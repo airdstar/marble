@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://cqg7msdtga6kt"]
+[gd_scene load_steps=10 format=3 uid="uid://cqg7msdtga6kt"]
 
 [ext_resource type="Script" path="res://floor.gd" id="1_3k5xj"]
 [ext_resource type="PackedScene" uid="uid://daqk2roaa6h1v" path="res://Player.tscn" id="1_ti5ib"]
@@ -17,6 +17,19 @@ top_radius = 100.0
 bottom_radius = 100.0
 height = 500.0
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mkrfl"]
+vertex_color_use_as_albedo = true
+
+[sub_resource type="TorusMesh" id="TorusMesh_3vc0p"]
+material = SubResource("StandardMaterial3D_mkrfl")
+inner_radius = 1.0
+outer_radius = 1.01
+
+[sub_resource type="Gradient" id="Gradient_c8jtw"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0.0266667, 0.506667)
+colors = PackedColorArray(0, 1, 0, 1, 0, 1, 1, 1)
+
 [node name="Node3D" type="Node3D"]
 script = ExtResource("1_3k5xj")
 
@@ -29,6 +42,7 @@ transform = Transform3D(1, 0, 0, 0, 0.92388, 0.382683, 0, -0.382683, 0.92388, 0,
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 
 [node name="CPUParticles3D" type="CPUParticles3D" parent="."]
+visible = false
 amount = 30
 mesh = SubResource("TextMesh_1b8rq")
 emission_shape = 1
@@ -40,3 +54,10 @@ mesh = SubResource("CylinderMesh_4vlp8")
 [node name="SpotLight3D" type="SpotLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 7.77484, 0)
 spot_range = 14.0
+
+[node name="EndParticles" type="CPUParticles3D" parent="."]
+mesh = SubResource("TorusMesh_3vc0p")
+gravity = Vector3(0, 9.8, 0)
+color_ramp = SubResource("Gradient_c8jtw")
+hue_variation_min = -1.0
+hue_variation_max = 1.0
