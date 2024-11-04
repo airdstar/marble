@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://btjsg168yymr3"]
+
+[ext_resource type="Script" path="res://platform.gd" id="1_ut0kj"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_5w47p"]
+friction = 0.2
+rough = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_gp5jn"]
+size = Vector3(20, 0.5, 20)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fg8c2"]
+size = Vector3(20, 0.5, 20)
+
+[node name="Platform" type="RigidBody3D"]
+mass = 0.001
+physics_material_override = SubResource("PhysicsMaterial_5w47p")
+gravity_scale = 0.0
+freeze = true
+freeze_mode = 1
+script = ExtResource("1_ut0kj")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_gp5jn")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_fg8c2")
