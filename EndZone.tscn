@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://cxxrgalbr0kp"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mkrfl"]
+vertex_color_use_as_albedo = true
+
+[sub_resource type="TorusMesh" id="TorusMesh_ixtdf"]
+material = SubResource("StandardMaterial3D_mkrfl")
+inner_radius = 1.0
+outer_radius = 1.01
+
+[sub_resource type="Gradient" id="Gradient_ouyk4"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0.0266667, 0.506667)
+colors = PackedColorArray(0, 1, 0, 1, 0, 1, 1, 1)
+
+[node name="End Zone" type="Node3D"]
+
+[node name="EndParticles" type="CPUParticles3D" parent="."]
+mesh = SubResource("TorusMesh_ixtdf")
+gravity = Vector3(0, 9.8, 0)
+color_ramp = SubResource("Gradient_ouyk4")
+hue_variation_min = -1.0
+hue_variation_max = 1.0

@@ -1,6 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://btjsg168yymr3"]
-
-[ext_resource type="Script" path="res://platform.gd" id="1_ut0kj"]
+[gd_scene load_steps=4 format=3 uid="uid://btjsg168yymr3"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_5w47p"]
 friction = 0.2
@@ -18,7 +16,6 @@ physics_material_override = SubResource("PhysicsMaterial_5w47p")
 gravity_scale = 0.0
 freeze = true
 freeze_mode = 1
-script = ExtResource("1_ut0kj")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("BoxMesh_gp5jn")
