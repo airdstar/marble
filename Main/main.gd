@@ -6,8 +6,8 @@ var settings
 
 func _ready():
 	Global.main = self
-	main_menu()
 	settings = preload("res://Main/SettingsMenu.tscn").instantiate()
+	main_menu()
 
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("exit"):
@@ -34,4 +34,6 @@ func start_run():
 		currentScene.queue_free()
 	currentScene = preload("res://Main/Floor.tscn").instantiate()
 	Global.runBase = currentScene
+	RunInfo.inRun = true
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	add_child(currentScene)

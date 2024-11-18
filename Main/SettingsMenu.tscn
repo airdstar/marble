@@ -26,4 +26,25 @@ offset_bottom = 95.0
 bbcode_enabled = true
 text = "[center]Settings"
 
+[node name="SensSlider" type="HSlider" parent="."]
+offset_left = 413.0
+offset_top = 395.0
+offset_right = 733.0
+offset_bottom = 476.0
+scrollable = false
+
+[node name="DeadzoneSlider" type="HSlider" parent="."]
+offset_left = 413.0
+offset_top = 395.0
+offset_right = 733.0
+offset_bottom = 476.0
+scrollable = false
+
+[node name="CameraSlider" type="HSlider" parent="."]
+offset_left = 413.0
+offset_top = 395.0
+offset_right = 733.0
+offset_bottom = 476.0
+scrollable = false
+
 [connection signal="pressed" from="Button" to="." method="switch_control_type"]

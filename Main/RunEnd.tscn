@@ -1,3 +1,15 @@
-[gd_scene format=3 uid="uid://cbkcx2bswrblr"]
+[gd_scene load_steps=2 format=3 uid="uid://cbkcx2bswrblr"]
+
+[ext_resource type="Script" path="res://Main/run_end.gd" id="1_pxsk4"]
 
 [node name="RunEnd" type="Node"]
+script = ExtResource("1_pxsk4")
+
+[node name="Restart" type="Button" parent="."]
+offset_left = 558.0
+offset_top = 474.0
+offset_right = 673.0
+offset_bottom = 509.0
+text = "Restart"
+
+[connection signal="pressed" from="Restart" to="." method="run_restart"]

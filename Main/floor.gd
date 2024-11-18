@@ -5,7 +5,6 @@ var input_tilt : Vector2
 var origin_tilt : Vector2
 var max_tilt : float = 40
 var tilt_scalar : float = 20
-var player
 
 var relative_background_rotation : float = 0
 
@@ -17,12 +16,8 @@ var relative_background_rotation : float = 0
 @onready var points = $CanvasLayer/Points
 
 func _ready():
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	RunInfo.floor = self
-	RunInfo.inRun = true
 	$CanvasLayer/Timer.theme.set_color("default_color", "RichTextLabel", RunInfo.playerColor)
 	state.start_game()
-	
 
 func _process(_delta: float) -> void:
 	if !state.transitioning:
@@ -46,13 +41,14 @@ func _process(_delta: float) -> void:
 
 func _physics_process(_delta: float) -> void:
 	if Settings.control_type == 1:
-		if Input.get_axis("tilt_up", "tilt_down") != 0:
-			input_tilt.x = Input.get_axis("tilt_up", "tilt_down") * Settings.tilt_sens_controller
+		var inputAxis = Input.get_axis("tilt_up", "tilt_down")
+		if inputAxis > Settings.controller_deadzone or inputAxis < -Settings.controller_deadzone:
+			input_tilt.x = inputAxis * Settings.tilt_sens_controller
 		else:
 			input_tilt.x = 0
 		
-		if Input.get_axis("tilt_right", "tilt_left") != 0:
-			input_tilt.y = Input.get_axis("tilt_right", "tilt_left") * Settings.tilt_sens_controller
+		if inputAxis > Settings.controller_deadzone or inputAxis < -Settings.controller_deadzone:
+			input_tilt.y = inputAxis * Settings.tilt_sens_controller
 		else:
 			input_tilt.y = 0
 
@@ -72,9 +68,9 @@ func _physics_process(_delta: float) -> void:
 func _input(event: InputEvent):
 	if event is InputEventMouseMotion:
 		if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
-			if event.relative.y > 2 or event.relative.y < -2:
+			if event.relative.y > Settings.mouse_deadzone or event.relative.y < -Settings.mouse_deadzone:
 				input_tilt.x += event.relative.y * Settings.tilt_sens_keyboard
-			if event.relative.x > 2 or event.relative.x < -2:
+			if event.relative.x > Settings.mouse_deadzone or event.relative.x < -Settings.mouse_deadzone:
 				input_tilt.y += -event.relative.x * Settings.tilt_sens_keyboard
 
 func game_over() -> void:
