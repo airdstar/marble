@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://txkyc6agipql"]
+
+[ext_resource type="Script" path="res://Levels/Parts/rotating_object.gd" id="1_y1uxt"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_gdi5m"]
+
+[node name="RotatingObject" type="RigidBody3D"]
+freeze = true
+script = ExtResource("1_y1uxt")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_gdi5m")

@@ -1,0 +1,45 @@
+[gd_scene load_steps=5 format=3 uid="uid://3vgtrp0i7ic1"]
+
+[ext_resource type="PackedScene" uid="uid://cxxrgalbr0kp" path="res://Levels/Parts/EndZone.tscn" id="1_ug8n0"]
+[ext_resource type="PackedScene" uid="uid://txkyc6agipql" path="res://Levels/Parts/RotatingObject.tscn" id="2_ji8pj"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_5w47p"]
+friction = 0.2
+rough = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cvea5"]
+
+[node name="Platform" type="RigidBody3D"]
+mass = 0.001
+physics_material_override = SubResource("PhysicsMaterial_5w47p")
+gravity_scale = 0.0
+freeze = true
+freeze_mode = 1
+metadata/GivenTime = 5.0
+metadata/StartPos = PackedVector2Array(-5, -5, -6, -5, -5, -6)
+metadata/PossibleRotations = Vector2(0, 360)
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
+layers = 3
+use_collision = true
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 0.4, 0, 0, 0, 1, 0, 0, 0)
+radius = 10.0
+radial_segments = 30
+rings = 30
+material = SubResource("StandardMaterial3D_cvea5")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+operation = 2
+size = Vector3(20, 4, 20)
+
+[node name="End Zone" parent="CSGCombiner3D" instance=ExtResource("1_ug8n0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 6)
+
+[node name="Obstacles" type="Node3D" parent="."]
+
+[node name="RotatingObject" parent="Obstacles" instance=ExtResource("2_ji8pj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.478453, 0)
+size = Vector3(10, 1, 1)

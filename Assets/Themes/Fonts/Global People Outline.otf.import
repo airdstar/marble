@@ -1,0 +1,34 @@
+[remap]
+
+importer="font_data_dynamic"
+type="FontFile"
+uid="uid://yknpa1ewo4x4"
+path="res://.godot/imported/Global People Outline.otf-260db66569c31f4f99d28c621a22b097.fontdata"
+
+[deps]
+
+source_file="res://Assets/Themes/Fonts/Global People Outline.otf"
+dest_files=["res://.godot/imported/Global People Outline.otf-260db66569c31f4f99d28c621a22b097.fontdata"]
+
+[params]
+
+Rendering=null
+antialiasing=1
+generate_mipmaps=false
+disable_embedded_bitmaps=true
+multichannel_signed_distance_field=false
+msdf_pixel_range=8
+msdf_size=48
+allow_system_fallback=true
+force_autohinter=false
+hinting=1
+subpixel_positioning=1
+oversampling=0.0
+Fallbacks=null
+fallbacks=[]
+Compress=null
+compress=true
+preload=[]
+language_support={}
+script_support={}
+opentype_features={}

@@ -1,0 +1,49 @@
+[gd_scene load_steps=2 format=3 uid="uid://b6tkuikggmkct"]
+
+[ext_resource type="Script" path="res://Main/run_starter.gd" id="1_jg14i"]
+
+[node name="RunStarter" type="Node"]
+script = ExtResource("1_jg14i")
+
+[node name="Easy" type="Button" parent="."]
+offset_left = 100.0
+offset_top = 216.0
+offset_right = 190.0
+offset_bottom = 248.0
+text = "Easy"
+
+[node name="Medium" type="Button" parent="."]
+offset_left = 100.0
+offset_top = 266.0
+offset_right = 190.0
+offset_bottom = 298.0
+disabled = true
+text = "Medium"
+
+[node name="Hard" type="Button" parent="."]
+offset_left = 100.0
+offset_top = 316.0
+offset_right = 190.0
+offset_bottom = 348.0
+disabled = true
+text = "Hard"
+
+[node name="Test" type="Button" parent="."]
+offset_left = 100.0
+offset_top = 366.0
+offset_right = 190.0
+offset_bottom = 398.0
+text = "Test"
+
+[node name="ColorPickerButton" type="ColorPickerButton" parent="."]
+offset_left = 610.0
+offset_top = 174.0
+offset_right = 910.0
+offset_bottom = 474.0
+edit_alpha = false
+
+[connection signal="pressed" from="Easy" to="." method="easy_pressed"]
+[connection signal="pressed" from="Medium" to="." method="medium_pressed"]
+[connection signal="pressed" from="Hard" to="." method="hard_pressed"]
+[connection signal="pressed" from="Test" to="." method="test_pressed"]
+[connection signal="color_changed" from="ColorPickerButton" to="." method="color_changed"]

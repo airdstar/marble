@@ -1,0 +1,29 @@
+[gd_scene load_steps=2 format=3 uid="uid://bq4emjmf4ogdr"]
+
+[ext_resource type="Script" path="res://Main/settings_menu.gd" id="1_321is"]
+
+[node name="Settings" type="Node"]
+script = ExtResource("1_321is")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = -9.0
+offset_top = -15.0
+offset_right = 1156.0
+offset_bottom = 657.0
+color = Color(0, 0, 0, 0.3)
+
+[node name="Button" type="Button" parent="."]
+offset_left = 491.0
+offset_top = 485.0
+offset_right = 661.0
+offset_bottom = 548.0
+text = "Keyboard/Mouse"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+offset_top = 1.0
+offset_right = 1152.0
+offset_bottom = 95.0
+bbcode_enabled = true
+text = "[center]Settings"
+
+[connection signal="pressed" from="Button" to="." method="switch_control_type"]

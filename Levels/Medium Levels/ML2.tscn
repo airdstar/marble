@@ -1,0 +1,62 @@
+[gd_scene load_steps=5 format=3 uid="uid://84e54m1a1b8"]
+
+[ext_resource type="PackedScene" uid="uid://cxxrgalbr0kp" path="res://Levels/Parts/EndZone.tscn" id="1_6spk6"]
+[ext_resource type="PackedScene" uid="uid://txkyc6agipql" path="res://Levels/Parts/RotatingObject.tscn" id="2_8kwjq"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_5w47p"]
+friction = 0.2
+rough = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cvea5"]
+
+[node name="Platform" type="RigidBody3D"]
+mass = 0.001
+physics_material_override = SubResource("PhysicsMaterial_5w47p")
+gravity_scale = 0.0
+freeze = true
+freeze_mode = 1
+metadata/GivenTime = 6.0
+metadata/StartPos = PackedVector2Array(-5, 5, 5, 5, -5, -5, 5, -5)
+metadata/PossibleRotations = Vector2(0, 360)
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
+layers = 3
+use_collision = true
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 0.4, 0, 0, 0, 1, 0, 0, 0)
+radius = 10.0
+radial_segments = 30
+rings = 30
+material = SubResource("StandardMaterial3D_cvea5")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+operation = 2
+size = Vector3(20, 4, 20)
+
+[node name="End Zone" parent="CSGCombiner3D" instance=ExtResource("1_6spk6")]
+
+[node name="Obstacles" type="Node3D" parent="."]
+
+[node name="RotatingObject" parent="Obstacles" instance=ExtResource("2_8kwjq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0.25, 2)
+size = Vector3(8, 0.5, 0.2)
+rotateSpeed = 2.0
+
+[node name="RotatingObject2" parent="Obstacles" instance=ExtResource("2_8kwjq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0.25, -2)
+size = Vector3(8, 0.5, 0.2)
+rotateSpeed = 2.0
+
+[node name="RotatingObject3" parent="Obstacles" instance=ExtResource("2_8kwjq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0.25, 5)
+size = Vector3(8, 0.5, 0.2)
+rotateSpeed = 2.0
+clockwise = false
+
+[node name="RotatingObject4" parent="Obstacles" instance=ExtResource("2_8kwjq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0.25, -5)
+size = Vector3(8, 0.5, 0.2)
+rotateSpeed = 2.0
+clockwise = false

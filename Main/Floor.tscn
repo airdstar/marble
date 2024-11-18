@@ -1,0 +1,77 @@
+[gd_scene load_steps=8 format=3 uid="uid://cqg7msdtga6kt"]
+
+[ext_resource type="Script" path="res://Main/floor.gd" id="1_mlw7t"]
+[ext_resource type="PackedScene" uid="uid://b1r1dlj4bb66l" path="res://Levels/Handlers/StateHandler.tscn" id="3_84gyn"]
+[ext_resource type="Texture2D" uid="uid://bm1dt3n6uqmou" path="res://background.png" id="3_jeokv"]
+[ext_resource type="Theme" uid="uid://dl6a6mq4q5lda" path="res://Assets/Themes/timer.tres" id="3_pch50"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2vi26"]
+albedo_texture = ExtResource("3_jeokv")
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_4vlp8"]
+material = SubResource("StandardMaterial3D_2vi26")
+flip_faces = true
+top_radius = 100.0
+bottom_radius = 100.0
+height = 1000.0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_iugt6"]
+size = Vector3(200, 1, 200)
+
+[node name="Node3D" type="Node3D"]
+process_mode = 1
+script = ExtResource("1_mlw7t")
+
+[node name="camera_y" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 306, 0)
+
+[node name="Camera3D" type="Camera3D" parent="camera_y"]
+transform = Transform3D(1, 0, 0, 0, 0.92388, 0.382683, 0, -0.382683, 0.92388, 0, 0, 20)
+current = true
+fov = 70.0
+
+[node name="Background" type="MeshInstance3D" parent="."]
+mesh = SubResource("CylinderMesh_4vlp8")
+
+[node name="RemainingTime" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Timer" type="RichTextLabel" parent="CanvasLayer"]
+offset_top = 23.0
+offset_right = 1152.0
+offset_bottom = 76.0
+theme = ExtResource("3_pch50")
+bbcode_enabled = true
+text = "[center]0"
+scroll_active = false
+
+[node name="Points" type="RichTextLabel" parent="CanvasLayer"]
+offset_top = 74.0
+offset_right = 1152.0
+offset_bottom = 139.0
+bbcode_enabled = true
+text = "[center]0"
+
+[node name="floor_base" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 300, 0)
+
+[node name="Origin" type="Node3D" parent="floor_base"]
+
+[node name="SpotLight3D" type="SpotLight3D" parent="floor_base"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 15, 0)
+light_energy = 2.0
+spot_range = 160.0
+
+[node name="Area3D" type="Area3D" parent="floor_base"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -50, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="floor_base/Area3D"]
+shape = SubResource("BoxShape3D_iugt6")
+
+[node name="StateHandler" parent="." instance=ExtResource("3_84gyn")]
+
+[connection signal="timeout" from="RemainingTime" to="." method="game_over"]
+[connection signal="area_entered" from="floor_base/Area3D" to="." method="reset_player"]
