@@ -34,6 +34,4 @@ func start_run():
 		currentScene.queue_free()
 	currentScene = preload("res://Main/Floor.tscn").instantiate()
 	Global.runBase = currentScene
-	RunInfo.inRun = true
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	add_child(currentScene)

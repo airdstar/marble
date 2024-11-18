@@ -6,6 +6,10 @@ var instanced
 var player
 
 func start_game():
+	transitioning = true
+	RunInfo.inRun = true
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	
 	if instanced != null:
 		instanced.queue_free()
 	
@@ -13,7 +17,7 @@ func start_game():
 		player.queue_free()
 	
 	create_level()
-	Global.runBase.timer.set_wait_time(Global.runBase.timer.wait_time + instanced.get_meta("GivenTime"))
+	Global.runBase.timer.set_wait_time(10 + instanced.get_meta("GivenTime"))
 	Global.runBase.origin.add_child(instanced)
 	chosenSpawn = instanced.get_meta("StartPos")[randi_range(0, instanced.get_meta("StartPos").size() - 1)]
 	
@@ -97,6 +101,3 @@ func reset_player():
 	player.linear_velocity = Vector3.ZERO
 	player.angular_velocity = Vector3.ZERO
 	player.position = Vector3(chosenSpawn.x,315,chosenSpawn.y)
-
-func game_over():
-	get_tree().quit()

@@ -29,10 +29,12 @@ disabled = true
 text = "Hard"
 
 [node name="Test" type="Button" parent="."]
+visible = false
 offset_left = 100.0
 offset_top = 366.0
 offset_right = 190.0
 offset_bottom = 398.0
+disabled = true
 text = "Test"
 
 [node name="ColorPickerButton" type="ColorPickerButton" parent="."]

@@ -7,6 +7,7 @@ var max_tilt : float = 40
 var tilt_scalar : float = 20
 
 var relative_background_rotation : float = 0
+var overlay
 
 @onready var camera = $camera_y
 @onready var background = $Background
@@ -14,16 +15,17 @@ var relative_background_rotation : float = 0
 @onready var timer = $RemainingTime
 @onready var state = $StateHandler
 @onready var points = $CanvasLayer/Points
+@onready var timerText = $CanvasLayer/Timer
 
 func _ready():
-	$CanvasLayer/Timer.theme.set_color("default_color", "RichTextLabel", RunInfo.playerColor)
+	timerText.theme.set_color("default_color", "RichTextLabel", RunInfo.playerColor)
 	state.start_game()
 
 func _process(_delta: float) -> void:
 	if !state.transitioning:
-		$CanvasLayer/Timer.text = "[center]" + "%.1f" % timer.time_left
+		timerText.text = "[center]" + "%.1f" % timer.time_left
 	else:
-		$CanvasLayer/Timer.text = "[center]" + "%.1f" % timer.wait_time
+		timerText.text = "[center]" + "%.1f" % timer.wait_time
 	
 	$Background.rotate_y(deg_to_rad(0.01))
 	relative_background_rotation += 0.01
@@ -74,7 +76,9 @@ func _input(event: InputEvent):
 				input_tilt.y += -event.relative.x * Settings.tilt_sens_keyboard
 
 func game_over() -> void:
-	state.game_over()
+	overlay = preload("res://Main/RunEnd.tscn").instantiate()
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	add_child(overlay)
 
 func reset_player(_area: Area3D) -> void:
 	state.reset_player()
