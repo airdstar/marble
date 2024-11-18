@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Main/floor.gd" id="1_mlw7t"]
 [ext_resource type="PackedScene" uid="uid://b1r1dlj4bb66l" path="res://Levels/Handlers/StateHandler.tscn" id="3_84gyn"]
-[ext_resource type="Texture2D" uid="uid://bm1dt3n6uqmou" path="res://background.png" id="3_jeokv"]
+[ext_resource type="Texture2D" uid="uid://bm1dt3n6uqmou" path="res://Assets/background.png" id="3_jeokv"]
 [ext_resource type="Theme" uid="uid://dl6a6mq4q5lda" path="res://Assets/Themes/timer.tres" id="3_pch50"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2vi26"]

@@ -17,7 +17,8 @@ func _process(_delta: float) -> void:
 		if !RunInfo.inRun:
 			if get_children().has(settings):
 				remove_child(settings)
-				get_tree().paused = false
+				if Global.runBase == null:
+					get_tree().paused = false
 			else:
 				add_child(settings)
 				get_tree().paused = true

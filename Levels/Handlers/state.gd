@@ -86,6 +86,8 @@ func pick_level():
 	var currentLevel : String = dir.get_next()
 	var allLevels : Array[String]
 	while currentLevel != "":
+		if '.tscn.remap' in currentLevel:
+			currentLevel = currentLevel.trim_suffix('.remap')
 		allLevels.append(directory + currentLevel)
 		currentLevel = dir.get_next()
 	dir.list_dir_end()
@@ -101,3 +103,6 @@ func reset_player():
 	player.linear_velocity = Vector3.ZERO
 	player.angular_velocity = Vector3.ZERO
 	player.position = Vector3(chosenSpawn.x,315,chosenSpawn.y)
+
+func reset_orientation():
+	pass

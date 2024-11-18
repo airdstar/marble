@@ -11,9 +11,12 @@ config_version=5
 [application]
 
 config/name="Marble"
+config/version="0.01"
 run/main_scene="res://Main/main.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
-config/icon="res://icon.svg"
+boot_splash/show_image=false
+config/icon="res://Assets/icon.png"
+config/windows_native_icon="res://Assets/icon.ico"
 
 [autoload]
 
