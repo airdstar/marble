@@ -1,0 +1,13 @@
+- Description
+  - You roll the marble into the goal
+  - Inspired by the Wii Fit marble game and Wariowarelike games
+- Keyboard/Mouse Controls
+  - Tilt: Mouse Movement
+  - Camera Rotation: A/D
+  - Close Game: Esc
+- Controller Controls
+  - Tilt: Left Stick
+  - Camera Rotation: Right Stick
+  - Close Game: Start/Pause
+- General Controls
+  - Open Settings: Tab
