@@ -16,5 +16,5 @@ var tilt_sens_keyboard : float = 0.001
 var mouse_deadzone : float = 1
 var controller_deadzone : float = 0.01
 
-var invert_x
-var invert_y
+var invert_x : int = 1
+var invert_y : int = 1

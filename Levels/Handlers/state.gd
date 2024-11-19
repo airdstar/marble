@@ -24,9 +24,9 @@ func start_game():
 	
 	var rotation = randf_range(instanced.get_meta("PossibleRotations").x,instanced.get_meta("PossibleRotations").y)
 	Global.runBase.camera.rotation.y = deg_to_rad(rotation)
-	Global.runBase.background.rotation.y = deg_to_rad(rotation + Global.runBase.relative_background_rotation)
+	Global.runBase.background.rotation.y = deg_to_rad(rotation)
 	
-	player = preload("res://Main/Player.tscn").instantiate()
+	player = preload("res://Main/Marble.tscn").instantiate()
 	Global.runBase.add_child(player)
 	reset_player()
 	
@@ -107,11 +107,17 @@ func reset_player():
 
 func reset_orientation():
 	allowInput = false
-	var rotationAmount = deg_to_rad(randf_range(180,360))
+	
+	var rotationAmount = deg_to_rad(randf_range(instanced.get_meta("PossibleRotations").x,instanced.get_meta("PossibleRotations").y))
+	print(rotationAmount)
+	
 	var tween = create_tween()
 	tween.tween_property(Global.runBase.camera, "rotation", Global.runBase.camera.rotation + Vector3(0,rotationAmount,0), 1.5).set_trans(Tween.TRANS_SPRING).set_ease(Tween.EASE_OUT)
 	var backgroundTween = create_tween()
 	backgroundTween.tween_property(Global.runBase.background, "rotation", Global.runBase.background.rotation + Vector3(0,rotationAmount,0), 1.5).set_trans(Tween.TRANS_SPRING).set_ease(Tween.EASE_OUT)
 	
-	
+	await get_tree().create_timer(2).timeout
+	print(rad_to_deg(Global.runBase.camera.rotation.y))
+	print(rad_to_deg(Global.runBase.background.rotation.y))
+	print(Global.runBase.relative_background_rotation)
 	allowInput = true

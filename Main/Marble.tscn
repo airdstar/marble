@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://daqk2roaa6h1v"]
 
-[ext_resource type="Script" path="res://Main/player.gd" id="1_6d1k2"]
+[ext_resource type="Script" path="res://Main/marble.gd" id="1_6d1k2"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_vmld2"]
 rough = true
