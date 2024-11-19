@@ -1,6 +1,7 @@
 extends Node
 
 var transitioning := true
+var allowInput : bool = true
 var chosenSpawn : Vector2
 var instanced
 var player
@@ -25,7 +26,7 @@ func start_game():
 	Global.runBase.camera.rotation.y = deg_to_rad(rotation)
 	Global.runBase.background.rotation.y = deg_to_rad(rotation + Global.runBase.relative_background_rotation)
 	
-	player = preload("res://Player.tscn").instantiate()
+	player = preload("res://Main/Player.tscn").instantiate()
 	Global.runBase.add_child(player)
 	reset_player()
 	
@@ -105,4 +106,12 @@ func reset_player():
 	player.position = Vector3(chosenSpawn.x,315,chosenSpawn.y)
 
 func reset_orientation():
-	pass
+	allowInput = false
+	var rotationAmount = deg_to_rad(randf_range(180,360))
+	var tween = create_tween()
+	tween.tween_property(Global.runBase.camera, "rotation", Global.runBase.camera.rotation + Vector3(0,rotationAmount,0), 1.5).set_trans(Tween.TRANS_SPRING).set_ease(Tween.EASE_OUT)
+	var backgroundTween = create_tween()
+	backgroundTween.tween_property(Global.runBase.background, "rotation", Global.runBase.background.rotation + Vector3(0,rotationAmount,0), 1.5).set_trans(Tween.TRANS_SPRING).set_ease(Tween.EASE_OUT)
+	
+	
+	allowInput = true

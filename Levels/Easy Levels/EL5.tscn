@@ -10,7 +10,6 @@ rough = true
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cvea5"]
 
 [node name="Platform" type="RigidBody3D"]
-mass = 0.001
 physics_material_override = SubResource("PhysicsMaterial_5w47p")
 gravity_scale = 0.0
 freeze = true
