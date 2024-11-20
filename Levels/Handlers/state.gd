@@ -109,7 +109,7 @@ func reset_orientation():
 	allowInput = false
 	
 	var rotationAmount = deg_to_rad(randf_range(instanced.get_meta("PossibleRotations").x,instanced.get_meta("PossibleRotations").y))
-	print(rotationAmount)
+	rotationAmount -= deg_to_rad(fmod(rad_to_deg(Global.runBase.camera.rotation.y), 360))
 	
 	var tween = create_tween()
 	tween.tween_property(Global.runBase.camera, "rotation", Global.runBase.camera.rotation + Vector3(0,rotationAmount,0), 1.5).set_trans(Tween.TRANS_SPRING).set_ease(Tween.EASE_OUT)
@@ -117,7 +117,4 @@ func reset_orientation():
 	backgroundTween.tween_property(Global.runBase.background, "rotation", Global.runBase.background.rotation + Vector3(0,rotationAmount,0), 1.5).set_trans(Tween.TRANS_SPRING).set_ease(Tween.EASE_OUT)
 	
 	await get_tree().create_timer(2).timeout
-	print(rad_to_deg(Global.runBase.camera.rotation.y))
-	print(rad_to_deg(Global.runBase.background.rotation.y))
-	print(Global.runBase.relative_background_rotation)
 	allowInput = true
