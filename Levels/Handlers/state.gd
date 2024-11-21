@@ -71,25 +71,14 @@ func next_level():
 	transitioning = false
 
 func pick_level():
-	var directory : String
-	match RunInfo.currentDifficulty:
-		0:
-			directory = "res://Levels/Easy Levels/"
-		1:
-			directory = "res://Levels/Medium Levels/"
-		2:
-			directory = "res://Levels/Hard Levels/"
-		3:
-			directory = "res://Levels/Test Levels/"
-	
-	var dir = DirAccess.open(directory)
+	var dir = DirAccess.open(Global.level_directories[RunInfo.currentDifficulty])
 	dir.list_dir_begin()
 	var currentLevel : String = dir.get_next()
 	var allLevels : Array[String]
 	while currentLevel != "":
 		if '.tscn.remap' in currentLevel:
 			currentLevel = currentLevel.trim_suffix('.remap')
-		allLevels.append(directory + currentLevel)
+		allLevels.append(Global.level_directories[RunInfo.currentDifficulty] + currentLevel)
 		currentLevel = dir.get_next()
 	dir.list_dir_end()
 	
@@ -116,5 +105,5 @@ func reset_orientation():
 	var backgroundTween = create_tween()
 	backgroundTween.tween_property(Global.runBase.background, "rotation", Global.runBase.background.rotation + Vector3(0,rotationAmount,0), 1.5).set_trans(Tween.TRANS_SPRING).set_ease(Tween.EASE_OUT)
 	
-	await get_tree().create_timer(2).timeout
+	await get_tree().create_timer(0.8).timeout
 	allowInput = true

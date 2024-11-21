@@ -1,13 +1,16 @@
-[gd_scene load_steps=5 format=3 uid="uid://3vgtrp0i7ic1"]
+[gd_scene load_steps=6 format=3 uid="uid://3vgtrp0i7ic1"]
 
-[ext_resource type="PackedScene" uid="uid://cxxrgalbr0kp" path="res://Levels/Parts/EndZone.tscn" id="1_ug8n0"]
-[ext_resource type="PackedScene" uid="uid://txkyc6agipql" path="res://Levels/Parts/RotatingObject.tscn" id="2_ji8pj"]
+[ext_resource type="PackedScene" uid="uid://cxxrgalbr0kp" path="res://Levels/Parts/EndZone.tscn" id="1_4ruah"]
+[ext_resource type="Script" path="res://Levels/Parts/rotating_object.gd" id="2_vslw6"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_5w47p"]
 friction = 0.2
 rough = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cvea5"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_0540x"]
+size = Vector3(10, 2, 0.2)
 
 [node name="Platform" type="RigidBody3D"]
 physics_material_override = SubResource("PhysicsMaterial_5w47p")
@@ -34,11 +37,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 operation = 2
 size = Vector3(20, 4, 20)
 
-[node name="End Zone" parent="CSGCombiner3D" instance=ExtResource("1_ug8n0")]
+[node name="End Zone" parent="CSGCombiner3D" instance=ExtResource("1_4ruah")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 6)
 
 [node name="Obstacles" type="Node3D" parent="."]
 
-[node name="RotatingObject" parent="Obstacles" instance=ExtResource("2_ji8pj")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.478453, 0)
-size = Vector3(10, 1, 1)
+[node name="RotatingObject" type="RigidBody3D" parent="Obstacles"]
+script = ExtResource("2_vslw6")
+rotation_speed = 3.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Obstacles/RotatingObject"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.969241, 0)
+mesh = SubResource("BoxMesh_0540x")

@@ -1,7 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://84e54m1a1b8"]
+[gd_scene load_steps=6 format=3 uid="uid://djf25b2ck11fx"]
 
-[ext_resource type="PackedScene" uid="uid://cxxrgalbr0kp" path="res://Levels/Parts/EndZone.tscn" id="1_6spk6"]
-[ext_resource type="Script" path="res://Levels/Parts/rotating_object.gd" id="2_li46p"]
+[ext_resource type="PackedScene" uid="uid://cxxrgalbr0kp" path="res://Levels/Parts/EndZone.tscn" id="1_1n57j"]
+[ext_resource type="Script" path="res://Levels/Parts/rotating_object.gd" id="2_qswvo"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_5w47p"]
 friction = 0.2
@@ -9,17 +9,16 @@ rough = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cvea5"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_m52lu"]
-size = Vector3(5, 0.5, 0.2)
+[sub_resource type="BoxMesh" id="BoxMesh_0540x"]
+size = Vector3(20, 0.7, 2)
 
 [node name="Platform" type="RigidBody3D"]
-mass = 0.001
 physics_material_override = SubResource("PhysicsMaterial_5w47p")
 gravity_scale = 0.0
 freeze = true
 freeze_mode = 1
-metadata/GivenTime = 6.0
-metadata/StartPos = PackedVector2Array(-5, 5, 5, 5, -5, -5, 5, -5)
+metadata/GivenTime = 5.0
+metadata/StartPos = PackedVector2Array(0, -6, -1, -5, 1, -5)
 metadata/PossibleRotations = Vector2(0, 360)
 
 [node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
@@ -38,15 +37,16 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 operation = 2
 size = Vector3(20, 4, 20)
 
-[node name="End Zone" parent="CSGCombiner3D" instance=ExtResource("1_6spk6")]
+[node name="End Zone" parent="CSGCombiner3D" instance=ExtResource("1_1n57j")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 6)
 
 [node name="Obstacles" type="Node3D" parent="."]
 
 [node name="RotatingObject" type="RigidBody3D" parent="Obstacles"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 4)
-script = ExtResource("2_li46p")
+script = ExtResource("2_qswvo")
+rotation_speed = 9.0
 random_direction = true
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Obstacles/RotatingObject"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.23169, 0)
-mesh = SubResource("BoxMesh_m52lu")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.37563, 0)
+mesh = SubResource("BoxMesh_0540x")
