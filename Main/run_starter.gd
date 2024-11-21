@@ -1,6 +1,5 @@
 extends Node
 
-
 var allow_test : bool = true
 
 var easy_veto : bool = false
@@ -13,27 +12,15 @@ var hard_veto : bool = true
 @onready var test = $Test
 
 func _ready():
-	$ColorPickerButton.color = RunInfo.playerColor
+	$Red.value = RunInfo.playerColor.r
+	$Blue.value = RunInfo.playerColor.b
+	$Green.value = RunInfo.playerColor.g
 	check_valid_difficulties()
 
-func color_changed(color: Color) -> void:
-	RunInfo.playerColor = color
+func _process(delta: float) -> void:
+	$TextureRect.texture = $SubViewport.get_texture()
+	$SubViewport/MeshInstance3D.rotate_y(0.0001)
 
-func easy_pressed() -> void:
-	RunInfo.currentDifficulty = RunInfo.difficulty.EASY
-	Global.main.start_run()
-
-func medium_pressed() -> void:
-	RunInfo.currentDifficulty = RunInfo.difficulty.MEDIUM
-	Global.main.start_run()
-
-func hard_pressed() -> void:
-	RunInfo.currentDifficulty = RunInfo.difficulty.HARD
-	Global.main.start_run()
-
-func test_pressed() -> void:
-	RunInfo.currentDifficulty = RunInfo.difficulty.TEST
-	Global.main.start_run()
 
 func check_valid_difficulties():
 	for n in range(4):
@@ -69,3 +56,33 @@ func check_valid_difficulties():
 						test.disabled = true
 				else:
 					test.visible = false
+
+
+func easy_pressed() -> void:
+	RunInfo.currentDifficulty = RunInfo.difficulty.EASY
+	Global.main.start_run()
+
+func medium_pressed() -> void:
+	RunInfo.currentDifficulty = RunInfo.difficulty.MEDIUM
+	Global.main.start_run()
+
+func hard_pressed() -> void:
+	RunInfo.currentDifficulty = RunInfo.difficulty.HARD
+	Global.main.start_run()
+
+func test_pressed() -> void:
+	RunInfo.currentDifficulty = RunInfo.difficulty.TEST
+	Global.main.start_run()
+
+
+func red_changed(value: float) -> void:
+	RunInfo.playerColor.r = value
+	$SubViewport/MeshInstance3D/OmniLight3D.light_color = RunInfo.playerColor
+
+func blue_changed(value: float) -> void:
+	RunInfo.playerColor.b = value
+	$SubViewport/MeshInstance3D/OmniLight3D.light_color = RunInfo.playerColor
+
+func green_changed(value: float) -> void:
+	RunInfo.playerColor.g = value
+	$SubViewport/MeshInstance3D/OmniLight3D.light_color = RunInfo.playerColor

@@ -44,7 +44,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 6)
 
 [node name="RotatingObject" type="RigidBody3D" parent="Obstacles"]
 script = ExtResource("2_qswvo")
-rotation_speed = 9.0
+rotation_speed = 10.0
 random_direction = true
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Obstacles/RotatingObject"]

@@ -4,11 +4,11 @@ var transitioning := true
 var allowInput : bool = true
 var chosenSpawn : Vector2
 var instanced
+var prev_instance
 var player
 
 func start_game():
 	transitioning = true
-	RunInfo.inRun = true
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	
 	if instanced != null:
@@ -18,13 +18,8 @@ func start_game():
 		player.queue_free()
 	
 	create_level()
-	Global.runBase.timer.set_wait_time(10 + instanced.get_meta("GivenTime"))
-	Global.runBase.origin.add_child(instanced)
-	chosenSpawn = instanced.get_meta("StartPos")[randi_range(0, instanced.get_meta("StartPos").size() - 1)]
-	
-	var rotation = randf_range(instanced.get_meta("PossibleRotations").x,instanced.get_meta("PossibleRotations").y)
-	Global.runBase.camera.rotation.y = deg_to_rad(rotation)
-	Global.runBase.background.rotation.y = deg_to_rad(rotation)
+	set_level_data()
+	RunInfo.inRun = true
 	
 	player = preload("res://Main/Marble.tscn").instantiate()
 	Global.runBase.add_child(player)
@@ -36,39 +31,55 @@ func start_game():
 
 func next_level():
 	transitioning = true
-	var holder = instanced
-	
+	prev_instance = instanced
 	create_level()
-	chosenSpawn = instanced.get_meta("StartPos")[randi_range(0, instanced.get_meta("StartPos").size() - 1)]
-	Global.runBase.timer.set_wait_time(Global.runBase.timer.time_left + instanced.get_meta("GivenTime"))
-	Global.runBase.timer.stop()
+	set_level_data()
 	
 	var tween = create_tween()
 	tween.tween_property(Global.runBase.camera, "position", Vector3(0,-281,0), 0.7).set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_IN)
 	
-	await get_tree().create_timer(0.3).timeout
-	
-	holder.queue_free()
-	Global.runBase.origin.add_child(instanced)
-	player.visible = false
-	
-	var rotation = randf_range(instanced.get_meta("PossibleRotations").x,instanced.get_meta("PossibleRotations").y)
-	Global.runBase.camera.rotation.y = deg_to_rad(rotation)
-	Global.runBase.background.rotation.y = deg_to_rad(rotation + Global.runBase.relative_background_rotation)
-
-	await get_tree().create_timer(0.41).timeout
+	await get_tree().create_timer(0.71).timeout
 	
 	Global.runBase.camera.position = Vector3(0,355,0)
 	tween = create_tween()
 	tween.tween_property(Global.runBase.camera, "position", Vector3(0,305,0), 0.2).set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_OUT)
-	await get_tree().create_timer(0.2).timeout
+	
+	await get_tree().create_timer(0.21).timeout
 	reset_player()
 	player.visible = true
 	
 	await get_tree().create_timer(0.7).timeout
 	
+	
 	Global.runBase.timer.start()
 	transitioning = false
+
+func set_level_data():
+	chosenSpawn = instanced.start_pos[randi_range(0, instanced.start_pos.size() - 1)]
+	
+	if RunInfo.inRun:
+		Global.runBase.timer.set_wait_time(Global.runBase.timer.time_left + instanced.given_time)
+	else:
+		Global.runBase.timer.set_wait_time(Global.runBase.timer.wait_time + instanced.given_time)
+	
+	
+	
+	Global.runBase.timer.stop()
+	
+	if RunInfo.inRun:
+		await get_tree().create_timer(0.3).timeout
+		prev_instance.queue_free()
+		player.visible = false
+		var rotation = randf_range(instanced.possible_rotations.x,instanced.possible_rotations.y)
+		Global.runBase.camera.rotation.y = deg_to_rad(rotation)
+		Global.runBase.background.rotation.y = deg_to_rad(rotation + Global.runBase.relative_background_rotation)
+	else:
+		var rotation = randf_range(instanced.possible_rotations.x,instanced.possible_rotations.y)
+		Global.runBase.camera.rotation.y = deg_to_rad(rotation)
+		Global.runBase.background.rotation.y = deg_to_rad(rotation + Global.runBase.relative_background_rotation)
+	
+	Global.runBase.origin.add_child(instanced)
+	
 
 func pick_level():
 	var dir = DirAccess.open(Global.level_directories[RunInfo.currentDifficulty])
@@ -97,7 +108,7 @@ func reset_player():
 func reset_orientation():
 	allowInput = false
 	
-	var rotationAmount = deg_to_rad(randf_range(instanced.get_meta("PossibleRotations").x,instanced.get_meta("PossibleRotations").y))
+	var rotationAmount = deg_to_rad(randf_range(instanced.possible_rotations.x,instanced.possible_rotations.y))
 	rotationAmount -= deg_to_rad(fmod(rad_to_deg(Global.runBase.camera.rotation.y), 360))
 	
 	var tween = create_tween()
