@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://Main/run_starter.gd" id="1_jg14i"]
 
 [node name="RunStarter" type="Node"]
+process_mode = 1
 script = ExtResource("1_jg14i")
 
 [node name="Easy" type="Button" parent="."]

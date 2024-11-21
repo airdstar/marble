@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://daqk2roaa6h1v"]
+[gd_scene load_steps=7 format=3 uid="uid://daqk2roaa6h1v"]
 
 [ext_resource type="Script" path="res://Main/marble.gd" id="1_6d1k2"]
 
@@ -7,12 +7,18 @@ rough = true
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_84e8f"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_180f3"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ge73a"]
 transparency = 1
-albedo_color = Color(1, 1, 1, 0.75)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_38p8a"]
+render_priority = -1
+next_pass = SubResource("StandardMaterial3D_ge73a")
+transparency = 1
+no_depth_test = true
+albedo_color = Color(64.324, 27.568, 1, 1)
 
 [sub_resource type="SphereMesh" id="SphereMesh_4hlcw"]
-material = SubResource("StandardMaterial3D_180f3")
+material = SubResource("StandardMaterial3D_38p8a")
 flip_faces = true
 
 [node name="Player" type="RigidBody3D"]

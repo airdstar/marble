@@ -35,6 +35,6 @@ func main_menu():
 func start_run():
 	if currentScene != null:
 		currentScene.queue_free()
-	currentScene = preload("res://Main/Floor.tscn").instantiate()
+	currentScene = preload("res://Levels/Handlers/Floor.tscn").instantiate()
 	Global.runBase = currentScene
 	add_child(currentScene)
