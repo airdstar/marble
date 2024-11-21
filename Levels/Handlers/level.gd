@@ -4,7 +4,9 @@ extends Node
 @export var start_pos : Array[Vector2] = [Vector2.ZERO]
 @export var possible_rotations : Vector2 = Vector2(0,360)
 
+@export_category("Experimental")
 ## Only change this if gravity can compensate it
+@export var tagline : String = "Test"
 @export var max_tilt : float = 35
 
 @export var end_pos : Array[Vector2]

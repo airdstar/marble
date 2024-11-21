@@ -62,8 +62,6 @@ func set_level_data():
 	else:
 		Global.runBase.timer.set_wait_time(Global.runBase.timer.wait_time + instanced.given_time)
 	
-	
-	
 	Global.runBase.timer.stop()
 	
 	if RunInfo.inRun:
@@ -73,6 +71,7 @@ func set_level_data():
 		var rotation = randf_range(instanced.possible_rotations.x,instanced.possible_rotations.y)
 		Global.runBase.camera.rotation.y = deg_to_rad(rotation)
 		Global.runBase.background.rotation.y = deg_to_rad(rotation + Global.runBase.relative_background_rotation)
+		reset_player()
 	else:
 		var rotation = randf_range(instanced.possible_rotations.x,instanced.possible_rotations.y)
 		Global.runBase.camera.rotation.y = deg_to_rad(rotation)

@@ -1,6 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://cgnnbe8rwgc54"]
+[gd_scene load_steps=8 format=3 uid="uid://cgnnbe8rwgc54"]
 
 [ext_resource type="PackedScene" uid="uid://cxxrgalbr0kp" path="res://Levels/Parts/EndZone.tscn" id="1_3vwjt"]
+[ext_resource type="Script" path="res://Levels/Handlers/level.gd" id="1_28c3y"]
 [ext_resource type="Script" path="res://Levels/Parts/moving_platform.gd" id="2_muwxy"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_5w47p"]
@@ -21,9 +22,9 @@ physics_material_override = SubResource("PhysicsMaterial_5w47p")
 gravity_scale = 0.0
 freeze = true
 freeze_mode = 1
-metadata/GivenTime = 5.0
-metadata/StartPos = PackedVector2Array(0, -5, 2, -3, -2, -3)
-metadata/PossibleRotations = Vector2(50, 310)
+script = ExtResource("1_28c3y")
+start_pos = Array[Vector2]([Vector2(0, -5), Vector2(2, -3), Vector2(-2, -3)])
+possible_rotations = Vector2(50, 310)
 
 [node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
 layers = 3
