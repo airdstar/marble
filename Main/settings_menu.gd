@@ -54,9 +54,9 @@ func camera_sens_changed(value: float) -> void:
 	$CameraSlider/CameraSensValue.text = "[center]" + str(snapped((value - camera_slider.min_value)/camera_slider.min_value * 2,0.01))
 
 func deadzone_changed(value: float) -> void:
-	if Settings.control_type == Settings.control.KEYBOARD:
-		Settings.mouse_deadzone = value
-	else:
-		Settings.controller_deadzone = value
+	#if Settings.control_type == Settings.control.KEYBOARD:
+		#Settings.mouse_deadzone = value
+	#else:
+		#Settings.controller_deadzone = value
 	
 	$DeadzoneSlider/DeadzoneValue.text = "[center]" + str(value)

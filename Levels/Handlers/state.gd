@@ -31,6 +31,7 @@ func start_game():
 
 func next_level():
 	transitioning = true
+	allowInput = false
 	prev_instance = instanced
 	create_level()
 	set_level_data()
@@ -48,11 +49,12 @@ func next_level():
 	reset_player()
 	player.visible = true
 	
-	await get_tree().create_timer(0.7).timeout
-	
-	
+	await get_tree().create_timer(0.6).timeout
+	allowInput = true
+	await get_tree().create_timer(0.1).timeout
 	Global.runBase.timer.start()
 	transitioning = false
+	
 
 func set_level_data():
 	chosenSpawn = instanced.start_pos[randi_range(0, instanced.start_pos.size() - 1)]
@@ -114,6 +116,6 @@ func reset_orientation():
 	tween.tween_property(Global.runBase.camera, "rotation", Global.runBase.camera.rotation + Vector3(0,rotationAmount,0), 1.5).set_trans(Tween.TRANS_SPRING).set_ease(Tween.EASE_OUT)
 	var backgroundTween = create_tween()
 	backgroundTween.tween_property(Global.runBase.background, "rotation", Global.runBase.background.rotation + Vector3(0,rotationAmount,0), 1.5).set_trans(Tween.TRANS_SPRING).set_ease(Tween.EASE_OUT)
-	
+
 	await get_tree().create_timer(0.8).timeout
 	allowInput = true
