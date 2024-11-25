@@ -9,6 +9,7 @@ var player
 
 func start_game():
 	transitioning = true
+	allowInput = false
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	
 	if instanced != null:
@@ -25,7 +26,9 @@ func start_game():
 	Global.runBase.add_child(player)
 	reset_player()
 	
-	await get_tree().create_timer(0.7).timeout
+	await get_tree().create_timer(0.5).timeout
+	allowInput = true
+	await get_tree().create_timer(0.2).timeout
 	Global.runBase.timer.start()
 	transitioning = false
 
@@ -49,9 +52,9 @@ func next_level():
 	reset_player()
 	player.visible = true
 	
-	await get_tree().create_timer(0.6).timeout
+	await get_tree().create_timer(0.5).timeout
 	allowInput = true
-	await get_tree().create_timer(0.1).timeout
+	await get_tree().create_timer(0.2).timeout
 	Global.runBase.timer.start()
 	transitioning = false
 	
@@ -113,9 +116,9 @@ func reset_orientation():
 	rotationAmount -= deg_to_rad(fmod(rad_to_deg(Global.runBase.camera.rotation.y), 360))
 	
 	var tween = create_tween()
-	tween.tween_property(Global.runBase.camera, "rotation", Global.runBase.camera.rotation + Vector3(0,rotationAmount,0), 1.5).set_trans(Tween.TRANS_SPRING).set_ease(Tween.EASE_OUT)
+	tween.tween_property(Global.runBase.camera, "rotation", Global.runBase.camera.rotation + Vector3(0,rotationAmount + 2,0), 1.5).set_trans(Tween.TRANS_SPRING).set_ease(Tween.EASE_OUT)
 	var backgroundTween = create_tween()
-	backgroundTween.tween_property(Global.runBase.background, "rotation", Global.runBase.background.rotation + Vector3(0,rotationAmount,0), 1.5).set_trans(Tween.TRANS_SPRING).set_ease(Tween.EASE_OUT)
+	backgroundTween.tween_property(Global.runBase.background, "rotation", Global.runBase.background.rotation + Vector3(0,rotationAmount + 2,0), 1.5).set_trans(Tween.TRANS_SPRING).set_ease(Tween.EASE_OUT)
 
-	await get_tree().create_timer(0.8).timeout
+	await get_tree().create_timer(0.7).timeout
 	allowInput = true

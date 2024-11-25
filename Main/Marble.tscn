@@ -24,8 +24,8 @@ flip_faces = true
 [node name="Player" type="RigidBody3D"]
 mass = 10.0
 physics_material_override = SubResource("PhysicsMaterial_vmld2")
-gravity_scale = 5.0
-angular_damp = 3.0
+gravity_scale = 7.5
+angular_damp = 3.5
 script = ExtResource("1_6d1k2")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
