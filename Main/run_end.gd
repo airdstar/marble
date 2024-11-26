@@ -18,4 +18,4 @@ func run_restart() -> void:
 	Global.runBase.timerText.visible = true
 	Global.runBase.points.visible = true
 	Global.runBase.state.start_game()
-	Global.runBase.overlay.queue_free()
+	queue_free()

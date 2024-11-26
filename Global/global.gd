@@ -1,7 +1,7 @@
 extends Node
 
-var main
-var runBase
+var main : Node
+var runBase : Node3D
 
 var level_directories : Array[String] = ["res://Levels/Easy Levels/",
 										"res://Levels/Medium Levels/",

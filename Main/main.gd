@@ -4,7 +4,7 @@ var currentScene
 var loadingScreen
 var settings
 
-func _ready():
+func _ready() -> void:
 	Global.main = self
 	settings = preload("res://Main/SettingsMenu.tscn").instantiate()
 	add_child(settings)
@@ -26,13 +26,13 @@ func _process(_delta: float) -> void:
 				get_tree().paused = true
 				Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
-func main_menu():
+func main_menu() -> void:
 	if currentScene != null:
 		currentScene.queue_free()
 	currentScene = preload("res://Main/RunStarter.tscn").instantiate()
 	add_child(currentScene)
 
-func start_run():
+func start_run() -> void:
 	if currentScene != null:
 		currentScene.queue_free()
 	currentScene = preload("res://Levels/Handlers/Floor.tscn").instantiate()

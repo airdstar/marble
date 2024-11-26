@@ -1,4 +1,5 @@
 extends Node3D
+class_name moveable_component
 
 @export var movement : Vector3 = Vector3.ZERO
 

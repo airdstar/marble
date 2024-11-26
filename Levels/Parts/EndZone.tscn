@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://cxxrgalbr0kp"]
+[gd_scene load_steps=9 format=3 uid="uid://cxxrgalbr0kp"]
 
 [ext_resource type="Script" path="res://Levels/Parts/end_zone.gd" id="1_ff1f8"]
 
@@ -20,6 +20,13 @@ colors = PackedColorArray(0, 1, 0.513726, 1, 0, 1, 1, 0.137255)
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_2kc1s"]
 height = 1.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uug2p"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_3spfp"]
+material = SubResource("StandardMaterial3D_uug2p")
+radius = 0.1
+height = 0.2
 
 [node name="End Zone" type="CSGCylinder3D"]
 operation = 2
@@ -48,5 +55,19 @@ shape = SubResource("CylinderShape3D_2kc1s")
 light_color = Color(0, 0.980392, 0.784314, 1)
 light_cull_mask = 4294966274
 omni_range = 6.0
+
+[node name="EndParticles" type="CPUParticles3D" parent="."]
+emitting = false
+amount = 20
+lifetime = 0.3
+one_shot = true
+explosiveness = 1.0
+lifetime_randomness = 0.03
+mesh = SubResource("SphereMesh_3spfp")
+direction = Vector3(0, 1, 0)
+spread = 30.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 7.5
+initial_velocity_max = 10.0
 
 [connection signal="area_entered" from="Area3D" to="." method="next_level"]

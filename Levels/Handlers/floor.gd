@@ -1,23 +1,22 @@
 extends Node3D
 
-var proxy_tilt = Node3D.new()
+var proxy_tilt : Node3D = Node3D.new()
 var input_tilt : Vector2
 var origin_tilt : Vector2
 var max_tilt : float = deg_to_rad(35)
 var tilt_scalar : float = 20
 
 var relative_background_rotation : float = 0
-var overlay
+var overlay : Control
 
 @onready var camera = $camera_y
-@onready var background = $Background
 @onready var origin = $floor_base/Origin
 @onready var timer = $RemainingTime
 @onready var state = $StateHandler
 @onready var points = $CanvasLayer/Points
 @onready var timerText = $CanvasLayer/Timer
 
-func _ready():
+func _ready() -> void:
 	timerText.theme.set_color("default_color", "RichTextLabel", RunInfo.playerColor)
 	state.start_game()
 
@@ -27,8 +26,7 @@ func _process(delta: float) -> void:
 	else:
 		timerText.text = "[center]" + "%.1f" % timer.wait_time
 	
-	$Background.rotate_y(deg_to_rad(0.01))
-	relative_background_rotation += 0.01
+	$CanvasLayer/fps.text = "FPS %d" % Engine.get_frames_per_second()
 	
 	var camera_input = Input.get_axis("camera_left", "camera_right")
 		
@@ -36,10 +34,8 @@ func _process(delta: float) -> void:
 		match Settings.control_type:
 			0:
 				camera.rotate_y(deg_to_rad(camera_input * Settings.camera_sens_keyboard) * delta)
-				background.rotate_y(deg_to_rad(camera_input * Settings.camera_sens_keyboard) * delta)
 			1:
 				camera.rotate_y(deg_to_rad(camera_input * Settings.camera_sens_controller) * delta)
-				background.rotate_y(deg_to_rad(camera_input * Settings.camera_sens_controller) * delta)
 	
 	if Settings.control_type == 0:
 		if state.allowInput:

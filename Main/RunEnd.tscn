@@ -2,11 +2,14 @@
 
 [ext_resource type="Script" path="res://Main/run_end.gd" id="1_pxsk4"]
 
-[node name="RunEnd" type="Node"]
+[node name="RunEnd" type="Control"]
 process_mode = 3
+layout_mode = 3
+anchors_preset = 0
 script = ExtResource("1_pxsk4")
 
 [node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
 offset_left = -9.0
 offset_top = -15.0
 offset_right = 1156.0
@@ -14,6 +17,7 @@ offset_bottom = 657.0
 color = Color(0, 0, 0, 0.3)
 
 [node name="Restart" type="Button" parent="."]
+layout_mode = 0
 offset_left = 491.0
 offset_top = 474.0
 offset_right = 661.0
@@ -21,6 +25,7 @@ offset_bottom = 509.0
 text = "Restart"
 
 [node name="points" type="RichTextLabel" parent="."]
+layout_mode = 0
 offset_left = 386.0
 offset_top = 373.0
 offset_right = 796.0

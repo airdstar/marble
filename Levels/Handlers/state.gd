@@ -40,13 +40,13 @@ func next_level():
 	set_level_data()
 	
 	var tween = create_tween()
-	tween.tween_property(Global.runBase.camera, "position", Vector3(0,-281,0), 0.7).set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_IN)
+	tween.tween_property(Global.runBase.camera, "position", Vector3(0,-300,0), 0.7).set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_IN)
 	
 	await get_tree().create_timer(0.71).timeout
 	
-	Global.runBase.camera.position = Vector3(0,355,0)
+	Global.runBase.camera.position = Vector3(0,55,0)
 	tween = create_tween()
-	tween.tween_property(Global.runBase.camera, "position", Vector3(0,305,0), 0.2).set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_OUT)
+	tween.tween_property(Global.runBase.camera, "position", Vector3(0,6,0), 0.2).set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_OUT)
 	
 	await get_tree().create_timer(0.21).timeout
 	reset_player()
@@ -65,7 +65,7 @@ func set_level_data():
 	if RunInfo.inRun:
 		Global.runBase.timer.set_wait_time(Global.runBase.timer.time_left + instanced.given_time)
 	else:
-		Global.runBase.timer.set_wait_time(Global.runBase.timer.wait_time + instanced.given_time)
+		Global.runBase.timer.set_wait_time(10 + instanced.given_time)
 	
 	Global.runBase.timer.stop()
 	
@@ -75,12 +75,10 @@ func set_level_data():
 		player.visible = false
 		var rotation = randf_range(instanced.possible_rotations.x,instanced.possible_rotations.y)
 		Global.runBase.camera.rotation.y = deg_to_rad(rotation)
-		Global.runBase.background.rotation.y = deg_to_rad(rotation + Global.runBase.relative_background_rotation)
 		reset_player()
 	else:
 		var rotation = randf_range(instanced.possible_rotations.x,instanced.possible_rotations.y)
 		Global.runBase.camera.rotation.y = deg_to_rad(rotation)
-		Global.runBase.background.rotation.y = deg_to_rad(rotation + Global.runBase.relative_background_rotation)
 	
 	Global.runBase.origin.add_child(instanced)
 	
@@ -107,7 +105,7 @@ func create_level():
 func reset_player():
 	player.linear_velocity = Vector3.ZERO
 	player.angular_velocity = Vector3.ZERO
-	player.position = Vector3(chosenSpawn.x,315,chosenSpawn.y)
+	player.position = Vector3(chosenSpawn.x,15,chosenSpawn.y)
 
 func reset_orientation():
 	allowInput = false
@@ -117,8 +115,6 @@ func reset_orientation():
 	
 	var tween = create_tween()
 	tween.tween_property(Global.runBase.camera, "rotation", Global.runBase.camera.rotation + Vector3(0,rotationAmount + 2,0), 1.5).set_trans(Tween.TRANS_SPRING).set_ease(Tween.EASE_OUT)
-	var backgroundTween = create_tween()
-	backgroundTween.tween_property(Global.runBase.background, "rotation", Global.runBase.background.rotation + Vector3(0,rotationAmount + 2,0), 1.5).set_trans(Tween.TRANS_SPRING).set_ease(Tween.EASE_OUT)
 
 	await get_tree().create_timer(0.7).timeout
 	allowInput = true

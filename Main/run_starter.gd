@@ -6,32 +6,37 @@ var easy_veto : bool = false
 var medium_veto : bool = true
 var hard_veto : bool = true
 
-@onready var easy = $Easy
-@onready var medium = $Medium
-@onready var hard = $Hard
-@onready var test = $Test
+@onready var easy : Button = $Easy
+@onready var medium : Button = $Medium
+@onready var hard : Button = $Hard
+@onready var test : Button = $Test
 
-func _ready():
-	$Red.value = RunInfo.playerColor.r
-	$Blue.value = RunInfo.playerColor.b
-	$Green.value = RunInfo.playerColor.g
+@onready var red_slider : HSlider = $Red
+@onready var blue_slider : HSlider = $Blue
+@onready var green_slider : HSlider = $Green
+
+func _ready() -> void:
+	red_slider.value = RunInfo.playerColor.r
+	blue_slider.value = RunInfo.playerColor.b
+	green_slider.value = RunInfo.playerColor.g
 	check_valid_difficulties()
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	$TextureRect.texture = $SubViewport.get_texture()
 	$SubViewport/MeshInstance3D.rotate_y(0.0001)
 
 
-func check_valid_difficulties():
+func check_valid_difficulties() -> void:
 	for n in range(4):
-		var dir = DirAccess.open(Global.level_directories[n])
-		dir.list_dir_begin()
-		var currentLevel : String = dir.get_next()
 		var level_count : int = 0
-		while currentLevel != "":
-			level_count += 1
-			currentLevel = dir.get_next()
-		dir.list_dir_end()
+		var dir : DirAccess = DirAccess.open(Global.level_directories[n])
+		if dir != null:
+			dir.list_dir_begin()
+			var currentLevel : String = dir.get_next()
+			while currentLevel != "":
+				level_count += 1
+				currentLevel = dir.get_next()
+			dir.list_dir_end()
 		match n:
 			0:
 				if level_count > 0 and !easy_veto:
