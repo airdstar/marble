@@ -1,6 +1,6 @@
 extends Node
 
-var allow_test : bool = false
+var allow_test : bool = true
 
 var easy_veto : bool = false
 var medium_veto : bool = true

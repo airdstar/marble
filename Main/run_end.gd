@@ -17,5 +17,5 @@ func run_restart() -> void:
 	get_tree().paused = false
 	Global.runBase.timerText.visible = true
 	Global.runBase.points.visible = true
-	Global.runBase.state.start_game()
+	Global.runBase.start_game()
 	queue_free()

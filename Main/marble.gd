@@ -1,5 +1,5 @@
 extends RigidBody3D
-class_name marble
+class_name player
 
 @onready var emittedLight = $OmniLight3D
 

@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://cqg7msdtga6kt"]
 
 [ext_resource type="Script" path="res://Levels/Handlers/floor.gd" id="1_mlw7t"]
-[ext_resource type="PackedScene" uid="uid://b1r1dlj4bb66l" path="res://Levels/Handlers/StateHandler.tscn" id="3_84gyn"]
+[ext_resource type="Script" path="res://Levels/Handlers/camera.gd" id="2_ksd3g"]
 [ext_resource type="Theme" uid="uid://dl6a6mq4q5lda" path="res://Assets/Themes/timer.tres" id="3_pch50"]
 
 [sub_resource type="Sky" id="Sky_km33h"]
@@ -26,7 +26,6 @@ glow_strength = 0.1
 glow_bloom = 0.05
 glow_blend_mode = 0
 glow_hdr_threshold = 0.05
-volumetric_fog_enabled = true
 adjustment_enabled = true
 adjustment_brightness = 0.75
 
@@ -42,6 +41,7 @@ environment = SubResource("Environment_s1d85")
 
 [node name="camera_y" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, 0)
+script = ExtResource("2_ksd3g")
 
 [node name="Camera3D" type="Camera3D" parent="camera_y"]
 transform = Transform3D(1, 0, 0, 0, 0.866026, 0.5, 0, -0.5, 0.866026, 0, 0, 15)
@@ -75,22 +75,18 @@ offset_right = 166.0
 offset_bottom = 40.0
 text = "fps"
 
-[node name="floor_base" type="Node3D" parent="."]
+[node name="Origin" type="Node3D" parent="."]
 
-[node name="Origin" type="Node3D" parent="floor_base"]
+[node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -50, 0)
 
-[node name="SpotLight3D" type="SpotLight3D" parent="floor_base"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("BoxShape3D_iugt6")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 15, 0)
 light_energy = 2.0
 spot_range = 160.0
 
-[node name="Area3D" type="Area3D" parent="floor_base"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -50, 0)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="floor_base/Area3D"]
-shape = SubResource("BoxShape3D_iugt6")
-
-[node name="StateHandler" parent="." instance=ExtResource("3_84gyn")]
-
-[connection signal="timeout" from="RemainingTime" to="." method="game_over"]
-[connection signal="area_entered" from="floor_base/Area3D" to="." method="reset_player"]
+[connection signal="timeout" from="RemainingTime" to="." method="time_up"]
+[connection signal="area_entered" from="Area3D" to="." method="killzone_touched"]

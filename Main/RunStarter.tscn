@@ -46,6 +46,7 @@ offset_right = 956.0
 offset_bottom = 446.0
 max_value = 1.0
 step = 0.01
+value = 0.1
 
 [node name="Blue" type="HSlider" parent="."]
 offset_left = 733.0
@@ -54,6 +55,7 @@ offset_right = 956.0
 offset_bottom = 476.0
 max_value = 1.0
 step = 0.01
+value = 0.1
 
 [node name="Green" type="HSlider" parent="."]
 offset_left = 733.0
@@ -62,6 +64,7 @@ offset_right = 956.0
 offset_bottom = 506.0
 max_value = 1.0
 step = 0.01
+value = 0.1
 
 [node name="TextureRect" type="TextureRect" parent="."]
 offset_left = 745.0
