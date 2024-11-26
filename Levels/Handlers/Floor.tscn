@@ -1,15 +1,19 @@
-[gd_scene load_steps=7 format=3 uid="uid://cqg7msdtga6kt"]
+[gd_scene load_steps=9 format=3 uid="uid://cqg7msdtga6kt"]
 
 [ext_resource type="Script" path="res://Levels/Handlers/floor.gd" id="1_mlw7t"]
+[ext_resource type="Texture2D" uid="uid://byydptui3nit8" path="res://Assets/sky_t.png" id="2_f267p"]
 [ext_resource type="Script" path="res://Levels/Handlers/camera.gd" id="2_ksd3g"]
 [ext_resource type="Theme" uid="uid://dl6a6mq4q5lda" path="res://Assets/Themes/timer.tres" id="3_pch50"]
 
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_3un7p"]
+panorama = ExtResource("2_f267p")
+
 [sub_resource type="Sky" id="Sky_km33h"]
+sky_material = SubResource("PanoramaSkyMaterial_3un7p")
 
 [sub_resource type="Environment" id="Environment_s1d85"]
 background_mode = 2
 sky = SubResource("Sky_km33h")
-sky_rotation = Vector3(-0.785398, 0, 0)
 ambient_light_source = 2
 ambient_light_color = Color(0.025, 0.1, 0.05, 1)
 ambient_light_energy = 0.5
