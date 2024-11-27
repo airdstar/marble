@@ -2,6 +2,8 @@ extends Node3D
 
 @onready var camera = $Camera3D
 
+var skybox : Environment
+
 func _ready():
 	pass
 
@@ -12,9 +14,10 @@ func _process(delta: float) -> void:
 		match Settings.control_type:
 			0:
 				rotate_y(deg_to_rad(camera_input * Settings.camera_sens_keyboard) * delta)
+				skybox.sky_rotation += Vector3(0, deg_to_rad(camera_input * Settings.camera_sens_keyboard) * delta, 0)
 			1:
 				rotate_y(deg_to_rad(camera_input * Settings.camera_sens_controller) * delta)
-
+				skybox.sky_rotation += Vector3(0, deg_to_rad(camera_input * Settings.camera_sens_keyboard) * delta, 0)
 
 func rand_rotation(lowerbound : float, upperbound : float):
 	var rotationAmount = deg_to_rad(randf_range(lowerbound, upperbound))
@@ -22,3 +25,18 @@ func rand_rotation(lowerbound : float, upperbound : float):
 	
 	var tween = create_tween()
 	tween.tween_property(self, "rotation", self.rotation + Vector3(0,rotationAmount + 2,0), 1.5).set_trans(Tween.TRANS_SPRING).set_ease(Tween.EASE_OUT)
+
+func next_level():
+	
+	var tween = create_tween()
+	tween.tween_property(self, "position", Vector3(0,-250,0), 0.7).set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_IN)
+	
+	await get_tree().create_timer(0.1).timeout
+	var skyboxTween = create_tween()
+	skyboxTween.tween_property(skybox, "sky_rotation",skybox.sky_rotation + self.transform * (Vector3(4,0,0)), 0.8).set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_IN_OUT)
+	
+	await get_tree().create_timer(0.61).timeout
+	
+	position = Vector3(0,55,0)
+	tween = create_tween()
+	tween.tween_property(self, "position", Vector3(0,6,0), 0.2).set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_OUT)

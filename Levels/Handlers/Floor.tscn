@@ -1,12 +1,12 @@
 [gd_scene load_steps=9 format=3 uid="uid://cqg7msdtga6kt"]
 
 [ext_resource type="Script" path="res://Levels/Handlers/floor.gd" id="1_mlw7t"]
-[ext_resource type="Texture2D" uid="uid://byydptui3nit8" path="res://Assets/sky_t.png" id="2_f267p"]
+[ext_resource type="Texture2D" uid="uid://bm3rtxg0minif" path="res://Assets/sky_t.002.png" id="2_2nyvh"]
 [ext_resource type="Script" path="res://Levels/Handlers/camera.gd" id="2_ksd3g"]
 [ext_resource type="Theme" uid="uid://dl6a6mq4q5lda" path="res://Assets/Themes/timer.tres" id="3_pch50"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_3un7p"]
-panorama = ExtResource("2_f267p")
+panorama = ExtResource("2_2nyvh")
 
 [sub_resource type="Sky" id="Sky_km33h"]
 sky_material = SubResource("PanoramaSkyMaterial_3un7p")
@@ -30,6 +30,7 @@ glow_strength = 0.1
 glow_bloom = 0.05
 glow_blend_mode = 0
 glow_hdr_threshold = 0.05
+volumetric_fog_enabled = true
 adjustment_enabled = true
 adjustment_brightness = 0.75
 
@@ -78,6 +79,12 @@ text = "[center]0"
 offset_right = 166.0
 offset_bottom = 40.0
 text = "fps"
+
+[node name="speed" type="RichTextLabel" parent="CanvasLayer"]
+offset_top = 30.0
+offset_right = 166.0
+offset_bottom = 70.0
+text = "speed:"
 
 [node name="Origin" type="Node3D" parent="."]
 
