@@ -1,19 +1,26 @@
 extends Node3D
 class_name floor
 
+#State related
 var transitioning : bool = true
 var allowInput : bool = true
 
+#Tilt related
 var proxy_tilt : Node3D = Node3D.new()
 var input_tilt : Vector2
 var origin_tilt : Vector2
-var relative_skybox_rotation : Vector3 = Vector3.ZERO
 
+#Skybox related
+var relative_skybox_rotation : Vector3 = Vector3.ZERO
+var relative_x_rotation : float = 0
+var relative_y_rotation : float = 0
+var relative_z_rotation : float = 0
+
+#Instanced related
 var instanced : level
 var prev_instance : level
-var chosenSpawn : Vector2
-
 var marble : player
+var chosenSpawn : Vector2
 
 @onready var camera = $camera_y
 @onready var origin = $Origin
@@ -23,13 +30,15 @@ var marble : player
 @onready var skybox = $WorldEnvironment.environment
 
 func _ready() -> void:
-	timerText.theme.set_color("default_color", "RichTextLabel", RunInfo.playerColor)
-	camera.skybox = $WorldEnvironment.environment
+	#timerText.theme.set_color("default_color", "RichTextLabel", RunInfo.playerColor)
+	camera.skybox = skybox
 	start_game()
 
 func _process(delta: float) -> void:
 	if !transitioning:
 		timerText.text = "[center]" + "%.1f" % timer.time_left
+	else:
+		timerText.text = "[center]" + "%.1f" % timer.wait_time
 	
 	$CanvasLayer/fps.text = "FPS %d" % Engine.get_frames_per_second()
 	$CanvasLayer/speed.text = "Speed %.01f" % (abs(marble.angular_velocity.x) + abs(marble.angular_velocity.y) + abs(marble.angular_velocity.z))
@@ -44,8 +53,8 @@ func _process(delta: float) -> void:
 
 func _physics_process(_delta: float) -> void:
 	
-	relative_skybox_rotation += Vector3(0.0001, 0.0002, 0)
-	skybox.sky_rotation += Vector3(0.0001, 0.0002, 0)
+	relative_skybox_rotation += Vector3(relative_x_rotation, relative_y_rotation, relative_z_rotation)
+	skybox.sky_rotation += Vector3(relative_x_rotation, relative_y_rotation, relative_z_rotation)
 	
 	input_tilt.x = clamp(input_tilt.x, -instanced.max_tilt, instanced.max_tilt)
 	input_tilt.y = clamp(input_tilt.y, -instanced.max_tilt, instanced.max_tilt)
@@ -61,9 +70,9 @@ func _physics_process(_delta: float) -> void:
 	origin.transform.basis = Basis(c)
 
 func handle_tilt(delta : float) -> void:
-	var tilt_scalar := 1.00
+	var tilt_scalar := 1.0
 	if Input.is_action_pressed("pinch"):
-		tilt_scalar = 0.25
+		tilt_scalar = 0.5
 	match Settings.control_type:
 		0:
 			var input = Input.get_last_mouse_velocity()
@@ -72,17 +81,12 @@ func handle_tilt(delta : float) -> void:
 			if input.x > Settings.mouse_deadzone or input.x < -Settings.mouse_deadzone:
 				input_tilt.y += -input.x * Settings.tilt_sens_keyboard * tilt_scalar * delta
 		1:
-			var inputAxis = Input.get_axis("tilt_up", "tilt_down")
-			if (inputAxis > Settings.controller_deadzone or inputAxis < -Settings.controller_deadzone):
-				input_tilt.x = inputAxis * Settings.tilt_sens_controller * tilt_scalar * delta
+			var input = Input.get_vector("tilt_up", "tilt_down", "tilt_right", "tilt_left")
+			if (input.x > Settings.controller_deadzone or input.x < -Settings.controller_deadzone) or (input.y > Settings.controller_deadzone or input.y < -Settings.controller_deadzone):
+				input_tilt = input * Settings.tilt_sens_controller * tilt_scalar * delta
 			else:
-				input_tilt.x = 0
-				
-			inputAxis = Input.get_axis("tilt_right", "tilt_left")
-			if (inputAxis > Settings.controller_deadzone or inputAxis < -Settings.controller_deadzone):
-				input_tilt.y = inputAxis * Settings.tilt_sens_controller * tilt_scalar * delta
-			else:
-				input_tilt.y = 0
+				input_tilt = Vector2.ZERO
+
 
 func start_game() -> void:
 	transitioning = true
@@ -94,8 +98,8 @@ func start_game() -> void:
 	
 	create_level()
 	set_level_data()
+	change_skybox_rotation()
 	RunInfo.inRun = true
-	timerText.text = "[center]" + "%.1f" % timer.wait_time
 	
 	if marble == null:
 		var holder = preload("res://Main/Marble.tscn").instantiate()
@@ -117,6 +121,7 @@ func next_level() -> void:
 	create_level()
 	set_level_data()
 	camera.next_level()
+	change_skybox_rotation()
 	
 	await get_tree().create_timer(0.91).timeout
 	allowInput = false
@@ -133,7 +138,8 @@ func set_level_data() -> void:
 	chosenSpawn = instanced.start_pos[randi_range(0, instanced.start_pos.size() - 1)]
 	
 	if RunInfo.inRun:
-		timer.set_wait_time(timer.time_left + instanced.given_time)
+		var tween = create_tween()
+		tween.tween_method(timer.set_wait_time, timer.time_left, timer.time_left + instanced.given_time, 1).set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_IN)
 	else:
 		timer.set_wait_time(20)
 	
@@ -181,6 +187,11 @@ func reset_orientation() -> void:
 	
 	await get_tree().create_timer(0.7).timeout
 	allowInput = true
+
+func change_skybox_rotation() -> void:
+	relative_x_rotation = randf_range(-0.0003,0.0003)
+	relative_y_rotation = randf_range(-0.0003,0.0003)
+	relative_z_rotation = randf_range(-0.0003,0.0003)
 
 func game_over() -> void:
 	if !timer.is_stopped():

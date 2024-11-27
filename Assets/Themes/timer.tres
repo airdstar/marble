@@ -5,7 +5,7 @@
 [resource]
 default_font = ExtResource("1_tdt6r")
 default_font_size = 50
-RichTextLabel/colors/default_color = Color(0.227451, 1, 0.509804, 1)
+RichTextLabel/colors/default_color = Color(0.64727, 0.865508, 0.989369, 1)
 RichTextLabel/colors/font_outline_color = Color(0, 0, 0, 1)
 RichTextLabel/constants/outline_size = 5
 RichTextLabel/fonts/mono_font = ExtResource("1_tdt6r")
