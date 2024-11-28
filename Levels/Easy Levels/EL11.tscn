@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://cxxrgalbr0kp" path="res://Levels/Parts/EndZone.tscn" id="1_1n57j"]
 [ext_resource type="Script" path="res://Levels/Handlers/level.gd" id="1_klyr7"]
-[ext_resource type="Script" path="res://Levels/Parts/rotating_object.gd" id="2_qswvo"]
+[ext_resource type="PackedScene" uid="uid://crkk1kn3cayuw" path="res://Levels/Parts/RotateableComponent.tscn" id="3_4wvlt"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_5w47p"]
 friction = 0.2
@@ -43,10 +43,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 6)
 [node name="Obstacles" type="Node3D" parent="."]
 
 [node name="RotatingObject" type="RigidBody3D" parent="Obstacles"]
-script = ExtResource("2_qswvo")
-rotation_speed = 10.0
-random_direction = true
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Obstacles/RotatingObject"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.37563, 0)
 mesh = SubResource("BoxMesh_0540x")
+
+[node name="RotateableComponent" parent="Obstacles/RotatingObject" instance=ExtResource("3_4wvlt")]
+rotation_speed = 10.0
+random_direction = true

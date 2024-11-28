@@ -16,6 +16,7 @@ freeze = true
 freeze_mode = 1
 script = ExtResource("1_x2vpl")
 start_pos = Array[Vector2]([Vector2(5, -3)])
+tagline = "Double circle..."
 
 [node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
 layers = 3

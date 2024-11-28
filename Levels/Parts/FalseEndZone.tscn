@@ -1,0 +1,68 @@
+[gd_scene load_steps=8 format=3 uid="uid://1eeeduytkkbm"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_51kn0"]
+vertex_color_use_as_albedo = true
+
+[sub_resource type="TorusMesh" id="TorusMesh_sf88u"]
+material = SubResource("StandardMaterial3D_51kn0")
+inner_radius = 0.97
+
+[sub_resource type="Curve" id="Curve_0q4hs"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.835165), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_u6m5s"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0.453333, 1)
+colors = PackedColorArray(0.447059, 0, 0, 1, 0.992157, 0.290196, 0.290196, 0)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_2kc1s"]
+height = 1.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uug2p"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_3spfp"]
+material = SubResource("StandardMaterial3D_uug2p")
+radius = 0.1
+height = 0.2
+
+[node name="False End Zone" type="CSGCylinder3D"]
+operation = 2
+radius = 0.75
+height = 10.0
+sides = 20
+
+[node name="CPUParticles3D" type="CPUParticles3D" parent="."]
+amount = 3
+lifetime = 0.75
+mesh = SubResource("TorusMesh_sf88u")
+direction = Vector3(0, 1, 0)
+spread = 0.0
+gravity = Vector3(0, 9, 0)
+scale_amount_curve = SubResource("Curve_0q4hs")
+color_ramp = SubResource("Gradient_u6m5s")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+shape = SubResource("CylinderShape3D_2kc1s")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+light_color = Color(0, 0.980392, 0.784314, 1)
+light_cull_mask = 4294966274
+omni_range = 6.0
+
+[node name="EndParticles" type="CPUParticles3D" parent="."]
+emitting = false
+amount = 20
+lifetime = 0.3
+one_shot = true
+explosiveness = 1.0
+lifetime_randomness = 0.03
+mesh = SubResource("SphereMesh_3spfp")
+direction = Vector3(0, 1, 0)
+spread = 30.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 7.5
+initial_velocity_max = 10.0

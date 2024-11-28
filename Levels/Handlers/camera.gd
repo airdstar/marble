@@ -33,7 +33,7 @@ func next_level():
 	
 	await get_tree().create_timer(0.1).timeout
 	var skyboxTween = create_tween()
-	skyboxTween.tween_property(skybox, "sky_rotation",skybox.sky_rotation + self.transform * (Vector3(4,0,0)), 0.8).set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_IN_OUT)
+	skyboxTween.tween_property(skybox, "sky_rotation", skybox.sky_rotation * (Vector3(4,0,0)), 0.8).set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_IN_OUT)
 	
 	await get_tree().create_timer(0.61).timeout
 	

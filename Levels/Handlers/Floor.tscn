@@ -86,6 +86,12 @@ offset_right = 166.0
 offset_bottom = 70.0
 text = "speed:"
 
+[node name="tagline" type="RichTextLabel" parent="CanvasLayer"]
+offset_left = 835.0
+offset_top = 16.0
+offset_right = 1108.0
+offset_bottom = 66.0
+
 [node name="Origin" type="Node3D" parent="."]
 
 [node name="Area3D" type="Area3D" parent="."]
@@ -96,7 +102,7 @@ shape = SubResource("BoxShape3D_iugt6")
 
 [node name="SpotLight3D" type="SpotLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 15, 0)
-light_energy = 2.0
+light_energy = 4.0
 spot_range = 160.0
 
 [connection signal="timeout" from="RemainingTime" to="." method="time_up"]

@@ -14,13 +14,12 @@ class_name moveable_component
 
 var area : Area3D
 var to_move : RigidBody3D
+var base : Node3D
 
 func _ready():
 	to_move = get_parent()
 	to_move.freeze = true
-	for n in to_move.get_children():
-		if n is MeshInstance3D:
-			n.create_trimesh_collision()
+	base = to_move.get_parent()
 	
 	if playerReliant:
 		area = Area3D.new()
@@ -39,11 +38,12 @@ func move_object():
 	if !playerReliant:
 		await get_tree().create_timer(down_time).timeout
 	var tween = create_tween()
-	tween.tween_property(to_move, "position", to_move.position + movement, movement_time)
+	tween.tween_property(to_move, "position", base.transform * (to_move.position + movement), movement_time)
 	await get_tree().create_timer(movement_time + 0.01).timeout
 	await get_tree().create_timer(down_time).timeout
+	
 	tween = create_tween()
-	tween.tween_property(to_move, "position", to_move.position - movement, movement_time)
+	tween.tween_property(to_move, "position", base.transform * (to_move.position - movement), movement_time)
 	await get_tree().create_timer(movement_time + 0.01).timeout
 	if playerReliant:
 		area.set_deferred("monitoring", true)

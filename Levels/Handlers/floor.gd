@@ -12,9 +12,7 @@ var origin_tilt : Vector2
 
 #Skybox related
 var relative_skybox_rotation : Vector3 = Vector3.ZERO
-var relative_x_rotation : float = 0
-var relative_y_rotation : float = 0
-var relative_z_rotation : float = 0
+var relative_desired_rotation : Vector3 = Vector3.ZERO
 
 #Instanced related
 var instanced : level
@@ -53,8 +51,8 @@ func _process(delta: float) -> void:
 
 func _physics_process(_delta: float) -> void:
 	
-	relative_skybox_rotation += Vector3(relative_x_rotation, relative_y_rotation, relative_z_rotation)
-	skybox.sky_rotation += Vector3(relative_x_rotation, relative_y_rotation, relative_z_rotation)
+	relative_skybox_rotation += relative_desired_rotation
+	skybox.sky_rotation += relative_desired_rotation
 	
 	input_tilt.x = clamp(input_tilt.x, -instanced.max_tilt, instanced.max_tilt)
 	input_tilt.y = clamp(input_tilt.y, -instanced.max_tilt, instanced.max_tilt)
@@ -70,17 +68,24 @@ func _physics_process(_delta: float) -> void:
 	origin.transform.basis = Basis(c)
 
 func handle_tilt(delta : float) -> void:
-	var tilt_scalar := 1.0
-	if Input.is_action_pressed("pinch"):
-		tilt_scalar = 0.5
 	match Settings.control_type:
 		0:
+			var tilt_scalar := 1.0
+			if Input.is_action_pressed("pinch"):
+				tilt_scalar = Settings.mouse_tilt_pinch
+			
 			var input = Input.get_last_mouse_velocity()
 			if input.y > Settings.mouse_deadzone or input.y < -Settings.mouse_deadzone:
 				input_tilt.x += input.y * Settings.tilt_sens_keyboard * tilt_scalar * delta
 			if input.x > Settings.mouse_deadzone or input.x < -Settings.mouse_deadzone:
 				input_tilt.y += -input.x * Settings.tilt_sens_keyboard * tilt_scalar * delta
 		1:
+			
+			var tilt_scalar := 1.0
+			if Input.is_action_pressed("pinch"):
+				tilt_scalar = 0.5
+			
+			
 			var input = Input.get_vector("tilt_up", "tilt_down", "tilt_right", "tilt_left")
 			if (input.x > Settings.controller_deadzone or input.x < -Settings.controller_deadzone) or (input.y > Settings.controller_deadzone or input.y < -Settings.controller_deadzone):
 				input_tilt = input * Settings.tilt_sens_controller * tilt_scalar * delta
@@ -117,6 +122,7 @@ func start_game() -> void:
 func next_level() -> void:
 	transitioning = true
 	prev_instance = instanced
+	marble.visible = false
 	
 	create_level()
 	set_level_data()
@@ -136,6 +142,7 @@ func next_level() -> void:
 
 func set_level_data() -> void:
 	chosenSpawn = instanced.start_pos[randi_range(0, instanced.start_pos.size() - 1)]
+	$CanvasLayer/tagline.text = instanced.tagline
 	
 	if RunInfo.inRun:
 		var tween = create_tween()
@@ -148,7 +155,7 @@ func set_level_data() -> void:
 	if RunInfo.inRun:
 		await get_tree().create_timer(0.3).timeout
 		prev_instance.queue_free()
-		marble.visible = false
+		
 
 	var rot = randf_range(instanced.possible_rotations.x,instanced.possible_rotations.y)
 	camera.rotation.y = deg_to_rad(rot)
@@ -189,9 +196,7 @@ func reset_orientation() -> void:
 	allowInput = true
 
 func change_skybox_rotation() -> void:
-	relative_x_rotation = randf_range(-0.0003,0.0003)
-	relative_y_rotation = randf_range(-0.0003,0.0003)
-	relative_z_rotation = randf_range(-0.0003,0.0003)
+	relative_desired_rotation = Vector3(randf_range(-0.0003,0.0003),randf_range(-0.0003,0.0003),randf_range(-0.0003,0.0003))
 
 func game_over() -> void:
 	if !timer.is_stopped():

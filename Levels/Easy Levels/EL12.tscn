@@ -16,6 +16,7 @@ freeze = true
 freeze_mode = 1
 script = ExtResource("1_thil7")
 start_pos = Array[Vector2]([Vector2(6, 3), Vector2(6, -3), Vector2(-6, 3), Vector2(-6, -3), Vector2(3, 6), Vector2(-3, 6), Vector2(3, -6), Vector2(-3, -6)])
+tagline = "The squares"
 
 [node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
 layers = 3

@@ -5,12 +5,12 @@ class_name level
 @export var start_pos : Array[Vector2] = [Vector2.ZERO]
 @export var possible_rotations : Vector2 = Vector2(0,360)
 
-@export_category("Experimental")
-
 @export var tagline : String = "Test"
+
+@export_category("Experimental")
 ## Only change this if gravity can compensate it
 @export var max_tilt : float = 35
-@export var gravity : float
+@export var gravity : Vector3 = Vector3(0, 9.8, 0)
 
 @export var end_pos : Array[Vector2]
 

@@ -4,8 +4,8 @@ extends Node
 @onready var deadzone_slider : HSlider = $DeadzoneSlider
 @onready var swap_control_type : Button = $Button
 
-@onready var deadzone_label : RichTextLabel = $DeadzoneSlider/DeadzoneLabel
-@onready var camera_sens_label : RichTextLabel = $CameraSlider/CameraSensLabel
+@onready var deadzone_label : RichTextLabel = $DeadzoneSlider/DeadzoneValue
+@onready var camera_sens_label : RichTextLabel = $CameraSlider/CameraSensValue
 
 func _ready() -> void:
 	set_control_type_text()
@@ -24,9 +24,9 @@ func set_slider_values() -> void:
 		camera_slider.step = 0.5
 		camera_slider.value = Settings.camera_sens_keyboard
 		
-		deadzone_slider.min_value = 0
-		deadzone_slider.max_value = 3
-		deadzone_slider.step = 1
+		deadzone_slider.min_value = 1
+		deadzone_slider.max_value = 40
+		deadzone_slider.step = 0.5
 		deadzone_slider.value = Settings.mouse_deadzone
 		
 		
@@ -58,9 +58,9 @@ func camera_sens_changed(value: float) -> void:
 	camera_sens_label.text = "[center]" + str(snapped((value - camera_slider.min_value)/camera_slider.min_value * 2,0.01))
 
 func deadzone_changed(value: float) -> void:
-	#if Settings.control_type == Settings.control.KEYBOARD:
-		#Settings.mouse_deadzone = value
-	#else:
-		#Settings.controller_deadzone = value
+	if Settings.control_type == Settings.control.KEYBOARD:
+		Settings.mouse_deadzone = value
+	else:
+		Settings.controller_deadzone = value
 	
-	deadzone_label.text = "[center]" + str(value)
+	deadzone_label.text = "[center]" + str(snapped((value / deadzone_slider.max_value), 0.01))
