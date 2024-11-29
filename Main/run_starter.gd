@@ -16,9 +16,9 @@ var hard_veto : bool = true
 @onready var green_slider : HSlider = $Green
 
 func _ready() -> void:
-	red_slider.value = RunInfo.playerColor.r
-	blue_slider.value = RunInfo.playerColor.b
-	green_slider.value = RunInfo.playerColor.g
+	red_slider.value = PlayerInfo.player_color.r
+	blue_slider.value = PlayerInfo.player_color.b
+	green_slider.value = PlayerInfo.player_color.g
 	check_valid_difficulties()
 
 func _process(_delta: float) -> void:
@@ -81,13 +81,13 @@ func test_pressed() -> void:
 
 
 func red_changed(value: float) -> void:
-	RunInfo.playerColor.r = value
-	$SubViewport/MeshInstance3D/OmniLight3D.light_color = RunInfo.playerColor
+	PlayerInfo.player_color.r = value
+	$SubViewport/MeshInstance3D/OmniLight3D.light_color = PlayerInfo.player_color
 
 func blue_changed(value: float) -> void:
-	RunInfo.playerColor.b = value
-	$SubViewport/MeshInstance3D/OmniLight3D.light_color = RunInfo.playerColor
+	PlayerInfo.player_color.b = value
+	$SubViewport/MeshInstance3D/OmniLight3D.light_color = PlayerInfo.player_color
 
 func green_changed(value: float) -> void:
-	RunInfo.playerColor.g = value
-	$SubViewport/MeshInstance3D/OmniLight3D.light_color = RunInfo.playerColor
+	PlayerInfo.player_color.g = value
+	$SubViewport/MeshInstance3D/OmniLight3D.light_color = PlayerInfo.player_color

@@ -28,7 +28,6 @@ var chosenSpawn : Vector2
 @onready var skybox = $WorldEnvironment.environment
 
 func _ready() -> void:
-	#timerText.theme.set_color("default_color", "RichTextLabel", RunInfo.playerColor)
 	camera.skybox = skybox
 	start_game()
 
