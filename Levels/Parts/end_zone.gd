@@ -1,7 +1,7 @@
 extends Node3D
 
 func _ready() -> void:
-	$EndParticles.mesh.material.albedo_color = PlayerInfo.player_color
+	$EndParticles.mesh.material.albedo_color = PlayerInfo.player_data.player_color
 
 func next_level(_area: Area3D) -> void:
 	$EndParticles.emitting = true

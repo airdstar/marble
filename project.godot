@@ -23,6 +23,7 @@ config/windows_native_icon="res://Assets/icon.ico"
 Global="*res://Global/global.gd"
 Settings="*res://Global/settings.gd"
 RunInfo="*res://Global/run_info.gd"
+PlayerInfo="*res://Global/player_info.gd"
 
 [input]
 

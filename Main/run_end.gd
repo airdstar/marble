@@ -3,6 +3,7 @@ extends Node
 var scoreHolder : int
 
 func _ready():
+	PlayerInfo.save_info()
 	scoreHolder = RunInfo.clearedLevels
 	RunInfo.clearedLevels = 0
 	Global.runBase.points.text = "[center]" + str(RunInfo.clearedLevels)
