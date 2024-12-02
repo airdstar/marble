@@ -7,14 +7,27 @@ extends Node
 @onready var deadzone_label : RichTextLabel = $DeadzoneSlider/DeadzoneValue
 @onready var camera_sens_label : RichTextLabel = $CameraSlider/CameraSensValue
 
+@onready var red_slider : HSlider = $Red
+@onready var blue_slider : HSlider = $Blue
+@onready var green_slider : HSlider = $Green
+
 var settings
 
 func _ready() -> void:
+	
+	red_slider.value = PlayerInfo.player_data.player_color.r
+	blue_slider.value = PlayerInfo.player_data.player_color.b
+	green_slider.value = PlayerInfo.player_data.player_color.g
+	
 	
 	settings = PlayerInfo.player_data.player_settings
 	
 	set_control_type_text()
 	set_slider_values()
+
+func _process(_delta: float) -> void:
+	$TextureRect.texture = $SubViewport.get_texture()
+	$SubViewport/MeshInstance3D.rotate_y(0.0001)
 
 func set_control_type_text() -> void:
 	if settings.control_type == settings.control.KEYBOARD:
@@ -69,3 +82,21 @@ func deadzone_changed(value: float) -> void:
 		settings.controller_deadzone = value
 	
 	deadzone_label.text = "[center]" + str(snapped((value / deadzone_slider.max_value), 0.01))
+
+func close_pressed() -> void:
+	Global.main.close_settings()
+
+func red_changed(value: float) -> void:
+	PlayerInfo.player_data.player_color.r = value
+	$SubViewport/MeshInstance3D.mesh.material.albedo_color = PlayerInfo.player_data.player_color
+	$SubViewport/MeshInstance3D/OmniLight3D.light_color = PlayerInfo.player_data.player_color
+
+func blue_changed(value: float) -> void:
+	PlayerInfo.player_data.player_color.b = value
+	$SubViewport/MeshInstance3D.mesh.material.albedo_color = PlayerInfo.player_data.player_color
+	$SubViewport/MeshInstance3D/OmniLight3D.light_color = PlayerInfo.player_data.player_color
+
+func green_changed(value: float) -> void:
+	PlayerInfo.player_data.player_color.g = value
+	$SubViewport/MeshInstance3D.mesh.material.albedo_color = PlayerInfo.player_data.player_color
+	$SubViewport/MeshInstance3D/OmniLight3D.light_color = PlayerInfo.player_data.player_color

@@ -12,7 +12,7 @@ func load_info() -> void:
 		print("Save path is missing")
 	else:
 		player_data = load(save_path)
-		check_info()
+		player_data.check_info()
 
 func save_info() -> void:
 	ResourceSaver.save(player_data, save_path)
@@ -20,7 +20,3 @@ func save_info() -> void:
 func clear_info() -> void:
 	player_data = PlayerData.new()
 	ResourceSaver.save(player_data, save_path)
-
-# Check for corruption in data
-func check_info() -> void:
-	pass

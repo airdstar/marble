@@ -1,6 +1,12 @@
-[gd_scene load_steps=2 format=3 uid="uid://bq4emjmf4ogdr"]
+[gd_scene load_steps=4 format=3 uid="uid://bq4emjmf4ogdr"]
 
 [ext_resource type="Script" path="res://Main/settings_menu.gd" id="1_321is"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_18obf"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_vmnhx"]
+material = SubResource("StandardMaterial3D_18obf")
+flip_faces = true
 
 [node name="Settings" type="Control"]
 process_mode = 3
@@ -121,6 +127,67 @@ bbcode_enabled = true
 text = "[center]"
 scroll_active = false
 
+[node name="Button2" type="Button" parent="."]
+layout_mode = 0
+offset_left = 550.0
+offset_top = 31.0
+offset_right = 600.0
+offset_bottom = 62.0
+text = "Close"
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 810.0
+offset_top = 68.0
+offset_right = 1010.0
+offset_bottom = 268.0
+
+[node name="SubViewport" type="SubViewport" parent="."]
+size = Vector2i(200, 200)
+
+[node name="Camera3D" type="Camera3D" parent="SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 400, 1.507)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 400, 0)
+mesh = SubResource("SphereMesh_vmnhx")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="SubViewport/MeshInstance3D"]
+
+[node name="Red" type="HSlider" parent="."]
+layout_mode = 0
+offset_left = 733.0
+offset_top = 430.0
+offset_right = 956.0
+offset_bottom = 446.0
+max_value = 1.0
+step = 0.01
+value = 0.1
+
+[node name="Blue" type="HSlider" parent="."]
+layout_mode = 0
+offset_left = 733.0
+offset_top = 460.0
+offset_right = 956.0
+offset_bottom = 476.0
+max_value = 1.0
+step = 0.01
+value = 0.1
+
+[node name="Green" type="HSlider" parent="."]
+layout_mode = 0
+offset_left = 733.0
+offset_top = 490.0
+offset_right = 956.0
+offset_bottom = 506.0
+max_value = 1.0
+step = 0.01
+value = 0.1
+
 [connection signal="pressed" from="Button" to="." method="switch_control_type"]
 [connection signal="value_changed" from="DeadzoneSlider" to="." method="deadzone_changed"]
 [connection signal="value_changed" from="CameraSlider" to="." method="camera_sens_changed"]
+[connection signal="pressed" from="Button2" to="." method="close_pressed"]
+[connection signal="value_changed" from="Red" to="." method="red_changed"]
+[connection signal="value_changed" from="Blue" to="." method="blue_changed"]
+[connection signal="value_changed" from="Green" to="." method="green_changed"]

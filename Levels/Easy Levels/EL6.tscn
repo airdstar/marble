@@ -15,6 +15,7 @@ gravity_scale = 0.0
 freeze = true
 freeze_mode = 1
 script = ExtResource("1_7cjmu")
+level_id = 1005
 start_pos = Array[Vector2]([Vector2(5.5, 5.5)])
 possible_rotations = Vector2(265, 540)
 

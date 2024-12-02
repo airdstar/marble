@@ -15,6 +15,7 @@ gravity_scale = 0.0
 freeze = true
 freeze_mode = 1
 script = ExtResource("1_j8ys3")
+level_id = 1012
 start_pos = Array[Vector2]([Vector2(0, 8), Vector2(0, -8)])
 
 [node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]

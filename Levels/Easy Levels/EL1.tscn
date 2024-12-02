@@ -15,8 +15,8 @@ gravity_scale = 0.0
 freeze = true
 freeze_mode = 1
 script = ExtResource("1_etof6")
+level_id = 1000
 start_pos = Array[Vector2]([Vector2(0, -5), Vector2(-4, 2)])
-tagline = "Lameeee"
 
 [node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
 layers = 3

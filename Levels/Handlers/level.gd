@@ -1,12 +1,14 @@
 extends Node
 class_name level
 
-@export var level_id : int
+@export var level_id : int = 0
+
+@export var tagline : String = "Test"
 
 @export var given_time : float = 5.0
 @export var start_pos : Array[Vector2] = [Vector2.ZERO]
 @export var possible_rotations : Vector2 = Vector2(0,360)
-@export var tagline : String = "Test"
+
 
 @export_category("Experimental")
 ## Only change this if gravity can compensate it

@@ -15,8 +15,8 @@ gravity_scale = 0.0
 freeze = true
 freeze_mode = 1
 script = ExtResource("1_r4ghv")
+level_id = 1009
 start_pos = Array[Vector2]([Vector2(5.5, 5.5)])
-tagline = "Pillars"
 
 [node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
 layers = 3

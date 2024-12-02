@@ -15,6 +15,7 @@ gravity_scale = 0.0
 freeze = true
 freeze_mode = 1
 script = ExtResource("1_8fvfv")
+level_id = 1003
 
 [node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
 layers = 3

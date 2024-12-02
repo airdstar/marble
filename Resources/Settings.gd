@@ -29,3 +29,6 @@ enum control {
 @export var invert_tilt_mouse_y : int = 1
 @export var invert_tilt_controller_x : int = 1
 @export var invert_tilt_controller_y : int = 1
+
+func check_info() -> void:
+	pass
