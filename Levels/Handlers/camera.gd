@@ -9,15 +9,17 @@ func _ready():
 
 func _process(delta: float) -> void:
 	var camera_input = Input.get_axis("camera_left", "camera_right")
-		
 	if (camera_input != 0):
-		match Settings.control_type:
+		
+		var settings = PlayerInfo.player_data.player_settings
+		
+		match settings.control_type:
 			0:
-				rotate_y(deg_to_rad(camera_input * Settings.camera_sens_keyboard) * delta)
-				skybox.sky_rotation += Vector3(0, deg_to_rad(camera_input * Settings.camera_sens_keyboard) * delta, 0)
+				rotate_y(deg_to_rad(camera_input * settings.camera_sens_keyboard) * delta)
+				skybox.sky_rotation += Vector3(0, deg_to_rad(camera_input * settings.camera_sens_keyboard) * delta, 0)
 			1:
-				rotate_y(deg_to_rad(camera_input * Settings.camera_sens_controller) * delta)
-				skybox.sky_rotation += Vector3(0, deg_to_rad(camera_input * Settings.camera_sens_keyboard) * delta, 0)
+				rotate_y(deg_to_rad(camera_input * settings.camera_sens_controller) * delta)
+				skybox.sky_rotation += Vector3(0, deg_to_rad(camera_input * settings.camera_sens_keyboard) * delta, 0)
 
 func rand_rotation(lowerbound : float, upperbound : float):
 	var rotationAmount = deg_to_rad(randf_range(lowerbound, upperbound))

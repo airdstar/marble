@@ -69,24 +69,25 @@ func _physics_process(_delta: float) -> void:
 func handle_tilt(delta : float) -> void:
 
 	var tilt_scalar := 1.0
+	var settings = PlayerInfo.player_data.player_settings
 
-	match Settings.control_type:
+	match settings.control_type:
 		0:
 			if Input.is_action_pressed("pinch"):
-				tilt_scalar = Settings.mouse_tilt_pinch
+				tilt_scalar = PlayerInfo.player_data.player_settings.mouse_tilt_pinch
 			
 			var input = Input.get_last_mouse_velocity()
-			if input.y > Settings.mouse_deadzone or input.y < -Settings.mouse_deadzone:
-				input_tilt.x += input.y * Settings.tilt_sens_keyboard * tilt_scalar * delta
-			if input.x > Settings.mouse_deadzone or input.x < -Settings.mouse_deadzone:
-				input_tilt.y += -input.x * Settings.tilt_sens_keyboard * tilt_scalar * delta
+			if input.y > settings.mouse_deadzone or input.y < -settings.mouse_deadzone:
+				input_tilt.x += input.y * settings.tilt_sens_keyboard * tilt_scalar * delta
+			if input.x > settings.mouse_deadzone or input.x < -settings.mouse_deadzone:
+				input_tilt.y += -input.x * settings.tilt_sens_keyboard * tilt_scalar * delta
 		1:
 			if Input.is_action_pressed("pinch"):
-				tilt_scalar = Settings.mouse_tilt_pinch
+				tilt_scalar = 0.5
 			
 			var input = Input.get_vector("tilt_up", "tilt_down", "tilt_right", "tilt_left")
-			if (input.x > Settings.controller_deadzone or input.x < -Settings.controller_deadzone) or (input.y > Settings.controller_deadzone or input.y < -Settings.controller_deadzone):
-				input_tilt = input * Settings.tilt_sens_controller * tilt_scalar * delta
+			if (input.x > settings.controller_deadzone or input.x < -settings.controller_deadzone) or (input.y > settings.controller_deadzone or input.y < -settings.controller_deadzone):
+				input_tilt = input * settings.tilt_sens_controller * tilt_scalar * delta
 			else:
 				input_tilt = Vector2.ZERO
 
