@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://kv4r3stljj5c"]
+[gd_scene load_steps=7 format=3 uid="uid://kv4r3stljj5c"]
 
-[ext_resource type="PackedScene" uid="uid://cxxrgalbr0kp" path="res://Levels/Parts/EndZone.tscn" id="1_1u1rf"]
-[ext_resource type="Script" path="res://Levels/Parts/moveable_component.gd" id="2_no776"]
+[ext_resource type="Script" path="res://Levels/Handlers/level.gd" id="1_mledu"]
+[ext_resource type="PackedScene" uid="uid://cxxrgalbr0kp" path="res://Levels/Parts/EndZone.tscn" id="2_37y3l"]
+[ext_resource type="Script" path="res://Levels/Parts/moveable_component.gd" id="3_rpwx3"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_5w47p"]
 friction = 0.2
@@ -18,9 +19,11 @@ physics_material_override = SubResource("PhysicsMaterial_5w47p")
 gravity_scale = 0.0
 freeze = true
 freeze_mode = 1
-metadata/GivenTime = 7.0
-metadata/StartPos = PackedVector2Array(-6, 6)
-metadata/PossibleRotations = Vector2(0, 360)
+script = ExtResource("1_mledu")
+level_id = 2000
+tagline = "move tuah"
+given_time = 7.0
+start_pos = Array[Vector2]([Vector2(-6, 6)])
 
 [node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
 layers = 3
@@ -45,14 +48,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 operation = 2
 size = Vector3(20, 4, 20)
 
-[node name="End Zone" parent="CSGCombiner3D" instance=ExtResource("1_1u1rf")]
+[node name="End Zone" parent="CSGCombiner3D" instance=ExtResource("2_37y3l")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -6)
 
 [node name="Obstacles" type="Node3D" parent="."]
 
 [node name="MovingPlatform" type="RigidBody3D" parent="Obstacles"]
 transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, -3, 0, 3)
-script = ExtResource("2_no776")
+script = ExtResource("3_rpwx3")
 movement = Vector3(6, 0, -6)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Obstacles/MovingPlatform"]

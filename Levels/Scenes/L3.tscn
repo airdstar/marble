@@ -1,8 +1,8 @@
 [gd_scene load_steps=8 format=3 uid="uid://3vgtrp0i7ic1"]
 
-[ext_resource type="PackedScene" uid="uid://cxxrgalbr0kp" path="res://Levels/Parts/EndZone.tscn" id="1_4ruah"]
-[ext_resource type="Script" path="res://Levels/Handlers/level.gd" id="1_dmt3y"]
-[ext_resource type="PackedScene" uid="uid://crkk1kn3cayuw" path="res://Levels/Parts/RotateableComponent.tscn" id="3_yj3xs"]
+[ext_resource type="Script" path="res://Levels/Handlers/level.gd" id="1_yrlvu"]
+[ext_resource type="PackedScene" uid="uid://cxxrgalbr0kp" path="res://Levels/Parts/EndZone.tscn" id="2_me4xq"]
+[ext_resource type="PackedScene" uid="uid://crkk1kn3cayuw" path="res://Levels/Parts/RotateableComponent.tscn" id="3_gkina"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_5w47p"]
 friction = 0.2
@@ -21,7 +21,7 @@ physics_material_override = SubResource("PhysicsMaterial_5w47p")
 gravity_scale = 0.0
 freeze = true
 freeze_mode = 1
-script = ExtResource("1_dmt3y")
+script = ExtResource("1_yrlvu")
 level_id = 1002
 start_pos = Array[Vector2]([Vector2(-5, -5), Vector2(-5, -6), Vector2(-6, -5)])
 
@@ -41,7 +41,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 operation = 2
 size = Vector3(20, 4, 20)
 
-[node name="End Zone" parent="CSGCombiner3D" instance=ExtResource("1_4ruah")]
+[node name="End Zone" parent="CSGCombiner3D" instance=ExtResource("2_me4xq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 6)
 
 [node name="Obstacles" type="Node3D" parent="."]
@@ -57,5 +57,5 @@ mesh = SubResource("BoxMesh_0540x")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Obstacles/RotatingObject/MeshInstance3D/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_drtqp")
 
-[node name="RotateableComponent" parent="Obstacles/RotatingObject" instance=ExtResource("3_yj3xs")]
+[node name="RotateableComponent" parent="Obstacles/RotatingObject" instance=ExtResource("3_gkina")]
 rotation_speed = 3.0

@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="level_resource" load_steps=3 format=3 uid="uid://dk3551fhyg3fb"]
+
+[ext_resource type="PackedScene" uid="uid://bm6xxxnq8gqsh" path="res://Levels/Scenes/L9.tscn" id="1_1yoox"]
+[ext_resource type="Script" path="res://Resources/LevelResource.gd" id="2_gjufd"]
+
+[resource]
+script = ExtResource("2_gjufd")
+tagline = "Test"
+given_time = 5.0
+start_pos = Array[Vector2]([Vector2(0, 0)])
+possible_rotations = Vector2(0, 360)
+goal_type = "Fall"
+associated_scene = ExtResource("1_1yoox")
+max_tilt = 35.0
+gravity = Vector3(0, 9.8, 0)
+end_pos = Array[Vector2]([])

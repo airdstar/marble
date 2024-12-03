@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://cahlj7e8yliu7"]
 
-[ext_resource type="Script" path="res://Levels/Handlers/level.gd" id="1_7cjmu"]
-[ext_resource type="PackedScene" uid="uid://cxxrgalbr0kp" path="res://Levels/Parts/EndZone.tscn" id="1_64jrr"]
+[ext_resource type="Script" path="res://Levels/Handlers/level.gd" id="1_mlvvg"]
+[ext_resource type="PackedScene" uid="uid://cxxrgalbr0kp" path="res://Levels/Parts/EndZone.tscn" id="2_7aari"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_5w47p"]
 friction = 0.2
@@ -14,7 +14,7 @@ physics_material_override = SubResource("PhysicsMaterial_5w47p")
 gravity_scale = 0.0
 freeze = true
 freeze_mode = 1
-script = ExtResource("1_7cjmu")
+script = ExtResource("1_mlvvg")
 level_id = 1005
 start_pos = Array[Vector2]([Vector2(5.5, 5.5)])
 possible_rotations = Vector2(265, 540)
@@ -41,5 +41,5 @@ radius = 6.0
 height = 3.0
 sides = 20
 
-[node name="End Zone" parent="CSGCombiner3D" instance=ExtResource("1_64jrr")]
+[node name="End Zone" parent="CSGCombiner3D" instance=ExtResource("2_7aari")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.5, 0, -5.5)

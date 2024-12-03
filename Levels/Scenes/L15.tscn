@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://84e54m1a1b8"]
 
-[ext_resource type="PackedScene" uid="uid://cxxrgalbr0kp" path="res://Levels/Parts/EndZone.tscn" id="1_6spk6"]
-[ext_resource type="Script" path="res://Levels/Parts/rotateable_component.gd" id="2_li46p"]
+[ext_resource type="PackedScene" uid="uid://cxxrgalbr0kp" path="res://Levels/Parts/EndZone.tscn" id="1_7a1h6"]
+[ext_resource type="Script" path="res://Levels/Parts/rotateable_component.gd" id="2_8o2vt"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_5w47p"]
 friction = 0.2
@@ -38,13 +38,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 operation = 2
 size = Vector3(20, 4, 20)
 
-[node name="End Zone" parent="CSGCombiner3D" instance=ExtResource("1_6spk6")]
+[node name="End Zone" parent="CSGCombiner3D" instance=ExtResource("1_7a1h6")]
 
 [node name="Obstacles" type="Node3D" parent="."]
 
 [node name="RotatingObject" type="RigidBody3D" parent="Obstacles"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 4)
-script = ExtResource("2_li46p")
+script = ExtResource("2_8o2vt")
 random_direction = true
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Obstacles/RotatingObject"]
