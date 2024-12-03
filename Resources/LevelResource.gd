@@ -12,6 +12,8 @@ class_name level_resource
 
 @export var associated_scene : PackedScene 
 
+@export var needs_testing : bool = false
+
 @export_category("Experimental")
 
 @export var max_tilt : float = 35

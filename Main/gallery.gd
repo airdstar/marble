@@ -1,5 +1,7 @@
 extends Node
 
+var allow_test : bool = true
+
 var easy_veto : bool = false
 var medium_veto : bool = false
 var hard_veto : bool = false
@@ -12,60 +14,58 @@ var option_info : Array[level_resource] = []
 @onready var medium : Button = $VBoxContainer/HBoxContainer/Medium
 @onready var hard : Button = $VBoxContainer/HBoxContainer/Hard
 
-func _ready():
+func _ready() -> void:
 	check_valid_difficulties()
 	show_options()
 
-func show_options():
+func show_options() -> void:
 	clear_options()
-	var dir = DirAccess.open("res://Levels/Info/")
-	dir.list_dir_begin()
-	var currentLevel : String = dir.get_next()
-	while currentLevel != "":
-		if '.tres.remap' in currentLevel:
-			currentLevel = currentLevel.trim_suffix('.remap')
-		
-		if currentLevel.begins_with(str(selected_tab)):
-			
-			var resource_holder = ResourceLoader.load("res://Levels/Info/" + currentLevel)
-			
-			option_info.append(resource_holder)
-			
-			var button_holder = Button.new()
-			button_holder.text = resource_holder.tagline + "   ID: " + str(currentLevel.trim_suffix('.tres')) 
-			options.append(button_holder)
-			$VBoxContainer/ScrollContainer/VBoxContainer.add_child(button_holder)
-		
-		currentLevel = dir.get_next()
+	match selected_tab:
+		1:
+			option_info = Global.easy_levels
+		2:
+			option_info = Global.medium_levels
+		3:
+			option_info = Global.hard_levels
 	
-	dir.list_dir_end()
+	for n in option_info:
+		create_option(n)
 
+func create_option(option : level_resource) -> void:
+	if (option.needs_testing and allow_test) or !option.needs_testing:
+		var button_holder = Button.new()
+		if option.needs_testing:
+			button_holder.text = "TEST "
+		button_holder.text += option.tagline + "   ID: "
+		
+		var id : String = option.resource_path.trim_prefix("res://Levels/Info/")
+		if '.tres.remap' in id:
+			id = id.trim_suffix('.tres.remap')
+		else:
+			id = id.trim_suffix('.tres')
+		button_holder.text += id
+		
+		options.append(button_holder)
+		button_holder.pressed.connect(option_pressed.bind(button_holder))
+		$VBoxContainer/ScrollContainer/VBoxContainer.add_child(button_holder)
 
-func clear_options():
+func option_pressed(button):
+	Global.main.start_gallery(option_info[options.find(button)])
+
+func clear_options() -> void:
 	for n in options:
 		n.queue_free()
 	options.clear()
-	option_info.clear()
 
 func check_valid_difficulties() -> void:
-	var easy_enabled : bool = false
-	var medium_enabled : bool = false
-	var hard_enabled : bool = false
+	if Global.easy_levels.size() > 0:
+		easy.visible = true
 	
-	var dir = DirAccess.open("res://Levels/Info/")
-	dir.list_dir_begin()
-	var currentLevel : String = dir.get_next()
-	while currentLevel != "":
-		if currentLevel.begins_with(str(1)) and !easy_enabled:
-			easy_enabled = true
-			easy.visible = true
-		elif currentLevel.begins_with(str(2)) and !medium_enabled:
-			medium_enabled = true
-			medium.visible = true
-		elif currentLevel.begins_with(str(3)) and !hard_enabled:
-			hard_enabled = true
-			hard.visible = true
-		currentLevel = dir.get_next()
+	if Global.medium_levels.size() > 0:
+		medium.visible = true
+	
+	if Global.hard_levels.size() > 0:
+		hard.visible = true
 
 func easy_pressed() -> void:
 	selected_tab = 1

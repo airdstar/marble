@@ -26,13 +26,19 @@ func start_run() -> void:
 	if currentScene != null:
 		currentScene.queue_free()
 	currentScene = preload("res://Levels/Handlers/Floor.tscn").instantiate()
-	Global.runBase = currentScene
 	add_child(currentScene)
 
 func open_gallery() -> void:
 	if currentScene != null:
 		currentScene.queue_free()
 	currentScene = preload("res://Main/Gallery.tscn").instantiate()
+	add_child(currentScene)
+
+func start_gallery(level_info : level_resource) -> void:
+	if currentScene != null:
+		currentScene.queue_free()
+	currentScene = preload("res://Levels/Handlers/GalleryFloor.tscn").instantiate()
+	currentScene.level_info = level_info
 	add_child(currentScene)
 
 func open_settings() -> void:

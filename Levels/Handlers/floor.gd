@@ -15,6 +15,7 @@ var relative_skybox_rotation : Vector3 = Vector3.ZERO
 var relative_desired_rotation : Vector3 = Vector3.ZERO
 
 #Instanced related
+var level_info : level_resource
 var instanced : level
 var prev_instance : level
 var marble : player
@@ -22,39 +23,35 @@ var chosenSpawn : Vector2
 
 @onready var camera = $camera_y
 @onready var origin = $Origin
-@onready var timer = $RemainingTime
-@onready var points = $CanvasLayer/Points
-@onready var timerText = $CanvasLayer/Timer
 @onready var skybox = $WorldEnvironment.environment
 
 func _ready() -> void:
+	Global.runBase = self
 	camera.skybox = skybox
 	start_game()
 
 func _process(delta: float) -> void:
-	if !transitioning:
-		timerText.text = "[center]" + "%.1f" % timer.time_left
-	else:
-		timerText.text = "[center]" + "%.1f" % timer.wait_time
-	
+
 	$CanvasLayer/fps.text = "FPS %d" % Engine.get_frames_per_second()
 	$CanvasLayer/speed.text = "Speed %.01f" % (abs(marble.angular_velocity.x) + abs(marble.angular_velocity.y) + abs(marble.angular_velocity.z))
-	
-	if Input.is_action_just_pressed("reset"):
-		game_over()
 	
 	if allowInput:
 		handle_tilt(delta)
 	else:
 		input_tilt = Vector2.ZERO
+	
+	secondary_process()
+
+func secondary_process() -> void:
+	pass
 
 func _physics_process(_delta: float) -> void:
 	
 	relative_skybox_rotation += relative_desired_rotation
 	skybox.sky_rotation += relative_desired_rotation
 	
-	input_tilt.x = clamp(input_tilt.x, -instanced.max_tilt, instanced.max_tilt)
-	input_tilt.y = clamp(input_tilt.y, -instanced.max_tilt, instanced.max_tilt)
+	input_tilt.x = clamp(input_tilt.x, deg_to_rad(-level_info.max_tilt), deg_to_rad(level_info.max_tilt))
+	input_tilt.y = clamp(input_tilt.y, deg_to_rad(-level_info.max_tilt), deg_to_rad(level_info.max_tilt))
 	
 	origin_tilt.x = deg_to_rad(input_tilt.x * 20)
 	origin_tilt.y = deg_to_rad(input_tilt.y * 20)
@@ -106,16 +103,13 @@ func start_game() -> void:
 	
 	if marble == null:
 		var holder = preload("res://Main/Marble.tscn").instantiate()
-		Global.runBase.add_child(holder)
+		add_child(holder)
 		marble = holder
 	
 	call_deferred("reset_marble")
 	
 	await get_tree().create_timer(0.5).timeout
 	allowInput = true
-	await get_tree().create_timer(0.2).timeout
-	Global.runBase.timer.start()
-	transitioning = false
 
 func next_level() -> void:
 	transitioning = true
@@ -134,51 +128,38 @@ func next_level() -> void:
 	
 	await get_tree().create_timer(0.5).timeout
 	allowInput = true
-	await get_tree().create_timer(0.2).timeout
-	Global.runBase.timer.start()
-	transitioning = false
 
 func set_level_data() -> void:
-	chosenSpawn = instanced.start_pos[randi_range(0, instanced.start_pos.size() - 1)]
-	$CanvasLayer/tagline.text = instanced.tagline
+	chosenSpawn = level_info.start_pos[randi_range(0, level_info.start_pos.size() - 1)]
+	$CanvasLayer/tagline.text = level_info.tagline
 	
-	if RunInfo.inRun:
-		var tween = create_tween()
-		tween.tween_method(timer.set_wait_time, timer.time_left, timer.time_left + instanced.given_time, 1).set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_IN)
-	else:
-		timer.set_wait_time(20)
-	
-	timer.stop()
+	set_level_time()
 	
 	if RunInfo.inRun:
 		await get_tree().create_timer(0.3).timeout
-		prev_instance.queue_free()
-		
-
-	var rot = randf_range(instanced.possible_rotations.x,instanced.possible_rotations.y)
+		origin.remove_child(prev_instance)
+	
+	var rot = randf_range(level_info.possible_rotations.x,level_info.possible_rotations.y)
 	camera.rotation.y = deg_to_rad(rot)
 	camera.skybox.sky_rotation = Vector3(0, deg_to_rad(rot), 0) + relative_skybox_rotation
 	
 	origin.add_child(instanced)
 
-func pick_level() -> String:
-	var dir = DirAccess.open(Global.level_directories[RunInfo.currentDifficulty])
-	dir.list_dir_begin()
-	var currentLevel : String = dir.get_next()
-	var allLevels : Array[String]
-	while currentLevel != "":
-		if '.tscn.remap' in currentLevel:
-			currentLevel = currentLevel.trim_suffix('.remap')
-		allLevels.append(Global.level_directories[RunInfo.currentDifficulty] + currentLevel)
-		currentLevel = dir.get_next()
-	dir.list_dir_end()
-	
-	return allLevels[randi_range(0, allLevels.size() - 1)]
+func set_level_time():
+	pass
+
+func pick_level() -> void:
+	match RunInfo.currentDifficulty:
+		0:
+			level_info = Global.easy_levels.pick_random()
+		1:
+			level_info = Global.medium_levels.pick_random()
+		2:
+			level_info = Global.hard_levels.pick_random()
 
 func create_level() -> void:
-	var chosenLevel = pick_level()
-	var current_platform = load(chosenLevel)
-	instanced = current_platform.instantiate()
+	pick_level()
+	instanced = level_info.associated_scene.instantiate()
 
 func reset_marble() -> void:
 	marble.linear_velocity = Vector3.ZERO
@@ -188,23 +169,13 @@ func reset_marble() -> void:
 func reset_orientation() -> void:
 	allowInput = false
 
-	camera.rand_rotation(instanced.possible_rotations.x, instanced.possible_rotations.y)
+	camera.rand_rotation(level_info.possible_rotations.x, level_info.possible_rotations.y)
 	
 	await get_tree().create_timer(0.7).timeout
 	allowInput = true
 
 func change_skybox_rotation() -> void:
 	relative_desired_rotation = Vector3(randf_range(-0.0003,0.0003),randf_range(-0.0003,0.0003),randf_range(-0.0003,0.0003))
-
-func game_over() -> void:
-	if !timer.is_stopped():
-		timer.stop()
-	var overlay = preload("res://Main/RunEnd.tscn").instantiate()
-	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-	add_child(overlay)
-
-func time_up() -> void:
-	game_over()
 
 func killzone_touched(_area: Area3D) -> void:
 	reset_marble()

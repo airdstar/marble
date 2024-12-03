@@ -1,0 +1,87 @@
+[gd_scene load_steps=8 format=3 uid="uid://dfu6x1e4xdaws"]
+
+[ext_resource type="Script" path="res://Levels/Handlers/gallery_floor.gd" id="1_w7ny3"]
+[ext_resource type="Texture2D" uid="uid://bm3rtxg0minif" path="res://Assets/sky_t.002.png" id="2_3np1u"]
+[ext_resource type="Script" path="res://Levels/Handlers/camera.gd" id="3_660rk"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_3un7p"]
+panorama = ExtResource("2_3np1u")
+
+[sub_resource type="Sky" id="Sky_km33h"]
+sky_material = SubResource("PanoramaSkyMaterial_3un7p")
+
+[sub_resource type="Environment" id="Environment_s1d85"]
+background_mode = 2
+sky = SubResource("Sky_km33h")
+ambient_light_source = 2
+ambient_light_color = Color(0.025, 0.1, 0.05, 1)
+ambient_light_energy = 0.5
+tonemap_mode = 2
+tonemap_exposure = 0.5
+ssr_fade_in = 0.0652913
+ssao_radius = 11.96
+ssao_intensity = 14.8
+ssao_power = 0.000787934
+ssil_radius = 3.99
+ssil_intensity = 11.61
+ssil_sharpness = 0.0
+glow_strength = 0.1
+glow_bloom = 0.05
+glow_blend_mode = 0
+glow_hdr_threshold = 0.05
+volumetric_fog_enabled = true
+adjustment_enabled = true
+adjustment_brightness = 0.75
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_iugt6"]
+size = Vector3(200, 1, 200)
+
+[node name="Node3D" type="Node3D"]
+process_mode = 1
+script = ExtResource("1_w7ny3")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_s1d85")
+
+[node name="camera_y" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, 0)
+script = ExtResource("3_660rk")
+
+[node name="Camera3D" type="Camera3D" parent="camera_y"]
+transform = Transform3D(1, 0, 0, 0, 0.866026, 0.5, 0, -0.5, 0.866026, 0, 0, 15)
+current = true
+fov = 70.0
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="fps" type="RichTextLabel" parent="CanvasLayer"]
+offset_right = 166.0
+offset_bottom = 40.0
+text = "fps"
+
+[node name="speed" type="RichTextLabel" parent="CanvasLayer"]
+offset_top = 30.0
+offset_right = 166.0
+offset_bottom = 70.0
+text = "speed:"
+
+[node name="tagline" type="RichTextLabel" parent="CanvasLayer"]
+offset_left = 835.0
+offset_top = 16.0
+offset_right = 1108.0
+offset_bottom = 66.0
+
+[node name="Origin" type="Node3D" parent="."]
+
+[node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -50, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("BoxShape3D_iugt6")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 15, 0)
+light_energy = 4.0
+spot_range = 160.0
+
+[connection signal="area_entered" from="Area3D" to="." method="killzone_touched"]
