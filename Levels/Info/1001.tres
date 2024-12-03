@@ -14,4 +14,3 @@ associated_scene = ExtResource("1_86ac7")
 needs_testing = false
 max_tilt = 35.0
 gravity = Vector3(0, 9.8, 0)
-end_pos = Array[Vector2]([])

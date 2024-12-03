@@ -25,7 +25,7 @@ func main_menu() -> void:
 func start_run() -> void:
 	if currentScene != null:
 		currentScene.queue_free()
-	currentScene = preload("res://Levels/Handlers/Floor.tscn").instantiate()
+	currentScene = preload("res://Levels/Handlers/PlayFloor.tscn").instantiate()
 	add_child(currentScene)
 
 func open_gallery() -> void:

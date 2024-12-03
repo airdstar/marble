@@ -31,7 +31,6 @@ func _ready() -> void:
 	start_game()
 
 func _process(delta: float) -> void:
-
 	$CanvasLayer/fps.text = "FPS %d" % Engine.get_frames_per_second()
 	$CanvasLayer/speed.text = "Speed %.01f" % (abs(marble.angular_velocity.x) + abs(marble.angular_velocity.y) + abs(marble.angular_velocity.z))
 	
@@ -130,7 +129,6 @@ func next_level() -> void:
 	allowInput = true
 
 func set_level_data() -> void:
-	chosenSpawn = level_info.start_pos[randi_range(0, level_info.start_pos.size() - 1)]
 	$CanvasLayer/tagline.text = level_info.tagline
 	
 	set_level_time()
@@ -148,14 +146,31 @@ func set_level_data() -> void:
 func set_level_time():
 	pass
 
+func start_timer():
+	pass
+
 func pick_level() -> void:
-	match RunInfo.currentDifficulty:
-		0:
-			level_info = Global.easy_levels.pick_random()
-		1:
-			level_info = Global.medium_levels.pick_random()
-		2:
-			level_info = Global.hard_levels.pick_random()
+	var valid_level := false
+	while !valid_level:
+		match RunInfo.currentDifficulty:
+			0:
+				level_info = Global.easy_levels.pick_random()
+			1:
+				level_info = Global.medium_levels.pick_random()
+			2:
+				level_info = Global.hard_levels.pick_random()
+		
+		if !level_info.needs_testing:
+			valid_level = true
+	
+	var id : String = level_info.resource_path.trim_prefix("res://Levels/Info/")
+	if '.tres.remap' in id:
+		id = id.trim_suffix('.tres.remap')
+	else:
+		id = id.trim_suffix('.tres')
+	
+	if !PlayerInfo.player_data.visited_levels.has(int(id)):
+		PlayerInfo.player_data.visited_levels.append(int(id))
 
 func create_level() -> void:
 	pick_level()

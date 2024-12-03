@@ -5,7 +5,6 @@ class_name play_floor
 @onready var timerText = $CanvasLayer/Timer
 @onready var points = $CanvasLayer/Points
 
-
 func secondary_process() -> void:
 	if !transitioning:
 		timerText.text = "[center]" + "%.1f" % timer.time_left
@@ -23,6 +22,10 @@ func set_level_time():
 		timer.set_wait_time(20)
 	
 	timer.stop()
+
+func start_timer():
+	timer.start()
+	transitioning = false
 
 func game_over() -> void:
 	if !timer.is_stopped():

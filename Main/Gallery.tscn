@@ -13,19 +13,16 @@ offset_bottom = 648.0
 layout_mode = 2
 
 [node name="Easy" type="Button" parent="VBoxContainer/HBoxContainer"]
-visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Easy"
 
 [node name="Medium" type="Button" parent="VBoxContainer/HBoxContainer"]
-visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Medium"
 
 [node name="Hard" type="Button" parent="VBoxContainer/HBoxContainer"]
-visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Hard"

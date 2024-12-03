@@ -22,6 +22,6 @@ invert_tilt_controller_y = 1
 [resource]
 script = ExtResource("2_rlw48")
 highest_level = 0
-visited_levels = Array[int]([])
+visited_levels = Array[int]([1004, 1009, 1003, 1011, 1000, 1001, 1002])
 player_color = Color(0.46, 1, 0.72, 1)
 player_settings = SubResource("Resource_5bjx5")

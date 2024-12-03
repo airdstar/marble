@@ -1,6 +1,12 @@
 extends Node
 
-var allow_test : bool = true
+enum sort_type {
+	ID,
+	TAGLINE,
+	RANDOM
+}
+
+var allow_test : bool = false
 
 var easy_veto : bool = false
 var medium_veto : bool = false
@@ -9,6 +15,8 @@ var hard_veto : bool = false
 var selected_tab : int = 1
 var options : Array[Button] = []
 var option_info : Array[level_resource] = []
+
+var sort_by = sort_type.ID
 
 @onready var easy : Button = $VBoxContainer/HBoxContainer/Easy
 @onready var medium : Button = $VBoxContainer/HBoxContainer/Medium
@@ -30,27 +38,50 @@ func show_options() -> void:
 	
 	for n in option_info:
 		create_option(n)
+	sort_options()
 
 func create_option(option : level_resource) -> void:
 	if (option.needs_testing and allow_test) or !option.needs_testing:
+		
 		var button_holder = Button.new()
-		if option.needs_testing:
-			button_holder.text = "TEST "
-		button_holder.text += option.tagline + "   ID: "
-		
-		var id : String = option.resource_path.trim_prefix("res://Levels/Info/")
-		if '.tres.remap' in id:
-			id = id.trim_suffix('.tres.remap')
-		else:
-			id = id.trim_suffix('.tres')
-		button_holder.text += id
-		
 		options.append(button_holder)
 		button_holder.pressed.connect(option_pressed.bind(button_holder))
 		$VBoxContainer/ScrollContainer/VBoxContainer.add_child(button_holder)
+		
+		set_option(button_holder, option)
+		
 
 func option_pressed(button):
 	Global.main.start_gallery(option_info[options.find(button)])
+
+func sort_options() -> void:
+	match sort_by:
+		sort_type.ID:
+			pass
+		sort_type.TAGLINE:
+			pass
+		sort_type.RANDOM:
+			pass
+	for n in options.size():
+		set_option(options[n], option_info[n])
+
+func set_option(button : Button, option : level_resource) -> void:
+	var id : String = option.resource_path.trim_prefix("res://Levels/Info/")
+	if '.tres.remap' in id:
+		id = id.trim_suffix('.tres.remap')
+	else:
+		id = id.trim_suffix('.tres')
+	
+	if option.needs_testing:
+		button.text = "TEST "
+	
+	if PlayerInfo.player_data.visited_levels.has(int(id)):
+		button.text += option.tagline
+	else:
+		button.text += "???"
+		button.disabled = true
+	
+	button.text += " ID: " + id
 
 func clear_options() -> void:
 	for n in options:
