@@ -11,6 +11,6 @@ start_pos = Array[Vector2]([Vector2(5.5, 5.5)])
 possible_rotations = Vector2(0, 360)
 goal_type = "Fall"
 associated_scene = ExtResource("1_kvhyl")
-needs_testing = true
+needs_testing = false
 max_tilt = 35.0
 gravity = Vector3(0, 9.8, 0)

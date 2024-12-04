@@ -7,10 +7,9 @@
 script = ExtResource("2_ak5fr")
 tagline = "Test"
 given_time = 5.0
-start_pos = Array[Vector2]([Vector2(6, 3), Vector2(-6, 3), Vector2(6, -3), Vector2(-6, -3), Vector2(3, 6), Vector2(3, -6), Vector2(-3, 6), Vector2(-3, -6)])
 possible_rotations = Vector2(0, 360)
 goal_type = "Fall"
 associated_scene = ExtResource("1_wg6va")
-needs_testing = true
+needs_testing = false
 max_tilt = 35.0
 gravity = Vector3(0, 9.8, 0)

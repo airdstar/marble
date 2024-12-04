@@ -55,15 +55,7 @@ func option_pressed(button):
 	Global.main.start_gallery(option_info[options.find(button)])
 
 func sort_options() -> void:
-	match sort_by:
-		sort_type.ID:
-			pass
-		sort_type.TAGLINE:
-			pass
-		sort_type.RANDOM:
-			pass
-	for n in options.size():
-		set_option(options[n], option_info[n])
+	pass
 
 func set_option(button : Button, option : level_resource) -> void:
 	var id : String = option.resource_path.trim_prefix("res://Levels/Info/")
@@ -72,13 +64,13 @@ func set_option(button : Button, option : level_resource) -> void:
 	else:
 		id = id.trim_suffix('.tres')
 	
-	if option.needs_testing:
-		button.text = "TEST "
+	#if option.needs_testing:
+		#button.text = "TEST "
 	
 	if PlayerInfo.player_data.visited_levels.has(int(id)):
-		button.text += option.tagline
+		button.text = option.tagline
 	else:
-		button.text += "???"
+		button.text = "???"
 		button.disabled = true
 	
 	button.text += " ID: " + id
@@ -91,12 +83,18 @@ func clear_options() -> void:
 func check_valid_difficulties() -> void:
 	if Global.easy_levels.size() > 0:
 		easy.visible = true
+	else:
+		easy.visible = false
 	
 	if Global.medium_levels.size() > 0:
 		medium.visible = true
+	else:
+		medium.visible = false
 	
 	if Global.hard_levels.size() > 0:
 		hard.visible = true
+	else:
+		hard.visible = false
 
 func easy_pressed() -> void:
 	selected_tab = 1

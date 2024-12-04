@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://coiwx64ppa522"]
+[gd_scene load_steps=6 format=3 uid="uid://coiwx64ppa522"]
 
 [ext_resource type="Script" path="res://Levels/Handlers/level.gd" id="1_0cq7v"]
 [ext_resource type="PackedScene" uid="uid://cxxrgalbr0kp" path="res://Levels/Parts/EndZone.tscn" id="2_qwmwh"]
@@ -9,14 +9,15 @@ rough = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cvea5"]
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_4r000"]
+size = Vector3(3, 1, 3)
+
 [node name="Platform" type="RigidBody3D"]
 physics_material_override = SubResource("PhysicsMaterial_5w47p")
 gravity_scale = 0.0
 freeze = true
 freeze_mode = 1
 script = ExtResource("1_0cq7v")
-level_id = 1009
-start_pos = Array[Vector2]([Vector2(5.5, 5.5)])
 
 [node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
 layers = 3
@@ -78,3 +79,11 @@ sides = 20
 
 [node name="End Zone" parent="CSGCombiner3D" instance=ExtResource("2_qwmwh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.5, 0, -5.5)
+
+[node name="Starts" type="Node" parent="."]
+
+[node name="Area3D" type="Area3D" parent="Starts"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Starts/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5, 0, 5.5)
+shape = SubResource("BoxShape3D_4r000")

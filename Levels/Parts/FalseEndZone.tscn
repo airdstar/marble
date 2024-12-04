@@ -1,4 +1,6 @@
-[gd_scene load_steps=8 format=3 uid="uid://1eeeduytkkbm"]
+[gd_scene load_steps=9 format=3 uid="uid://1eeeduytkkbm"]
+
+[ext_resource type="Script" path="res://Levels/Parts/false_end_zone.gd" id="1_rx20m"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_51kn0"]
 vertex_color_use_as_albedo = true
@@ -31,6 +33,7 @@ operation = 2
 radius = 0.75
 height = 10.0
 sides = 20
+script = ExtResource("1_rx20m")
 
 [node name="CPUParticles3D" type="CPUParticles3D" parent="."]
 amount = 3
@@ -53,7 +56,7 @@ light_color = Color(0, 0.980392, 0.784314, 1)
 light_cull_mask = 4294966274
 omni_range = 6.0
 
-[node name="EndParticles" type="CPUParticles3D" parent="."]
+[node name="Particles" type="CPUParticles3D" parent="."]
 emitting = false
 amount = 20
 lifetime = 0.3
@@ -66,3 +69,5 @@ spread = 30.0
 gravity = Vector3(0, 0, 0)
 initial_velocity_min = 7.5
 initial_velocity_max = 10.0
+
+[connection signal="area_entered" from="Area3D" to="." method="respawn_marble"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://b1n2htlpuriy7"]
+[gd_scene load_steps=6 format=3 uid="uid://b1n2htlpuriy7"]
 
 [ext_resource type="Script" path="res://Levels/Handlers/level.gd" id="1_pb514"]
 [ext_resource type="PackedScene" uid="uid://cxxrgalbr0kp" path="res://Levels/Parts/EndZone.tscn" id="2_48hsp"]
@@ -9,14 +9,15 @@ rough = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cvea5"]
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_ds6pg"]
+size = Vector3(3, 1, 3)
+
 [node name="Platform" type="RigidBody3D"]
 physics_material_override = SubResource("PhysicsMaterial_5w47p")
 gravity_scale = 0.0
 freeze = true
 freeze_mode = 1
 script = ExtResource("1_pb514")
-level_id = 1011
-start_pos = Array[Vector2]([Vector2(6, 3), Vector2(6, -3), Vector2(-6, 3), Vector2(-6, -3), Vector2(3, 6), Vector2(-3, 6), Vector2(3, -6), Vector2(-3, -6)])
 
 [node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
 layers = 3
@@ -49,3 +50,39 @@ size = Vector3(1.5, 1.5, 10.1)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
 operation = 2
 size = Vector3(10.1, 1.5, 1.5)
+
+[node name="Starts" type="Node" parent="."]
+
+[node name="Area3D" type="Area3D" parent="Starts"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Starts/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 3)
+shape = SubResource("BoxShape3D_ds6pg")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Starts/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -3)
+shape = SubResource("BoxShape3D_ds6pg")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="Starts/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 3)
+shape = SubResource("BoxShape3D_ds6pg")
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="Starts/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -3)
+shape = SubResource("BoxShape3D_ds6pg")
+
+[node name="CollisionShape3D5" type="CollisionShape3D" parent="Starts/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 6)
+shape = SubResource("BoxShape3D_ds6pg")
+
+[node name="CollisionShape3D6" type="CollisionShape3D" parent="Starts/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -6)
+shape = SubResource("BoxShape3D_ds6pg")
+
+[node name="CollisionShape3D7" type="CollisionShape3D" parent="Starts/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, 6)
+shape = SubResource("BoxShape3D_ds6pg")
+
+[node name="CollisionShape3D8" type="CollisionShape3D" parent="Starts/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, -6)
+shape = SubResource("BoxShape3D_ds6pg")

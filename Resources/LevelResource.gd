@@ -1,10 +1,13 @@
 extends Resource
 class_name level_resource
 
-@export var tagline : String = "Test"
+## Name of the level
+@export var tagline : String = "Tagline"
 
+## Time given at start of level
 @export var given_time : float = 5.0
-@export var start_pos : Array[Vector2] = [Vector2.ZERO]
+
+## Possible rotations that the level can default to
 @export var possible_rotations : Vector2 = Vector2(0,360)
 
 @export_enum("Fall", "Paint") var goal_type : String = "Fall"
