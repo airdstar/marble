@@ -48,7 +48,6 @@ func next_level() -> void:
 	allowInput = true
 
 func set_level_data() -> void:
-	chosenSpawn = level_info.start_pos[randi_range(0, level_info.start_pos.size() - 1)]
 	$CanvasLayer/tagline.text = level_info.tagline
 	
 	var rot = randf_range(level_info.possible_rotations.x,level_info.possible_rotations.y)
