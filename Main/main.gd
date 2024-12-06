@@ -42,9 +42,11 @@ func start_gallery(level_info : level_resource) -> void:
 	add_child(currentScene)
 
 func open_settings() -> void:
+	PlayerInfo.save_info()
 	settings.visible = true
 	get_tree().paused = true
 
 func close_settings() -> void:
+	PlayerInfo.save_info()
 	settings.visible = false
 	get_tree().paused = false

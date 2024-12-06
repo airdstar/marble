@@ -1,6 +1,6 @@
 extends Node
 
-var save_path : String = "res://player_info.tres"
+var save_path : String = "user://player_info.tres"
 
 var player_data : PlayerData = PlayerData.new()
 
