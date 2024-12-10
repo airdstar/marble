@@ -3,11 +3,10 @@ extends Node
 enum difficulty {
 	EASY,
 	MEDIUM,
-	HARD,
-	TEST
+	HARD
 }
 
 var inRun : bool = false
 
-var currentDifficulty : difficulty = difficulty.EASY
-var clearedLevels : int = 0
+var current_difficulty : difficulty = difficulty.EASY
+var current_level : int = 1

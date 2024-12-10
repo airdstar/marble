@@ -7,10 +7,7 @@ enum sort_type {
 }
 
 var allow_test : bool = false
-
-var easy_veto : bool = false
-var medium_veto : bool = false
-var hard_veto : bool = false
+var allow_undiscovered : bool = true
 
 var selected_tab : int = 1
 var options : Array[Button] = []
@@ -25,6 +22,10 @@ var sort_by = sort_type.ID
 func _ready() -> void:
 	check_valid_difficulties()
 	show_options()
+
+func _process(_delta: float) -> void:
+	if Input.is_action_just_pressed("back"):
+		Global.main.main_menu()
 
 func show_options() -> void:
 	clear_options()
@@ -64,10 +65,7 @@ func set_option(button : Button, option : level_resource) -> void:
 	else:
 		id = id.trim_suffix('.tres')
 	
-	#if option.needs_testing:
-		#button.text = "TEST "
-	
-	if PlayerInfo.player_data.visited_levels.has(int(id)):
+	if PlayerInfo.player_data.visited_levels.has(int(id)) or allow_undiscovered:
 		button.text = option.tagline
 	else:
 		button.text = "???"

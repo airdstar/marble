@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://crkk1kn3cayuw"]
 
-[ext_resource type="Script" path="res://Levels/Parts/rotateable_component.gd" id="1_v5w81"]
+[ext_resource type="Script" path="res://Levels/Parts/Components/rotateable_component.gd" id="1_v5w81"]
 
 [node name="RotateableComponent" type="Node"]
 script = ExtResource("1_v5w81")

@@ -1,0 +1,39 @@
+[gd_scene load_steps=6 format=3 uid="uid://bbc2ijamssvmg"]
+
+[ext_resource type="Script" path="res://Assets/tv.gd" id="1_gc73v"]
+[ext_resource type="Shader" path="res://Assets/crt.gdshader" id="2_cr3pv"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_f37x2"]
+size = Vector3(0.6, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xls3j"]
+render_priority = 0
+shader = ExtResource("2_cr3pv")
+shader_parameter/albedo = Color(0, 0, 0, 1)
+shader_parameter/point_size = 0.1
+shader_parameter/roughness = null
+shader_parameter/metallic_texture_channel = null
+shader_parameter/specular = null
+shader_parameter/metallic = null
+shader_parameter/emission = Color(0.374139, 0.374139, 0.374139, 1)
+shader_parameter/emission_energy = null
+shader_parameter/uv1_scale = null
+shader_parameter/uv1_offset = null
+shader_parameter/uv2_scale = null
+shader_parameter/uv2_offset = null
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_ou6cs"]
+material = SubResource("ShaderMaterial_xls3j")
+size = Vector2(0.9, 0.9)
+orientation = 0
+
+[node name="TV" type="Node3D"]
+script = ExtResource("1_gc73v")
+
+[node name="Body" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_f37x2")
+
+[node name="Screen" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.31, 0, 0)
+mesh = SubResource("PlaneMesh_ou6cs")
+skeleton = NodePath("../Body")

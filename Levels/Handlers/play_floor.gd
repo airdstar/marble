@@ -11,7 +11,7 @@ func secondary_process() -> void:
 	else:
 		timerText.text = "[center]" + "%.1f" % timer.wait_time
 	
-	if Input.is_action_just_pressed("reset"):
+	if Input.is_action_just_pressed("back"):
 		game_over()
 
 func set_level_time():
@@ -23,6 +23,9 @@ func set_level_time():
 	
 	timer.stop()
 
+func ramp_up():
+	pass
+
 func start_timer():
 	timer.start()
 	transitioning = false
@@ -30,7 +33,7 @@ func start_timer():
 func game_over() -> void:
 	if !timer.is_stopped():
 		timer.stop()
-	var overlay = preload("res://Main/RunEnd.tscn").instantiate()
+	var overlay = preload("res://Levels/Handlers/PlayEnd.tscn").instantiate()
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	add_child(overlay)
 

@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://bhhsj6x2yla26"]
 
-[ext_resource type="PackedScene" uid="uid://cxxrgalbr0kp" path="res://Levels/Parts/EndZone.tscn" id="1_1t8os"]
 [ext_resource type="Script" path="res://Levels/Handlers/level.gd" id="1_e3qgh"]
+[ext_resource type="PackedScene" uid="uid://df3msx1k8vfiy" path="res://Levels/Parts/NewEndZone.tscn" id="3_xwdi4"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_5w47p"]
 friction = 0.2
@@ -49,13 +49,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 operation = 2
 size = Vector3(20, 4, 20)
 
-[node name="End Zone" parent="CSGCombiner3D" instance=ExtResource("1_1t8os")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 6)
-
-[node name="Starts" type="Node" parent="."]
+[node name="Starts" type="Node3D" parent="."]
 
 [node name="Area3D" type="Area3D" parent="Starts"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Starts/Area3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -3)
 shape = SubResource("BoxShape3D_imhjd")
+
+[node name="Ends" type="Node3D" parent="."]
+
+[node name="EndZoneNew" parent="Ends" instance=ExtResource("3_xwdi4")]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, -6, 0, 6)

@@ -5,9 +5,8 @@
 
 [resource]
 script = ExtResource("2_1djo8")
-tagline = "Test"
+tagline = "That fucking level that i hate"
 given_time = 5.0
-start_pos = Array[Vector2]([Vector2(0, -5), Vector2(2, -3), Vector2(-2, -3)])
 possible_rotations = Vector2(50, 310)
 goal_type = "Fall"
 associated_scene = ExtResource("1_ilo55")

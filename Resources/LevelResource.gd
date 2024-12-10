@@ -14,7 +14,7 @@ class_name level_resource
 
 @export var associated_scene : PackedScene 
 
-@export var needs_testing : bool = false
+@export var needs_testing : bool = true
 
 @export_category("Experimental")
 

@@ -7,7 +7,6 @@
 script = ExtResource("1_0xxv6")
 tagline = "Test"
 given_time = 5.0
-start_pos = Array[Vector2]([Vector2(5.5, 5.5)])
 possible_rotations = Vector2(265, 540)
 goal_type = "Fall"
 associated_scene = ExtResource("1_ljp2g")

@@ -7,10 +7,9 @@
 script = ExtResource("1_g0xiq")
 tagline = "Move tuah"
 given_time = 7.0
-start_pos = Array[Vector2]([Vector2(-6, 6)])
 possible_rotations = Vector2(0, 360)
 goal_type = "Fall"
 associated_scene = ExtResource("1_8ympj")
-needs_testing = true
+needs_testing = false
 max_tilt = 35.0
 gravity = Vector3(0, 9.8, 0)

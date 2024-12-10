@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://bm6xxxnq8gqsh"]
 
 [ext_resource type="Script" path="res://Levels/Handlers/level.gd" id="1_n1kq2"]
-[ext_resource type="PackedScene" uid="uid://cxxrgalbr0kp" path="res://Levels/Parts/EndZone.tscn" id="2_h41to"]
+[ext_resource type="PackedScene" uid="uid://df3msx1k8vfiy" path="res://Levels/Parts/NewEndZone.tscn" id="3_81bq0"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_5w47p"]
 friction = 0.2
@@ -37,25 +37,27 @@ size = Vector3(20, 4, 20)
 
 [node name="CSGCylinder3D" type="CSGCylinder3D" parent="CSGCombiner3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
-radius = 5.0
+radius = 4.0
 height = 1.59993
 sides = 20
 
 [node name="CSGBox3D2" type="CSGBox3D" parent="CSGCombiner3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.74585, 0)
 operation = 2
-size = Vector3(9, 1.4917, 10)
+size = Vector3(7, 1.492, 8)
 
-[node name="End Zone" parent="CSGCombiner3D" instance=ExtResource("2_h41to")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 0)
-
-[node name="End Zone2" parent="CSGCombiner3D" instance=ExtResource("2_h41to")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 0)
-
-[node name="Starts" type="Node" parent="."]
+[node name="Starts" type="Node3D" parent="."]
 
 [node name="Area3D" type="Area3D" parent="Starts"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Starts/Area3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.886521, 0)
 shape = SubResource("BoxShape3D_qbku2")
+
+[node name="Ends" type="Node3D" parent="."]
+
+[node name="EndZoneNew" parent="Ends" instance=ExtResource("3_81bq0")]
+transform = Transform3D(1.91069e-15, 4.37114e-08, 1, 1, -4.37114e-08, 0, 4.37114e-08, 1, -4.37114e-08, 7, 0, 0)
+
+[node name="EndZoneNew2" parent="Ends" instance=ExtResource("3_81bq0")]
+transform = Transform3D(1.91069e-15, 4.37114e-08, 1, 1, -4.37114e-08, 0, 4.37114e-08, 1, -4.37114e-08, -7, 0, 0)

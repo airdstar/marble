@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://dk0f2evyqpu6"]
 
-[ext_resource type="PackedScene" uid="uid://cxxrgalbr0kp" path="res://Levels/Parts/EndZone.tscn" id="1_6cyyu"]
 [ext_resource type="Script" path="res://Levels/Handlers/level.gd" id="1_8fvfv"]
+[ext_resource type="PackedScene" uid="uid://df3msx1k8vfiy" path="res://Levels/Parts/NewEndZone.tscn" id="3_hgd56"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_5w47p"]
 friction = 0.2
@@ -24,33 +24,29 @@ layers = 3
 use_collision = true
 
 [node name="CSGSphere3D" type="CSGSphere3D" parent="CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 0.4, 0, 0, 0, 1, 0, 0, 0)
-radius = 10.0
+transform = Transform3D(1, 0, 0, 0, 0.4, 0, 0, 0, 1, 0, 2.29194, 0)
+radius = 5.0
 radial_segments = 30
 rings = 30
 material = SubResource("StandardMaterial3D_cvea5")
 
 [node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.67667, 0)
 operation = 2
 size = Vector3(20, 4, 20)
 
-[node name="CSGCylinder3D3" type="CSGCylinder3D" parent="CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.17218, 0)
-radius = 6.0
-height = 3.0
-sides = 20
-
-[node name="End Zone" parent="CSGCombiner3D" instance=ExtResource("1_6cyyu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 0)
-
-[node name="End Zone2" parent="CSGCombiner3D" instance=ExtResource("1_6cyyu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 0)
-
-[node name="Starts" type="Node" parent="."]
+[node name="Starts" type="Node3D" parent="."]
 
 [node name="Area3D" type="Area3D" parent="Starts"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Starts/Area3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
 shape = SubResource("BoxShape3D_3hjwg")
+
+[node name="Ends" type="Node3D" parent="."]
+
+[node name="EndZoneNew" parent="Ends" instance=ExtResource("3_hgd56")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 0)
+
+[node name="EndZoneNew2" parent="Ends" instance=ExtResource("3_hgd56")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 0)

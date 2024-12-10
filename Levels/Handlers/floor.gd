@@ -77,19 +77,14 @@ func handle_tilt(delta : float) -> void:
 				input_tilt.x += input.y * settings.tilt_sens_keyboard * tilt_scalar * delta
 			if input.x > settings.mouse_deadzone or input.x < -settings.mouse_deadzone:
 				input_tilt.y += -input.x * settings.tilt_sens_keyboard * tilt_scalar * delta
-		1:
-			if Input.is_action_pressed("pinch"):
-				tilt_scalar = 0.5
-			
-			var input = Input.get_vector("tilt_up", "tilt_down", "tilt_right", "tilt_left")
-			if (input.x > settings.controller_deadzone or input.x < -settings.controller_deadzone) or (input.y > settings.controller_deadzone or input.y < -settings.controller_deadzone):
-				input_tilt = input * settings.tilt_sens_controller * tilt_scalar * delta
-			else:
-				input_tilt = Vector2.ZERO
+
 
 func start_game() -> void:
 	transitioning = true
 	allowInput = false
+	RunInfo.current_level = 1
+	RunInfo.current_difficulty = RunInfo.difficulty.EASY
+
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	
 	if instanced != null:
@@ -123,7 +118,6 @@ func next_level() -> void:
 	await get_tree().create_timer(0.91).timeout
 	allowInput = false
 	reset_marble()
-	marble.visible = true
 	
 	await get_tree().create_timer(0.5).timeout
 	allowInput = true
@@ -135,7 +129,7 @@ func set_level_data() -> void:
 	
 	if RunInfo.inRun:
 		await get_tree().create_timer(0.3).timeout
-		origin.remove_child(prev_instance)
+		prev_instance.queue_free()
 	
 	var rot = randf_range(level_info.possible_rotations.x,level_info.possible_rotations.y)
 	camera.rotation.y = deg_to_rad(rot)
@@ -152,7 +146,7 @@ func start_timer():
 func pick_level() -> void:
 	var valid_level := false
 	while !valid_level:
-		match RunInfo.currentDifficulty:
+		match RunInfo.current_difficulty:
 			0:
 				level_info = Global.easy_levels.pick_random()
 			1:
@@ -177,6 +171,7 @@ func create_level() -> void:
 	instanced = level_info.associated_scene.instantiate()
 
 func reset_marble() -> void:
+	marble.visible = true
 	marble.linear_velocity = Vector3.ZERO
 	marble.angular_velocity = Vector3.ZERO
 	marble.position = Vector3(chosenSpawn.x,15,chosenSpawn.y)

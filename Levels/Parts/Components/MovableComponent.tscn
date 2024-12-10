@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://s04ljxpb2oc0"]
 
-[ext_resource type="Script" path="res://Levels/Parts/moveable_component.gd" id="1_ac01l"]
+[ext_resource type="Script" path="res://Levels/Parts/Components/moveable_component.gd" id="1_ac01l"]
 
 [node name="MovableComponent" type="Node"]
 script = ExtResource("1_ac01l")

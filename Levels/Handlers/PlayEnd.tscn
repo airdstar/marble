@@ -1,12 +1,12 @@
 [gd_scene load_steps=2 format=3 uid="uid://cbkcx2bswrblr"]
 
-[ext_resource type="Script" path="res://Main/run_end.gd" id="1_pxsk4"]
+[ext_resource type="Script" path="res://Levels/Handlers/play_end.gd" id="1_1vy14"]
 
 [node name="RunEnd" type="Control"]
 process_mode = 3
 layout_mode = 3
 anchors_preset = 0
-script = ExtResource("1_pxsk4")
+script = ExtResource("1_1vy14")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 0

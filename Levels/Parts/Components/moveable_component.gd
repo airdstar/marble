@@ -16,10 +16,14 @@ var area : Area3D
 var to_move : RigidBody3D
 var base : Node3D
 
+var platform_collision : CollisionShape3D
+
 func _ready():
 	to_move = get_parent()
 	to_move.freeze = true
 	base = to_move.get_parent()
+	
+	platform_collision = to_move.get_node("MeshInstance3D").get_node("StaticBody3D").get_node("CollisionShape3D")
 	
 	if playerReliant:
 		area = Area3D.new()
@@ -33,6 +37,12 @@ func _ready():
 		collision.position = trigger_pos
 	else:
 		move_object()
+
+func _physics_process(_delta : float) -> void:
+	if Global.runBase.marble.position.y < to_move.global_position.y:
+		platform_collision.disabled = true
+	else:
+		platform_collision.disabled = false
 
 func move_object():
 	if !playerReliant:

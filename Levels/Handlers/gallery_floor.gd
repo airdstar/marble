@@ -2,7 +2,7 @@ extends floor
 class_name gallery_floor
 
 func secondary_process() -> void:
-	if Input.is_action_just_pressed("reset"):
+	if Input.is_action_just_pressed("back"):
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 		Global.main.open_gallery()
 
@@ -34,11 +34,13 @@ func next_level() -> void:
 	camera.next_level()
 	change_skybox_rotation()
 	
-	await get_tree().create_timer(0.7).timeout
+	await get_tree().create_timer(0.6).timeout
 	
 	var rot = randf_range(level_info.possible_rotations.x,level_info.possible_rotations.y)
 	camera.rotation.y = deg_to_rad(rot)
 	camera.skybox.sky_rotation = Vector3(0, deg_to_rad(rot), 0) + relative_skybox_rotation
+	
+	await get_tree().create_timer(0.3).timeout
 	
 	allowInput = false
 	reset_marble()

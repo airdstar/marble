@@ -4,15 +4,18 @@
 [ext_resource type="Texture2D" uid="uid://bm3rtxg0minif" path="res://Assets/sky_t.002.png" id="2_3np1u"]
 [ext_resource type="Script" path="res://Levels/Handlers/camera.gd" id="3_660rk"]
 
-[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_3un7p"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_iugt6"]
+size = Vector3(200, 1, 200)
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_m5dhn"]
 panorama = ExtResource("2_3np1u")
 
-[sub_resource type="Sky" id="Sky_km33h"]
-sky_material = SubResource("PanoramaSkyMaterial_3un7p")
+[sub_resource type="Sky" id="Sky_muliy"]
+sky_material = SubResource("PanoramaSkyMaterial_m5dhn")
 
-[sub_resource type="Environment" id="Environment_s1d85"]
+[sub_resource type="Environment" id="Environment_ni5g3"]
 background_mode = 2
-sky = SubResource("Sky_km33h")
+sky = SubResource("Sky_muliy")
 ambient_light_source = 2
 ambient_light_color = Color(0.025, 0.1, 0.05, 1)
 ambient_light_energy = 0.5
@@ -33,15 +36,9 @@ volumetric_fog_enabled = true
 adjustment_enabled = true
 adjustment_brightness = 0.75
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_iugt6"]
-size = Vector3(200, 1, 200)
-
 [node name="Node3D" type="Node3D"]
 process_mode = 1
 script = ExtResource("1_w7ny3")
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_s1d85")
 
 [node name="camera_y" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, 0)
@@ -74,10 +71,23 @@ offset_bottom = 66.0
 [node name="Origin" type="Node3D" parent="."]
 
 [node name="Area3D" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -50, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -20, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 shape = SubResource("BoxShape3D_iugt6")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+size = Vector2i(206, 206)
+
+[node name="Camera2D" type="Camera2D" parent="SubViewport"]
+
+[node name="Label" type="Label" parent="SubViewport"]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Hi"
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_ni5g3")
 
 [node name="SpotLight3D" type="SpotLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 15, 0)
