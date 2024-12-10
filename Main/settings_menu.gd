@@ -30,20 +30,25 @@ func set_slider_values() -> void:
 	camera_slider.min_value = 60
 	camera_slider.max_value = 90
 	camera_slider.step = 0.5
-	camera_slider.value = settings.camera_sens_keyboard
+	camera_slider.value = settings.camera_sens
 		
 	deadzone_slider.min_value = 1
 	deadzone_slider.max_value = 40
 	deadzone_slider.step = 0.5
-	deadzone_slider.value = settings.mouse_deadzone
+	deadzone_slider.value = settings.tilt_deadzone
+	
+	
 
+func tilt_sens_changed(value : float) -> void:
+	#settings.tilt_sens = value
+	pass
 
 func camera_sens_changed(value: float) -> void:
-	settings.camera_sens_keyboard = value
+	settings.camera_sens = value
 	camera_sens_label.text = "[center]" + str(snapped((value - camera_slider.min_value)/camera_slider.min_value * 2,0.01))
 
 func deadzone_changed(value: float) -> void:
-	settings.mouse_deadzone = value
+	settings.tilt_deadzone = value
 	deadzone_label.text = "[center]" + str(snapped((value / deadzone_slider.max_value), 0.01))
 
 func close_pressed() -> void:

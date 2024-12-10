@@ -21,6 +21,9 @@ var prev_instance : level
 var marble : player
 var chosenSpawn : Vector2
 
+#Player related
+var settings = PlayerInfo.player_data.player_settings
+
 @onready var camera = $camera_y
 @onready var origin = $Origin
 @onready var skybox = $WorldEnvironment.environment
@@ -49,8 +52,8 @@ func _physics_process(_delta: float) -> void:
 	relative_skybox_rotation += relative_desired_rotation
 	skybox.sky_rotation += relative_desired_rotation
 	
-	input_tilt.x = clamp(input_tilt.x, deg_to_rad(-level_info.max_tilt), deg_to_rad(level_info.max_tilt))
-	input_tilt.y = clamp(input_tilt.y, deg_to_rad(-level_info.max_tilt), deg_to_rad(level_info.max_tilt))
+	input_tilt.x = clamp(input_tilt.x * settings.invert_tilt_x, deg_to_rad(-level_info.max_tilt), deg_to_rad(level_info.max_tilt))
+	input_tilt.y = clamp(input_tilt.y * settings.invert_tilt_y, deg_to_rad(-level_info.max_tilt), deg_to_rad(level_info.max_tilt))
 	
 	origin_tilt.x = deg_to_rad(input_tilt.x * 20)
 	origin_tilt.y = deg_to_rad(input_tilt.y * 20)
@@ -63,20 +66,19 @@ func _physics_process(_delta: float) -> void:
 	origin.transform.basis = Basis(c)
 
 func handle_tilt(delta : float) -> void:
-
+	
 	var tilt_scalar := 1.0
-	var settings = PlayerInfo.player_data.player_settings
-
+	
 	match settings.control_type:
 		0:
 			if Input.is_action_pressed("pinch"):
 				tilt_scalar = PlayerInfo.player_data.player_settings.mouse_tilt_pinch
 			
 			var input = Input.get_last_mouse_velocity()
-			if input.y > settings.mouse_deadzone or input.y < -settings.mouse_deadzone:
-				input_tilt.x += input.y * settings.tilt_sens_keyboard * tilt_scalar * delta
-			if input.x > settings.mouse_deadzone or input.x < -settings.mouse_deadzone:
-				input_tilt.y += -input.x * settings.tilt_sens_keyboard * tilt_scalar * delta
+			if input.y > settings.tilt_deadzone or input.y < -settings.tilt_deadzone:
+				input_tilt.x += input.y * settings.tilt_sens * tilt_scalar * delta
+			if input.x > settings.tilt_deadzone or input.x < -settings.tilt_deadzone:
+				input_tilt.y += -input.x * settings.tilt_sens * tilt_scalar * delta
 
 
 func start_game() -> void:

@@ -2,44 +2,38 @@ extends Resource
 class_name Settings
 
 enum control {
-	KEYBOARD
+	KEYBOARDMOUSE
 }
 
-@export var control_type : control = control.KEYBOARD
+@export var control_type : control = control.KEYBOARDMOUSE
 
-#Camera sens
-@export var camera_sens_keyboard : float = 70
+#Camera Options
+@export var camera_sens : float = 70
 
-#Tilt sens
-@export var tilt_sens_keyboard : float = 0.001
+#Tilt Options
+@export var tilt_sens : float = 0.001
+@export var tilt_deadzone : float = 25
+@export var tilt_pinch : float = 0.5
 
-#Deadzone
-@export var mouse_deadzone : float = 25
-
-#Pinch
-@export var mouse_tilt_pinch : float = 0.5
-@export var keyboard_camera_pinch : float = 0.5
-
-#Inversion of controls
-@export var invert_tilt_mouse_x : int = 1
-@export var invert_tilt_mouse_y : int = 1
+#Inversion of Controls ( 1 means not inverted, -1 means inverted)
+@export var invert_tilt_x : int = 1
+@export var invert_tilt_y : int = 1
 
 func check_info() -> void:
 	if control_type == null:
-		control_type = control.KEYBOARD
+		control_type = control.KEYBOARDMOUSE
 	
-	if camera_sens_keyboard == null:
-		camera_sens_keyboard = 70
-	if tilt_sens_keyboard == null:
-		tilt_sens_keyboard = 0.001
+	if camera_sens == null:
+		camera_sens = 70
 	
-	if mouse_deadzone == null:
-		mouse_deadzone = 10
+	if tilt_sens == null:
+		tilt_sens = 0.001
+	if tilt_deadzone == null:
+		tilt_deadzone = 10
+	if tilt_pinch == null:
+		tilt_pinch = 0.5
 	
-	if mouse_tilt_pinch == null:
-		mouse_tilt_pinch = 0.5
-	
-	if invert_tilt_mouse_x == null:
-		invert_tilt_mouse_x = 1
-	if invert_tilt_mouse_y == null:
-		invert_tilt_mouse_y = 1
+	if invert_tilt_x == null:
+		invert_tilt_x = 1
+	if invert_tilt_y == null:
+		invert_tilt_y = 1

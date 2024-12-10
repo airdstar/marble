@@ -10,6 +10,9 @@ func _ready() -> void:
 
 func next_level(area: Area3D) -> void:
 	if area.get_parent() is player:
+		
+		Particle.spawn_reset_particle(area.global_position)
+		
 		$Area3D.set_deferred("monitoring", false)
 	
 		if Global.runBase is play_floor:

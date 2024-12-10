@@ -12,7 +12,7 @@ func _ready():
 	get_endzones()
 
 func get_endzones():
-	for n in $CSGCombiner3D.get_children():
+	for n in $Ends.get_children():
 		if n is endzone:
 			endzones.append(n)
 
