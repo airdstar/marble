@@ -2,14 +2,14 @@
 
 [ext_resource type="Script" path="res://Levels/Parts/end_zone.gd" id="1_at64b"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tsrlt"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hr6n5"]
 albedo_color = Color(2.88785e-06, 0.872455, 0.931396, 1)
 metallic_specular = 1.0
 roughness = 0.0
 disable_receive_shadows = true
 
 [sub_resource type="TorusMesh" id="TorusMesh_s3sg4"]
-material = SubResource("StandardMaterial3D_tsrlt")
+material = SubResource("StandardMaterial3D_hr6n5")
 inner_radius = 2.25
 outer_radius = 2.5
 

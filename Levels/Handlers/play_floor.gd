@@ -3,7 +3,6 @@ class_name play_floor
 
 @onready var timer = $RemainingTime
 @onready var timerText = $CanvasLayer/Timer
-@onready var points = $CanvasLayer/Points
 
 func secondary_process() -> void:
 	if !transitioning:

@@ -34,8 +34,8 @@ func _ready() -> void:
 	start_game()
 
 func _process(delta: float) -> void:
-	$CanvasLayer/fps.text = "FPS %d" % Engine.get_frames_per_second()
-	$CanvasLayer/speed.text = "Speed %.01f" % (abs(marble.angular_velocity.x) + abs(marble.angular_velocity.y) + abs(marble.angular_velocity.z))
+	$CanvasLayer/VBoxContainer/fps.text = "FPS %d" % Engine.get_frames_per_second()
+	$CanvasLayer/VBoxContainer/speed.text = "Speed %.01f" % (abs(marble.angular_velocity.x) + abs(marble.angular_velocity.y) + abs(marble.angular_velocity.z))
 	
 	if allowInput:
 		handle_tilt(delta)
@@ -125,7 +125,7 @@ func next_level() -> void:
 	allowInput = true
 
 func set_level_data() -> void:
-	$CanvasLayer/tagline.text = level_info.tagline
+	$CanvasLayer/VBoxContainer/tagline.text = level_info.tagline
 	
 	set_level_time()
 	

@@ -1,0 +1,8 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://dnuvw7urh35y3"]
+
+[ext_resource type="FontFile" uid="uid://soqlkydh1uri" path="res://Assets/Themes/Fonts/VCR_OSD_MONO_1.001.ttf" id="1_uyk54"]
+
+[resource]
+default_font = ExtResource("1_uyk54")
+default_font_size = 20
+RichTextLabel/fonts/normal_font = ExtResource("1_uyk54")

@@ -50,7 +50,7 @@ func next_level() -> void:
 	allowInput = true
 
 func set_level_data() -> void:
-	$CanvasLayer/tagline.text = level_info.tagline
+	$CanvasLayer/VBoxContainer/tagline.text = level_info.tagline
 	
 	var rot = randf_range(level_info.possible_rotations.x,level_info.possible_rotations.y)
 	camera.rotation.y = deg_to_rad(rot)

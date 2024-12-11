@@ -5,7 +5,6 @@ class_name endzone
 @export var disable_back : bool = false
 
 func _ready() -> void:
-	#$EndParticles.mesh.material.albedo_color = PlayerInfo.player_data.player_color
 	pass
 
 func next_level(area: Area3D) -> void:

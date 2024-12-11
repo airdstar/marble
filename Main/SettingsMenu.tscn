@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://bq4emjmf4ogdr"]
+[gd_scene load_steps=5 format=3 uid="uid://bq4emjmf4ogdr"]
 
 [ext_resource type="Script" path="res://Main/settings_menu.gd" id="1_321is"]
+[ext_resource type="Theme" uid="uid://dnuvw7urh35y3" path="res://Assets/Themes/Settings.tres" id="2_qpujl"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_18obf"]
 
@@ -9,39 +10,26 @@ material = SubResource("StandardMaterial3D_18obf")
 flip_faces = true
 
 [node name="Settings" type="Control"]
-process_mode = 3
-z_index = 2
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_321is")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 process_mode = 3
-layout_mode = 0
 offset_left = -9.0
 offset_top = -15.0
-offset_right = 1156.0
-offset_bottom = 657.0
-color = Color(0, 0, 0, 0.3)
-
-[node name="RichTextLabel" type="RichTextLabel" parent="."]
-layout_mode = 0
-offset_top = 1.0
-offset_right = 1152.0
-offset_bottom = 95.0
-bbcode_enabled = true
-text = "[center]Settings"
+offset_right = 978.0
+offset_bottom = 566.0
+color = Color(0, 0, 0, 0.5)
 
 [node name="Button2" type="Button" parent="."]
-layout_mode = 0
-offset_left = 550.0
-offset_top = 31.0
-offset_right = 600.0
-offset_bottom = 62.0
+offset_left = 130.0
+offset_top = 489.0
+offset_right = 180.0
+offset_bottom = 520.0
 text = "Close"
 
 [node name="TextureRect" type="TextureRect" parent="."]
-layout_mode = 0
 offset_left = 746.0
 offset_top = 201.0
 offset_right = 946.0
@@ -52,6 +40,7 @@ size = Vector2i(200, 200)
 
 [node name="Camera3D" type="Camera3D" parent="SubViewport"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 400, 1.507)
+current = true
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewport"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 400, 0)
@@ -60,7 +49,6 @@ mesh = SubResource("SphereMesh_vmnhx")
 [node name="OmniLight3D" type="OmniLight3D" parent="SubViewport/MeshInstance3D"]
 
 [node name="Red" type="HSlider" parent="."]
-layout_mode = 0
 offset_left = 733.0
 offset_top = 430.0
 offset_right = 956.0
@@ -70,7 +58,6 @@ step = 0.01
 value = 0.1
 
 [node name="Blue" type="HSlider" parent="."]
-layout_mode = 0
 offset_left = 733.0
 offset_top = 460.0
 offset_right = 956.0
@@ -80,7 +67,6 @@ step = 0.01
 value = 0.1
 
 [node name="Green" type="HSlider" parent="."]
-layout_mode = 0
 offset_left = 733.0
 offset_top = 490.0
 offset_right = 956.0
@@ -90,58 +76,71 @@ step = 0.01
 value = 0.1
 
 [node name="ControlSettingsBox" type="VBoxContainer" parent="."]
-layout_mode = 0
-offset_top = 150.0
-offset_right = 504.0
-offset_bottom = 304.0
+offset_left = 17.0
+offset_top = 18.0
+offset_right = 521.0
+offset_bottom = 343.0
 
 [node name="Label" type="RichTextLabel" parent="ControlSettingsBox"]
 layout_mode = 2
-size_flags_vertical = 3
+theme = ExtResource("2_qpujl")
 bbcode_enabled = true
 text = "[center]Control Settings"
+fit_content = true
 
 [node name="TiltSens" type="HSplitContainer" parent="ControlSettingsBox"]
 layout_mode = 2
-size_flags_vertical = 3
+size_flags_vertical = 4
 split_offset = 425
+dragger_visibility = 1
 
 [node name="HSplitContainer" type="HSplitContainer" parent="ControlSettingsBox/TiltSens"]
 layout_mode = 2
 split_offset = 130
+dragger_visibility = 1
 
 [node name="TiltSensLabel" type="RichTextLabel" parent="ControlSettingsBox/TiltSens/HSplitContainer"]
 layout_mode = 2
+theme = ExtResource("2_qpujl")
 bbcode_enabled = true
 text = "[center]Tilt Sens"
+fit_content = true
 
 [node name="TiltSlider" type="HSlider" parent="ControlSettingsBox/TiltSens/HSplitContainer"]
 layout_mode = 2
-min_value = 20.0
-step = 0.5
-value = 20.0
+min_value = 0.01
+max_value = 0.2
+step = 0.01
+value = 0.01
 allow_greater = true
 allow_lesser = true
 scrollable = false
 
 [node name="TiltSensValue" type="RichTextLabel" parent="ControlSettingsBox/TiltSens"]
 layout_mode = 2
+theme = ExtResource("2_qpujl")
 bbcode_enabled = true
 text = "[center]hi"
+fit_content = true
+scroll_active = false
+shortcut_keys_enabled = false
 
 [node name="CameraSens" type="HSplitContainer" parent="ControlSettingsBox"]
 layout_mode = 2
-size_flags_vertical = 3
 split_offset = 425
+dragger_visibility = 1
 
 [node name="HSplitContainer" type="HSplitContainer" parent="ControlSettingsBox/CameraSens"]
 layout_mode = 2
 split_offset = 130
+dragger_visibility = 1
 
 [node name="CameraSensLabel" type="RichTextLabel" parent="ControlSettingsBox/CameraSens/HSplitContainer"]
 layout_mode = 2
+theme = ExtResource("2_qpujl")
 bbcode_enabled = true
 text = "[center]Camera Sens"
+fit_content = true
 
 [node name="CameraSlider" type="HSlider" parent="ControlSettingsBox/CameraSens/HSplitContainer"]
 layout_mode = 2
@@ -155,79 +154,94 @@ scrollable = false
 
 [node name="CameraSensValue" type="RichTextLabel" parent="ControlSettingsBox/CameraSens"]
 layout_mode = 2
+theme = ExtResource("2_qpujl")
 bbcode_enabled = true
 text = "[center]hi"
+fit_content = true
 scroll_active = false
 
 [node name="Deadzone" type="HSplitContainer" parent="ControlSettingsBox"]
 layout_mode = 2
-size_flags_vertical = 3
 split_offset = 425
+dragger_visibility = 1
 
 [node name="HSplitContainer" type="HSplitContainer" parent="ControlSettingsBox/Deadzone"]
 layout_mode = 2
 split_offset = 130
+dragger_visibility = 1
 
 [node name="DeadzoneLabel" type="RichTextLabel" parent="ControlSettingsBox/Deadzone/HSplitContainer"]
 layout_mode = 2
+theme = ExtResource("2_qpujl")
 bbcode_enabled = true
 text = "[center]Deadzone"
+fit_content = true
 
 [node name="DeadzoneSlider" type="HSlider" parent="ControlSettingsBox/Deadzone/HSplitContainer"]
 layout_mode = 2
 min_value = 1.0
 max_value = 40.0
 step = 0.5
+value = 1.0
 allow_greater = true
 allow_lesser = true
 scrollable = false
 
 [node name="DeadzoneValue" type="RichTextLabel" parent="ControlSettingsBox/Deadzone"]
 layout_mode = 2
+theme = ExtResource("2_qpujl")
 bbcode_enabled = true
 text = "[center]hi"
+fit_content = true
 scroll_active = false
 
 [node name="Pinch" type="HSplitContainer" parent="ControlSettingsBox"]
 layout_mode = 2
-size_flags_vertical = 3
 split_offset = 425
+dragger_visibility = 1
 
 [node name="HSplitContainer" type="HSplitContainer" parent="ControlSettingsBox/Pinch"]
 layout_mode = 2
 split_offset = 130
+dragger_visibility = 1
 
 [node name="PinchLabel" type="RichTextLabel" parent="ControlSettingsBox/Pinch/HSplitContainer"]
 layout_mode = 2
+theme = ExtResource("2_qpujl")
 bbcode_enabled = true
 text = "[center]Pinch"
+fit_content = true
 
 [node name="PinchSlider" type="HSlider" parent="ControlSettingsBox/Pinch/HSplitContainer"]
 layout_mode = 2
+min_value = 0.1
+max_value = 0.9
+step = 0.01
+value = 0.1
 allow_greater = true
 allow_lesser = true
 scrollable = false
 
 [node name="PinchValue" type="RichTextLabel" parent="ControlSettingsBox/Pinch"]
 layout_mode = 2
+theme = ExtResource("2_qpujl")
 bbcode_enabled = true
 text = "[center]hi"
+fit_content = true
 scroll_active = false
 
 [node name="Reset" type="Button" parent="."]
-layout_mode = 0
-offset_left = 201.0
-offset_top = 584.0
-offset_right = 252.0
-offset_bottom = 615.0
+offset_left = 93.0
+offset_top = 443.0
+offset_right = 224.0
+offset_bottom = 474.0
 text = "Reset to default"
 
 [node name="Save" type="Button" parent="."]
-layout_mode = 0
-offset_left = 211.0
-offset_top = 546.0
-offset_right = 321.0
-offset_bottom = 577.0
+offset_left = 101.0
+offset_top = 396.0
+offset_right = 211.0
+offset_bottom = 427.0
 text = "Save Settings"
 
 [connection signal="pressed" from="Button2" to="." method="close_pressed"]
@@ -237,6 +251,6 @@ text = "Save Settings"
 [connection signal="value_changed" from="ControlSettingsBox/TiltSens/HSplitContainer/TiltSlider" to="." method="tilt_sens_changed"]
 [connection signal="value_changed" from="ControlSettingsBox/CameraSens/HSplitContainer/CameraSlider" to="." method="camera_sens_changed"]
 [connection signal="value_changed" from="ControlSettingsBox/Deadzone/HSplitContainer/DeadzoneSlider" to="." method="deadzone_changed"]
-[connection signal="value_changed" from="ControlSettingsBox/Pinch/HSplitContainer/PinchSlider" to="." method="deadzone_changed"]
+[connection signal="value_changed" from="ControlSettingsBox/Pinch/HSplitContainer/PinchSlider" to="." method="pinch_changed"]
 [connection signal="pressed" from="Reset" to="." method="reset_settings"]
 [connection signal="pressed" from="Save" to="." method="save_settings"]

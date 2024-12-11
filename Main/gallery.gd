@@ -15,9 +15,9 @@ var option_info : Array[level_resource] = []
 
 var sort_by = sort_type.ID
 
-@onready var easy : Button = $VBoxContainer/HBoxContainer/Easy
-@onready var medium : Button = $VBoxContainer/HBoxContainer/Medium
-@onready var hard : Button = $VBoxContainer/HBoxContainer/Hard
+@onready var easy : Button = $VBoxContainer/HSplitContainer/HBoxContainer/Easy
+@onready var medium : Button = $VBoxContainer/HSplitContainer/HBoxContainer/Medium
+@onready var hard : Button = $VBoxContainer/HSplitContainer/HBoxContainer/Hard
 
 func _ready() -> void:
 	check_valid_difficulties()
