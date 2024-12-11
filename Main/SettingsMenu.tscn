@@ -32,93 +32,6 @@ offset_bottom = 95.0
 bbcode_enabled = true
 text = "[center]Settings"
 
-[node name="TiltSlider" type="HSlider" parent="."]
-layout_mode = 0
-offset_left = 40.0
-offset_top = 175.0
-offset_right = 360.0
-offset_bottom = 206.0
-min_value = 20.0
-step = 0.5
-value = 20.0
-allow_greater = true
-allow_lesser = true
-scrollable = false
-
-[node name="TiltSensLabel" type="RichTextLabel" parent="TiltSlider"]
-layout_mode = 0
-offset_top = -30.0
-offset_right = 320.0
-offset_bottom = -4.0
-bbcode_enabled = true
-text = "[center]Tilt Sens"
-
-[node name="TiltSensValue" type="RichTextLabel" parent="TiltSlider"]
-layout_mode = 0
-offset_left = 320.0
-offset_right = 380.0
-offset_bottom = 26.0
-bbcode_enabled = true
-text = "[center]"
-
-[node name="DeadzoneSlider" type="HSlider" parent="."]
-layout_mode = 0
-offset_left = 40.0
-offset_top = 250.0
-offset_right = 360.0
-offset_bottom = 281.0
-allow_greater = true
-allow_lesser = true
-scrollable = false
-
-[node name="DeadzoneLabel" type="RichTextLabel" parent="DeadzoneSlider"]
-layout_mode = 0
-offset_top = -30.0
-offset_right = 320.0
-offset_bottom = -4.0
-bbcode_enabled = true
-text = "[center]Deadzone"
-
-[node name="DeadzoneValue" type="RichTextLabel" parent="DeadzoneSlider"]
-layout_mode = 0
-offset_left = 320.0
-offset_right = 390.0
-offset_bottom = 26.0
-bbcode_enabled = true
-text = "[center]"
-scroll_active = false
-
-[node name="CameraSlider" type="HSlider" parent="."]
-layout_mode = 0
-offset_left = 40.0
-offset_top = 100.0
-offset_right = 360.0
-offset_bottom = 131.0
-min_value = 60.0
-max_value = 90.0
-step = 0.5
-value = 60.0
-allow_greater = true
-allow_lesser = true
-scrollable = false
-
-[node name="CameraSensLabel" type="RichTextLabel" parent="CameraSlider"]
-layout_mode = 0
-offset_top = -30.0
-offset_right = 320.0
-offset_bottom = -3.0
-bbcode_enabled = true
-text = "[center]Camera Sens"
-
-[node name="CameraSensValue" type="RichTextLabel" parent="CameraSlider"]
-layout_mode = 0
-offset_left = 320.0
-offset_right = 390.0
-offset_bottom = 26.0
-bbcode_enabled = true
-text = "[center]"
-scroll_active = false
-
 [node name="Button2" type="Button" parent="."]
 layout_mode = 0
 offset_left = 550.0
@@ -176,10 +89,154 @@ max_value = 1.0
 step = 0.01
 value = 0.1
 
-[connection signal="value_changed" from="TiltSlider" to="." method="tilt_sens_changed"]
-[connection signal="value_changed" from="DeadzoneSlider" to="." method="deadzone_changed"]
-[connection signal="value_changed" from="CameraSlider" to="." method="camera_sens_changed"]
+[node name="ControlSettingsBox" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_top = 150.0
+offset_right = 504.0
+offset_bottom = 304.0
+
+[node name="Label" type="RichTextLabel" parent="ControlSettingsBox"]
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+text = "[center]Control Settings"
+
+[node name="TiltSens" type="HSplitContainer" parent="ControlSettingsBox"]
+layout_mode = 2
+size_flags_vertical = 3
+split_offset = 425
+
+[node name="HSplitContainer" type="HSplitContainer" parent="ControlSettingsBox/TiltSens"]
+layout_mode = 2
+split_offset = 130
+
+[node name="TiltSensLabel" type="RichTextLabel" parent="ControlSettingsBox/TiltSens/HSplitContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[center]Tilt Sens"
+
+[node name="TiltSlider" type="HSlider" parent="ControlSettingsBox/TiltSens/HSplitContainer"]
+layout_mode = 2
+min_value = 20.0
+step = 0.5
+value = 20.0
+allow_greater = true
+allow_lesser = true
+scrollable = false
+
+[node name="TiltSensValue" type="RichTextLabel" parent="ControlSettingsBox/TiltSens"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[center]hi"
+
+[node name="CameraSens" type="HSplitContainer" parent="ControlSettingsBox"]
+layout_mode = 2
+size_flags_vertical = 3
+split_offset = 425
+
+[node name="HSplitContainer" type="HSplitContainer" parent="ControlSettingsBox/CameraSens"]
+layout_mode = 2
+split_offset = 130
+
+[node name="CameraSensLabel" type="RichTextLabel" parent="ControlSettingsBox/CameraSens/HSplitContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[center]Camera Sens"
+
+[node name="CameraSlider" type="HSlider" parent="ControlSettingsBox/CameraSens/HSplitContainer"]
+layout_mode = 2
+min_value = 60.0
+max_value = 90.0
+step = 0.5
+value = 60.0
+allow_greater = true
+allow_lesser = true
+scrollable = false
+
+[node name="CameraSensValue" type="RichTextLabel" parent="ControlSettingsBox/CameraSens"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[center]hi"
+scroll_active = false
+
+[node name="Deadzone" type="HSplitContainer" parent="ControlSettingsBox"]
+layout_mode = 2
+size_flags_vertical = 3
+split_offset = 425
+
+[node name="HSplitContainer" type="HSplitContainer" parent="ControlSettingsBox/Deadzone"]
+layout_mode = 2
+split_offset = 130
+
+[node name="DeadzoneLabel" type="RichTextLabel" parent="ControlSettingsBox/Deadzone/HSplitContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[center]Deadzone"
+
+[node name="DeadzoneSlider" type="HSlider" parent="ControlSettingsBox/Deadzone/HSplitContainer"]
+layout_mode = 2
+min_value = 1.0
+max_value = 40.0
+step = 0.5
+allow_greater = true
+allow_lesser = true
+scrollable = false
+
+[node name="DeadzoneValue" type="RichTextLabel" parent="ControlSettingsBox/Deadzone"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[center]hi"
+scroll_active = false
+
+[node name="Pinch" type="HSplitContainer" parent="ControlSettingsBox"]
+layout_mode = 2
+size_flags_vertical = 3
+split_offset = 425
+
+[node name="HSplitContainer" type="HSplitContainer" parent="ControlSettingsBox/Pinch"]
+layout_mode = 2
+split_offset = 130
+
+[node name="PinchLabel" type="RichTextLabel" parent="ControlSettingsBox/Pinch/HSplitContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[center]Pinch"
+
+[node name="PinchSlider" type="HSlider" parent="ControlSettingsBox/Pinch/HSplitContainer"]
+layout_mode = 2
+allow_greater = true
+allow_lesser = true
+scrollable = false
+
+[node name="PinchValue" type="RichTextLabel" parent="ControlSettingsBox/Pinch"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[center]hi"
+scroll_active = false
+
+[node name="Reset" type="Button" parent="."]
+layout_mode = 0
+offset_left = 201.0
+offset_top = 584.0
+offset_right = 252.0
+offset_bottom = 615.0
+text = "Reset to default"
+
+[node name="Save" type="Button" parent="."]
+layout_mode = 0
+offset_left = 211.0
+offset_top = 546.0
+offset_right = 321.0
+offset_bottom = 577.0
+text = "Save Settings"
+
 [connection signal="pressed" from="Button2" to="." method="close_pressed"]
 [connection signal="value_changed" from="Red" to="." method="red_changed"]
 [connection signal="value_changed" from="Blue" to="." method="blue_changed"]
 [connection signal="value_changed" from="Green" to="." method="green_changed"]
+[connection signal="value_changed" from="ControlSettingsBox/TiltSens/HSplitContainer/TiltSlider" to="." method="tilt_sens_changed"]
+[connection signal="value_changed" from="ControlSettingsBox/CameraSens/HSplitContainer/CameraSlider" to="." method="camera_sens_changed"]
+[connection signal="value_changed" from="ControlSettingsBox/Deadzone/HSplitContainer/DeadzoneSlider" to="." method="deadzone_changed"]
+[connection signal="value_changed" from="ControlSettingsBox/Pinch/HSplitContainer/PinchSlider" to="." method="deadzone_changed"]
+[connection signal="pressed" from="Reset" to="." method="reset_settings"]
+[connection signal="pressed" from="Save" to="." method="save_settings"]

@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://coiwx64ppa522"]
 
 [ext_resource type="Script" path="res://Levels/Handlers/level.gd" id="1_0cq7v"]
-[ext_resource type="PackedScene" uid="uid://df3msx1k8vfiy" path="res://Levels/Parts/NewEndZone.tscn" id="3_1e5bj"]
+[ext_resource type="PackedScene" uid="uid://df3msx1k8vfiy" path="res://Levels/Parts/EndZone.tscn" id="3_1e5bj"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_5w47p"]
 friction = 0.2

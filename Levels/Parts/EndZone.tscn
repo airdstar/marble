@@ -1,73 +1,56 @@
-[gd_scene load_steps=9 format=3 uid="uid://cxxrgalbr0kp"]
+[gd_scene load_steps=5 format=3 uid="uid://df3msx1k8vfiy"]
 
-[ext_resource type="Script" path="res://Levels/Parts/end_zone.gd" id="1_ff1f8"]
+[ext_resource type="Script" path="res://Levels/Parts/end_zone.gd" id="1_at64b"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_51kn0"]
-vertex_color_use_as_albedo = true
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tsrlt"]
+albedo_color = Color(2.88785e-06, 0.872455, 0.931396, 1)
+metallic_specular = 1.0
+roughness = 0.0
+disable_receive_shadows = true
 
-[sub_resource type="TorusMesh" id="TorusMesh_sf88u"]
-material = SubResource("StandardMaterial3D_51kn0")
-inner_radius = 0.97
+[sub_resource type="TorusMesh" id="TorusMesh_s3sg4"]
+material = SubResource("StandardMaterial3D_tsrlt")
+inner_radius = 2.25
+outer_radius = 2.5
 
-[sub_resource type="Curve" id="Curve_0q4hs"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.835165), 0.0, 0.0, 0, 0]
-point_count = 2
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_kv84c"]
+height = 0.5
+radius = 2.5
 
-[sub_resource type="Gradient" id="Gradient_u6m5s"]
-interpolation_mode = 2
-offsets = PackedFloat32Array(0.453333, 1)
-colors = PackedColorArray(0, 1, 0.513726, 1, 0, 1, 1, 0.137255)
+[node name="EndZone" type="Node3D"]
+script = ExtResource("1_at64b")
 
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_2kc1s"]
-height = 1.0
+[node name="End" type="MeshInstance3D" parent="."]
+layers = 4
+mesh = SubResource("TorusMesh_s3sg4")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uug2p"]
+[node name="SpotLight3D" type="SpotLight3D" parent="."]
+transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, -3, 0, 3)
+light_color = Color(0, 0.980392, 0.784314, 1)
+spot_range = 10.0
+spot_angle = 40.0
 
-[sub_resource type="SphereMesh" id="SphereMesh_3spfp"]
-material = SubResource("StandardMaterial3D_uug2p")
-radius = 0.1
-height = 0.2
+[node name="SpotLight3D2" type="SpotLight3D" parent="."]
+transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 3, 0, 3)
+light_color = Color(0, 0.980392, 0.784314, 1)
+spot_range = 10.0
+spot_angle = 40.0
 
-[node name="End Zone" type="CSGCylinder3D"]
-operation = 2
-radius = 0.75
-height = 10.0
-sides = 20
-script = ExtResource("1_ff1f8")
+[node name="SpotLight3D3" type="SpotLight3D" parent="."]
+transform = Transform3D(-0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107, 3, 0, -3)
+light_color = Color(0, 0.980392, 0.784314, 1)
+spot_range = 10.0
+spot_angle = 40.0
 
-[node name="CPUParticles3D" type="CPUParticles3D" parent="."]
-amount = 3
-lifetime = 0.75
-mesh = SubResource("TorusMesh_sf88u")
-direction = Vector3(0, 1, 0)
-spread = 0.0
-gravity = Vector3(0, 9, 0)
-scale_amount_curve = SubResource("Curve_0q4hs")
-color_ramp = SubResource("Gradient_u6m5s")
+[node name="SpotLight3D4" type="SpotLight3D" parent="."]
+transform = Transform3D(-0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, -0.707107, -3, 0, -3)
+light_color = Color(0, 0.980392, 0.784314, 1)
+spot_range = 10.0
+spot_angle = 40.0
 
 [node name="Area3D" type="Area3D" parent="."]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
-shape = SubResource("CylinderShape3D_2kc1s")
-
-[node name="OmniLight3D" type="OmniLight3D" parent="."]
-light_color = Color(0, 0.980392, 0.784314, 1)
-light_cull_mask = 4294966274
-omni_range = 6.0
-
-[node name="EndParticles" type="CPUParticles3D" parent="."]
-emitting = false
-amount = 20
-lifetime = 0.3
-one_shot = true
-explosiveness = 1.0
-lifetime_randomness = 0.03
-mesh = SubResource("SphereMesh_3spfp")
-direction = Vector3(0, 1, 0)
-spread = 30.0
-gravity = Vector3(0, 0, 0)
-initial_velocity_min = 7.5
-initial_velocity_max = 10.0
+shape = SubResource("CylinderShape3D_kv84c")
 
 [connection signal="area_entered" from="Area3D" to="." method="next_level"]
