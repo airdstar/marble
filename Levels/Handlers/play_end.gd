@@ -6,7 +6,6 @@ func _ready():
 	
 	if RunInfo.current_level > PlayerInfo.player_data.highest_level:
 		PlayerInfo.player_data.highest_level = RunInfo.current_level
-	Global.runBase.points.visible = false
 	Global.runBase.timerText.visible = false
 	
 	PlayerInfo.save_info()
@@ -22,6 +21,5 @@ func _process(_delta: float) -> void:
 func run_restart() -> void:
 	get_tree().paused = false
 	Global.runBase.timerText.visible = true
-	Global.runBase.points.visible = true
 	Global.runBase.start_game()
 	queue_free()

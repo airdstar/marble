@@ -91,5 +91,21 @@ shape = SubResource("BoxShape3D_pftjh")
 
 [node name="Ends" type="Node3D" parent="."]
 
-[node name="EndZoneNew" parent="Ends" instance=ExtResource("4_lvhfv")]
+[node name="EndZone" parent="Ends" instance=ExtResource("4_lvhfv")]
 transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 6)
+
+[node name="InputTrigger" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InputTrigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -6)
+shape = SubResource("BoxShape3D_pftjh")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="InputTrigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 2, -5)
+shape = SubResource("BoxShape3D_pftjh")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="InputTrigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 2, -5)
+shape = SubResource("BoxShape3D_pftjh")
+
+[connection signal="area_entered" from="InputTrigger" to="." method="input_trigger"]

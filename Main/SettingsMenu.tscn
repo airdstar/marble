@@ -16,20 +16,15 @@ script = ExtResource("1_321is")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 process_mode = 3
+layout_mode = 0
 offset_left = -9.0
 offset_top = -15.0
-offset_right = 978.0
-offset_bottom = 566.0
+offset_right = 1294.0
+offset_bottom = 734.0
 color = Color(0, 0, 0, 0.5)
 
-[node name="Button2" type="Button" parent="."]
-offset_left = 130.0
-offset_top = 489.0
-offset_right = 180.0
-offset_bottom = 520.0
-text = "Close"
-
 [node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
 offset_left = 746.0
 offset_top = 201.0
 offset_right = 946.0
@@ -49,6 +44,7 @@ mesh = SubResource("SphereMesh_vmnhx")
 [node name="OmniLight3D" type="OmniLight3D" parent="SubViewport/MeshInstance3D"]
 
 [node name="Red" type="HSlider" parent="."]
+layout_mode = 0
 offset_left = 733.0
 offset_top = 430.0
 offset_right = 956.0
@@ -58,6 +54,7 @@ step = 0.01
 value = 0.1
 
 [node name="Blue" type="HSlider" parent="."]
+layout_mode = 0
 offset_left = 733.0
 offset_top = 460.0
 offset_right = 956.0
@@ -67,6 +64,7 @@ step = 0.01
 value = 0.1
 
 [node name="Green" type="HSlider" parent="."]
+layout_mode = 0
 offset_left = 733.0
 offset_top = 490.0
 offset_right = 956.0
@@ -76,6 +74,7 @@ step = 0.01
 value = 0.1
 
 [node name="ControlSettingsBox" type="VBoxContainer" parent="."]
+layout_mode = 0
 offset_left = 17.0
 offset_top = 18.0
 offset_right = 521.0
@@ -230,7 +229,56 @@ text = "[center]hi"
 fit_content = true
 scroll_active = false
 
+[node name="InvertX" type="HBoxContainer" parent="ControlSettingsBox"]
+visible = false
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="ControlSettingsBox/InvertX"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("2_qpujl")
+bbcode_enabled = true
+text = "[center]Invert X"
+scroll_active = false
+
+[node name="InvertX" type="CheckButton" parent="ControlSettingsBox/InvertX"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="ControlSettingsBox/InvertX"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.47
+
+[node name="InvertY" type="HBoxContainer" parent="ControlSettingsBox"]
+visible = false
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="ControlSettingsBox/InvertY"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("2_qpujl")
+bbcode_enabled = true
+text = "[center]Invert Y"
+scroll_active = false
+
+[node name="InvertY" type="CheckButton" parent="ControlSettingsBox/InvertY"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="ControlSettingsBox/InvertY"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.47
+
+[node name="Close" type="Button" parent="."]
+layout_mode = 0
+offset_left = 130.0
+offset_top = 489.0
+offset_right = 180.0
+offset_bottom = 520.0
+text = "Close"
+
 [node name="Reset" type="Button" parent="."]
+layout_mode = 0
 offset_left = 93.0
 offset_top = 443.0
 offset_right = 224.0
@@ -238,13 +286,13 @@ offset_bottom = 474.0
 text = "Reset to default"
 
 [node name="Save" type="Button" parent="."]
+layout_mode = 0
 offset_left = 101.0
 offset_top = 396.0
 offset_right = 211.0
 offset_bottom = 427.0
 text = "Save Settings"
 
-[connection signal="pressed" from="Button2" to="." method="close_pressed"]
 [connection signal="value_changed" from="Red" to="." method="red_changed"]
 [connection signal="value_changed" from="Blue" to="." method="blue_changed"]
 [connection signal="value_changed" from="Green" to="." method="green_changed"]
@@ -252,5 +300,6 @@ text = "Save Settings"
 [connection signal="value_changed" from="ControlSettingsBox/CameraSens/HSplitContainer/CameraSlider" to="." method="camera_sens_changed"]
 [connection signal="value_changed" from="ControlSettingsBox/Deadzone/HSplitContainer/DeadzoneSlider" to="." method="deadzone_changed"]
 [connection signal="value_changed" from="ControlSettingsBox/Pinch/HSplitContainer/PinchSlider" to="." method="pinch_changed"]
+[connection signal="pressed" from="Close" to="." method="close_pressed"]
 [connection signal="pressed" from="Reset" to="." method="reset_settings"]
 [connection signal="pressed" from="Save" to="." method="save_settings"]

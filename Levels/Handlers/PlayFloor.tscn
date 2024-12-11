@@ -61,7 +61,7 @@ one_shot = true
 
 [node name="Timer" type="RichTextLabel" parent="CanvasLayer"]
 offset_top = 23.0
-offset_right = 960.0
+offset_right = 1280.0
 offset_bottom = 76.0
 theme = ExtResource("4_db1ct")
 bbcode_enabled = true

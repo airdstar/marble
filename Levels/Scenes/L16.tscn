@@ -54,7 +54,7 @@ shape = SubResource("BoxShape3D_gxrci")
 
 [node name="Ends" type="Node3D" parent="."]
 
-[node name="EndZoneNew" parent="Ends" instance=ExtResource("4_wio52")]
+[node name="EndZone" parent="Ends" instance=ExtResource("4_wio52")]
 transform = Transform3D(-3.09086e-08, -0.707107, -0.707107, 1, -4.37114e-08, 0, -3.09086e-08, -0.707107, 0.707107, 5, 0, 5)
 
 [node name="Obstacles" type="Node3D" parent="."]
@@ -73,3 +73,19 @@ transform = Transform3D(-4.10753e-08, -0.939693, 0.34202, 1, -4.37114e-08, 0, 1.
 
 [node name="False End Zone5" parent="Obstacles" instance=ExtResource("3_msh67")]
 transform = Transform3D(-3.09086e-08, -0.707107, -0.707107, 1, -4.37114e-08, 0, -3.09086e-08, -0.707107, 0.707107, -6.04898, 0, 5.04797)
+
+[node name="InputTrigger" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InputTrigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.584, 1, -5)
+shape = SubResource("BoxShape3D_gxrci")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="InputTrigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.566, 1, -1.01)
+shape = SubResource("BoxShape3D_gxrci")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="InputTrigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.175, 1, -4.586)
+shape = SubResource("BoxShape3D_gxrci")
+
+[connection signal="area_entered" from="InputTrigger" to="." method="input_trigger"]

@@ -3,7 +3,7 @@ class_name floor
 
 #State related
 var transitioning : bool = true
-var allowInput : bool = true
+var allow_input : bool = false
 
 #Tilt related
 var proxy_tilt : Node3D = Node3D.new()
@@ -37,7 +37,7 @@ func _process(delta: float) -> void:
 	$CanvasLayer/VBoxContainer/fps.text = "FPS %d" % Engine.get_frames_per_second()
 	$CanvasLayer/VBoxContainer/speed.text = "Speed %.01f" % (abs(marble.angular_velocity.x) + abs(marble.angular_velocity.y) + abs(marble.angular_velocity.z))
 	
-	if allowInput:
+	if allow_input:
 		handle_tilt(delta)
 	else:
 		input_tilt = Vector2.ZERO
@@ -83,7 +83,7 @@ func handle_tilt(delta : float) -> void:
 
 func start_game() -> void:
 	transitioning = true
-	allowInput = false
+	allow_input = false
 	RunInfo.current_level = 1
 	RunInfo.current_difficulty = RunInfo.difficulty.EASY
 
@@ -103,9 +103,6 @@ func start_game() -> void:
 		marble = holder
 	
 	call_deferred("reset_marble")
-	
-	await get_tree().create_timer(0.5).timeout
-	allowInput = true
 
 func next_level() -> void:
 	transitioning = true
@@ -117,12 +114,13 @@ func next_level() -> void:
 	camera.next_level()
 	change_skybox_rotation()
 	
-	await get_tree().create_timer(0.91).timeout
-	allowInput = false
-	reset_marble()
+	await get_tree().create_timer(0.3).timeout
+	allow_input = false
 	
-	await get_tree().create_timer(0.5).timeout
-	allowInput = true
+	await get_tree().create_timer(0.61).timeout
+	
+	call_deferred("reset_marble")
+
 
 func set_level_data() -> void:
 	$CanvasLayer/VBoxContainer/tagline.text = level_info.tagline
@@ -138,6 +136,7 @@ func set_level_data() -> void:
 	camera.skybox.sky_rotation = Vector3(0, deg_to_rad(rot), 0) + relative_skybox_rotation
 	
 	origin.add_child(instanced)
+	instanced.choose_spawn()
 
 func set_level_time():
 	pass
@@ -176,15 +175,12 @@ func reset_marble() -> void:
 	marble.visible = true
 	marble.linear_velocity = Vector3.ZERO
 	marble.angular_velocity = Vector3.ZERO
-	marble.position = Vector3(chosenSpawn.x,15,chosenSpawn.y)
+	marble.position = Vector3(chosenSpawn.x,20,chosenSpawn.y)
+	marble.enable_monitoring()
 
 func reset_orientation() -> void:
-	allowInput = false
-
+	allow_input = false
 	camera.rand_rotation(level_info.possible_rotations.x, level_info.possible_rotations.y)
-	
-	await get_tree().create_timer(0.7).timeout
-	allowInput = true
 
 func change_skybox_rotation() -> void:
 	relative_desired_rotation = Vector3(randf_range(-0.0003,0.0003),randf_range(-0.0003,0.0003),randf_range(-0.0003,0.0003))

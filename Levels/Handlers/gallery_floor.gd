@@ -8,7 +8,7 @@ func secondary_process() -> void:
 
 func start_game() -> void:
 	transitioning = true
-	allowInput = false
+	allow_input = false
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	
 	create_level()
@@ -23,13 +23,12 @@ func start_game() -> void:
 	
 	call_deferred("reset_marble")
 	
-	await get_tree().create_timer(0.5).timeout
-	allowInput = true
 
 func next_level() -> void:
 	transitioning = true
 	marble.visible = false
 	instanced.reset_state()
+	instanced.choose_spawn()
 
 	camera.next_level()
 	change_skybox_rotation()
@@ -42,12 +41,9 @@ func next_level() -> void:
 	
 	await get_tree().create_timer(0.3).timeout
 	
-	allowInput = false
+	allow_input = false
 	reset_marble()
-	marble.visible = true
 	
-	await get_tree().create_timer(0.5).timeout
-	allowInput = true
 
 func set_level_data() -> void:
 	$CanvasLayer/VBoxContainer/tagline.text = level_info.tagline

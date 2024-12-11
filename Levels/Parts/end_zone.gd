@@ -12,7 +12,7 @@ func next_level(area: Area3D) -> void:
 		
 		Particle.spawn_reset_particle(area.global_position)
 		
-		$Area3D.set_deferred("monitoring", false)
+		area.set_deferred("monitorable", false)
 	
 		if Global.runBase is play_floor:
 			RunInfo.current_level += 1
@@ -20,6 +20,3 @@ func next_level(area: Area3D) -> void:
 			if RunInfo.current_level % 10 == 0:
 				Global.runBase.ramp_up()
 		Global.runBase.next_level()
-
-func reset_state() -> void:
-	$Area3D.set_deferred("monitoring", true)

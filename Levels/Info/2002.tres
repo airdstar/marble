@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="level_resource" load_steps=3 format=3 uid="uid://doqlwyihby5pv"]
+
+[ext_resource type="PackedScene" uid="uid://ckfcue3kvegv0" path="res://Levels/Scenes/L17.tscn" id="1_0iad6"]
+[ext_resource type="Script" path="res://Resources/LevelResource.gd" id="1_gams6"]
+
+[resource]
+script = ExtResource("1_gams6")
+tagline = "Freaky Pillars"
+given_time = 5.0
+possible_rotations = Vector2(0, 360)
+goal_type = "Fall"
+associated_scene = ExtResource("1_0iad6")
+needs_testing = false
+max_tilt = 35.0
+gravity = Vector3(0, 9.8, 0)

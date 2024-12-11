@@ -10,6 +10,9 @@ extends Node
 @onready var deadzone_value : RichTextLabel = $ControlSettingsBox/Deadzone/DeadzoneValue
 @onready var pinch_value : RichTextLabel = $ControlSettingsBox/Pinch/PinchValue
 
+@onready var invert_x : CheckButton = $ControlSettingsBox/InvertX/InvertX
+@onready var invert_y : CheckButton = $ControlSettingsBox/InvertY/InvertY
+
 @onready var red_slider : HSlider = $Red
 @onready var blue_slider : HSlider = $Blue
 @onready var green_slider : HSlider = $Green
@@ -22,13 +25,10 @@ func _ready() -> void:
 	green_slider.value = PlayerInfo.player_data.player_color.g
 	
 	settings = PlayerInfo.player_data.player_settings
-	
-	set_slider_values()
 
 func _process(_delta: float) -> void:
 	$TextureRect.texture = $SubViewport.get_texture()
 	$SubViewport/MeshInstance3D.rotate_y(0.0001)
-
 
 func set_slider_values() -> void:
 	tilt_slider.value = (settings.tilt_sens * 100)
@@ -68,11 +68,22 @@ func save_settings() -> void:
 	settings.camera_sens = camera_slider.value
 	settings.tilt_deadzone = deadzone_slider.value
 	settings.tilt_pinch = pinch_slider.value
+	
+	if invert_x.button_pressed:
+		settings.invert_tilt_x = -1
+	else:
+		settings.invert_tilt_x = 1
+	
+	if invert_y.button_pressed:
+		settings.invert_tilt_y = -1
+	else:
+		settings.invert_tilt_y = 1
 
 func reset_settings() -> void:
 	PlayerInfo.player_data.player_settings = Settings.new()
 	set_slider_values()
 
 func close_pressed() -> void:
-	Global.main.close_settings()
-	set_slider_values()
+	PlayerInfo.save_info()
+	self.visible = false
+	get_parent().show_all()
