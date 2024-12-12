@@ -119,7 +119,7 @@ func next_level() -> void:
 	
 	await get_tree().create_timer(0.61).timeout
 	
-	call_deferred("reset_marble")
+	reset_marble()
 
 
 func set_level_data() -> void:
