@@ -2,6 +2,8 @@ extends Resource
 class_name PlayerData
 
 @export var highest_level : int = 0
+@export var game_over_count : int = 0
+
 @export var visited_levels : Array[int] = []
 
 @export var player_color : Color = Color(1,1,1)
@@ -21,7 +23,6 @@ func check_info() -> void:
 	if current_version != Global.current_version:
 		current_version = Global.current_version
 		visited_levels.clear()
-	
 
 func open_profile():
 	var toReturn = preload("res://Main/Profile.tscn").instantiate()

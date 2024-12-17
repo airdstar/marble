@@ -28,8 +28,6 @@ func _ready() -> void:
 	set_slider_values()
 
 func _process(_delta: float) -> void:
-	$TextureRect.texture = $SubViewport.get_texture()
-	$SubViewport/MeshInstance3D.rotate_y(0.0001)
 	
 	if Input.is_action_just_pressed("back"):
 		close_pressed()
@@ -83,17 +81,3 @@ func close_pressed() -> void:
 	queue_free()
 
 # To be moved
-func red_changed(value: float) -> void:
-	PlayerInfo.player_data.player_color.r = value
-	$SubViewport/MeshInstance3D.mesh.material.albedo_color = PlayerInfo.player_data.player_color
-	$SubViewport/MeshInstance3D/OmniLight3D.light_color = PlayerInfo.player_data.player_color
-
-func blue_changed(value: float) -> void:
-	PlayerInfo.player_data.player_color.b = value
-	$SubViewport/MeshInstance3D.mesh.material.albedo_color = PlayerInfo.player_data.player_color
-	$SubViewport/MeshInstance3D/OmniLight3D.light_color = PlayerInfo.player_data.player_color
-
-func green_changed(value: float) -> void:
-	PlayerInfo.player_data.player_color.g = value
-	$SubViewport/MeshInstance3D.mesh.material.albedo_color = PlayerInfo.player_data.player_color
-	$SubViewport/MeshInstance3D/OmniLight3D.light_color = PlayerInfo.player_data.player_color

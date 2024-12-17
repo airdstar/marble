@@ -1,13 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://bq4emjmf4ogdr"]
+[gd_scene load_steps=3 format=3 uid="uid://bq4emjmf4ogdr"]
 
 [ext_resource type="Script" path="res://Main/settings_menu.gd" id="1_321is"]
 [ext_resource type="Theme" uid="uid://dnuvw7urh35y3" path="res://Assets/Themes/Settings.tres" id="2_qpujl"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_18obf"]
-
-[sub_resource type="SphereMesh" id="SphereMesh_vmnhx"]
-material = SubResource("StandardMaterial3D_18obf")
-flip_faces = true
 
 [node name="Settings" type="Control"]
 layout_mode = 3
@@ -22,56 +16,6 @@ offset_top = -15.0
 offset_right = 1294.0
 offset_bottom = 734.0
 color = Color(0, 0, 0, 0.5)
-
-[node name="TextureRect" type="TextureRect" parent="."]
-layout_mode = 0
-offset_left = 746.0
-offset_top = 201.0
-offset_right = 946.0
-offset_bottom = 401.0
-
-[node name="SubViewport" type="SubViewport" parent="."]
-size = Vector2i(200, 200)
-
-[node name="Camera3D" type="Camera3D" parent="SubViewport"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 400, 1.507)
-current = true
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewport"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 400, 0)
-mesh = SubResource("SphereMesh_vmnhx")
-
-[node name="OmniLight3D" type="OmniLight3D" parent="SubViewport/MeshInstance3D"]
-
-[node name="Red" type="HSlider" parent="."]
-layout_mode = 0
-offset_left = 733.0
-offset_top = 430.0
-offset_right = 956.0
-offset_bottom = 446.0
-max_value = 1.0
-step = 0.01
-value = 0.1
-
-[node name="Blue" type="HSlider" parent="."]
-layout_mode = 0
-offset_left = 733.0
-offset_top = 460.0
-offset_right = 956.0
-offset_bottom = 476.0
-max_value = 1.0
-step = 0.01
-value = 0.1
-
-[node name="Green" type="HSlider" parent="."]
-layout_mode = 0
-offset_left = 733.0
-offset_top = 490.0
-offset_right = 956.0
-offset_bottom = 506.0
-max_value = 1.0
-step = 0.01
-value = 0.1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 0
@@ -339,9 +283,6 @@ layout_mode = 2
 layout_mode = 2
 text = "Reset to default"
 
-[connection signal="value_changed" from="Red" to="." method="red_changed"]
-[connection signal="value_changed" from="Blue" to="." method="blue_changed"]
-[connection signal="value_changed" from="Green" to="." method="green_changed"]
 [connection signal="value_changed" from="VBoxContainer/ControlSettingsBox/TiltSens/HSplitContainer/TiltSlider" to="." method="tilt_sens_changed"]
 [connection signal="value_changed" from="VBoxContainer/ControlSettingsBox/CameraSens/HSplitContainer/CameraSlider" to="." method="camera_sens_changed"]
 [connection signal="value_changed" from="VBoxContainer/ControlSettingsBox/Deadzone/HSplitContainer/DeadzoneSlider" to="." method="deadzone_changed"]

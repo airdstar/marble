@@ -74,7 +74,7 @@ func handle_tilt(delta : float) -> void:
 	var tilt_scalar := 1.0
 	
 	if Input.is_action_pressed("pinch"):
-		tilt_scalar = PlayerInfo.player_data.player_settings.tilt_pinch
+		tilt_scalar = PlayerInfo.player_settings.tilt_pinch
 	
 	var input = Input.get_last_mouse_velocity()
 	if input.y > settings.tilt_deadzone or input.y < -settings.tilt_deadzone:
