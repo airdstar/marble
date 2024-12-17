@@ -14,11 +14,12 @@ extends Node
 ## Should the desired direction be random?
 @export var random_direction : bool = false
 
-var to_rotate : RigidBody3D
+var to_rotate : Node3D
 
 func _ready():
 	to_rotate = get_parent()
-	to_rotate.freeze = true
+	if to_rotate is RigidBody3D:
+		to_rotate.freeze = true
 	
 	rotation_amount = deg_to_rad(rotation_amount)
 	if random_direction:
@@ -31,9 +32,9 @@ func rotate_object():
 	var tween
 	while(true):
 		tween = create_tween()
-		tween.tween_property(to_rotate, "rotation", Vector3(0, to_rotate.rotation.y - rotation_amount,0), rotation_speed)
+		tween.tween_property(to_rotate, "rotation", Vector3(to_rotate.rotation.x, to_rotate.rotation.y - rotation_amount,to_rotate.rotation.z), rotation_speed)
 		await get_tree().create_timer(rotation_speed + downtime).timeout
 		if reversable:
 			tween = create_tween()
-			tween.tween_property(to_rotate, "rotation", Vector3(0, to_rotate.rotation.y + rotation_amount,0), rotation_speed)
+			tween.tween_property(to_rotate, "rotation", Vector3(to_rotate.rotation.x, to_rotate.rotation.y + rotation_amount,to_rotate.rotation.z), rotation_speed)
 			await get_tree().create_timer(rotation_speed + downtime).timeout

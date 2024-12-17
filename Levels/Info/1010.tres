@@ -5,9 +5,8 @@
 
 [resource]
 script = ExtResource("2_1k24i")
-tagline = "Test"
+tagline = "Quart"
 given_time = 5.0
-start_pos = Array[Vector2]([Vector2(0, -6), Vector2(1, -5), Vector2(-1, -5)])
 possible_rotations = Vector2(0, 360)
 goal_type = "Fall"
 associated_scene = ExtResource("1_ly4q7")

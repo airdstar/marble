@@ -5,11 +5,11 @@
 
 [resource]
 script = ExtResource("2_l2teh")
-tagline = "Dude"
+tagline = "Droppa"
 given_time = 5.0
 possible_rotations = Vector2(-90, -90)
-goal_type = "Fall"
+level_type = 1
 associated_scene = ExtResource("1_6wjpm")
-needs_testing = true
+needs_testing = false
 max_tilt = 35.0
 gravity = Vector3(0, 9.8, 0)

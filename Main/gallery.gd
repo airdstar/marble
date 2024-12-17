@@ -6,8 +6,11 @@ enum sort_type {
 	RANDOM
 }
 
+var only_test : bool = false
 var allow_test : bool = false
-var allow_undiscovered : bool = true
+
+var hide_undiscovered : bool = false
+var allow_undiscovered : bool = false
 
 var selected_tab : int = 1
 var options : Array[Button] = []
@@ -20,6 +23,9 @@ var sort_by = sort_type.ID
 @onready var hard : Button = $VBoxContainer/HSplitContainer/HBoxContainer/Hard
 
 func _ready() -> void:
+	if only_test:
+		allow_test = true
+		allow_undiscovered = true
 	check_valid_difficulties()
 	show_options()
 
@@ -37,19 +43,37 @@ func show_options() -> void:
 		3:
 			option_info = Global.hard_levels
 	
-	for n in option_info:
-		create_option(n)
+	var total_removed = 0
+	for n in range(option_info.size()):
+		if only_test:
+			if !option_info[n - total_removed].needs_testing:
+				option_info.remove_at(n - total_removed)
+				total_removed += 1
+		else:
+			if !allow_test and option_info[n - total_removed].needs_testing:
+				option_info.remove_at(n - total_removed)
+				total_removed += 1
+			elif hide_undiscovered:
+				var id : String = option_info[n - total_removed].resource_path.trim_prefix("res://Levels/Info/")
+				if '.tres.remap' in id:
+					id = id.trim_suffix('.tres.remap')
+				else:
+					id = id.trim_suffix('.tres')
+				if !PlayerInfo.player_data.visited_levels.has(int(id)):
+					option_info.remove_at(n - total_removed)
+					total_removed += 1
+
+	create_options()
 	sort_options()
 
-func create_option(option : level_resource) -> void:
-	if (option.needs_testing and allow_test) or !option.needs_testing:
-		
+func create_options() -> void:
+	for n in option_info:
 		var button_holder = Button.new()
 		options.append(button_holder)
 		button_holder.pressed.connect(option_pressed.bind(button_holder))
 		$VBoxContainer/ScrollContainer/VBoxContainer.add_child(button_holder)
 		
-		set_option(button_holder, option)
+		set_option(button_holder, n)
 		
 
 func option_pressed(button):
@@ -65,7 +89,7 @@ func set_option(button : Button, option : level_resource) -> void:
 	else:
 		id = id.trim_suffix('.tres')
 	
-	if PlayerInfo.player_data.visited_levels.has(int(id)) or allow_undiscovered:
+	if PlayerInfo.player_data.visited_levels.has(int(id)) or allow_undiscovered or (option.needs_testing and allow_test):
 		button.text = option.tagline
 	else:
 		button.text = "???"

@@ -5,11 +5,10 @@
 
 [resource]
 script = ExtResource("2_kkwn5")
-tagline = "Test"
+tagline = "Around da world"
 given_time = 5.0
-start_pos = Array[Vector2]([Vector2(0, 8), Vector2(0, -8)])
 possible_rotations = Vector2(0, 360)
-goal_type = "Fall"
+level_type = 0
 associated_scene = ExtResource("1_36lg1")
 needs_testing = false
 max_tilt = 35.0

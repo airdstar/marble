@@ -5,7 +5,7 @@
 
 [resource]
 script = ExtResource("1_h2u1c")
-tagline = "Tagline"
+tagline = "Double circle *drols"
 given_time = 5.0
 possible_rotations = Vector2(0, 360)
 goal_type = "Fall"

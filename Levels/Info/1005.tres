@@ -5,10 +5,10 @@
 
 [resource]
 script = ExtResource("1_0xxv6")
-tagline = "Test"
+tagline = "Blocker blocker go away"
 given_time = 5.0
 possible_rotations = Vector2(265, 540)
-goal_type = "Fall"
+level_type = 0
 associated_scene = ExtResource("1_ljp2g")
 needs_testing = false
 max_tilt = 35.0

@@ -17,6 +17,8 @@ extends Node
 @onready var blue_slider : HSlider = $Blue
 @onready var green_slider : HSlider = $Green
 
+@onready var background = $Background
+
 var settings 
 
 func _ready() -> void:
@@ -36,18 +38,49 @@ func set_slider_values() -> void:
 	deadzone_slider.value = settings.tilt_deadzone
 	pinch_slider.value = settings.tilt_pinch
 
+# Control Settings
 func tilt_sens_changed(value : float) -> void:
 	tilt_value.text = "[center]%.1f" % (value * 10)
-
 func camera_sens_changed(value: float) -> void:
 	camera_value.text = "[center]%.2f" % (value/camera_slider.min_value)
-
 func deadzone_changed(value: float) -> void:
 	deadzone_value.text = "[center]%.2f" % (value / deadzone_slider.max_value)
-
 func pinch_changed(value: float) -> void:
 	pinch_value.text = "[center]%d" % (pinch_slider.value * 100) + "%"
 
+# Visual Settings
+func res_changed(_res: Vector2) -> void:
+	pass
+func window_type_changed(_type : int) -> void:
+	pass
+
+# Others
+func save_settings() -> void:
+	settings.tilt_sens = tilt_slider.value / 100
+	settings.camera_sens = camera_slider.value
+	settings.tilt_deadzone = deadzone_slider.value
+	settings.tilt_pinch = pinch_slider.value
+	
+	#if invert_x.button_pressed:
+		#settings.invert_tilt_x = -1
+	#else:
+		#settings.invert_tilt_x = 1
+	
+	#if invert_y.button_pressed:
+		#settings.invert_tilt_y = -1
+	#else:
+		#settings.invert_tilt_y = 1
+
+func reset_settings() -> void:
+	PlayerInfo.player_data.player_settings = Settings.new()
+	set_slider_values()
+
+func close_pressed() -> void:
+	PlayerInfo.save_info()
+	self.visible = false
+	get_parent().show_all()
+
+# To be moved
 func red_changed(value: float) -> void:
 	PlayerInfo.player_data.player_color.r = value
 	$SubViewport/MeshInstance3D.mesh.material.albedo_color = PlayerInfo.player_data.player_color
@@ -62,28 +95,3 @@ func green_changed(value: float) -> void:
 	PlayerInfo.player_data.player_color.g = value
 	$SubViewport/MeshInstance3D.mesh.material.albedo_color = PlayerInfo.player_data.player_color
 	$SubViewport/MeshInstance3D/OmniLight3D.light_color = PlayerInfo.player_data.player_color
-
-func save_settings() -> void:
-	settings.tilt_sens = tilt_slider.value / 100
-	settings.camera_sens = camera_slider.value
-	settings.tilt_deadzone = deadzone_slider.value
-	settings.tilt_pinch = pinch_slider.value
-	
-	if invert_x.button_pressed:
-		settings.invert_tilt_x = -1
-	else:
-		settings.invert_tilt_x = 1
-	
-	if invert_y.button_pressed:
-		settings.invert_tilt_y = -1
-	else:
-		settings.invert_tilt_y = 1
-
-func reset_settings() -> void:
-	PlayerInfo.player_data.player_settings = Settings.new()
-	set_slider_values()
-
-func close_pressed() -> void:
-	PlayerInfo.save_info()
-	self.visible = false
-	get_parent().show_all()

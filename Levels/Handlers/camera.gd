@@ -3,24 +3,25 @@ extends Node3D
 @onready var camera = $Camera3D
 
 var skybox : Environment
-
 var settings = PlayerInfo.player_data.player_settings
+var allow_input : bool = true
 
 func _ready():
 	pass
 
 func _process(delta: float) -> void:
-	var camera_input = Input.get_axis("camera_left", "camera_right")
-	
-	if (camera_input != 0):
+	if allow_input:
+		var camera_input = Input.get_axis("camera_left", "camera_right")
 		
-		match settings.control_type:
-			0:
-				rotate_y(deg_to_rad(camera_input * settings.camera_sens) * delta)
-				skybox.sky_rotation += Vector3(0, deg_to_rad(camera_input * settings.camera_sens) * delta, 0)
-			1:
-				rotate_y(deg_to_rad(camera_input * settings.camera_sens_controller) * delta)
-				skybox.sky_rotation += Vector3(0, deg_to_rad(camera_input * settings.camera_sens) * delta, 0)
+		if (camera_input != 0):
+			
+			match settings.control_type:
+				0:
+					rotate_y(deg_to_rad(camera_input * settings.camera_sens) * delta)
+					skybox.sky_rotation += Vector3(0, deg_to_rad(camera_input * settings.camera_sens) * delta, 0)
+				1:
+					rotate_y(deg_to_rad(camera_input * settings.camera_sens_controller) * delta)
+					skybox.sky_rotation += Vector3(0, deg_to_rad(camera_input * settings.camera_sens) * delta, 0)
 
 func rand_rotation(lowerbound : float, upperbound : float):
 	var rotationAmount = deg_to_rad(randf_range(lowerbound, upperbound))

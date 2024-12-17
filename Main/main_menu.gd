@@ -17,6 +17,11 @@ func _ready() -> void:
 	settings_menu.visible = false
 
 func play_pressed() -> void:
+	RunInfo.current_difficulty = RunInfo.difficulty.EASY
+	Global.main.start_run()
+
+func play_test_pressed() -> void:
+	RunInfo.current_difficulty = RunInfo.difficulty.TEST
 	Global.main.start_run()
 
 func gallery_pressed() -> void:

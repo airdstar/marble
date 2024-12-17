@@ -22,7 +22,6 @@ func start_game() -> void:
 		marble = holder
 	
 	call_deferred("reset_marble")
-	
 
 func next_level() -> void:
 	transitioning = true
@@ -35,22 +34,17 @@ func next_level() -> void:
 	
 	await get_tree().create_timer(0.6).timeout
 	
-	var rot = randf_range(level_info.possible_rotations.x,level_info.possible_rotations.y)
-	camera.rotation.y = deg_to_rad(rot)
-	camera.skybox.sky_rotation = Vector3(0, deg_to_rad(rot), 0) + relative_skybox_rotation
+	default_camera_skybox()
 	
 	await get_tree().create_timer(0.3).timeout
 	
 	allow_input = false
 	reset_marble()
-	
 
 func set_level_data() -> void:
 	$CanvasLayer/VBoxContainer/tagline.text = level_info.tagline
 	
-	var rot = randf_range(level_info.possible_rotations.x,level_info.possible_rotations.y)
-	camera.rotation.y = deg_to_rad(rot)
-	camera.skybox.sky_rotation = Vector3(0, deg_to_rad(rot), 0) + relative_skybox_rotation
+	default_camera_skybox()
 	
 	origin.add_child(instanced)
 

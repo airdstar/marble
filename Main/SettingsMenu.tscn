@@ -14,7 +14,7 @@ layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_321is")
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="Background" type="ColorRect" parent="."]
 process_mode = 3
 layout_mode = 0
 offset_left = -9.0
@@ -102,7 +102,7 @@ dragger_visibility = 1
 layout_mode = 2
 theme = ExtResource("2_qpujl")
 bbcode_enabled = true
-text = "[center]Tilt Sens"
+text = "Tilt Sens"
 fit_content = true
 
 [node name="TiltSlider" type="HSlider" parent="ControlSettingsBox/TiltSens/HSplitContainer"]
@@ -138,7 +138,7 @@ dragger_visibility = 1
 layout_mode = 2
 theme = ExtResource("2_qpujl")
 bbcode_enabled = true
-text = "[center]Camera Sens"
+text = "Camera Sens"
 fit_content = true
 
 [node name="CameraSlider" type="HSlider" parent="ControlSettingsBox/CameraSens/HSplitContainer"]
@@ -173,7 +173,7 @@ dragger_visibility = 1
 layout_mode = 2
 theme = ExtResource("2_qpujl")
 bbcode_enabled = true
-text = "[center]Deadzone"
+text = "Deadzone"
 fit_content = true
 
 [node name="DeadzoneSlider" type="HSlider" parent="ControlSettingsBox/Deadzone/HSplitContainer"]
@@ -208,7 +208,7 @@ dragger_visibility = 1
 layout_mode = 2
 theme = ExtResource("2_qpujl")
 bbcode_enabled = true
-text = "[center]Pinch"
+text = "Pinch"
 fit_content = true
 
 [node name="PinchSlider" type="HSlider" parent="ControlSettingsBox/Pinch/HSplitContainer"]
@@ -238,7 +238,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("2_qpujl")
 bbcode_enabled = true
-text = "[center]Invert X"
+text = "Invert X"
 scroll_active = false
 
 [node name="InvertX" type="CheckButton" parent="ControlSettingsBox/InvertX"]
@@ -258,7 +258,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("2_qpujl")
 bbcode_enabled = true
-text = "[center]Invert Y"
+text = "Invert Y"
 scroll_active = false
 
 [node name="InvertY" type="CheckButton" parent="ControlSettingsBox/InvertY"]

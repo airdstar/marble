@@ -18,9 +18,10 @@ func input_trigger(area: Area3D) -> void:
 	if area.get_parent() is player:
 		Global.runBase.allow_input = true
 
-func start_timer(_area : Area3D) -> void:
-	start.set_deferred("monitoring", false)
-	Global.runBase.start_timer()
+func start_timer(area : Area3D) -> void:
+	if area.get_parent() is player:
+		start.set_deferred("monitoring", false)
+		Global.runBase.start_timer()
 
 func reset_state() -> void:
 	await get_tree().create_timer(0.7).timeout

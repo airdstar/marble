@@ -28,14 +28,18 @@ var settings = PlayerInfo.player_data.player_settings
 @onready var origin = $Origin
 @onready var skybox = $WorldEnvironment.environment
 
+@onready var tagline_text = $CanvasLayer/VBoxContainer/tagline
+@onready var fps_text = $CanvasLayer/VBoxContainer/fps
+@onready var speed_text = $CanvasLayer/VBoxContainer/speed
+
 func _ready() -> void:
 	Global.runBase = self
 	camera.skybox = skybox
 	start_game()
 
 func _process(delta: float) -> void:
-	$CanvasLayer/VBoxContainer/fps.text = "FPS %d" % Engine.get_frames_per_second()
-	$CanvasLayer/VBoxContainer/speed.text = "Speed %.01f" % (abs(marble.angular_velocity.x) + abs(marble.angular_velocity.y) + abs(marble.angular_velocity.z))
+	fps_text.text = "FPS %d" % Engine.get_frames_per_second()
+	speed_text.text = "Speed %.01f" % (abs(marble.angular_velocity.x) + abs(marble.angular_velocity.y) + abs(marble.angular_velocity.z))
 	
 	if allow_input:
 		handle_tilt(delta)
@@ -72,7 +76,7 @@ func handle_tilt(delta : float) -> void:
 	match settings.control_type:
 		0:
 			if Input.is_action_pressed("pinch"):
-				tilt_scalar = PlayerInfo.player_data.player_settings.mouse_tilt_pinch
+				tilt_scalar = PlayerInfo.player_data.player_settings.tilt_pinch
 			
 			var input = Input.get_last_mouse_velocity()
 			if input.y > settings.tilt_deadzone or input.y < -settings.tilt_deadzone:
@@ -84,8 +88,10 @@ func handle_tilt(delta : float) -> void:
 func start_game() -> void:
 	transitioning = true
 	allow_input = false
+	RunInfo.levels_until_change = 5
 	RunInfo.current_level = 1
-	RunInfo.current_difficulty = RunInfo.difficulty.EASY
+	if RunInfo.current_difficulty != RunInfo.difficulty.TEST:
+		RunInfo.current_difficulty = RunInfo.difficulty.EASY
 
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	
@@ -105,25 +111,10 @@ func start_game() -> void:
 	call_deferred("reset_marble")
 
 func next_level() -> void:
-	transitioning = true
-	prev_instance = instanced
-	marble.visible = false
-	
-	create_level()
-	set_level_data()
-	camera.next_level()
-	change_skybox_rotation()
-	
-	await get_tree().create_timer(0.3).timeout
-	allow_input = false
-	
-	await get_tree().create_timer(0.61).timeout
-	
-	reset_marble()
-
+	pass
 
 func set_level_data() -> void:
-	$CanvasLayer/VBoxContainer/tagline.text = level_info.tagline
+	tagline_text.text = level_info.tagline
 	
 	set_level_time()
 	
@@ -131,12 +122,9 @@ func set_level_data() -> void:
 		await get_tree().create_timer(0.3).timeout
 		prev_instance.queue_free()
 	
-	var rot = randf_range(level_info.possible_rotations.x,level_info.possible_rotations.y)
-	camera.rotation.y = deg_to_rad(rot)
-	camera.skybox.sky_rotation = Vector3(0, deg_to_rad(rot), 0) + relative_skybox_rotation
+	default_camera_skybox()
 	
 	origin.add_child(instanced)
-	instanced.choose_spawn()
 
 func set_level_time():
 	pass
@@ -154,8 +142,10 @@ func pick_level() -> void:
 				level_info = Global.medium_levels.pick_random()
 			2:
 				level_info = Global.hard_levels.pick_random()
+			3:
+				level_info = Global.test_levels.pick_random()
 		
-		if !level_info.needs_testing:
+		if !level_info.needs_testing or RunInfo.current_difficulty == RunInfo.difficulty.TEST:
 			valid_level = true
 	
 	var id : String = level_info.resource_path.trim_prefix("res://Levels/Info/")
@@ -171,6 +161,23 @@ func create_level() -> void:
 	pick_level()
 	instanced = level_info.associated_scene.instantiate()
 
+func default_camera_skybox() -> void:
+	match level_info.level_type:
+		0:
+			camera.allow_input = true
+			var rot = randf_range(level_info.possible_rotations.x,level_info.possible_rotations.y)
+			camera.rotation.y = deg_to_rad(rot)
+			camera.skybox.sky_rotation = Vector3(0, deg_to_rad(rot), 0) + relative_skybox_rotation
+		1:
+			camera.allow_input = false
+			match randi_range(0,1):
+				0:
+					camera.rotation.y = deg_to_rad(90)
+					camera.skybox.sky_rotation = Vector3(0, deg_to_rad(90), 0) + relative_skybox_rotation
+				1:
+					camera.rotation.y = deg_to_rad(-90)
+					camera.skybox.sky_rotation = Vector3(0, deg_to_rad(-90), 0) + relative_skybox_rotation
+
 func reset_marble() -> void:
 	marble.visible = true
 	marble.linear_velocity = Vector3.ZERO
@@ -180,7 +187,8 @@ func reset_marble() -> void:
 
 func reset_orientation() -> void:
 	allow_input = false
-	camera.rand_rotation(level_info.possible_rotations.x, level_info.possible_rotations.y)
+	if level_info.level_type == 0:
+		camera.rand_rotation(level_info.possible_rotations.x, level_info.possible_rotations.y)
 
 func change_skybox_rotation() -> void:
 	relative_desired_rotation = Vector3(randf_range(-0.0003,0.0003),randf_range(-0.0003,0.0003),randf_range(-0.0003,0.0003))

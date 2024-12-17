@@ -5,10 +5,10 @@
 
 [resource]
 script = ExtResource("2_1djo8")
-tagline = "That fucking level that i hate"
+tagline = "It go up on a tuesday"
 given_time = 5.0
 possible_rotations = Vector2(50, 310)
-goal_type = "Fall"
+level_type = 0
 associated_scene = ExtResource("1_ilo55")
 needs_testing = false
 max_tilt = 35.0

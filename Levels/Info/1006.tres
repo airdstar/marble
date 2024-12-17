@@ -5,10 +5,10 @@
 
 [resource]
 script = ExtResource("1_paosp")
-tagline = "Test"
+tagline = "Triple :P"
 given_time = 5.0
 possible_rotations = Vector2(0, 360)
-goal_type = "Fall"
+level_type = 0
 associated_scene = ExtResource("1_7q6ff")
 needs_testing = false
 max_tilt = 35.0

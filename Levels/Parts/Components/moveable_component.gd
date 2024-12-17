@@ -12,19 +12,21 @@ class_name moveable_component
 @export var trigger_pos : Vector3 = Vector3(0,0.4,0)
 @export var trigger_size : Vector3 = Vector3(3,1,1.5)
 
+@export_category("Fixes")
+@export var disable_collision_below : bool = true
+
 var area : Area3D
-var to_move : RigidBody3D
+var to_move : Node3D
 var base : Node3D
 
 var platform_collision : CollisionShape3D
 
 func _ready():
 	to_move = get_parent()
-	to_move.freeze = true
+	if to_move is RigidBody3D:
+		to_move.freeze = true
+		platform_collision = to_move.get_node("MeshInstance3D").get_node("StaticBody3D").get_node("CollisionShape3D")
 	base = to_move.get_parent()
-	
-	platform_collision = to_move.get_node("MeshInstance3D").get_node("StaticBody3D").get_node("CollisionShape3D")
-	
 	if playerReliant:
 		area = Area3D.new()
 		to_move.add_child.call_deferred(area)
@@ -39,10 +41,11 @@ func _ready():
 		move_object()
 
 func _physics_process(_delta : float) -> void:
-	if Global.runBase.marble.position.y < to_move.global_position.y:
-		platform_collision.disabled = true
-	else:
-		platform_collision.disabled = false
+	if disable_collision_below:
+		if Global.runBase.marble.position.y < to_move.global_position.y:
+			platform_collision.disabled = true
+		else:
+			platform_collision.disabled = false
 
 func move_object():
 	if !playerReliant:
