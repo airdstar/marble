@@ -9,7 +9,7 @@ func _ready():
 		PlayerInfo.player_data.highest_level = RunInfo.current_level
 	Global.runBase.timerText.visible = false
 	level_display.text += "You reached level %d!" % RunInfo.current_level
-	PlayerInfo.save_info()
+	PlayerInfo.save_data()
 	
 	get_tree().paused = true
 	RunInfo.inRun = false

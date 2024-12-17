@@ -1,17 +1,17 @@
 extends Node
 
-@onready var tilt_slider : HSlider = $ControlSettingsBox/TiltSens/HSplitContainer/TiltSlider
-@onready var camera_slider : HSlider = $ControlSettingsBox/CameraSens/HSplitContainer/CameraSlider
-@onready var deadzone_slider : HSlider = $ControlSettingsBox/Deadzone/HSplitContainer/DeadzoneSlider
-@onready var pinch_slider : HSlider = $ControlSettingsBox/Pinch/HSplitContainer/PinchSlider
+@onready var tilt_slider : HSlider = $VBoxContainer/ControlSettingsBox/TiltSens/HSplitContainer/TiltSlider
+@onready var camera_slider : HSlider = $VBoxContainer/ControlSettingsBox/CameraSens/HSplitContainer/CameraSlider
+@onready var deadzone_slider : HSlider = $VBoxContainer/ControlSettingsBox/Deadzone/HSplitContainer/DeadzoneSlider
+@onready var pinch_slider : HSlider = $VBoxContainer/ControlSettingsBox/Pinch/HSplitContainer/PinchSlider
 
-@onready var tilt_value : RichTextLabel = $ControlSettingsBox/TiltSens/TiltSensValue
-@onready var camera_value : RichTextLabel = $ControlSettingsBox/CameraSens/CameraSensValue
-@onready var deadzone_value : RichTextLabel = $ControlSettingsBox/Deadzone/DeadzoneValue
-@onready var pinch_value : RichTextLabel = $ControlSettingsBox/Pinch/PinchValue
+@onready var tilt_value : RichTextLabel = $VBoxContainer/ControlSettingsBox/TiltSens/TiltSensValue
+@onready var camera_value : RichTextLabel = $VBoxContainer/ControlSettingsBox/CameraSens/CameraSensValue
+@onready var deadzone_value : RichTextLabel = $VBoxContainer/ControlSettingsBox/Deadzone/DeadzoneValue
+@onready var pinch_value : RichTextLabel = $VBoxContainer/ControlSettingsBox/Pinch/PinchValue
 
-@onready var invert_x : CheckButton = $ControlSettingsBox/InvertX/InvertX
-@onready var invert_y : CheckButton = $ControlSettingsBox/InvertY/InvertY
+@onready var invert_x : CheckButton = $VBoxContainer/ControlSettingsBox/InvertX/InvertX
+@onready var invert_y : CheckButton = $VBoxContainer/ControlSettingsBox/InvertY/InvertY
 
 @onready var red_slider : HSlider = $Red
 @onready var blue_slider : HSlider = $Blue
@@ -19,24 +19,26 @@ extends Node
 
 @onready var background = $Background
 
-var settings 
 
 func _ready() -> void:
 	red_slider.value = PlayerInfo.player_data.player_color.r
 	blue_slider.value = PlayerInfo.player_data.player_color.b
 	green_slider.value = PlayerInfo.player_data.player_color.g
 	
-	settings = PlayerInfo.player_data.player_settings
+	set_slider_values()
 
 func _process(_delta: float) -> void:
 	$TextureRect.texture = $SubViewport.get_texture()
 	$SubViewport/MeshInstance3D.rotate_y(0.0001)
+	
+	if Input.is_action_just_pressed("back"):
+		close_pressed()
 
 func set_slider_values() -> void:
-	tilt_slider.value = (settings.tilt_sens * 100)
-	camera_slider.value = settings.camera_sens
-	deadzone_slider.value = settings.tilt_deadzone
-	pinch_slider.value = settings.tilt_pinch
+	tilt_slider.value = (PlayerInfo.player_settings.tilt_sens * 100)
+	camera_slider.value = PlayerInfo.player_settings.camera_sens
+	deadzone_slider.value = PlayerInfo.player_settings.tilt_deadzone
+	pinch_slider.value = PlayerInfo.player_settings.tilt_pinch
 
 # Control Settings
 func tilt_sens_changed(value : float) -> void:
@@ -56,10 +58,10 @@ func window_type_changed(_type : int) -> void:
 
 # Others
 func save_settings() -> void:
-	settings.tilt_sens = tilt_slider.value / 100
-	settings.camera_sens = camera_slider.value
-	settings.tilt_deadzone = deadzone_slider.value
-	settings.tilt_pinch = pinch_slider.value
+	PlayerInfo.player_settings.tilt_sens = tilt_slider.value / 100
+	PlayerInfo.player_settings.camera_sens = camera_slider.value
+	PlayerInfo.player_settings.tilt_deadzone = deadzone_slider.value
+	PlayerInfo.player_settings.tilt_pinch = pinch_slider.value
 	
 	#if invert_x.button_pressed:
 		#settings.invert_tilt_x = -1
@@ -70,15 +72,15 @@ func save_settings() -> void:
 		#settings.invert_tilt_y = -1
 	#else:
 		#settings.invert_tilt_y = 1
+	
+	PlayerInfo.save_settings()
 
 func reset_settings() -> void:
 	PlayerInfo.player_data.player_settings = Settings.new()
 	set_slider_values()
 
 func close_pressed() -> void:
-	PlayerInfo.save_info()
-	self.visible = false
-	get_parent().show_all()
+	queue_free()
 
 # To be moved
 func red_changed(value: float) -> void:

@@ -9,7 +9,6 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("exit"):
-		PlayerInfo.save_info()
 		get_tree().quit()
 
 func main_menu() -> void:
@@ -25,6 +24,7 @@ func start_run() -> void:
 	add_child(currentScene)
 
 func open_gallery() -> void:
+	RunInfo.inRun = false
 	if currentScene != null:
 		currentScene.queue_free()
 	currentScene = preload("res://Main/Gallery.tscn").instantiate()

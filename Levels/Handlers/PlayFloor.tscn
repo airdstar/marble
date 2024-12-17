@@ -1,15 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://cqg7msdtga6kt"]
+[gd_scene load_steps=7 format=3 uid="uid://cqg7msdtga6kt"]
 
 [ext_resource type="Script" path="res://Levels/Handlers/play_floor.gd" id="1_jqjs0"]
-[ext_resource type="Texture2D" uid="uid://bm3rtxg0minif" path="res://Assets/sky_t.002.png" id="2_p1igb"]
 [ext_resource type="Script" path="res://Levels/Handlers/camera.gd" id="3_acswx"]
 [ext_resource type="Theme" uid="uid://dl6a6mq4q5lda" path="res://Assets/Themes/timer.tres" id="4_db1ct"]
 
-[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_3un7p"]
-panorama = ExtResource("2_p1igb")
-
 [sub_resource type="Sky" id="Sky_0bori"]
-sky_material = SubResource("PanoramaSkyMaterial_3un7p")
 
 [sub_resource type="Environment" id="Environment_s1d85"]
 background_mode = 2

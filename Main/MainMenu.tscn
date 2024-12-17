@@ -39,7 +39,6 @@ layout_mode = 2
 text = "Gallery"
 
 [node name="Profile" type="Button" parent="CenterContainer/VBoxContainer"]
-visible = false
 layout_mode = 2
 text = "Profile"
 
@@ -51,4 +50,5 @@ text = "Settings
 [connection signal="pressed" from="CenterContainer/VBoxContainer/Play" to="." method="play_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/PlayTest" to="." method="play_test_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/Gallery" to="." method="gallery_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/Profile" to="." method="profile_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/Settings" to="." method="settings_pressed"]

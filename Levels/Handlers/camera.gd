@@ -3,7 +3,7 @@ extends Node3D
 @onready var camera = $Camera3D
 
 var skybox : Environment
-var settings = PlayerInfo.player_data.player_settings
+var settings = PlayerInfo.player_settings
 var allow_input : bool = true
 
 func _ready():

@@ -22,7 +22,7 @@ var marble : player
 var chosenSpawn : Vector2
 
 #Player related
-var settings = PlayerInfo.player_data.player_settings
+var settings = PlayerInfo.player_settings
 
 @onready var camera = $camera_y
 @onready var origin = $Origin
@@ -73,16 +73,14 @@ func handle_tilt(delta : float) -> void:
 	
 	var tilt_scalar := 1.0
 	
-	match settings.control_type:
-		0:
-			if Input.is_action_pressed("pinch"):
-				tilt_scalar = PlayerInfo.player_data.player_settings.tilt_pinch
-			
-			var input = Input.get_last_mouse_velocity()
-			if input.y > settings.tilt_deadzone or input.y < -settings.tilt_deadzone:
-				input_tilt.x += input.y * settings.tilt_sens * tilt_scalar * delta
-			if input.x > settings.tilt_deadzone or input.x < -settings.tilt_deadzone:
-				input_tilt.y += -input.x * settings.tilt_sens * tilt_scalar * delta
+	if Input.is_action_pressed("pinch"):
+		tilt_scalar = PlayerInfo.player_data.player_settings.tilt_pinch
+	
+	var input = Input.get_last_mouse_velocity()
+	if input.y > settings.tilt_deadzone or input.y < -settings.tilt_deadzone:
+		input_tilt.x += input.y * settings.tilt_sens * tilt_scalar * delta
+	if input.x > settings.tilt_deadzone or input.x < -settings.tilt_deadzone:
+		input_tilt.y += -input.x * settings.tilt_sens * tilt_scalar * delta
 
 
 func start_game() -> void:

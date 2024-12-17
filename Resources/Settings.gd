@@ -1,12 +1,6 @@
 extends Resource
 class_name Settings
 
-enum control {
-	KEYBOARDMOUSE
-}
-
-@export var control_type : control = control.KEYBOARDMOUSE
-
 #Camera Options
 @export var camera_sens : float = 70
 
@@ -20,9 +14,6 @@ enum control {
 @export var invert_tilt_y : int = 1
 
 func check_info() -> void:
-	if control_type == null:
-		control_type = control.KEYBOARDMOUSE
-	
 	if camera_sens == null:
 		camera_sens = 70
 	

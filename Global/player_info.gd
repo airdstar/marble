@@ -1,22 +1,39 @@
 extends Node
 
-var save_path : String = "user://player_info.tres"
+var data_save_path : String = "user://player_data.tres"
+var settings_save_path : String = "user://player_settings.tres"
 
 var player_data : PlayerData = PlayerData.new()
+var player_settings : Settings = Settings.new()
 
 func _ready() -> void:
 	load_info()
 
 func load_info() -> void:
-	if !FileAccess.file_exists(save_path):
-		print("Save path is missing")
+	if !FileAccess.file_exists(data_save_path):
+		print("Data path is missing")
+		clear_data()
 	else:
-		player_data = load(save_path)
+		player_data = load(data_save_path)
 		player_data.check_info()
+	
+	if !FileAccess.file_exists(settings_save_path):
+		print("Settings path is missing")
+		clear_settings()
+	else:
+		player_settings = load(settings_save_path)
+		player_settings.check_info()
 
-func save_info() -> void:
-	ResourceSaver.save(player_data, save_path)
+func save_data() -> void:
+	ResourceSaver.save(player_data, data_save_path)
 
-func clear_info() -> void:
+func save_settings() -> void:
+	ResourceSaver.save(player_settings, settings_save_path)
+
+func clear_data() -> void:
 	player_data = PlayerData.new()
-	ResourceSaver.save(player_data, save_path)
+	ResourceSaver.save(player_data, data_save_path)
+
+func clear_settings() -> void:
+	player_settings = Settings.new()
+	ResourceSaver.save(player_settings, settings_save_path)
