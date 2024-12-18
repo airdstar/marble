@@ -4,9 +4,6 @@ class_name level_resource
 ## Name of the level
 @export var tagline : String = "Tagline"
 
-## Time given at start of level
-@export var given_time : float = 5.0
-
 ## Possible rotations that the level can default to
 @export var possible_rotations : Vector2 = Vector2(0,360)
 

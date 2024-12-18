@@ -40,7 +40,7 @@ func set_level_time():
 		var remaining_time = timer.time_left
 		timer.stop()
 		var tween = create_tween()
-		tween.tween_method(timer.set_wait_time, remaining_time, remaining_time + level_info.given_time, 1).set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_IN)
+		tween.tween_method(timer.set_wait_time, remaining_time, remaining_time + 4.5, 1).set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_IN)
 	else:
 		timer.stop()
 		timer.set_wait_time(20)

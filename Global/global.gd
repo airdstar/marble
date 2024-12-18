@@ -3,7 +3,7 @@ extends Node
 var main : Node
 var runBase : Node3D
 
-var current_version : String = "0.0.2.1"
+var current_version : String = "0.0.2.0"
 
 var resolutions_16_9 : Dictionary = {"1920x1080" : Vector2(1920,1080),
 									"1600x900" : Vector2(1600,900),

@@ -10,6 +10,7 @@ script = ExtResource("1_321is")
 
 [node name="Background2" type="ColorRect" parent="."]
 process_mode = 3
+layout_mode = 0
 offset_left = 437.0
 offset_right = 835.0
 offset_bottom = 731.0
