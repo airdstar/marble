@@ -13,26 +13,16 @@ extends Node
 @onready var invert_x : CheckButton = $VBoxContainer/ControlSettingsBox/InvertX/InvertX
 @onready var invert_y : CheckButton = $VBoxContainer/ControlSettingsBox/InvertY/InvertY
 
-@onready var red_slider : HSlider = $Red
-@onready var blue_slider : HSlider = $Blue
-@onready var green_slider : HSlider = $Green
-
-@onready var background = $Background
-
 
 func _ready() -> void:
-	red_slider.value = PlayerInfo.player_data.player_color.r
-	blue_slider.value = PlayerInfo.player_data.player_color.b
-	green_slider.value = PlayerInfo.player_data.player_color.g
-	
-	set_slider_values()
+	set_values()
 
 func _process(_delta: float) -> void:
 	
 	if Input.is_action_just_pressed("back"):
 		close_pressed()
 
-func set_slider_values() -> void:
+func set_values() -> void:
 	tilt_slider.value = (PlayerInfo.player_settings.tilt_sens * 100)
 	camera_slider.value = PlayerInfo.player_settings.camera_sens
 	deadzone_slider.value = PlayerInfo.player_settings.tilt_deadzone
@@ -75,7 +65,7 @@ func save_settings() -> void:
 
 func reset_settings() -> void:
 	PlayerInfo.player_data.player_settings = Settings.new()
-	set_slider_values()
+	set_values()
 
 func close_pressed() -> void:
 	queue_free()

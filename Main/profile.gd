@@ -4,41 +4,54 @@ extends Control
 @onready var blue_slider : HSlider = $VBoxContainer/Blue
 @onready var green_slider : HSlider = $VBoxContainer/Green
 
+@onready var player_info : RichTextLabel = $Info
+
 var playerdata : PlayerData
+var is_own_profile : bool = false
 
 func _ready() -> void:
-	red_slider.value = playerdata.player_color.r
-	blue_slider.value = playerdata.player_color.b
-	green_slider.value = playerdata.player_color.g
+	if is_own_profile:
+		own_profile_opened()
+	else:
+		red_slider.visible = false
+		blue_slider.visible = false
+		green_slider.visible = false
+	
+	if playerdata.game_over_count != 0: 
+		player_info.text = "Highest level reached: %d\n" % playerdata.highest_level
+		player_info.text += "Amount of runs done: %d\n" % playerdata.game_over_count
+	else:
+		player_info.text = "Not played yet\n"
 
 func _process(_delta: float) -> void:
-	$VBoxContainer/TextureRect.texture = $SubViewport.get_texture()
-	$SubViewport/MeshInstance3D.rotate_y(0.0001)
-	
 	if Input.is_action_just_pressed("back"):
 		close_pressed()
 
 func set_data(playerdata_in : PlayerData) -> void:
 	playerdata = playerdata_in
-	if playerdata.highest_level != 0: 
-		$Label.text = "Highest level reached: %d" % playerdata.highest_level
-	else:
-		$Label.text = "Not played yet"
+	if playerdata == PlayerInfo.player_data:
+		is_own_profile = true
+
+func own_profile_opened():
+	red_slider.visible = true
+	blue_slider.visible = true
+	green_slider.visible = true
+	
+	red_slider.value = playerdata.player_color.r
+	blue_slider.value = playerdata.player_color.b
+	green_slider.value = playerdata.player_color.g
 
 func red_changed(value: float) -> void:
-	PlayerInfo.player_data.player_color.r = value
-	$SubViewport/MeshInstance3D.mesh.material.albedo_color = PlayerInfo.player_data.player_color
-	$SubViewport/MeshInstance3D/OmniLight3D.light_color = PlayerInfo.player_data.player_color
+	playerdata.player_color.r = value
+	$VBoxContainer/TextureRect.modulate = playerdata.player_color
 
 func blue_changed(value: float) -> void:
-	PlayerInfo.player_data.player_color.b = value
-	$SubViewport/MeshInstance3D.mesh.material.albedo_color = PlayerInfo.player_data.player_color
-	$SubViewport/MeshInstance3D/OmniLight3D.light_color = PlayerInfo.player_data.player_color
+	playerdata.player_color.b = value
+	$VBoxContainer/TextureRect.modulate = playerdata.player_color
 
 func green_changed(value: float) -> void:
-	PlayerInfo.player_data.player_color.g = value
-	$SubViewport/MeshInstance3D.mesh.material.albedo_color = PlayerInfo.player_data.player_color
-	$SubViewport/MeshInstance3D/OmniLight3D.light_color = PlayerInfo.player_data.player_color
+	playerdata.player_color.g = value
+	$VBoxContainer/TextureRect.modulate = playerdata.player_color
 
 func close_pressed() -> void:
 	queue_free()

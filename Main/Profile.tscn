@@ -1,13 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://dh7dc6u5iari0"]
+[gd_scene load_steps=3 format=3 uid="uid://dh7dc6u5iari0"]
 
 [ext_resource type="Script" path="res://Main/profile.gd" id="1_jmq05"]
-[ext_resource type="Texture2D" uid="uid://b12odpmjarfvt" path="res://Assets/dummy-200x200.png" id="2_v856p"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_18obf"]
-
-[sub_resource type="SphereMesh" id="SphereMesh_x6be2"]
-material = SubResource("StandardMaterial3D_18obf")
-flip_faces = true
+[ext_resource type="Texture2D" uid="uid://bupa5jgoolv5x" path="res://Assets/marble.png" id="2_p56cv"]
 
 [node name="Profile" type="Control"]
 layout_mode = 3
@@ -18,26 +12,22 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_jmq05")
 
-[node name="Label" type="Label" parent="."]
+[node name="Background2" type="ColorRect" parent="."]
+process_mode = 3
+layout_mode = 2
+offset_left = 437.0
+offset_right = 835.0
+offset_bottom = 731.0
+color = Color(0.298039, 0.298039, 0.298039, 1)
+
+[node name="Info" type="RichTextLabel" parent="."]
 layout_mode = 0
-offset_left = 408.0
-offset_top = 234.0
-offset_right = 765.0
-offset_bottom = 257.0
+offset_left = 98.0
+offset_top = 136.0
+offset_right = 455.0
+offset_bottom = 308.0
 text = "Hi"
-
-[node name="SubViewport" type="SubViewport" parent="."]
-size = Vector2i(200, 200)
-
-[node name="Camera3D" type="Camera3D" parent="SubViewport"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 400, 1.507)
-current = true
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewport"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 400, 0)
-mesh = SubResource("SphereMesh_x6be2")
-
-[node name="OmniLight3D" type="OmniLight3D" parent="SubViewport/MeshInstance3D"]
+fit_content = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 0
@@ -48,7 +38,7 @@ offset_bottom = 495.0
 
 [node name="TextureRect" type="TextureRect" parent="VBoxContainer"]
 layout_mode = 2
-texture = ExtResource("2_v856p")
+texture = ExtResource("2_p56cv")
 
 [node name="Red" type="HSlider" parent="VBoxContainer"]
 layout_mode = 2

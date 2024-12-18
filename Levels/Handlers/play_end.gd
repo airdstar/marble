@@ -3,6 +3,7 @@ extends Node
 @onready var level_display = $CenterContainer/VBoxContainer/points
 
 func _ready():
+	PlayerInfo.player_data.game_over_count += 1
 	level_display.text = "[center][rainbow]"
 	if RunInfo.current_level > PlayerInfo.player_data.highest_level:
 		level_display.text += "New Record!\n"
