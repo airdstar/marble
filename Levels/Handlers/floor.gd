@@ -151,9 +151,6 @@ func pick_level() -> void:
 		id = id.trim_suffix('.tres.remap')
 	else:
 		id = id.trim_suffix('.tres')
-	
-	if !PlayerInfo.player_data.visited_levels.has(int(id)):
-		PlayerInfo.player_data.visited_levels.append(int(id))
 
 func create_level() -> void:
 	pick_level()

@@ -9,9 +9,6 @@ enum sort_type {
 var only_test : bool = false
 var allow_test : bool = false
 
-var hide_undiscovered : bool = false
-var allow_undiscovered : bool = false
-
 var selected_tab : int = 1
 var options : Array[Button] = []
 var option_info : Array[level_resource] = []
@@ -25,7 +22,6 @@ var sort_by = sort_type.ID
 func _ready() -> void:
 	if only_test:
 		allow_test = true
-		allow_undiscovered = true
 	check_valid_difficulties()
 	show_options()
 
@@ -53,15 +49,6 @@ func show_options() -> void:
 			if !allow_test and option_info[n - total_removed].needs_testing:
 				option_info.remove_at(n - total_removed)
 				total_removed += 1
-			elif hide_undiscovered:
-				var id : String = option_info[n - total_removed].resource_path.trim_prefix("res://Levels/Info/")
-				if '.tres.remap' in id:
-					id = id.trim_suffix('.tres.remap')
-				else:
-					id = id.trim_suffix('.tres')
-				if !PlayerInfo.player_data.visited_levels.has(int(id)):
-					option_info.remove_at(n - total_removed)
-					total_removed += 1
 
 	create_options()
 	sort_options()
@@ -89,13 +76,7 @@ func set_option(button : Button, option : level_resource) -> void:
 	else:
 		id = id.trim_suffix('.tres')
 	
-	if PlayerInfo.player_data.visited_levels.has(int(id)) or allow_undiscovered or (option.needs_testing and allow_test):
-		button.text = option.tagline
-	else:
-		button.text = "???"
-		button.disabled = true
-	
-	button.text += " ID: " + id
+	button.text = option.tagline + " ID: " + id
 
 func clear_options() -> void:
 	for n in options:

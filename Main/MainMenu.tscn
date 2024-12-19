@@ -1,6 +1,14 @@
-[gd_scene load_steps=2 format=3 uid="uid://dqdv1dvpasyd"]
+[gd_scene load_steps=7 format=3 uid="uid://dqdv1dvpasyd"]
 
 [ext_resource type="Script" path="res://Main/main_menu.gd" id="1_hdyms"]
+[ext_resource type="Texture2D" uid="uid://bjenkqfpq1own" path="res://Assets/Settings.png" id="2_2dxc0"]
+[ext_resource type="Texture2D" uid="uid://3api5up43veb" path="res://Assets/Profile.png" id="3_p8ekw"]
+
+[sub_resource type="Theme" id="Theme_guwbr"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1el8n"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2ilk4"]
 
 [node name="MainMenu" type="Node"]
 process_mode = 1
@@ -44,17 +52,44 @@ text = "Multiplayer"
 layout_mode = 2
 text = "Gallery"
 
-[node name="Profile" type="Button" parent="CenterContainer/VBoxContainer"]
-layout_mode = 2
-text = "Profile"
+[node name="Settings" type="Button" parent="."]
+offset_top = 648.0
+offset_right = 72.0
+offset_bottom = 720.0
+theme = SubResource("Theme_guwbr")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_1el8n")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_1el8n")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_1el8n")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_1el8n")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_1el8n")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_1el8n")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_1el8n")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_1el8n")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_1el8n")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_1el8n")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_1el8n")
+icon = ExtResource("2_2dxc0")
+expand_icon = true
 
-[node name="Settings" type="Button" parent="CenterContainer/VBoxContainer"]
-layout_mode = 2
-text = "Settings
-"
+[node name="Profile" type="Button" parent="."]
+offset_right = 64.0
+offset_bottom = 64.0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_2ilk4")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_2ilk4")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_2ilk4")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_2ilk4")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_2ilk4")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_2ilk4")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_2ilk4")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_2ilk4")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_2ilk4")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_2ilk4")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_2ilk4")
+icon = ExtResource("3_p8ekw")
+expand_icon = true
 
 [connection signal="pressed" from="CenterContainer/VBoxContainer/Play" to="." method="play_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/Playtest" to="." method="play_test_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/Gallery" to="." method="gallery_pressed"]
-[connection signal="pressed" from="CenterContainer/VBoxContainer/Profile" to="." method="profile_pressed"]
-[connection signal="pressed" from="CenterContainer/VBoxContainer/Settings" to="." method="settings_pressed"]
+[connection signal="pressed" from="Settings" to="." method="settings_pressed"]
+[connection signal="pressed" from="Profile" to="." method="profile_pressed"]

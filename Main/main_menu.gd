@@ -7,7 +7,6 @@ var enable_gallery : bool = false
 
 @onready var play : Button = $CenterContainer/VBoxContainer/Play
 @onready var gallery : Button = $CenterContainer/VBoxContainer/Gallery
-@onready var settings : Button = $CenterContainer/VBoxContainer/Settings
 
 func _ready() -> void:
 	pass
