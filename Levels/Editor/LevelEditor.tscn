@@ -1,9 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://1yq80goel736"]
+[gd_scene load_steps=8 format=3 uid="uid://1yq80goel736"]
 
-[ext_resource type="Script" path="res://Levels/Editor/proc_mesh.gd" id="1_5j1k4"]
 [ext_resource type="Script" path="res://Levels/Editor/level_editor.gd" id="1_vllh1"]
 [ext_resource type="PackedScene" uid="uid://cdfxecxw2jbo" path="res://Levels/Editor/LevelBase.tscn" id="2_wbesp"]
 [ext_resource type="Texture2D" uid="uid://d0fbpahnke75l" path="res://Assets/grid.png" id="4_33n1c"]
+[ext_resource type="PackedScene" uid="uid://2nsb0c22moeb" path="res://Levels/Editor/Shapes/ProcMesh.tscn" id="4_stuxe"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lopki"]
 transparency = 1
@@ -14,6 +14,9 @@ disable_receive_shadows = true
 [sub_resource type="BoxMesh" id="BoxMesh_5yxar"]
 material = SubResource("StandardMaterial3D_lopki")
 size = Vector3(20, 0.01, 20)
+
+[sub_resource type="Environment" id="Environment_kluo7"]
+background_mode = 1
 
 [node name="LevelEditor" type="Node3D"]
 script = ExtResource("1_vllh1")
@@ -124,16 +127,13 @@ fov = 37.8493
 
 [node name="LevelBase" parent="." instance=ExtResource("2_wbesp")]
 
-[node name="shape_preview" type="MeshInstance3D" parent="."]
-script = ExtResource("1_5j1k4")
-
 [node name="SpotLight3D2" type="SpotLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 15, 0)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 30, 0)
 light_energy = 4.0
 spot_range = 160.0
 
 [node name="SpotLight3D3" type="SpotLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, -15, 0)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, -30, 0)
 light_energy = 4.0
 spot_range = 160.0
 
@@ -142,6 +142,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
 cast_shadow = 0
 mesh = SubResource("BoxMesh_5yxar")
 skeleton = NodePath("")
+
+[node name="ProcMesh" parent="." instance=ExtResource("4_stuxe")]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_kluo7")
 
 [connection signal="pressed" from="CanvasLayer/VBoxContainer/HBoxContainer/Button" to="." method="plane_pressed"]
 [connection signal="pressed" from="CanvasLayer/VBoxContainer/HBoxContainer/Button2" to="." method="cube_pressed"]

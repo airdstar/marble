@@ -9,14 +9,13 @@ enum section {
 var allow_camera_movement := false
 
 var chosen_level : level_resource
-
 var selected_part 
 
 var selected_section : section = section.GEOMETRY
 
 @onready var level_base : RigidBody3D = $LevelBase
 
-@onready var shape_preview = $shape_preview
+@onready var shape_preview = $ProcMesh
 
 @onready var pos_x = $CanvasLayer/VBoxContainer/Position/PosX
 @onready var pos_y = $CanvasLayer/VBoxContainer/Position/PosY
@@ -43,12 +42,12 @@ func _process(delta : float) -> void:
 		$CameraPivot.rotation.x += -input.y * 0.002 * delta
 		
 		if Input.is_action_just_released("camera_zoom_in"):
-			$CameraPivot/Camera3D.position.z -= 10 * delta
+			$CameraPivot/Camera3D.position.z -= 100 * delta
 			if $CameraPivot/Camera3D.position.z < 3:
 				$CameraPivot/Camera3D.position.z = 3
 		
 		if Input.is_action_just_released("camera_zoom_out"):
-			$CameraPivot/Camera3D.position.z += 10 * delta
+			$CameraPivot/Camera3D.position.z += 100 * delta
 			if $CameraPivot/Camera3D.position.z > 25:
 				$CameraPivot/Camera3D.position.z = 25
 

@@ -1,10 +1,10 @@
 extends Resource
 class_name Settings
 
-#Camera Options
+#Camera Settings
 @export var camera_sens : float = 70
 
-#Tilt Options
+#Tilt Settings
 @export var tilt_sens : float = 0.001
 @export var tilt_deadzone : float = 25
 @export var tilt_pinch : float = 0.5
@@ -12,6 +12,11 @@ class_name Settings
 #Inversion of Controls ( 1 means not inverted, -1 means inverted)
 @export var invert_tilt_x : int = 1
 @export var invert_tilt_y : int = 1
+
+#Visual Settings
+@export var aspect_ratio : String = "16:9"
+@export var resolution : String = "1280x720"
+
 
 func check_info() -> void:
 	if camera_sens == null:

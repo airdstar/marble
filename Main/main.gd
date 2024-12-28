@@ -38,6 +38,8 @@ func open_editor() -> void:
 	currentScene = preload("res://Levels/Editor/LevelEditor.tscn").instantiate()
 	add_child(currentScene)
 
+
+
 func clear_scene() -> void:
 	if currentScene != null:
 		currentScene.queue_free()

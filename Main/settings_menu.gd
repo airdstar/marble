@@ -13,8 +13,12 @@ extends Node
 @onready var invert_x : CheckButton = $VBoxContainer/ControlSettingsBox/InvertX/InvertX
 @onready var invert_y : CheckButton = $VBoxContainer/ControlSettingsBox/InvertY/InvertY
 
+@onready var res_options : OptionButton = $VBoxContainer/VisualSettingsBox/Res/ResOptions
+@onready var aspect_options : OptionButton = $VBoxContainer/VisualSettingsBox/Aspect/AspectOptions
 
 func _ready() -> void:
+	for n in Global.aspect_ratios:
+		aspect_options.add_item(n)
 	set_values()
 
 func _process(_delta: float) -> void:
@@ -27,6 +31,13 @@ func set_values() -> void:
 	camera_slider.value = PlayerInfo.player_settings.camera_sens
 	deadzone_slider.value = PlayerInfo.player_settings.tilt_deadzone
 	pinch_slider.value = PlayerInfo.player_settings.tilt_pinch
+	
+	for n in aspect_options.item_count:
+		if aspect_options.get_item_text(n) == PlayerInfo.player_settings.aspect_ratio:
+			aspect_options.selected = n
+			set_res_options(n)
+	
+	
 
 # Control Settings
 func tilt_sens_changed(value : float) -> void:
@@ -39,10 +50,16 @@ func pinch_changed(value: float) -> void:
 	pinch_value.text = "[center]%d" % (pinch_slider.value * 100) + "%"
 
 # Visual Settings
-func res_changed(_res: Vector2) -> void:
-	pass
-func window_type_changed(_type : int) -> void:
-	pass
+func set_res_options(index : int) -> void:
+	res_options.clear()
+	var found_res := false
+	for n in Global.aspect_ratios[aspect_options.get_item_text(index)]:
+		res_options.add_item(n)
+		if n == PlayerInfo.player_settings.resolution:
+			res_options.selected = res_options.item_count - 1
+			found_res = true
+	if !found_res:
+		res_options.selected = 0
 
 # Others
 func save_settings() -> void:
@@ -61,13 +78,16 @@ func save_settings() -> void:
 	#else:
 		#settings.invert_tilt_y = 1
 	
+	PlayerInfo.player_settings.aspect_ratio = aspect_options.get_item_text(aspect_options.selected)
+	PlayerInfo.player_settings.resolution = res_options.get_item_text(res_options.selected)
+	
+	Global.set_resolution(Global.aspect_ratios[PlayerInfo.player_settings.aspect_ratio][PlayerInfo.player_settings.resolution])
+	
 	PlayerInfo.save_settings()
 
 func reset_settings() -> void:
-	PlayerInfo.player_data.player_settings = Settings.new()
+	PlayerInfo.player_settings = Settings.new()
 	set_values()
 
 func close_pressed() -> void:
 	queue_free()
-
-# To be moved

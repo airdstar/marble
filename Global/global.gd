@@ -16,11 +16,9 @@ var resolutions_16_10 : Dictionary
 
 var resolutions_4_3 : Dictionary
 
-
-
 var aspect_ratios : Dictionary = {"16:9" : resolutions_16_9,
-									"16:10" : resolutions_16_10,
-									"4:3" : resolutions_4_3}
+									"4:3" : resolutions_4_3,
+									"16:10" : resolutions_16_10}
 
 var easy_levels : Array[level_resource] = []
 var medium_levels : Array[level_resource] = []
@@ -48,3 +46,10 @@ func _ready():
 		
 		currentLevel = dir.get_next()
 	dir.list_dir_end()
+
+func set_resolution(res : Vector2) -> void:
+	get_window().set_size(res)
+	
+	var screen_center = DisplayServer.screen_get_position() + DisplayServer.screen_get_size() / 2
+	var window_size = get_window().get_size_with_decorations()
+	get_window().set_position(screen_center - window_size / 2)
