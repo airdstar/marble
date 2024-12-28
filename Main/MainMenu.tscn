@@ -34,7 +34,6 @@ layout_mode = 2
 text = "Playtest"
 
 [node name="Editor" type="Button" parent="CenterContainer/VBoxContainer"]
-visible = false
 layout_mode = 2
 text = "Editor"
 
@@ -90,6 +89,7 @@ expand_icon = true
 
 [connection signal="pressed" from="CenterContainer/VBoxContainer/Play" to="." method="play_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/Playtest" to="." method="play_test_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/Editor" to="." method="editor_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/Gallery" to="." method="gallery_pressed"]
 [connection signal="pressed" from="Settings" to="." method="settings_pressed"]
 [connection signal="pressed" from="Profile" to="." method="profile_pressed"]

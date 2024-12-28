@@ -28,3 +28,6 @@ func profile_pressed() -> void:
 func settings_pressed() -> void:
 	var holder = preload("res://Main/SettingsMenu.tscn").instantiate()
 	add_child(holder)
+
+func editor_pressed() -> void:
+	Global.main.open_editor()

@@ -12,27 +12,32 @@ func _process(_delta: float) -> void:
 		get_tree().quit()
 
 func main_menu() -> void:
-	if currentScene != null:
-		currentScene.queue_free()
+	clear_scene()
 	currentScene = preload("res://Main/MainMenu.tscn").instantiate()
 	add_child(currentScene)
 
 func start_run() -> void:
-	if currentScene != null:
-		currentScene.queue_free()
+	clear_scene()
 	currentScene = preload("res://Levels/Handlers/PlayFloor.tscn").instantiate()
 	add_child(currentScene)
 
 func open_gallery() -> void:
 	RunInfo.inRun = false
-	if currentScene != null:
-		currentScene.queue_free()
+	clear_scene()
 	currentScene = preload("res://Main/Gallery.tscn").instantiate()
 	add_child(currentScene)
 
 func start_gallery(level_info : level_resource) -> void:
-	if currentScene != null:
-		currentScene.queue_free()
+	clear_scene()
 	currentScene = preload("res://Levels/Handlers/GalleryFloor.tscn").instantiate()
 	currentScene.level_info = level_info
 	add_child(currentScene)
+
+func open_editor() -> void:
+	clear_scene()
+	currentScene = preload("res://Levels/Editor/LevelEditor.tscn").instantiate()
+	add_child(currentScene)
+
+func clear_scene() -> void:
+	if currentScene != null:
+		currentScene.queue_free()

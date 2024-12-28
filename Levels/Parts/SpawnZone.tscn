@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://bxvh0pps2xxw0"]
+
+[ext_resource type="Texture2D" uid="uid://wg1rc5sjx0ud" path="res://Assets/Spawn.png" id="1_akh53"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mcfgt"]
+size = Vector3(3, 1, 3)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ykvgg"]
+transparency = 1
+albedo_texture = ExtResource("1_akh53")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_7faxf"]
+material = SubResource("StandardMaterial3D_ykvgg")
+size = Vector2(3, 3)
+
+[node name="SpawnZone" type="CollisionShape3D"]
+shape = SubResource("BoxShape3D_mcfgt")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.284508, 0)
+mesh = SubResource("PlaneMesh_7faxf")
+skeleton = NodePath("")

@@ -12,9 +12,14 @@ var resolutions_16_9 : Dictionary = {"1920x1080" : Vector2(1920,1080),
 									"960x540" : Vector2(960,540),
 									"854x480" : Vector2(854,480),}
 
+var resolutions_16_10 : Dictionary
+
 var resolutions_4_3 : Dictionary
 
+
+
 var aspect_ratios : Dictionary = {"16:9" : resolutions_16_9,
+									"16:10" : resolutions_16_10,
 									"4:3" : resolutions_4_3}
 
 var easy_levels : Array[level_resource] = []

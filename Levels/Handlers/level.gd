@@ -1,12 +1,16 @@
 extends Node
 class_name level
 
-@onready var start = $Starts/Area3D
+#@onready var start = $Starts/Area3D
+
+@onready var geometry = $Geometry
+
+var start
 
 func _ready():
 	self.freeze = true
-	start.area_entered.connect(start_timer)
-	choose_spawn()
+	#start.area_entered.connect(start_timer)
+	#choose_spawn()
 
 func choose_spawn():
 	var holder = []
