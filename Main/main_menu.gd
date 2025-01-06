@@ -6,34 +6,33 @@ var enable_gallery : bool = false
 #var enable_multiplayer : bool = false
 
 @onready var play_container : VBoxContainer = $PlayContainer
+@onready var settings_button : Button = $Settings
 
 func _ready() -> void:
 	place_control()
 
 func place_control() -> void:
 	play_container.call_deferred("set_size", Vector2(get_window().get_size().x / 7, get_window().get_size().y * 5 / 6))
-	play_container.call_deferred("set_position", Vector2(get_window().get_size().x / 2.25, 0))
+	play_container.call_deferred("set_position", Vector2(get_window().get_size().x / 2 - get_window().get_size().x / 14, 0))
+	
+	settings_button.set_size(Vector2(get_window().get_size().y / 12, get_window().get_size().y / 12))
+	settings_button.set_position(Vector2.ZERO)
 	
 
 func play_pressed() -> void:
-	RunInfo.current_difficulty = RunInfo.difficulty.EASY
-	Global.main.start_run()
-
-func play_test_pressed() -> void:
-	RunInfo.current_difficulty = RunInfo.difficulty.TEST
-	Global.main.start_run()
+	Global.open_scene("floor_play")
 
 func gallery_pressed() -> void:
-	Global.open_scene(main.possible_scenes.GALLERY)
+	Global.open_scene("gallery")
 
 func editor_pressed() -> void:
-	Global.open_scene(main.possible_scenes.EDITOR)
+	Global.open_scene("editor")
 
 func profile_pressed() -> void:
 	add_child(PlayerInfo.player_data.open_profile())
 
 func settings_pressed() -> void:
-	Global.open_scene(main.possible_scenes.SETTINGS)
+	Global.open_scene("settings")
 
 func exit_pressed() -> void:
 	get_tree().quit()

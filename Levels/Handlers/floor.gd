@@ -84,29 +84,7 @@ func handle_tilt(delta : float) -> void:
 
 
 func start_game() -> void:
-	transitioning = true
-	allow_input = false
-	RunInfo.levels_until_change = 5
-	RunInfo.current_level = 1
-	if RunInfo.current_difficulty != RunInfo.difficulty.TEST:
-		RunInfo.current_difficulty = RunInfo.difficulty.EASY
-
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	
-	if instanced != null:
-		instanced.queue_free()
-	
-	create_level()
-	set_level_data()
-	change_skybox_rotation()
-	RunInfo.inRun = true
-	
-	if marble == null:
-		var holder = preload("res://Main/Marble.tscn").instantiate()
-		add_child(holder)
-		marble = holder
-	
-	call_deferred("reset_marble")
+	pass
 
 func next_level() -> void:
 	pass

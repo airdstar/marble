@@ -1,4 +1,5 @@
 extends Node
+class_name RunInfo
 
 enum difficulty {
 	EASY,

@@ -1,17 +1,8 @@
 extends Node
 class_name main
 
-enum possible_scenes {
-	MAIN_MENU,
-	SETTINGS,
-	GALLERY,
-	EDITOR,
-	FLOOR_PLAY,
-	FLOOR_GALLERY,
-}
-
-var cur_scene : possible_scenes
-var prev_scene : possible_scenes
+var cur_scene : String
+var prev_scene : String
 var child_scene
 
 func _ready() -> void:

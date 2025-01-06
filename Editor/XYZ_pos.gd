@@ -16,7 +16,7 @@ const RAY_LENGTH := 40
 func _ready() -> void:
 	master = get_parent()
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if axis_grabbed != 0:
 		var global_pos = get_mouse_world_position()
 		if global_pos != null:

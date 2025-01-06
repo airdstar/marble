@@ -34,7 +34,7 @@ func _process(_delta: float) -> void:
 func place_control() -> void:
 	background.set_size(get_window().get_size())
 	settings_box.call_deferred("set_size", Vector2(get_window().get_size().x / 2, get_window().get_size().y))
-	settings_box.call_deferred("set_position", Vector2(get_window().get_size().x / 4, 0))
+	settings_box.call_deferred("set_position", Vector2(get_window().get_size().x / 2 - get_window().get_size().x / 4, 0))
 
 func set_values() -> void:
 	tilt_slider.value = (PlayerInfo.player_settings.tilt_sens * 100)

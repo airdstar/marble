@@ -18,7 +18,7 @@ func _ready():
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("back"):
 		get_tree().paused = false
-		Global.main.main_menu()
+		Global.open_scene("main_menu")
 
 func run_restart() -> void:
 	get_tree().paused = false

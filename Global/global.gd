@@ -3,6 +3,13 @@ extends Node
 var main_scene : main
 var runBase : Node3D
 
+var pos_scenes : Dictionary = {"main_menu" : "res://Main/MainMenu.tscn",
+								"settings" : "res://Main/SettingsMenu.tscn",
+								"gallery" : "res://Main/Gallery.tscn",
+								"editor" : "res://Editor/LevelEditor.tscn",
+								"floor_play" : "res://Levels/Handlers/PlayFloor.tscn",
+								"floor_gallery" : "res://Levels/Handlers/GalleryFloor.tscn"}
+
 var resolutions_16_9 : Dictionary = {"1920x1080" : Vector2(1920,1080),
 									"1600x900" : Vector2(1600,900),
 									"1366x768" : Vector2(1366,768),
@@ -49,29 +56,17 @@ func _ready():
 
 func set_main(main_in : main) -> void:
 	main_scene = main_in
-	open_scene(main.possible_scenes.MAIN_MENU)
+	open_scene("main_menu")
 
-func open_scene(scene : main.possible_scenes) -> void:
+func open_scene(scene : String) -> void:
 	main_scene.prev_scene = main_scene.cur_scene
 	main_scene.cur_scene = scene
 	
 	if main_scene.child_scene != null:
 		main_scene.child_scene.queue_free()
 	
-	var holder
-	match scene:
-		main.possible_scenes.MAIN_MENU:
-			holder = preload("res://Main/MainMenu.tscn").instantiate()
-		main.possible_scenes.SETTINGS:
-			holder = preload("res://Main/SettingsMenu.tscn").instantiate()
-		main.possible_scenes.GALLERY:
-			holder = preload("res://Main/Gallery.tscn").instantiate()
-		main.possible_scenes.EDITOR:
-			holder = preload("res://Editor/LevelEditor.tscn").instantiate()
-		main.possible_scenes.FLOOR_PLAY:
-			holder = preload("res://Levels/Handlers/PlayFloor.tscn").instantiate()
-		main.possible_scenes.FLOOR_GALLERY:
-			holder = preload("res://Levels/Handlers/GalleryFloor.tscn").instantiate()
+	var holder = load(pos_scenes[scene])
+	holder = holder.instantiate()
 	
 	if holder != null:
 		main_scene.child_scene = holder

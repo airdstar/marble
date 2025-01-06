@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://f4rdoebkiaqd"]
+
+[ext_resource type="Script" path="res://Levels/Handlers/run_info.gd" id="1_higbp"]
+
+[node name="RunInfo" type="Node"]
+script = ExtResource("1_higbp")
