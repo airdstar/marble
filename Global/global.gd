@@ -1,9 +1,7 @@
 extends Node
 
-var main : Node
+var main_scene : main
 var runBase : Node3D
-
-var current_version : String = "0.0.2.0"
 
 var resolutions_16_9 : Dictionary = {"1920x1080" : Vector2(1920,1080),
 									"1600x900" : Vector2(1600,900),
@@ -26,6 +24,8 @@ var hard_levels : Array[level_resource] = []
 var test_levels : Array[level_resource] = []
 
 func _ready():
+	PlayerInfo.load_info()
+	
 	var dir = DirAccess.open("res://Levels/Info/")
 	dir.list_dir_begin()
 	var currentLevel : String = dir.get_next()
@@ -47,8 +47,38 @@ func _ready():
 		currentLevel = dir.get_next()
 	dir.list_dir_end()
 
-func set_resolution(res : Vector2) -> void:
-	get_window().set_size(res)
+func set_main(main_in : main) -> void:
+	main_scene = main_in
+	open_scene(main.possible_scenes.MAIN_MENU)
+
+func open_scene(scene : main.possible_scenes) -> void:
+	main_scene.prev_scene = main_scene.cur_scene
+	main_scene.cur_scene = scene
+	
+	if main_scene.child_scene != null:
+		main_scene.child_scene.queue_free()
+	
+	var holder
+	match scene:
+		main.possible_scenes.MAIN_MENU:
+			holder = preload("res://Main/MainMenu.tscn").instantiate()
+		main.possible_scenes.SETTINGS:
+			holder = preload("res://Main/SettingsMenu.tscn").instantiate()
+		main.possible_scenes.GALLERY:
+			holder = preload("res://Main/Gallery.tscn").instantiate()
+		main.possible_scenes.EDITOR:
+			holder = preload("res://Editor/LevelEditor.tscn").instantiate()
+		main.possible_scenes.FLOOR_PLAY:
+			holder = preload("res://Levels/Handlers/PlayFloor.tscn").instantiate()
+		main.possible_scenes.FLOOR_GALLERY:
+			holder = preload("res://Levels/Handlers/GalleryFloor.tscn").instantiate()
+	
+	if holder != null:
+		main_scene.child_scene = holder
+		main_scene.add_child(holder)
+
+func set_resolution() -> void:
+	get_window().set_size(aspect_ratios[PlayerInfo.player_settings.aspect_ratio][PlayerInfo.player_settings.resolution])
 	
 	var screen_center = DisplayServer.screen_get_position() + DisplayServer.screen_get_size() / 2
 	var window_size = get_window().get_size_with_decorations()

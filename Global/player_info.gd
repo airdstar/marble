@@ -6,9 +6,6 @@ var settings_save_path : String = "user://player_settings.tres"
 var player_data : PlayerData = PlayerData.new()
 var player_settings : Settings = Settings.new()
 
-func _ready() -> void:
-	load_info()
-
 func load_info() -> void:
 	if !FileAccess.file_exists(data_save_path):
 		print("Data path is missing")
@@ -23,6 +20,7 @@ func load_info() -> void:
 	else:
 		player_settings = load(settings_save_path)
 		player_settings.check_info()
+		Global.set_resolution()
 
 func save_data() -> void:
 	ResourceSaver.save(player_data, data_save_path)
@@ -37,3 +35,4 @@ func clear_data() -> void:
 func clear_settings() -> void:
 	player_settings = Settings.new()
 	ResourceSaver.save(player_settings, settings_save_path)
+	Global.set_resolution()

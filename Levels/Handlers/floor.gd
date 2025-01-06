@@ -123,6 +123,7 @@ func set_level_data() -> void:
 	default_camera_skybox()
 	
 	origin.add_child(instanced)
+	instanced.start_level()
 
 func set_level_time():
 	pass

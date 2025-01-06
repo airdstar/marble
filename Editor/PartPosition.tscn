@@ -1,0 +1,62 @@
+[gd_scene load_steps=9 format=3 uid="uid://dwc148b4a6pi8"]
+
+[ext_resource type="Script" path="res://Editor/XYZ_pos.gd" id="1_uhu75"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_13nor"]
+no_depth_test = true
+albedo_color = Color(0.824894, 0, 0.143332, 1)
+backlight_enabled = true
+backlight = Color(1, 1, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_vmp4h"]
+material = SubResource("StandardMaterial3D_13nor")
+size = Vector3(0.95, 0.05, 0.05)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_t13eo"]
+size = Vector3(0.95, 0.05, 0.05)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u8c5h"]
+no_depth_test = true
+albedo_color = Color(0, 0.532594, 0.147573, 1)
+backlight_enabled = true
+backlight = Color(1, 1, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_7wbtw"]
+material = SubResource("StandardMaterial3D_u8c5h")
+size = Vector3(0.05, 0.95, 0.05)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iksc7"]
+no_depth_test = true
+albedo_color = Color(0.179355, 0.341728, 1, 1)
+backlight_enabled = true
+backlight = Color(1, 1, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_po4kx"]
+material = SubResource("StandardMaterial3D_iksc7")
+size = Vector3(0.05, 0.05, 0.95)
+
+[node name="PartPosition" type="Node3D"]
+script = ExtResource("1_uhu75")
+
+[node name="X" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0)
+mesh = SubResource("BoxMesh_vmp4h")
+skeleton = NodePath("../..")
+
+[node name="Area3D" type="Area3D" parent="X"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="X/Area3D"]
+shape = SubResource("BoxShape3D_t13eo")
+
+[node name="Y" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+mesh = SubResource("BoxMesh_7wbtw")
+skeleton = NodePath("../..")
+
+[node name="Z" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5)
+mesh = SubResource("BoxMesh_po4kx")
+skeleton = NodePath("../..")
+
+[connection signal="input_event" from="X/Area3D" to="." method="x_clicked"]
+[connection signal="mouse_entered" from="X/Area3D" to="." method="x_entered"]

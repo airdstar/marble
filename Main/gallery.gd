@@ -27,7 +27,7 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("back"):
-		Global.main.main_menu()
+		Global.open_scene(Global.main_scene.prev_scene)
 
 func show_options() -> void:
 	clear_options()

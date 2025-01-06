@@ -14,42 +14,42 @@
 process_mode = 1
 script = ExtResource("1_hdyms")
 
-[node name="CenterContainer" type="CenterContainer" parent="."]
-offset_top = 360.0
-offset_right = 1280.0
+[node name="PlayContainer" type="VBoxContainer" parent="."]
+offset_left = 568.889
+offset_right = 750.889
 offset_bottom = 720.0
-mouse_filter = 2
+alignment = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
-layout_mode = 2
-alignment = 1
-
-[node name="Play" type="Button" parent="CenterContainer/VBoxContainer"]
+[node name="Play" type="Button" parent="PlayContainer"]
 layout_mode = 2
 text = "Play"
 
-[node name="Playtest" type="Button" parent="CenterContainer/VBoxContainer"]
+[node name="Playtest" type="Button" parent="PlayContainer"]
 visible = false
 layout_mode = 2
 text = "Playtest"
 
-[node name="Editor" type="Button" parent="CenterContainer/VBoxContainer"]
+[node name="Editor" type="Button" parent="PlayContainer"]
 layout_mode = 2
 text = "Editor"
 
-[node name="Button3" type="Button" parent="CenterContainer/VBoxContainer"]
+[node name="Button3" type="Button" parent="PlayContainer"]
 visible = false
 layout_mode = 2
 text = "Challenges"
 
-[node name="Button4" type="Button" parent="CenterContainer/VBoxContainer"]
+[node name="Button4" type="Button" parent="PlayContainer"]
 visible = false
 layout_mode = 2
 text = "Multiplayer"
 
-[node name="Gallery" type="Button" parent="CenterContainer/VBoxContainer"]
+[node name="Gallery" type="Button" parent="PlayContainer"]
 layout_mode = 2
 text = "Gallery"
+
+[node name="Exit" type="Button" parent="PlayContainer"]
+layout_mode = 2
+text = "Exit"
 
 [node name="Settings" type="Button" parent="."]
 offset_top = 648.0
@@ -87,9 +87,10 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_2ilk4")
 icon = ExtResource("3_p8ekw")
 expand_icon = true
 
-[connection signal="pressed" from="CenterContainer/VBoxContainer/Play" to="." method="play_pressed"]
-[connection signal="pressed" from="CenterContainer/VBoxContainer/Playtest" to="." method="play_test_pressed"]
-[connection signal="pressed" from="CenterContainer/VBoxContainer/Editor" to="." method="editor_pressed"]
-[connection signal="pressed" from="CenterContainer/VBoxContainer/Gallery" to="." method="gallery_pressed"]
+[connection signal="pressed" from="PlayContainer/Play" to="." method="play_pressed"]
+[connection signal="pressed" from="PlayContainer/Playtest" to="." method="play_test_pressed"]
+[connection signal="pressed" from="PlayContainer/Editor" to="." method="editor_pressed"]
+[connection signal="pressed" from="PlayContainer/Gallery" to="." method="gallery_pressed"]
+[connection signal="pressed" from="PlayContainer/Exit" to="." method="exit_pressed"]
 [connection signal="pressed" from="Settings" to="." method="settings_pressed"]
 [connection signal="pressed" from="Profile" to="." method="profile_pressed"]

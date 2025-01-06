@@ -47,6 +47,7 @@ func set_level_data() -> void:
 	default_camera_skybox()
 	
 	origin.add_child(instanced)
+	instanced.start_level()
 
 func pick_level() -> void:
 	pass

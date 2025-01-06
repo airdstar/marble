@@ -3,59 +3,49 @@
 [ext_resource type="Script" path="res://Main/settings_menu.gd" id="1_321is"]
 [ext_resource type="Theme" uid="uid://dnuvw7urh35y3" path="res://Assets/Themes/Settings.tres" id="2_qpujl"]
 
-[node name="Settings" type="Control"]
-layout_mode = 3
-anchors_preset = 0
+[node name="Settings" type="Node"]
 script = ExtResource("1_321is")
 
-[node name="Background2" type="ColorRect" parent="."]
-process_mode = 3
-layout_mode = 0
-offset_left = -59.0
-offset_right = 1333.0
-offset_bottom = 731.0
-color = Color(0.298039, 0.298039, 0.298039, 1)
-
-[node name="ColorRect" type="ColorRect" parent="."]
-layout_mode = 0
+[node name="Background" type="ColorRect" parent="."]
 offset_right = 1280.0
 offset_bottom = 720.0
 color = Color(0.0598786, 0.0877354, 0.246724, 1)
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
-layout_mode = 0
-offset_right = 488.0
-offset_bottom = 333.0
+[node name="SettingsBox" type="VBoxContainer" parent="."]
+offset_left = 320.0
+offset_right = 960.0
+offset_bottom = 720.0
+alignment = 1
 
-[node name="ControlSettingsBox" type="VBoxContainer" parent="VBoxContainer"]
+[node name="ControlSettingsBox" type="VBoxContainer" parent="SettingsBox"]
 layout_mode = 2
 
-[node name="Label" type="RichTextLabel" parent="VBoxContainer/ControlSettingsBox"]
+[node name="Label" type="RichTextLabel" parent="SettingsBox/ControlSettingsBox"]
 layout_mode = 2
 theme = ExtResource("2_qpujl")
 bbcode_enabled = true
 text = "[center]Control Settings"
 fit_content = true
 
-[node name="TiltSens" type="HSplitContainer" parent="VBoxContainer/ControlSettingsBox"]
+[node name="TiltSens" type="HSplitContainer" parent="SettingsBox/ControlSettingsBox"]
 layout_mode = 2
 size_flags_vertical = 4
-split_offset = 425
+split_offset = 560
 dragger_visibility = 1
 
-[node name="HSplitContainer" type="HSplitContainer" parent="VBoxContainer/ControlSettingsBox/TiltSens"]
+[node name="HSplitContainer" type="HSplitContainer" parent="SettingsBox/ControlSettingsBox/TiltSens"]
 layout_mode = 2
 split_offset = 130
 dragger_visibility = 1
 
-[node name="TiltSensLabel" type="RichTextLabel" parent="VBoxContainer/ControlSettingsBox/TiltSens/HSplitContainer"]
+[node name="TiltSensLabel" type="RichTextLabel" parent="SettingsBox/ControlSettingsBox/TiltSens/HSplitContainer"]
 layout_mode = 2
 theme = ExtResource("2_qpujl")
 bbcode_enabled = true
 text = "Tilt Sens"
 fit_content = true
 
-[node name="TiltSlider" type="HSlider" parent="VBoxContainer/ControlSettingsBox/TiltSens/HSplitContainer"]
+[node name="TiltSlider" type="HSlider" parent="SettingsBox/ControlSettingsBox/TiltSens/HSplitContainer"]
 layout_mode = 2
 min_value = 0.01
 max_value = 0.2
@@ -65,7 +55,7 @@ allow_greater = true
 allow_lesser = true
 scrollable = false
 
-[node name="TiltSensValue" type="RichTextLabel" parent="VBoxContainer/ControlSettingsBox/TiltSens"]
+[node name="TiltSensValue" type="RichTextLabel" parent="SettingsBox/ControlSettingsBox/TiltSens"]
 layout_mode = 2
 theme = ExtResource("2_qpujl")
 bbcode_enabled = true
@@ -74,24 +64,24 @@ fit_content = true
 scroll_active = false
 shortcut_keys_enabled = false
 
-[node name="CameraSens" type="HSplitContainer" parent="VBoxContainer/ControlSettingsBox"]
+[node name="CameraSens" type="HSplitContainer" parent="SettingsBox/ControlSettingsBox"]
 layout_mode = 2
-split_offset = 425
+split_offset = 560
 dragger_visibility = 1
 
-[node name="HSplitContainer" type="HSplitContainer" parent="VBoxContainer/ControlSettingsBox/CameraSens"]
+[node name="HSplitContainer" type="HSplitContainer" parent="SettingsBox/ControlSettingsBox/CameraSens"]
 layout_mode = 2
 split_offset = 130
 dragger_visibility = 1
 
-[node name="CameraSensLabel" type="RichTextLabel" parent="VBoxContainer/ControlSettingsBox/CameraSens/HSplitContainer"]
+[node name="CameraSensLabel" type="RichTextLabel" parent="SettingsBox/ControlSettingsBox/CameraSens/HSplitContainer"]
 layout_mode = 2
 theme = ExtResource("2_qpujl")
 bbcode_enabled = true
 text = "Camera Sens"
 fit_content = true
 
-[node name="CameraSlider" type="HSlider" parent="VBoxContainer/ControlSettingsBox/CameraSens/HSplitContainer"]
+[node name="CameraSlider" type="HSlider" parent="SettingsBox/ControlSettingsBox/CameraSens/HSplitContainer"]
 layout_mode = 2
 min_value = 60.0
 max_value = 90.0
@@ -101,7 +91,7 @@ allow_greater = true
 allow_lesser = true
 scrollable = false
 
-[node name="CameraSensValue" type="RichTextLabel" parent="VBoxContainer/ControlSettingsBox/CameraSens"]
+[node name="CameraSensValue" type="RichTextLabel" parent="SettingsBox/ControlSettingsBox/CameraSens"]
 layout_mode = 2
 theme = ExtResource("2_qpujl")
 bbcode_enabled = true
@@ -109,24 +99,24 @@ text = "[center]hi"
 fit_content = true
 scroll_active = false
 
-[node name="Deadzone" type="HSplitContainer" parent="VBoxContainer/ControlSettingsBox"]
+[node name="Deadzone" type="HSplitContainer" parent="SettingsBox/ControlSettingsBox"]
 layout_mode = 2
-split_offset = 425
+split_offset = 560
 dragger_visibility = 1
 
-[node name="HSplitContainer" type="HSplitContainer" parent="VBoxContainer/ControlSettingsBox/Deadzone"]
+[node name="HSplitContainer" type="HSplitContainer" parent="SettingsBox/ControlSettingsBox/Deadzone"]
 layout_mode = 2
 split_offset = 130
 dragger_visibility = 1
 
-[node name="DeadzoneLabel" type="RichTextLabel" parent="VBoxContainer/ControlSettingsBox/Deadzone/HSplitContainer"]
+[node name="DeadzoneLabel" type="RichTextLabel" parent="SettingsBox/ControlSettingsBox/Deadzone/HSplitContainer"]
 layout_mode = 2
 theme = ExtResource("2_qpujl")
 bbcode_enabled = true
 text = "Deadzone"
 fit_content = true
 
-[node name="DeadzoneSlider" type="HSlider" parent="VBoxContainer/ControlSettingsBox/Deadzone/HSplitContainer"]
+[node name="DeadzoneSlider" type="HSlider" parent="SettingsBox/ControlSettingsBox/Deadzone/HSplitContainer"]
 layout_mode = 2
 min_value = 1.0
 max_value = 40.0
@@ -136,7 +126,7 @@ allow_greater = true
 allow_lesser = true
 scrollable = false
 
-[node name="DeadzoneValue" type="RichTextLabel" parent="VBoxContainer/ControlSettingsBox/Deadzone"]
+[node name="DeadzoneValue" type="RichTextLabel" parent="SettingsBox/ControlSettingsBox/Deadzone"]
 layout_mode = 2
 theme = ExtResource("2_qpujl")
 bbcode_enabled = true
@@ -144,24 +134,24 @@ text = "[center]hi"
 fit_content = true
 scroll_active = false
 
-[node name="Pinch" type="HSplitContainer" parent="VBoxContainer/ControlSettingsBox"]
+[node name="Pinch" type="HSplitContainer" parent="SettingsBox/ControlSettingsBox"]
 layout_mode = 2
-split_offset = 425
+split_offset = 560
 dragger_visibility = 1
 
-[node name="HSplitContainer" type="HSplitContainer" parent="VBoxContainer/ControlSettingsBox/Pinch"]
+[node name="HSplitContainer" type="HSplitContainer" parent="SettingsBox/ControlSettingsBox/Pinch"]
 layout_mode = 2
 split_offset = 130
 dragger_visibility = 1
 
-[node name="PinchLabel" type="RichTextLabel" parent="VBoxContainer/ControlSettingsBox/Pinch/HSplitContainer"]
+[node name="PinchLabel" type="RichTextLabel" parent="SettingsBox/ControlSettingsBox/Pinch/HSplitContainer"]
 layout_mode = 2
 theme = ExtResource("2_qpujl")
 bbcode_enabled = true
 text = "Pinch"
 fit_content = true
 
-[node name="PinchSlider" type="HSlider" parent="VBoxContainer/ControlSettingsBox/Pinch/HSplitContainer"]
+[node name="PinchSlider" type="HSlider" parent="SettingsBox/ControlSettingsBox/Pinch/HSplitContainer"]
 layout_mode = 2
 min_value = 0.1
 max_value = 0.9
@@ -171,7 +161,7 @@ allow_greater = true
 allow_lesser = true
 scrollable = false
 
-[node name="PinchValue" type="RichTextLabel" parent="VBoxContainer/ControlSettingsBox/Pinch"]
+[node name="PinchValue" type="RichTextLabel" parent="SettingsBox/ControlSettingsBox/Pinch"]
 layout_mode = 2
 theme = ExtResource("2_qpujl")
 bbcode_enabled = true
@@ -179,11 +169,11 @@ text = "[center]hi"
 fit_content = true
 scroll_active = false
 
-[node name="InvertX" type="HBoxContainer" parent="VBoxContainer/ControlSettingsBox"]
+[node name="InvertX" type="HBoxContainer" parent="SettingsBox/ControlSettingsBox"]
 visible = false
 layout_mode = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer/ControlSettingsBox/InvertX"]
+[node name="RichTextLabel" type="RichTextLabel" parent="SettingsBox/ControlSettingsBox/InvertX"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("2_qpujl")
@@ -191,19 +181,19 @@ bbcode_enabled = true
 text = "Invert X"
 scroll_active = false
 
-[node name="InvertX" type="CheckButton" parent="VBoxContainer/ControlSettingsBox/InvertX"]
+[node name="InvertX" type="CheckButton" parent="SettingsBox/ControlSettingsBox/InvertX"]
 layout_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/ControlSettingsBox/InvertX"]
+[node name="MarginContainer" type="MarginContainer" parent="SettingsBox/ControlSettingsBox/InvertX"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.47
 
-[node name="InvertY" type="HBoxContainer" parent="VBoxContainer/ControlSettingsBox"]
+[node name="InvertY" type="HBoxContainer" parent="SettingsBox/ControlSettingsBox"]
 visible = false
 layout_mode = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer/ControlSettingsBox/InvertY"]
+[node name="RichTextLabel" type="RichTextLabel" parent="SettingsBox/ControlSettingsBox/InvertY"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("2_qpujl")
@@ -211,82 +201,80 @@ bbcode_enabled = true
 text = "Invert Y"
 scroll_active = false
 
-[node name="InvertY" type="CheckButton" parent="VBoxContainer/ControlSettingsBox/InvertY"]
+[node name="InvertY" type="CheckButton" parent="SettingsBox/ControlSettingsBox/InvertY"]
 layout_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/ControlSettingsBox/InvertY"]
+[node name="MarginContainer" type="MarginContainer" parent="SettingsBox/ControlSettingsBox/InvertY"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.47
 
-[node name="VisualSettingsBox" type="VBoxContainer" parent="VBoxContainer"]
+[node name="VisualSettingsBox" type="VBoxContainer" parent="SettingsBox"]
 layout_mode = 2
 
-[node name="Label" type="RichTextLabel" parent="VBoxContainer/VisualSettingsBox"]
+[node name="Label" type="RichTextLabel" parent="SettingsBox/VisualSettingsBox"]
 layout_mode = 2
 theme = ExtResource("2_qpujl")
 bbcode_enabled = true
 text = "[center]Visual Settings"
 fit_content = true
 
-[node name="Aspect" type="HSplitContainer" parent="VBoxContainer/VisualSettingsBox"]
+[node name="Aspect" type="HSplitContainer" parent="SettingsBox/VisualSettingsBox"]
 layout_mode = 2
 size_flags_vertical = 4
 split_offset = 200
 dragger_visibility = 1
 
-[node name="AspectLabel" type="RichTextLabel" parent="VBoxContainer/VisualSettingsBox/Aspect"]
+[node name="AspectLabel" type="RichTextLabel" parent="SettingsBox/VisualSettingsBox/Aspect"]
 layout_mode = 2
 theme = ExtResource("2_qpujl")
 bbcode_enabled = true
 text = "Aspect Ratio"
 fit_content = true
 
-[node name="AspectOptions" type="OptionButton" parent="VBoxContainer/VisualSettingsBox/Aspect"]
+[node name="AspectOptions" type="OptionButton" parent="SettingsBox/VisualSettingsBox/Aspect"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("2_qpujl")
-selected = 0
 fit_to_longest_item = false
 
-[node name="Res" type="HSplitContainer" parent="VBoxContainer/VisualSettingsBox"]
+[node name="Res" type="HSplitContainer" parent="SettingsBox/VisualSettingsBox"]
 layout_mode = 2
 size_flags_vertical = 4
 split_offset = 200
 dragger_visibility = 1
 
-[node name="ResLabel" type="RichTextLabel" parent="VBoxContainer/VisualSettingsBox/Res"]
+[node name="ResLabel" type="RichTextLabel" parent="SettingsBox/VisualSettingsBox/Res"]
 layout_mode = 2
 theme = ExtResource("2_qpujl")
 bbcode_enabled = true
 text = "Resolution"
 fit_content = true
 
-[node name="ResOptions" type="OptionButton" parent="VBoxContainer/VisualSettingsBox/Res"]
+[node name="ResOptions" type="OptionButton" parent="SettingsBox/VisualSettingsBox/Res"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("2_qpujl")
-selected = 0
 fit_to_longest_item = false
 
-[node name="CenterContainer" type="CenterContainer" parent="VBoxContainer"]
+[node name="CenterContainer" type="CenterContainer" parent="SettingsBox"]
 layout_mode = 2
 
-[node name="Save" type="Button" parent="VBoxContainer/CenterContainer"]
+[node name="Save" type="Button" parent="SettingsBox/CenterContainer"]
 layout_mode = 2
 text = "Save Settings"
 
-[node name="CenterContainer2" type="CenterContainer" parent="VBoxContainer"]
+[node name="CenterContainer2" type="CenterContainer" parent="SettingsBox"]
 layout_mode = 2
 
-[node name="Reset" type="Button" parent="VBoxContainer/CenterContainer2"]
+[node name="Reset" type="Button" parent="SettingsBox/CenterContainer2"]
 layout_mode = 2
 text = "Reset to default"
 
-[connection signal="value_changed" from="VBoxContainer/ControlSettingsBox/TiltSens/HSplitContainer/TiltSlider" to="." method="tilt_sens_changed"]
-[connection signal="value_changed" from="VBoxContainer/ControlSettingsBox/CameraSens/HSplitContainer/CameraSlider" to="." method="camera_sens_changed"]
-[connection signal="value_changed" from="VBoxContainer/ControlSettingsBox/Deadzone/HSplitContainer/DeadzoneSlider" to="." method="deadzone_changed"]
-[connection signal="value_changed" from="VBoxContainer/ControlSettingsBox/Pinch/HSplitContainer/PinchSlider" to="." method="pinch_changed"]
-[connection signal="item_selected" from="VBoxContainer/VisualSettingsBox/Aspect/AspectOptions" to="." method="set_res_options"]
-[connection signal="pressed" from="VBoxContainer/CenterContainer/Save" to="." method="save_settings"]
-[connection signal="pressed" from="VBoxContainer/CenterContainer2/Reset" to="." method="reset_settings"]
+[connection signal="value_changed" from="SettingsBox/ControlSettingsBox/TiltSens/HSplitContainer/TiltSlider" to="." method="tilt_sens_changed"]
+[connection signal="value_changed" from="SettingsBox/ControlSettingsBox/CameraSens/HSplitContainer/CameraSlider" to="." method="camera_sens_changed"]
+[connection signal="value_changed" from="SettingsBox/ControlSettingsBox/Deadzone/HSplitContainer/DeadzoneSlider" to="." method="deadzone_changed"]
+[connection signal="value_changed" from="SettingsBox/ControlSettingsBox/Pinch/HSplitContainer/PinchSlider" to="." method="pinch_changed"]
+[connection signal="item_selected" from="SettingsBox/VisualSettingsBox/Aspect/AspectOptions" to="." method="set_res_options"]
+[connection signal="pressed" from="SettingsBox/CenterContainer/Save" to="." method="save_settings"]
+[connection signal="pressed" from="SettingsBox/CenterContainer2/Reset" to="." method="reset_settings"]

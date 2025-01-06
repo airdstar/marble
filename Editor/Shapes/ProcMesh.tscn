@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://2nsb0c22moeb"]
 
-[ext_resource type="Script" path="res://Levels/Editor/Shapes/proc_mesh.gd" id="1_gq2ps"]
+[ext_resource type="Script" path="res://Editor/Shapes/proc_mesh.gd" id="1_gq2ps"]
 
 [node name="ProcMesh" type="MeshInstance3D"]
 script = ExtResource("1_gq2ps")

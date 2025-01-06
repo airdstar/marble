@@ -1,9 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://1yq80goel736"]
+[gd_scene load_steps=17 format=3 uid="uid://1yq80goel736"]
 
-[ext_resource type="Script" path="res://Levels/Editor/level_editor.gd" id="1_vllh1"]
-[ext_resource type="PackedScene" uid="uid://cdfxecxw2jbo" path="res://Levels/Editor/LevelBase.tscn" id="2_wbesp"]
+[ext_resource type="Script" path="res://Editor/level_editor.gd" id="1_gkh0n"]
 [ext_resource type="Texture2D" uid="uid://d0fbpahnke75l" path="res://Assets/grid.png" id="4_33n1c"]
-[ext_resource type="PackedScene" uid="uid://2nsb0c22moeb" path="res://Levels/Editor/Shapes/ProcMesh.tscn" id="4_stuxe"]
+[ext_resource type="PackedScene" uid="uid://2nsb0c22moeb" path="res://Editor/Shapes/ProcMesh.tscn" id="4_stuxe"]
+[ext_resource type="Script" path="res://Editor/XYZ_pos.gd" id="4_vj7w4"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lopki"]
 transparency = 1
@@ -18,8 +18,47 @@ size = Vector3(20, 0.01, 20)
 [sub_resource type="Environment" id="Environment_kluo7"]
 background_mode = 1
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ytq3e"]
+no_depth_test = true
+albedo_color = Color(0.824894, 0, 0.143332, 1)
+backlight_enabled = true
+backlight = Color(1, 1, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_oyjqt"]
+material = SubResource("StandardMaterial3D_ytq3e")
+size = Vector3(0.95, 0.05, 0.05)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_cygxg"]
+size = Vector3(0.95, 0.25, 0.25)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_n08y7"]
+no_depth_test = true
+albedo_color = Color(0, 0.532594, 0.147573, 1)
+backlight_enabled = true
+backlight = Color(1, 1, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_fcbbq"]
+material = SubResource("StandardMaterial3D_n08y7")
+size = Vector3(0.05, 0.95, 0.05)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_rw5tg"]
+size = Vector3(0.25, 0.95, 0.25)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_t87mf"]
+no_depth_test = true
+albedo_color = Color(0.179355, 0.341728, 1, 1)
+backlight_enabled = true
+backlight = Color(1, 1, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ixdoo"]
+material = SubResource("StandardMaterial3D_t87mf")
+size = Vector3(0.05, 0.05, 0.95)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_x408b"]
+size = Vector3(0.25, 0.25, 0.95)
+
 [node name="LevelEditor" type="Node3D"]
-script = ExtResource("1_vllh1")
+script = ExtResource("1_gkh0n")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -120,12 +159,11 @@ text = "Total Tris: 0
 Selected Tris: 0"
 
 [node name="CameraPivot" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.984808, 0.173648, 0, -0.173648, 0.984808, 0, 0, 0)
 
 [node name="Camera3D" type="Camera3D" parent="CameraPivot"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10)
 fov = 37.8493
-
-[node name="LevelBase" parent="." instance=ExtResource("2_wbesp")]
 
 [node name="SpotLight3D2" type="SpotLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 30, 0)
@@ -143,10 +181,46 @@ cast_shadow = 0
 mesh = SubResource("BoxMesh_5yxar")
 skeleton = NodePath("")
 
-[node name="ProcMesh" parent="." instance=ExtResource("4_stuxe")]
-
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_kluo7")
+
+[node name="ProcMesh" parent="." instance=ExtResource("4_stuxe")]
+
+[node name="XYZPos" type="Node3D" parent="."]
+script = ExtResource("4_vj7w4")
+
+[node name="X" type="MeshInstance3D" parent="XYZPos"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0)
+mesh = SubResource("BoxMesh_oyjqt")
+skeleton = NodePath("../..")
+
+[node name="Area3D" type="Area3D" parent="XYZPos/X"]
+input_capture_on_drag = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="XYZPos/X/Area3D"]
+shape = SubResource("BoxShape3D_cygxg")
+
+[node name="Y" type="MeshInstance3D" parent="XYZPos"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+mesh = SubResource("BoxMesh_fcbbq")
+skeleton = NodePath("../..")
+
+[node name="Area3D" type="Area3D" parent="XYZPos/Y"]
+input_capture_on_drag = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="XYZPos/Y/Area3D"]
+shape = SubResource("BoxShape3D_rw5tg")
+
+[node name="Z" type="MeshInstance3D" parent="XYZPos"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5)
+mesh = SubResource("BoxMesh_ixdoo")
+skeleton = NodePath("../..")
+
+[node name="Area3D" type="Area3D" parent="XYZPos/Z"]
+input_capture_on_drag = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="XYZPos/Z/Area3D"]
+shape = SubResource("BoxShape3D_x408b")
 
 [connection signal="pressed" from="CanvasLayer/VBoxContainer/HBoxContainer/Button" to="." method="plane_pressed"]
 [connection signal="pressed" from="CanvasLayer/VBoxContainer/HBoxContainer/Button2" to="." method="cube_pressed"]
@@ -158,3 +232,6 @@ environment = SubResource("Environment_kluo7")
 [connection signal="value_changed" from="CanvasLayer/VBoxContainer/Scale/ScaleY" to="." method="preview_shape_scale_y_changed"]
 [connection signal="value_changed" from="CanvasLayer/VBoxContainer/Scale/ScaleZ" to="." method="preview_shape_scale_z_changed"]
 [connection signal="pressed" from="CanvasLayer/VBoxContainer/Camera" to="." method="reset_camera"]
+[connection signal="input_event" from="XYZPos/X/Area3D" to="XYZPos" method="x_clicked"]
+[connection signal="input_event" from="XYZPos/Y/Area3D" to="XYZPos" method="y_clicked"]
+[connection signal="input_event" from="XYZPos/Z/Area3D" to="XYZPos" method="z_clicked"]

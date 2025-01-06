@@ -5,11 +5,15 @@ var enable_gallery : bool = false
 #var enable_challenges : bool = false
 #var enable_multiplayer : bool = false
 
-@onready var play : Button = $CenterContainer/VBoxContainer/Play
-@onready var gallery : Button = $CenterContainer/VBoxContainer/Gallery
+@onready var play_container : VBoxContainer = $PlayContainer
 
 func _ready() -> void:
-	pass
+	place_control()
+
+func place_control() -> void:
+	play_container.call_deferred("set_size", Vector2(get_window().get_size().x / 7, get_window().get_size().y * 5 / 6))
+	play_container.call_deferred("set_position", Vector2(get_window().get_size().x / 2.25, 0))
+	
 
 func play_pressed() -> void:
 	RunInfo.current_difficulty = RunInfo.difficulty.EASY
@@ -20,14 +24,16 @@ func play_test_pressed() -> void:
 	Global.main.start_run()
 
 func gallery_pressed() -> void:
-	Global.main.open_gallery()
+	Global.open_scene(main.possible_scenes.GALLERY)
+
+func editor_pressed() -> void:
+	Global.open_scene(main.possible_scenes.EDITOR)
 
 func profile_pressed() -> void:
 	add_child(PlayerInfo.player_data.open_profile())
 
 func settings_pressed() -> void:
-	var holder = preload("res://Main/SettingsMenu.tscn").instantiate()
-	add_child(holder)
+	Global.open_scene(main.possible_scenes.SETTINGS)
 
-func editor_pressed() -> void:
-	Global.main.open_editor()
+func exit_pressed() -> void:
+	get_tree().quit()
