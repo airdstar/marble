@@ -12,18 +12,19 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_jmq05")
 
-[node name="Background2" type="ColorRect" parent="."]
-process_mode = 3
-layout_mode = 2
-offset_left = -27.0
-offset_right = 1326.0
-offset_bottom = 731.0
-color = Color(0.298039, 0.298039, 0.298039, 1)
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 294.0
+offset_top = 143.0
+offset_right = 961.0
+offset_bottom = 581.0
 
 [node name="Info" type="RichTextLabel" parent="."]
 layout_mode = 0
-offset_right = 357.0
-offset_bottom = 172.0
+offset_left = 307.0
+offset_top = 160.0
+offset_right = 664.0
+offset_bottom = 332.0
 text = "Hi"
 fit_content = true
 

@@ -78,3 +78,8 @@ func set_resolution() -> void:
 	var screen_center = DisplayServer.screen_get_position() + DisplayServer.screen_get_size() / 2
 	var window_size = get_window().get_size_with_decorations()
 	get_window().set_position(screen_center - window_size / 2)
+	
+	adjust_fonts()
+
+func adjust_fonts() -> void:
+	pass

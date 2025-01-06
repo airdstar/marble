@@ -15,7 +15,7 @@ func place_control() -> void:
 	play_container.call_deferred("set_size", Vector2(get_window().get_size().x / 7, get_window().get_size().y * 5 / 6))
 	play_container.call_deferred("set_position", Vector2(get_window().get_size().x / 2 - get_window().get_size().x / 14, 0))
 	
-	settings_button.set_size(Vector2(get_window().get_size().y / 12, get_window().get_size().y / 12))
+	settings_button.set_size(Vector2(get_window().get_size().y / 16, get_window().get_size().y / 16))
 	settings_button.set_position(Vector2.ZERO)
 	
 

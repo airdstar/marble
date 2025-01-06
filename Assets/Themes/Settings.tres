@@ -5,4 +5,5 @@
 [resource]
 default_font = ExtResource("1_uyk54")
 default_font_size = 20
+MarginContainer/constants/margin_top = 1
 RichTextLabel/fonts/normal_font = ExtResource("1_uyk54")
