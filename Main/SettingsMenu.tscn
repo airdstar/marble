@@ -12,23 +12,23 @@ offset_bottom = 720.0
 color = Color(0.0598786, 0.0877354, 0.246724, 1)
 
 [node name="Save" type="Button" parent="."]
-offset_left = 602.0
-offset_top = 358.0
-offset_right = 712.0
-offset_bottom = 389.0
+offset_left = 19.0
+offset_top = 526.0
+offset_right = 129.0
+offset_bottom = 557.0
 text = "Save Settings"
 
 [node name="Reset" type="Button" parent="."]
-offset_left = 592.0
-offset_top = 375.0
-offset_right = 723.0
-offset_bottom = 406.0
+offset_left = 13.0
+offset_top = 574.0
+offset_right = 144.0
+offset_bottom = 605.0
 text = "Reset to default"
 
 [node name="Settings" type="VBoxContainer" parent="."]
 offset_left = 136.0
 offset_top = 55.0
-offset_right = 847.0
+offset_right = 194.0
 offset_bottom = 466.0
 
 [node name="TabBar" type="TabBar" parent="Settings"]
@@ -97,6 +97,10 @@ layout_mode = 2
 
 [node name="VisualSettings" type="VBoxContainer" parent="Settings/HSplitContainer/HSplitContainer/Labels"]
 layout_mode = 2
+
+[node name="MarginContainer3" type="MarginContainer" parent="Settings/HSplitContainer/HSplitContainer/Labels/VisualSettings"]
+layout_mode = 2
+theme = ExtResource("2_qpujl")
 
 [node name="AspectLabel" type="RichTextLabel" parent="Settings/HSplitContainer/HSplitContainer/Labels/VisualSettings"]
 layout_mode = 2
@@ -193,13 +197,11 @@ layout_mode = 2
 
 [node name="AspectOptions" type="OptionButton" parent="Settings/HSplitContainer/HSplitContainer/ValueChangers/VisualSettings"]
 layout_mode = 2
-size_flags_horizontal = 3
 theme = ExtResource("2_qpujl")
 fit_to_longest_item = false
 
 [node name="ResOptions" type="OptionButton" parent="Settings/HSplitContainer/HSplitContainer/ValueChangers/VisualSettings"]
 layout_mode = 2
-size_flags_horizontal = 3
 theme = ExtResource("2_qpujl")
 fit_to_longest_item = false
 
@@ -258,15 +260,32 @@ layout_mode = 2
 [node name="VisualSettings" type="VBoxContainer" parent="Settings/HSplitContainer/Values"]
 layout_mode = 2
 
+[node name="MarginContainer11" type="MarginContainer" parent="Settings/HSplitContainer/Values/VisualSettings"]
+layout_mode = 2
+
 [node name="AspectValue" type="RichTextLabel" parent="Settings/HSplitContainer/Values/VisualSettings"]
+layout_mode = 2
+theme = ExtResource("2_qpujl")
+bbcode_enabled = true
+text = "[right]16:9"
+fit_content = true
+
+[node name="MarginContainer9" type="MarginContainer" parent="Settings/HSplitContainer/Values/VisualSettings"]
+layout_mode = 2
+
+[node name="ResValue" type="RichTextLabel" parent="Settings/HSplitContainer/Values/VisualSettings"]
 layout_mode = 2
 theme = ExtResource("2_qpujl")
 bbcode_enabled = true
 text = "[right]1280x720"
 fit_content = true
 
+[node name="MarginContainer10" type="MarginContainer" parent="Settings/HSplitContainer/Values/VisualSettings"]
+layout_mode = 2
+
 [connection signal="pressed" from="Save" to="." method="save_settings"]
 [connection signal="pressed" from="Reset" to="." method="reset_settings"]
+[connection signal="tab_changed" from="Settings/TabBar" to="." method="tab_changed"]
 [connection signal="value_changed" from="Settings/HSplitContainer/HSplitContainer/ValueChangers/ControlSettings/TiltSlider" to="." method="tilt_sens_changed"]
 [connection signal="value_changed" from="Settings/HSplitContainer/HSplitContainer/ValueChangers/ControlSettings/CameraSlider" to="." method="camera_sens_changed"]
 [connection signal="value_changed" from="Settings/HSplitContainer/HSplitContainer/ValueChangers/ControlSettings/DeadzoneSlider" to="." method="deadzone_changed"]

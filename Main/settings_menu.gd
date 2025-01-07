@@ -1,31 +1,38 @@
 extends Node
 
-@onready var settings_box : VBoxContainer = $SettingsBox
+@onready var settings_box : VBoxContainer = $Settings
 @onready var background : ColorRect = $Background
 
-#@onready var tilt_right : HSplitContainer = $SettingsBox/ControlSettingsBox/TiltSens
+@onready var control_labels : VBoxContainer = $Settings/HSplitContainer/HSplitContainer/Labels/ControlSettings
+@onready var control_changers : VBoxContainer = $Settings/HSplitContainer/HSplitContainer/ValueChangers/ControlSettings
+@onready var control_values : VBoxContainer = $Settings/HSplitContainer/Values/ControlSettings
 
-@onready var tilt_slider : HSlider = $SettingsBox/ControlSettingsBox/TiltSens/HSplitContainer/TiltSlider
-@onready var camera_slider : HSlider = $SettingsBox/ControlSettingsBox/CameraSens/HSplitContainer/CameraSlider
-@onready var deadzone_slider : HSlider = $SettingsBox/ControlSettingsBox/Deadzone/HSplitContainer/DeadzoneSlider
-@onready var pinch_slider : HSlider = $SettingsBox/ControlSettingsBox/Pinch/HSplitContainer/PinchSlider
+@onready var visual_labels : VBoxContainer = $Settings/HSplitContainer/HSplitContainer/Labels/VisualSettings
+@onready var visual_changers : VBoxContainer = $Settings/HSplitContainer/HSplitContainer/ValueChangers/VisualSettings
+@onready var visual_values : VBoxContainer = $Settings/HSplitContainer/Values/VisualSettings
 
-@onready var tilt_value : RichTextLabel = $SettingsBox/ControlSettingsBox/TiltSens/TiltSensValue
-@onready var camera_value : RichTextLabel = $SettingsBox/ControlSettingsBox/CameraSens/CameraSensValue
-@onready var deadzone_value : RichTextLabel = $SettingsBox/ControlSettingsBox/Deadzone/DeadzoneValue
-@onready var pinch_value : RichTextLabel = $SettingsBox/ControlSettingsBox/Pinch/PinchValue
 
-@onready var invert_x : CheckButton = $SettingsBox/ControlSettingsBox/InvertX/InvertX
-@onready var invert_y : CheckButton = $SettingsBox/ControlSettingsBox/InvertY/InvertY
+@onready var tilt_slider : HSlider = $Settings/HSplitContainer/HSplitContainer/ValueChangers/ControlSettings/TiltSlider
+@onready var camera_slider : HSlider = $Settings/HSplitContainer/HSplitContainer/ValueChangers/ControlSettings/CameraSlider
+@onready var deadzone_slider : HSlider = $Settings/HSplitContainer/HSplitContainer/ValueChangers/ControlSettings/DeadzoneSlider
+@onready var pinch_slider : HSlider = $Settings/HSplitContainer/HSplitContainer/ValueChangers/ControlSettings/PinchSlider
 
-@onready var res_options : OptionButton = $SettingsBox/VisualSettingsBox/Res/ResOptions
-@onready var aspect_options : OptionButton = $SettingsBox/VisualSettingsBox/Aspect/AspectOptions
+@onready var tilt_value : RichTextLabel = $Settings/HSplitContainer/Values/ControlSettings/TiltSensValue
+@onready var camera_value : RichTextLabel = $Settings/HSplitContainer/Values/ControlSettings/CameraSensValue
+@onready var deadzone_value : RichTextLabel = $Settings/HSplitContainer/Values/ControlSettings/DeadzoneValue
+@onready var pinch_value : RichTextLabel = $Settings/HSplitContainer/Values/ControlSettings/PinchValue
+
+
+@onready var aspect_options : OptionButton = $Settings/HSplitContainer/HSplitContainer/ValueChangers/VisualSettings/AspectOptions
+@onready var res_options : OptionButton = $Settings/HSplitContainer/HSplitContainer/ValueChangers/VisualSettings/ResOptions
+
 
 func _ready() -> void:
 	for n in Global.aspect_ratios:
 		aspect_options.add_item(n)
 	set_values()
 	place_control()
+	show_control_settings()
 
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("back"):
@@ -33,8 +40,8 @@ func _process(_delta: float) -> void:
 
 func place_control() -> void:
 	background.set_size(get_window().get_size())
-	settings_box.call_deferred("set_size", Vector2(get_window().get_size().x / 2, get_window().get_size().y))
-	settings_box.call_deferred("set_position", Vector2(get_window().get_size().x / 2 - get_window().get_size().x / 4, 0))
+	settings_box.call_deferred("set_size", Vector2(get_window().get_size().x / 1.5, get_window().get_size().y))
+	settings_box.call_deferred("set_position", Vector2(get_window().get_size().x / 2 - get_window().get_size().x / 3, 0))
 
 func set_values() -> void:
 	tilt_slider.value = (PlayerInfo.player_settings.tilt_sens * 100)
@@ -69,6 +76,37 @@ func set_res_options(index : int) -> void:
 			found_res = true
 	if !found_res:
 		res_options.selected = 0
+
+func tab_changed(tab: int) -> void:
+	match tab:
+		0:
+			show_control_settings()
+		1:
+			show_visual_settings()
+
+func show_control_settings() -> void:
+	control_labels.visible = true
+	control_changers.visible = true
+	control_values.visible = true
+	
+	hide_visual_settings()
+
+func show_visual_settings() -> void:
+	visual_labels.visible = true
+	visual_changers.visible = true
+	visual_values.visible = true
+	
+	hide_control_settings()
+
+func hide_control_settings() -> void:
+	control_labels.visible = false
+	control_changers.visible = false
+	control_values.visible = false
+
+func hide_visual_settings() -> void:
+	visual_labels.visible = false
+	visual_changers.visible = false
+	visual_values.visible = false
 
 # Others
 func save_settings() -> void:
