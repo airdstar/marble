@@ -64,7 +64,7 @@ func create_options() -> void:
 		
 
 func option_pressed(button):
-	Global.main.start_gallery(option_info[options.find(button)])
+	Global.main.start_gallery("floor_gallery")
 
 func sort_options() -> void:
 	pass

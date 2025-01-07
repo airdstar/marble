@@ -28,7 +28,7 @@ text = "Reset to default"
 [node name="Settings" type="VBoxContainer" parent="."]
 offset_left = 136.0
 offset_top = 55.0
-offset_right = 194.0
+offset_right = 989.0
 offset_bottom = 466.0
 
 [node name="TabBar" type="TabBar" parent="Settings"]
@@ -41,11 +41,11 @@ tab_1/title = "Visual"
 
 [node name="HSplitContainer" type="HSplitContainer" parent="Settings"]
 layout_mode = 2
-split_offset = 575
+split_offset = 680
 
 [node name="HSplitContainer" type="HSplitContainer" parent="Settings/HSplitContainer"]
 layout_mode = 2
-split_offset = -400
+split_offset = -480
 
 [node name="Labels" type="VBoxContainer" parent="Settings/HSplitContainer/HSplitContainer"]
 layout_mode = 2

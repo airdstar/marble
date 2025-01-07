@@ -35,6 +35,7 @@ var settings = PlayerInfo.player_settings
 func _ready() -> void:
 	Global.runBase = self
 	camera.skybox = skybox
+	place_control()
 	start_game()
 
 func _process(delta: float) -> void:
@@ -82,6 +83,9 @@ func handle_tilt(delta : float) -> void:
 	if input.x > settings.tilt_deadzone or input.x < -settings.tilt_deadzone:
 		input_tilt.y += -input.x * settings.tilt_sens * tilt_scalar * delta
 
+func place_control() -> void:
+	pass
+
 
 func start_game() -> void:
 	pass
@@ -90,18 +94,7 @@ func next_level() -> void:
 	pass
 
 func set_level_data() -> void:
-	tagline_text.text = level_info.tagline
-	
-	set_level_time()
-	
-	if RunInfo.inRun:
-		await get_tree().create_timer(0.3).timeout
-		prev_instance.queue_free()
-	
-	default_camera_skybox()
-	
-	origin.add_child(instanced)
-	instanced.start_level()
+	pass
 
 func set_level_time():
 	pass
@@ -110,26 +103,7 @@ func start_timer():
 	pass
 
 func pick_level() -> void:
-	var valid_level := false
-	while !valid_level:
-		match RunInfo.current_difficulty:
-			0:
-				level_info = Global.easy_levels.pick_random()
-			1:
-				level_info = Global.medium_levels.pick_random()
-			2:
-				level_info = Global.hard_levels.pick_random()
-			3:
-				level_info = Global.test_levels.pick_random()
-		
-		if !level_info.needs_testing or RunInfo.current_difficulty == RunInfo.difficulty.TEST:
-			valid_level = true
-	
-	var id : String = level_info.resource_path.trim_prefix("res://Levels/Info/")
-	if '.tres.remap' in id:
-		id = id.trim_suffix('.tres.remap')
-	else:
-		id = id.trim_suffix('.tres')
+	pass
 
 func create_level() -> void:
 	pick_level()

@@ -1,7 +1,11 @@
 extends Node
 
 @onready var settings_box : VBoxContainer = $Settings
+@onready var right_size : HSplitContainer = $Settings/HSplitContainer
+@onready var middle_size : HSplitContainer = $Settings/HSplitContainer/HSplitContainer
+
 @onready var background : ColorRect = $Background
+
 
 @onready var control_labels : VBoxContainer = $Settings/HSplitContainer/HSplitContainer/Labels/ControlSettings
 @onready var control_changers : VBoxContainer = $Settings/HSplitContainer/HSplitContainer/ValueChangers/ControlSettings
@@ -26,6 +30,8 @@ extends Node
 @onready var aspect_options : OptionButton = $Settings/HSplitContainer/HSplitContainer/ValueChangers/VisualSettings/AspectOptions
 @onready var res_options : OptionButton = $Settings/HSplitContainer/HSplitContainer/ValueChangers/VisualSettings/ResOptions
 
+@onready var aspect_value : RichTextLabel = $Settings/HSplitContainer/Values/VisualSettings/AspectValue
+@onready var res_value : RichTextLabel = $Settings/HSplitContainer/Values/VisualSettings/ResValue
 
 func _ready() -> void:
 	for n in Global.aspect_ratios:
@@ -42,6 +48,9 @@ func place_control() -> void:
 	background.set_size(get_window().get_size())
 	settings_box.call_deferred("set_size", Vector2(get_window().get_size().x / 1.5, get_window().get_size().y))
 	settings_box.call_deferred("set_position", Vector2(get_window().get_size().x / 2 - get_window().get_size().x / 3, 0))
+	
+	middle_size.split_offset = -get_window().get_size().x / 2.5
+	right_size.split_offset = get_window().get_size().x / 1.75
 
 func set_values() -> void:
 	tilt_slider.value = (PlayerInfo.player_settings.tilt_sens * 100)
@@ -53,17 +62,19 @@ func set_values() -> void:
 		if aspect_options.get_item_text(n) == PlayerInfo.player_settings.aspect_ratio:
 			aspect_options.selected = n
 			set_res_options(n)
-
+	
+	aspect_value.text = "[right]" + PlayerInfo.player_settings.aspect_ratio
+	res_value.text = "[right]" + PlayerInfo.player_settings.resolution
 
 # Control Settings
 func tilt_sens_changed(value : float) -> void:
-	tilt_value.text = "[center]%.1f" % (value * 10)
+	tilt_value.text = "[right]%.1f" % (value * 10)
 func camera_sens_changed(value: float) -> void:
-	camera_value.text = "[center]%.2f" % (value/camera_slider.min_value)
+	camera_value.text = "[right]%.2f" % (value/camera_slider.min_value)
 func deadzone_changed(value: float) -> void:
-	deadzone_value.text = "[center]%.2f" % (value / deadzone_slider.max_value)
+	deadzone_value.text = "[right]%.2f" % (value / deadzone_slider.max_value)
 func pinch_changed(value: float) -> void:
-	pinch_value.text = "[center]%d" % (pinch_slider.value * 100) + "%"
+	pinch_value.text = "[right]%d" % (pinch_slider.value * 100) + "%"
 
 # Visual Settings
 func set_res_options(index : int) -> void:
@@ -123,6 +134,9 @@ func save_settings() -> void:
 		place_control()
 	
 	PlayerInfo.save_settings()
+	
+	aspect_value.text = "[right]" + PlayerInfo.player_settings.aspect_ratio
+	res_value.text = "[right]" + PlayerInfo.player_settings.resolution
 
 func reset_settings() -> void:
 	PlayerInfo.player_settings = Settings.new()
