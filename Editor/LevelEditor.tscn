@@ -184,7 +184,7 @@ skeleton = NodePath("")
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_kluo7")
 
-[node name="ProcMesh" parent="." instance=ExtResource("4_stuxe")]
+[node name="SelectedShape" parent="." instance=ExtResource("4_stuxe")]
 
 [node name="XYZPos" type="Node3D" parent="."]
 script = ExtResource("4_vj7w4")
@@ -232,6 +232,7 @@ shape = SubResource("BoxShape3D_x408b")
 [connection signal="value_changed" from="CanvasLayer/VBoxContainer/Scale/ScaleY" to="." method="preview_shape_scale_y_changed"]
 [connection signal="value_changed" from="CanvasLayer/VBoxContainer/Scale/ScaleZ" to="." method="preview_shape_scale_z_changed"]
 [connection signal="pressed" from="CanvasLayer/VBoxContainer/Camera" to="." method="reset_camera"]
+[connection signal="movement_detected" from="XYZPos" to="SelectedShape" method="movement_detected"]
 [connection signal="input_event" from="XYZPos/X/Area3D" to="XYZPos" method="x_clicked"]
 [connection signal="input_event" from="XYZPos/Y/Area3D" to="XYZPos" method="y_clicked"]
 [connection signal="input_event" from="XYZPos/Z/Area3D" to="XYZPos" method="z_clicked"]

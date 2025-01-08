@@ -14,7 +14,7 @@ var selected_section : section = section.GEOMETRY
 
 
 var selected_part = null
-@onready var selected_shape : procmesh = $ProcMesh
+@onready var selected_shape : ProcMesh = $SelectedShape
 
 @onready var XYZpos = $XYZPos
 
@@ -63,27 +63,6 @@ func level_select():
 	level_base = holder
 	add_child(level_base)
 	level_base.open_editor()
-
-func selected_position_changed(axis : int, pos : Vector3) -> void:
-	if selected_shape.shape_info.size() != 0:
-		match axis:
-			0:
-				if selected_shape.shape_info[0].total_offset.x != pos.x:
-					selected_shape.shape_info[0].total_offset.x = pos.x
-					XYZpos.position.x = pos.x
-					selected_shape.regenerate_mesh()
-			1:
-				if selected_shape.shape_info[0].total_offset.y != pos.y:
-					selected_shape.shape_info[0].total_offset.y = pos.y
-					XYZpos.position.y = pos.y
-					selected_shape.regenerate_mesh()
-			2:
-				if selected_shape.shape_info[0].total_offset.z != pos.z:
-					selected_shape.shape_info[0].total_offset.z = pos.z
-					XYZpos.position.z = pos.z
-					selected_shape.regenerate_mesh()
-	elif selected_part != null:
-		pass
 
 func part_selected() -> void:
 	XYZpos.visible = true

@@ -16,7 +16,7 @@ func secondary_process() -> void:
 
 func place_control() -> void:
 	timerText.set_size(get_window().get_size())
-	timerText.set_position(Vector2(0, get_window().get_size().y / 10))
+	timerText.set_position(Vector2(0, get_window().get_size().y / 20))
 
 
 func start_game() -> void:
@@ -66,7 +66,7 @@ func next_level() -> void:
 	reset_marble()
 
 func set_level_data() -> void:
-	tagline_text.text = level_info.tagline
+	name_text.text = level_info.name
 	
 	set_level_time()
 	

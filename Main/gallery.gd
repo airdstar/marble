@@ -76,7 +76,7 @@ func set_option(button : Button, option : level_resource) -> void:
 	else:
 		id = id.trim_suffix('.tres')
 	
-	button.text = option.tagline + " ID: " + id
+	button.text = option.name + " ID: " + id
 
 func clear_options() -> void:
 	for n in options:

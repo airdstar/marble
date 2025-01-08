@@ -1,8 +1,16 @@
 extends Resource
 class_name level_resource
 
+enum difficulty {
+	EASY,
+	MEDIUM,
+	HARD
+}
+
 ## Name of the level
-@export var tagline : String = "Tagline"
+@export var name : String = "Name"
+
+@export var level_difficulty : difficulty = difficulty.EASY
 
 ## Possible rotations that the level can default to
 @export var possible_rotations : Vector2 = Vector2(0,360)
@@ -11,7 +19,7 @@ class_name level_resource
 
 @export var associated_scene : PackedScene 
 
-@export var needs_testing : bool = true
+@export var include_in_pool : bool = false
 
 @export_category("Experimental")
 

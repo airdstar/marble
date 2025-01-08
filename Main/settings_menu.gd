@@ -1,11 +1,10 @@
 extends Node
 
 @onready var settings_box : VBoxContainer = $Settings
+@onready var io_box : VBoxContainer = $IO
+
 @onready var right_size : HSplitContainer = $Settings/HSplitContainer
 @onready var middle_size : HSplitContainer = $Settings/HSplitContainer/HSplitContainer
-
-@onready var background : ColorRect = $Background
-
 
 @onready var control_labels : VBoxContainer = $Settings/HSplitContainer/HSplitContainer/Labels/ControlSettings
 @onready var control_changers : VBoxContainer = $Settings/HSplitContainer/HSplitContainer/ValueChangers/ControlSettings
@@ -45,9 +44,11 @@ func _process(_delta: float) -> void:
 		Global.open_scene(Global.main_scene.prev_scene)
 
 func place_control() -> void:
-	background.set_size(get_window().get_size())
 	settings_box.call_deferred("set_size", Vector2(get_window().get_size().x / 1.5, get_window().get_size().y))
-	settings_box.call_deferred("set_position", Vector2(get_window().get_size().x / 2 - get_window().get_size().x / 3, 0))
+	settings_box.call_deferred("set_position", Vector2(get_window().get_size().x / 2 - get_window().get_size().x / 3, get_window().get_size().y / 20))
+	
+	io_box.call_deferred("set_size", Vector2(get_window().get_size().x / 4, get_window().get_size().y))
+	io_box.call_deferred("set_position", Vector2(get_window().get_size().x / 2 - get_window().get_size().x / 8, -get_window().get_size().y / 20))
 	
 	middle_size.split_offset = -get_window().get_size().x / 2.5
 	right_size.split_offset = get_window().get_size().x / 1.75
@@ -94,6 +95,8 @@ func tab_changed(tab: int) -> void:
 			show_control_settings()
 		1:
 			show_visual_settings()
+		2:
+			pass
 
 func show_control_settings() -> void:
 	control_labels.visible = true

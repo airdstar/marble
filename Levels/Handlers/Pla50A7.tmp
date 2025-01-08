@@ -1,7 +1,6 @@
-[gd_scene load_steps=8 format=3 uid="uid://cqg7msdtga6kt"]
+[gd_scene load_steps=7 format=3 uid="uid://cqg7msdtga6kt"]
 
 [ext_resource type="Script" path="res://Levels/Handlers/play_floor.gd" id="1_jqjs0"]
-[ext_resource type="PackedScene" uid="uid://f4rdoebkiaqd" path="res://Levels/Handlers/RunInfo.tscn" id="2_ibiyt"]
 [ext_resource type="Script" path="res://Levels/Handlers/camera.gd" id="3_acswx"]
 [ext_resource type="Theme" uid="uid://dl6a6mq4q5lda" path="res://Assets/Themes/timer.tres" id="4_db1ct"]
 
@@ -36,8 +35,6 @@ size = Vector3(200, 1, 200)
 [node name="Node3D" type="Node3D"]
 process_mode = 1
 script = ExtResource("1_jqjs0")
-
-[node name="RunInfo" parent="." instance=ExtResource("2_ibiyt")]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_s1d85")
@@ -85,7 +82,7 @@ layout_mode = 2
 text = "speed:"
 fit_content = true
 
-[node name="name" type="RichTextLabel" parent="Control/VBoxContainer"]
+[node name="tagline" type="RichTextLabel" parent="Control/VBoxContainer"]
 layout_mode = 2
 text = "hi"
 fit_content = true

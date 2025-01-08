@@ -2,18 +2,23 @@ extends Node
 
 @onready var level_display = $CenterContainer/VBoxContainer/points
 
+var run_info : RunInfo
+
 func _ready():
 	PlayerInfo.player_data.game_over_count += 1
+	
+	run_info = get_parent().run_info
+	
 	level_display.text = "[center][rainbow]"
-	if RunInfo.current_level > PlayerInfo.player_data.highest_level:
+	if run_info.current_level > PlayerInfo.player_data.highest_level:
 		level_display.text += "New Record!\n"
-		PlayerInfo.player_data.highest_level = RunInfo.current_level
+		PlayerInfo.player_data.highest_level = run_info.current_level
 	Global.runBase.timerText.visible = false
-	level_display.text += "You reached level %d!" % RunInfo.current_level
+	level_display.text += "You reached level %d!" % run_info.current_level
 	PlayerInfo.save_data()
 	
 	get_tree().paused = true
-	RunInfo.inRun = false
+	run_info.inRun = false
 
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("back"):

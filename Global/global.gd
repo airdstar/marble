@@ -48,9 +48,6 @@ func _ready():
 		elif currentLevel.begins_with(str(3)):
 			hard_levels.append(holder)
 		
-		if holder.needs_testing:
-			test_levels.append(holder)
-		
 		currentLevel = dir.get_next()
 	dir.list_dir_end()
 

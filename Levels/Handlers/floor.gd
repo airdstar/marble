@@ -28,9 +28,9 @@ var settings = PlayerInfo.player_settings
 @onready var origin = $Origin
 @onready var skybox = $WorldEnvironment.environment
 
-@onready var tagline_text = $CanvasLayer/VBoxContainer/tagline
-@onready var fps_text = $CanvasLayer/VBoxContainer/fps
-@onready var speed_text = $CanvasLayer/VBoxContainer/speed
+@onready var name_text = $Control/VBoxContainer/name
+@onready var fps_text = $Control/VBoxContainer/fps
+@onready var speed_text = $Control/VBoxContainer/speed
 
 func _ready() -> void:
 	Global.runBase = self

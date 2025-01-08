@@ -13,6 +13,8 @@ var axis_grabbed : int = 0
 var master
 const RAY_LENGTH := 40
 
+signal movement_detected
+
 func _ready() -> void:
 	master = get_parent()
 
@@ -22,11 +24,16 @@ func _process(_delta: float) -> void:
 		if global_pos != null:
 			match axis_grabbed:
 				1:
-					master.selected_position_changed(axis_grabbed - 1, Vector3(snapped(global_pos.x - 0.5, 0.5),0,0))
+					global_pos = Vector3(snapped(global_pos.x - 0.5, 0.5), 0, 0)
+					position.x = global_pos.x
 				2:
-					master.selected_position_changed(axis_grabbed - 1, Vector3(0,snapped(global_pos.y - 0.5, 0.5),0))
+					global_pos = Vector3(0, snapped(global_pos.y - 0.5, 0.5), 0)
+					position.y = global_pos.y
 				3:
-					master.selected_position_changed(axis_grabbed - 1, Vector3(0,0,snapped(global_pos.z - 0.5, 0.5)))
+					global_pos = Vector3(0, 0, snapped(global_pos.z - 0.5, 0.5))
+					position.z = global_pos.z
+			
+			movement_detected.emit(global_pos)
 
 
 func _do_raycast_on_mouse_position(collision_mask: int = 0b00000000_00000000_00000000_00000001):

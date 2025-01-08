@@ -1,5 +1,5 @@
 extends MeshInstance3D
-class_name procmesh
+class_name ProcMesh
 
 var shape_info : Array[shape_resource]
 var array_mesh : ArrayMesh
@@ -31,3 +31,16 @@ func regenerate_mesh() -> void:
 
 func cull() -> void:
 	pass
+
+func movement_detected(pos_change : Vector3) -> void:
+	if pos_change.x != 0:
+		shape_info[0].total_offset.x = pos_change.x
+	
+	if pos_change.y != 0:
+		shape_info[0].total_offset.y = pos_change.y
+	
+	if pos_change.z != 0:
+		shape_info[0].total_offset.z = pos_change.z
+	
+	if pos_change != Vector3.ZERO:
+		regenerate_mesh()
