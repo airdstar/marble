@@ -10,13 +10,12 @@ extends Node3D
 
 
 var axis_grabbed : int = 0
-var master
 const RAY_LENGTH := 40
 
 signal movement_detected
 
 func _ready() -> void:
-	master = get_parent()
+	pass
 
 func _process(_delta: float) -> void:
 	if axis_grabbed != 0:
@@ -25,13 +24,10 @@ func _process(_delta: float) -> void:
 			match axis_grabbed:
 				1:
 					global_pos = Vector3(snapped(global_pos.x - 0.5, 0.5), 0, 0)
-					position.x = global_pos.x
 				2:
 					global_pos = Vector3(0, snapped(global_pos.y - 0.5, 0.5), 0)
-					position.y = global_pos.y
 				3:
 					global_pos = Vector3(0, 0, snapped(global_pos.z - 0.5, 0.5))
-					position.z = global_pos.z
 			
 			movement_detected.emit(global_pos)
 
@@ -87,3 +83,7 @@ func z_clicked(_camera: Node, event: InputEvent, _event_position: Vector3, _norm
 			else:
 				axis_grabbed = 3
 				Zcol.shape.size = Vector3(0.25,20,20)
+
+
+func shape_pos_changed(new_pos : Vector3) -> void:
+	position = new_pos

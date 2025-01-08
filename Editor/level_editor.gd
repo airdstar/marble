@@ -71,20 +71,17 @@ func part_selected() -> void:
 
 func plane_pressed() -> void:
 	selected_shape.clear_mesh()
-	var new_shape = plane.new()
-	selected_shape.add_shape(new_shape)
+	selected_shape.add_shape(plane.new())
 	part_selected()
 
 func cube_pressed() -> void:
 	selected_shape.clear_mesh()
-	var new_shape = cube.new()
-	selected_shape.add_shape(new_shape)
+	selected_shape.add_shape(cube.new())
 	part_selected()
 
 func polygon_pressed() -> void:
 	selected_shape.clear_mesh()
-	var new_shape = polygon.new()
-	selected_shape.add_shape(new_shape)
+	selected_shape.add_shape(polygon.new())
 	part_selected()
 
 func add_pressed() -> void:

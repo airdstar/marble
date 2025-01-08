@@ -6,6 +6,8 @@ var array_mesh : ArrayMesh
 
 var tri_count : int = 0
 
+signal pos_changed
+
 func clear_mesh() -> void:
 	shape_info.clear()
 	tri_count = 0
@@ -44,3 +46,4 @@ func movement_detected(pos_change : Vector3) -> void:
 	
 	if pos_change != Vector3.ZERO:
 		regenerate_mesh()
+		pos_changed.emit(shape_info[0].total_offset)
