@@ -1,16 +1,10 @@
 extends Resource
 class_name level_resource
 
-enum difficulty {
-	EASY,
-	MEDIUM,
-	HARD
-}
-
 ## Name of the level
 @export var name : String = "Name"
 
-@export var level_difficulty : difficulty = difficulty.EASY
+@export var level_difficulty : Global.difficulty = Global.difficulty.EASY
 
 ## Possible rotations that the level can default to
 @export var possible_rotations : Vector2 = Vector2(0,360)

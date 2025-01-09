@@ -1,5 +1,11 @@
 extends Node
 
+enum difficulty {
+	EASY,
+	MEDIUM,
+	HARD
+}
+
 var main_scene : main
 var runBase : Node3D
 
