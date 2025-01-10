@@ -1,4 +1,6 @@
-[gd_scene format=3 uid="uid://u16tdhj1gbcg"]
+[gd_scene load_steps=2 format=3 uid="uid://pepg2djcmqnt"]
+
+[ext_resource type="Theme" uid="uid://dyhnu7yerr3w2" path="res://Assets/Themes/Editor.tres" id="1_pk0on"]
 
 [node name="EditorPropertyUI" type="Control"]
 layout_mode = 3
@@ -7,6 +9,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_pk0on")
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 0
@@ -18,80 +21,40 @@ layout_mode = 0
 offset_right = 300.0
 offset_bottom = 300.0
 
+[node name="MarginContainer" type="MarginContainer" parent="Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Panel/VBoxContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[center]Properties"
+fit_content = true
+
 [node name="HBoxContainer" type="HBoxContainer" parent="Panel/VBoxContainer"]
 layout_mode = 2
-alignment = 2
 
 [node name="Button" type="Button" parent="Panel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
-toggle_mode = true
 text = "Pos"
 
 [node name="Button2" type="Button" parent="Panel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
-toggle_mode = true
 text = "Size"
 
-[node name="Pos" type="RichTextLabel" parent="Panel/VBoxContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel/VBoxContainer"]
 layout_mode = 2
-text = "Position: (0,0,0)"
-fit_content = true
+size_flags_vertical = 3
 
-[node name="Size" type="RichTextLabel" parent="Panel/VBoxContainer"]
-layout_mode = 2
-text = "Size: (1,1,1)"
-fit_content = true
-
-[node name="ShapeProperties" type="Control" parent="Panel/VBoxContainer"]
-layout_mode = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel/VBoxContainer/ShapeProperties"]
-layout_mode = 0
-offset_right = 289.0
-offset_bottom = 94.0
-
-[node name="Orientation" type="HSplitContainer" parent="Panel/VBoxContainer/ShapeProperties/VBoxContainer"]
-layout_mode = 2
-split_offset = 95
-
-[node name="RichTextLabel" type="RichTextLabel" parent="Panel/VBoxContainer/ShapeProperties/VBoxContainer/Orientation"]
-layout_mode = 2
-text = "Orientation:"
-fit_content = true
-
-[node name="OptionButton" type="OptionButton" parent="Panel/VBoxContainer/ShapeProperties/VBoxContainer/Orientation"]
-layout_mode = 2
-selected = 1
-item_count = 3
-popup/item_0/text = "X"
-popup/item_1/text = "Y"
-popup/item_1/id = 1
-popup/item_2/text = "Z"
-popup/item_2/id = 2
-
-[node name="FlipOrientation" type="HSplitContainer" parent="Panel/VBoxContainer/ShapeProperties/VBoxContainer"]
-layout_mode = 2
-
-[node name="RichTextLabel2" type="RichTextLabel" parent="Panel/VBoxContainer/ShapeProperties/VBoxContainer/FlipOrientation"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/VBoxContainer/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Flip Orientation"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Panel/VBoxContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = " Position: 0,0,0"
 fit_content = true
 
-[node name="FlipOrientation" type="CheckButton" parent="Panel/VBoxContainer/ShapeProperties/VBoxContainer/FlipOrientation"]
+[node name="RichTextLabel2" type="RichTextLabel" parent="Panel/VBoxContainer/ScrollContainer/VBoxContainer"]
 layout_mode = 2
-
-[node name="Sides" type="HSplitContainer" parent="Panel/VBoxContainer/ShapeProperties/VBoxContainer"]
-layout_mode = 2
-split_offset = 50
-
-[node name="RichTextLabel" type="RichTextLabel" parent="Panel/VBoxContainer/ShapeProperties/VBoxContainer/Sides"]
-layout_mode = 2
-text = "Sides:"
+text = "Size: 1,1,1"
 fit_content = true
-
-[node name="OptionButton" type="SpinBox" parent="Panel/VBoxContainer/ShapeProperties/VBoxContainer/Sides"]
-layout_mode = 2
-min_value = 5.0
-max_value = 32.0
-value = 5.0

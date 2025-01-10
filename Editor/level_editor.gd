@@ -16,6 +16,8 @@ var selected_section : section = section.GEOMETRY
 var selected_part = null
 @onready var selected_shape : ProcMesh = $SelectedShape
 
+@onready var level_select : Control = $LevelSelect
+
 @onready var XYZpos = $XYZPos
 
 
@@ -33,7 +35,7 @@ var selected_part = null
 
 func _ready() -> void:
 	XYZpos.visible = false
-	level_select()
+	open_level_select()
 
 func _process(delta : float) -> void:
 	if Input.is_action_pressed("camera_right"):
@@ -58,11 +60,8 @@ func _process(delta : float) -> void:
 			if camera.position.z > 25:
 				camera.position.z = 25
 
-func level_select():
-	var holder = preload("res://Editor/LevelBase.tscn").instantiate()
-	level_base = holder
-	add_child(level_base)
-	level_base.open_editor()
+func open_level_select():
+	level_select.visible = true
 
 func part_selected() -> void:
 	XYZpos.visible = true
@@ -132,3 +131,13 @@ func preview_shape_scale() -> Vector3:
 
 func reset_camera() -> void:
 	$CameraPivot.rotation = Vector3(deg_to_rad(-10), 0, 0)
+
+
+func level_selected(level_info : level_resource) -> void:
+	chosen_level = level_info
+	if chosen_level.associated_scene == null:
+		var holder = preload("res://Editor/LevelBase.tscn")
+		chosen_level.associated_scene = holder
+	level_base = chosen_level.associated_scene.instantiate()
+	add_child(level_base)
+	level_base.open_editor()

@@ -1,0 +1,7 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://dyhnu7yerr3w2"]
+
+[ext_resource type="FontFile" uid="uid://tc8t70kcccsk" path="res://Assets/Themes/Fonts/easvhs.ttf" id="1_hjh6u"]
+
+[resource]
+default_font = ExtResource("1_hjh6u")
+default_font_size = 20

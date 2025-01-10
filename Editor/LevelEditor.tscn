@@ -1,11 +1,11 @@
-[gd_scene load_steps=20 format=3 uid="uid://1yq80goel736"]
+[gd_scene load_steps=19 format=3 uid="uid://1yq80goel736"]
 
 [ext_resource type="Script" path="res://Editor/level_editor.gd" id="1_gkh0n"]
 [ext_resource type="Texture2D" uid="uid://d0fbpahnke75l" path="res://Assets/grid.png" id="4_33n1c"]
 [ext_resource type="PackedScene" uid="uid://2nsb0c22moeb" path="res://Editor/Shapes/ProcMesh.tscn" id="4_stuxe"]
 [ext_resource type="Script" path="res://Editor/XYZ_pos.gd" id="4_vj7w4"]
 [ext_resource type="Script" path="res://Editor/UI/editor_level_select.gd" id="5_kbbl2"]
-[ext_resource type="FontFile" uid="uid://tc8t70kcccsk" path="res://Assets/Themes/Fonts/easvhs.ttf" id="5_mly0c"]
+[ext_resource type="Theme" uid="uid://dyhnu7yerr3w2" path="res://Assets/Themes/Editor.tres" id="5_msf75"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lopki"]
 transparency = 1
@@ -58,10 +58,6 @@ size = Vector3(0.05, 0.05, 0.95)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_x408b"]
 size = Vector3(0.25, 0.25, 0.95)
-
-[sub_resource type="Theme" id="Theme_4oqmp"]
-default_font = ExtResource("5_mly0c")
-default_font_size = 20
 
 [node name="LevelEditor" type="Node3D"]
 script = ExtResource("1_gkh0n")
@@ -229,29 +225,76 @@ input_capture_on_drag = true
 [node name="CollisionShape3D" type="CollisionShape3D" parent="XYZPos/Z/Area3D"]
 shape = SubResource("BoxShape3D_x408b")
 
-[node name="LevelSelect" type="Control" parent="."]
+[node name="UI" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
-theme = SubResource("Theme_4oqmp")
-script = ExtResource("5_kbbl2")
+theme = ExtResource("5_msf75")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="LevelSelect"]
+[node name="Panel" type="Panel" parent="UI"]
+offset_right = 300.0
+offset_bottom = 300.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Panel"]
+layout_mode = 0
+offset_right = 300.0
+offset_bottom = 300.0
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="UI/Panel/VBoxContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[center]Properties"
+fit_content = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="UI/Panel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Pos"
+
+[node name="Button2" type="Button" parent="UI/Panel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Size"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="UI/Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Panel/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="UI/Panel/VBoxContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = " Position: 0,0,0"
+fit_content = true
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="UI/Panel/VBoxContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "Size: 1,1,1"
+fit_content = true
+
+[node name="LevelSelect" type="VBoxContainer" parent="UI"]
 layout_mode = 0
 offset_left = 47.0
 offset_top = 44.0
 offset_right = 181.0
 offset_bottom = 309.0
+script = ExtResource("5_kbbl2")
 
-[node name="ScrollContainer" type="ScrollContainer" parent="LevelSelect/VBoxContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="UI/LevelSelect"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="LevelSelect/VBoxContainer/ScrollContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/LevelSelect/ScrollContainer"]
 layout_mode = 2
 
-[node name="NewLevel" type="Button" parent="LevelSelect/VBoxContainer"]
+[node name="NewLevel" type="Button" parent="UI/LevelSelect"]
 layout_mode = 2
 text = "New Level"
 
@@ -270,4 +313,4 @@ text = "New Level"
 [connection signal="input_event" from="XYZPos/X/Area3D" to="XYZPos" method="x_clicked"]
 [connection signal="input_event" from="XYZPos/Y/Area3D" to="XYZPos" method="y_clicked"]
 [connection signal="input_event" from="XYZPos/Z/Area3D" to="XYZPos" method="z_clicked"]
-[connection signal="pressed" from="LevelSelect/VBoxContainer/NewLevel" to="LevelSelect" method="new_level"]
+[connection signal="level_selected" from="UI/LevelSelect" to="." method="level_selected"]
