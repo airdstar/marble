@@ -4,9 +4,11 @@ var level_info : level
 
 var shape_buttons : Array[Button] = []
 
-@onready var geometry_holder : VBoxContainer = $VBoxContainer/ScrollContainer/Geometry
-@onready var start_holder : VBoxContainer = $VBoxContainer/ScrollContainer/Starts
-@onready var misc_holder : VBoxContainer = $VBoxContainer/ScrollContainer/Misc
+@onready var geometry_holder : VBoxContainer = $VBoxContainer/HBoxContainer/ScrollContainer/VBoxContainer/Geometry
+@onready var start_holder : VBoxContainer = $VBoxContainer/HBoxContainer/ScrollContainer/VBoxContainer/Starts
+@onready var misc_holder : VBoxContainer = $VBoxContainer/HBoxContainer/ScrollContainer/VBoxContainer/Misc
+
+@onready var shape_holder : VBoxContainer = $VBoxContainer/HBoxContainer/Shapes/VBoxContainer
 
 signal shape_selected
 signal part_selected
@@ -28,14 +30,18 @@ func add_geometry(proc_mesh : ProcMesh) -> void:
 	current_button.toggle_mode = true
 	geometry_holder.add_child(current_button)
 	current_button.pressed.connect(geometry_section_selected.bind(proc_mesh))
+	
+		
+func geometry_section_selected(proc_mesh : ProcMesh) -> void:
 	for n in proc_mesh.shape_info:
 		var shape_button : Button = Button.new()
 		shape_button.text = n.shape_name
-		
-		
+		shape_button.toggle_mode = true
+		shape_holder.add_child(shape_button)
+		shape_button.pressed.connect(shape_chosen.bind(n))
 
-func geometry_section_selected(proc_mesh : ProcMesh) -> void:
-	pass
+func shape_chosen(shape : shape_resource) -> void:
+	shape_selected.emit(shape)
 
 
 

@@ -60,24 +60,6 @@ func add_pressed() -> void:
 	if selected_part is shape_resource:
 		level_base.geometry.add_part(selected_part)
 
-func preview_shape_pos_x_changed(value: float) -> void:
-	#adjust_range()
-	if selected_shape.shape_info.size() != 0:
-		selected_shape.shape_info[0].total_offset.x = value
-		selected_shape.regenerate_mesh()
-
-func preview_shape_pos_y_changed(value: float) -> void:
-	#adjust_range()
-	if selected_shape.shape_info.size() != 0:
-		selected_shape.shape_info[0].total_offset.y = value
-		selected_shape.regenerate_mesh()
-
-func preview_shape_pos_z_changed(value: float) -> void:
-	#adjust_range()
-	if selected_shape.shape_info.size() != 0:
-		selected_shape.shape_info[0].total_offset.z = value
-		selected_shape.regenerate_mesh()
-
 func preview_shape_scale_x_changed(value: float) -> void:
 	#adjust_range()
 	if selected_shape.shape_info.size() != 0:
@@ -95,7 +77,6 @@ func preview_shape_scale_z_changed(value: float) -> void:
 	if selected_shape.shape_info.size() != 0:
 		selected_shape.shape_info[0].size.z = value
 		selected_shape.regenerate_mesh()
-
 
 func reset_camera() -> void:
 	$CameraPivot.rotation = Vector3(deg_to_rad(-10), 0, 0)

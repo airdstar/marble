@@ -31,10 +31,13 @@ func place_control() -> void:
 
 func display_levels() -> void:
 	for n : level_resource in levels:
-		var option : Button = Button.new()
-		option.text = n.name
-		option_container.add_child(option)
-		option.pressed.connect(level_chosen.bind(n))
+		add_level(n)
+
+func add_level(level_info : level_resource) -> void:
+	var option : Button = Button.new()
+	option.text = level_info.name
+	option_container.add_child(option)
+	option.pressed.connect(level_chosen.bind(level_info))
 
 func level_chosen(level_info : level_resource) -> void:
 	if level_info.associated_scene == null:
@@ -44,4 +47,5 @@ func level_chosen(level_info : level_resource) -> void:
 	visible = false
 
 func new_level() -> void:
-	pass # Replace with function body.
+	pass
+	#ResourceSaver.save(player_data, resource_path + chosen_name)

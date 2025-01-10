@@ -337,19 +337,35 @@ tab_0/title = "Geometry"
 tab_1/title = "Starts"
 tab_2/title = "Misc"
 
-[node name="ScrollContainer" type="ScrollContainer" parent="UI/Sections/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/Sections/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Geometry" type="VBoxContainer" parent="UI/Sections/VBoxContainer/ScrollContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="UI/Sections/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Sections/VBoxContainer/HBoxContainer/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Starts" type="VBoxContainer" parent="UI/Sections/VBoxContainer/ScrollContainer"]
+[node name="Geometry" type="VBoxContainer" parent="UI/Sections/VBoxContainer/HBoxContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Starts" type="VBoxContainer" parent="UI/Sections/VBoxContainer/HBoxContainer/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Misc" type="VBoxContainer" parent="UI/Sections/VBoxContainer/ScrollContainer"]
+[node name="Misc" type="VBoxContainer" parent="UI/Sections/VBoxContainer/HBoxContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Shapes" type="ScrollContainer" parent="UI/Sections/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Sections/VBoxContainer/HBoxContainer/Shapes"]
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -392,3 +408,4 @@ text = "New Level"
 [connection signal="new_shape_selected" from="UI/Parts" to="." method="shape_selected"]
 [connection signal="tab_changed" from="UI/Sections/VBoxContainer/TabBar" to="UI/Sections" method="tab_changed"]
 [connection signal="level_selected" from="UI/LevelSelect" to="." method="level_selected"]
+[connection signal="pressed" from="UI/LevelSelect/NewLevel" to="UI/LevelSelect" method="new_level"]
