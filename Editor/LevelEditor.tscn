@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://1yq80goel736"]
+[gd_scene load_steps=20 format=3 uid="uid://1yq80goel736"]
 
 [ext_resource type="Script" path="res://Editor/level_editor.gd" id="1_gkh0n"]
 [ext_resource type="Texture2D" uid="uid://d0fbpahnke75l" path="res://Assets/grid.png" id="4_33n1c"]
@@ -6,6 +6,8 @@
 [ext_resource type="Script" path="res://Editor/XYZ_pos.gd" id="4_vj7w4"]
 [ext_resource type="Script" path="res://Editor/UI/editor_level_select.gd" id="5_kbbl2"]
 [ext_resource type="Theme" uid="uid://dyhnu7yerr3w2" path="res://Assets/Themes/Editor.tres" id="5_msf75"]
+[ext_resource type="Script" path="res://Editor/UI/editor_parts.gd" id="6_xrgr4"]
+[ext_resource type="Script" path="res://Editor/UI/editor_sections.gd" id="7_2n8hv"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lopki"]
 transparency = 1
@@ -16,9 +18,6 @@ disable_receive_shadows = true
 [sub_resource type="BoxMesh" id="BoxMesh_5yxar"]
 material = SubResource("StandardMaterial3D_lopki")
 size = Vector3(20, 0.01, 20)
-
-[sub_resource type="Environment" id="Environment_kluo7"]
-background_mode = 1
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ytq3e"]
 no_depth_test = true
@@ -184,9 +183,6 @@ cast_shadow = 0
 mesh = SubResource("BoxMesh_5yxar")
 skeleton = NodePath("")
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_kluo7")
-
 [node name="SelectedShape" parent="." instance=ExtResource("4_stuxe")]
 
 [node name="XYZPos" type="Node3D" parent="."]
@@ -232,58 +228,126 @@ offset_right = 40.0
 offset_bottom = 40.0
 theme = ExtResource("5_msf75")
 
-[node name="Panel" type="Panel" parent="UI"]
+[node name="Properties" type="Panel" parent="UI"]
+layout_mode = 0
+offset_top = 400.0
 offset_right = 300.0
-offset_bottom = 300.0
+offset_bottom = 700.0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/Panel"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Properties"]
 layout_mode = 0
 offset_right = 300.0
 offset_bottom = 300.0
 
-[node name="MarginContainer" type="MarginContainer" parent="UI/Panel/VBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="UI/Properties/VBoxContainer"]
 layout_mode = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="UI/Panel/VBoxContainer"]
+[node name="RichTextLabel" type="RichTextLabel" parent="UI/Properties/VBoxContainer"]
 layout_mode = 2
 bbcode_enabled = true
 text = "[center]Properties"
 fit_content = true
 
-[node name="HBoxContainer" type="HBoxContainer" parent="UI/Panel/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/Properties/VBoxContainer"]
 layout_mode = 2
 
-[node name="Button" type="Button" parent="UI/Panel/VBoxContainer/HBoxContainer"]
+[node name="Button" type="Button" parent="UI/Properties/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 text = "Pos"
 
-[node name="Button2" type="Button" parent="UI/Panel/VBoxContainer/HBoxContainer"]
+[node name="Button2" type="Button" parent="UI/Properties/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 text = "Size"
 
-[node name="ScrollContainer" type="ScrollContainer" parent="UI/Panel/VBoxContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="UI/Properties/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/Panel/VBoxContainer/ScrollContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Properties/VBoxContainer/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="RichTextLabel" type="RichTextLabel" parent="UI/Panel/VBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="RichTextLabel" type="RichTextLabel" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 text = " Position: 0,0,0"
 fit_content = true
 
-[node name="RichTextLabel2" type="RichTextLabel" parent="UI/Panel/VBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="RichTextLabel2" type="RichTextLabel" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 text = "Size: 1,1,1"
 fit_content = true
 
+[node name="Parts" type="Panel" parent="UI"]
+layout_mode = 0
+offset_right = 300.0
+offset_bottom = 300.0
+script = ExtResource("6_xrgr4")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Parts"]
+layout_mode = 0
+offset_right = 300.0
+offset_bottom = 300.0
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/Parts/VBoxContainer"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="UI/Parts/VBoxContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[center]Parts"
+fit_content = true
+
+[node name="ScrollContainer" type="ScrollContainer" parent="UI/Parts/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Parts/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Sections" type="Panel" parent="UI"]
+layout_mode = 0
+offset_left = 900.0
+offset_top = 400.0
+offset_right = 1200.0
+offset_bottom = 700.0
+script = ExtResource("7_2n8hv")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Sections"]
+layout_mode = 0
+offset_right = 300.0
+offset_bottom = 300.0
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/Sections/VBoxContainer"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="UI/Sections/VBoxContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[center]Sections"
+fit_content = true
+
+[node name="TabBar" type="TabBar" parent="UI/Sections/VBoxContainer"]
+layout_mode = 2
+current_tab = 0
+tab_count = 3
+tab_0/title = "Geometry"
+tab_1/title = "Starts"
+tab_2/title = "Misc"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="UI/Sections/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Sections/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
 [node name="LevelSelect" type="VBoxContainer" parent="UI"]
 layout_mode = 0
-offset_left = 47.0
+offset_left = 500.0
 offset_top = 44.0
-offset_right = 181.0
+offset_right = 634.0
 offset_bottom = 309.0
 script = ExtResource("5_kbbl2")
 
@@ -293,6 +357,7 @@ size_flags_vertical = 3
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UI/LevelSelect/ScrollContainer"]
 layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="NewLevel" type="Button" parent="UI/LevelSelect"]
 layout_mode = 2
@@ -313,4 +378,5 @@ text = "New Level"
 [connection signal="input_event" from="XYZPos/X/Area3D" to="XYZPos" method="x_clicked"]
 [connection signal="input_event" from="XYZPos/Y/Area3D" to="XYZPos" method="y_clicked"]
 [connection signal="input_event" from="XYZPos/Z/Area3D" to="XYZPos" method="z_clicked"]
+[connection signal="new_shape_selected" from="UI/Parts" to="." method="shape_selected"]
 [connection signal="level_selected" from="UI/LevelSelect" to="." method="level_selected"]

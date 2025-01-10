@@ -34,10 +34,12 @@ func display_levels() -> void:
 		var option : Button = Button.new()
 		option.text = n.name
 		option_container.add_child(option)
-		option_container.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		option.pressed.connect(level_chosen.bind(n))
 
 func level_chosen(level_info : level_resource) -> void:
+	if level_info.associated_scene == null:
+		var holder = preload("res://Editor/LevelBase.tscn")
+		level_info.associated_scene = holder
 	level_selected.emit(level_info)
 	visible = false
 

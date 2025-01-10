@@ -16,22 +16,12 @@ var selected_section : section = section.GEOMETRY
 var selected_part = null
 @onready var selected_shape : ProcMesh = $SelectedShape
 
-@onready var level_select : Control = $LevelSelect
+@onready var level_select : VBoxContainer = $UI/LevelSelect
 
 @onready var XYZpos = $XYZPos
 
-
 @onready var camera : Camera3D = $CameraPivot/Camera3D
 
-
-
-@onready var pos_x = $CanvasLayer/VBoxContainer/Position/PosX
-@onready var pos_y = $CanvasLayer/VBoxContainer/Position/PosY
-@onready var pos_z = $CanvasLayer/VBoxContainer/Position/PosZ
-
-@onready var scale_x = $CanvasLayer/VBoxContainer/Scale/ScaleX
-@onready var scale_y = $CanvasLayer/VBoxContainer/Scale/ScaleY
-@onready var scale_z = $CanvasLayer/VBoxContainer/Scale/ScaleZ
 
 func _ready() -> void:
 	XYZpos.visible = false
@@ -105,9 +95,6 @@ func preview_shape_pos_z_changed(value: float) -> void:
 		selected_shape.shape_info[0].total_offset.z = value
 		selected_shape.regenerate_mesh()
 
-func preview_shape_pos() -> Vector3:
-	return Vector3(pos_x.value, pos_y.value, pos_z.value)
-
 func preview_shape_scale_x_changed(value: float) -> void:
 	#adjust_range()
 	if selected_shape.shape_info.size() != 0:
@@ -126,8 +113,6 @@ func preview_shape_scale_z_changed(value: float) -> void:
 		selected_shape.shape_info[0].size.z = value
 		selected_shape.regenerate_mesh()
 
-func preview_shape_scale() -> Vector3:
-	return Vector3(scale_x.value, scale_y.value, scale_z.value)
 
 func reset_camera() -> void:
 	$CameraPivot.rotation = Vector3(deg_to_rad(-10), 0, 0)
@@ -135,9 +120,11 @@ func reset_camera() -> void:
 
 func level_selected(level_info : level_resource) -> void:
 	chosen_level = level_info
-	if chosen_level.associated_scene == null:
-		var holder = preload("res://Editor/LevelBase.tscn")
-		chosen_level.associated_scene = holder
 	level_base = chosen_level.associated_scene.instantiate()
 	add_child(level_base)
 	level_base.open_editor()
+
+func shape_selected(shape : shape_resource) -> void:
+	selected_shape.clear_mesh()
+	selected_shape.add_shape(shape)
+	part_selected()
