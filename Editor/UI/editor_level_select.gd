@@ -1,6 +1,6 @@
 extends Control
 
-@onready var option_container : VBoxContainer = $Level_Options
+@onready var option_container : VBoxContainer = $VBoxContainer/ScrollContainer/VBoxContainer
 
 var resource_path : String = "res://Levels/EditorTests/"
 var scene_path : String = "res://Levels/EditorTests/"
@@ -32,12 +32,12 @@ func display_levels() -> void:
 		var option : Button = Button.new()
 		option.text = n.name
 		option_container.add_child(option)
-		option.pressed.connect(self.level_chosen)
+		option_container.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		option.pressed.connect(level_chosen.bind(n))
 
-func add_level() -> void:
-	pass
-
-
-func level_chosen() -> void:
-	level_selected.emit()
+func level_chosen(level_info : level_resource) -> void:
+	level_selected.emit(level_info)
 	visible = false
+
+func new_level() -> void:
+	pass # Replace with function body.

@@ -1,11 +1,14 @@
-[gd_scene load_steps=5 format=3 uid="uid://dqdv1dvpasyd"]
+[gd_scene load_steps=7 format=3 uid="uid://dqdv1dvpasyd"]
 
 [ext_resource type="Script" path="res://Main/main_menu.gd" id="1_hdyms"]
 [ext_resource type="Texture2D" uid="uid://bjenkqfpq1own" path="res://Assets/Settings.png" id="2_2dxc0"]
+[ext_resource type="Texture2D" uid="uid://bklfyfts4w2f4" path="res://Assets/Exit.png" id="3_6i788"]
 
 [sub_resource type="Theme" id="Theme_guwbr"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1el8n"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_imfnh"]
 
 [node name="MainMenu" type="Node"]
 process_mode = 1
@@ -44,10 +47,6 @@ layout_mode = 2
 text = "Profile"
 expand_icon = true
 
-[node name="Exit" type="Button" parent="PlayContainer"]
-layout_mode = 2
-text = "Exit"
-
 [node name="Settings" type="Button" parent="."]
 offset_top = 648.0
 offset_right = 72.0
@@ -67,9 +66,28 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_1el8n")
 icon = ExtResource("2_2dxc0")
 expand_icon = true
 
+[node name="Exit" type="Button" parent="."]
+offset_left = 74.0
+offset_top = 652.0
+offset_right = 138.0
+offset_bottom = 716.0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_imfnh")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_imfnh")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_imfnh")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_imfnh")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_imfnh")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_imfnh")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_imfnh")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_imfnh")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_imfnh")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_imfnh")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_imfnh")
+icon = ExtResource("3_6i788")
+expand_icon = true
+
 [connection signal="pressed" from="PlayContainer/Play" to="." method="play_pressed"]
 [connection signal="pressed" from="PlayContainer/Editor" to="." method="editor_pressed"]
 [connection signal="pressed" from="PlayContainer/Gallery" to="." method="gallery_pressed"]
 [connection signal="pressed" from="PlayContainer/Profile" to="." method="profile_pressed"]
-[connection signal="pressed" from="PlayContainer/Exit" to="." method="exit_pressed"]
 [connection signal="pressed" from="Settings" to="." method="settings_pressed"]
+[connection signal="pressed" from="Exit" to="." method="exit_pressed"]

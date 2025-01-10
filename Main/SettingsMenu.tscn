@@ -3,10 +3,14 @@
 [ext_resource type="Script" path="res://Main/settings_menu.gd" id="1_321is"]
 [ext_resource type="Theme" uid="uid://dnuvw7urh35y3" path="res://Assets/Themes/Settings.tres" id="2_qpujl"]
 
-[node name="Settings" type="Node"]
+[node name="Settings" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+theme = ExtResource("2_qpujl")
 script = ExtResource("1_321is")
 
 [node name="Settings" type="VBoxContainer" parent="."]
+layout_mode = 0
 offset_left = 136.0
 offset_top = 55.0
 offset_right = 989.0
@@ -266,6 +270,7 @@ fit_content = true
 layout_mode = 2
 
 [node name="IO" type="VBoxContainer" parent="."]
+layout_mode = 0
 offset_left = 455.0
 offset_right = 586.0
 offset_bottom = 575.0

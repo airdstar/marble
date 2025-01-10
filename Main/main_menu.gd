@@ -19,8 +19,8 @@ func place_control() -> void:
 	settings_button.set_size(Vector2(get_window().get_size().y / 16, get_window().get_size().y / 16))
 	settings_button.set_position(Vector2.ZERO)
 
-	exit_button.set_size(settings_button.get_size())
-	exit_button.set_position(get_window().get_size().x - exit_button.size.x)
+	exit_button.set_size(settings_button.size)
+	exit_button.set_position(Vector2(get_window().get_size().x - exit_button.size.x, 0))
 	
 
 func play_pressed() -> void:
