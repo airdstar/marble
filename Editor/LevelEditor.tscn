@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://1yq80goel736"]
+[gd_scene load_steps=21 format=3 uid="uid://1yq80goel736"]
 
 [ext_resource type="Script" path="res://Editor/level_editor.gd" id="1_gkh0n"]
 [ext_resource type="Texture2D" uid="uid://d0fbpahnke75l" path="res://Assets/grid.png" id="4_33n1c"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://Editor/XYZ_pos.gd" id="4_vj7w4"]
 [ext_resource type="Script" path="res://Editor/UI/editor_level_select.gd" id="5_kbbl2"]
 [ext_resource type="Theme" uid="uid://dyhnu7yerr3w2" path="res://Assets/Themes/Editor.tres" id="5_msf75"]
+[ext_resource type="Script" path="res://Editor/UI/editor_property.gd" id="6_mogux"]
 [ext_resource type="Script" path="res://Editor/UI/editor_parts.gd" id="6_xrgr4"]
 [ext_resource type="Script" path="res://Editor/UI/editor_sections.gd" id="7_2n8hv"]
 
@@ -233,6 +234,7 @@ layout_mode = 0
 offset_top = 400.0
 offset_right = 300.0
 offset_bottom = 700.0
+script = ExtResource("6_mogux")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UI/Properties"]
 layout_mode = 0
@@ -339,7 +341,15 @@ tab_2/title = "Misc"
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/Sections/VBoxContainer/ScrollContainer"]
+[node name="Geometry" type="VBoxContainer" parent="UI/Sections/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Starts" type="VBoxContainer" parent="UI/Sections/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Misc" type="VBoxContainer" parent="UI/Sections/VBoxContainer/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -363,6 +373,7 @@ size_flags_horizontal = 3
 layout_mode = 2
 text = "New Level"
 
+[connection signal="level_loaded" from="." to="UI/Sections" method="_on_level_loaded"]
 [connection signal="pressed" from="CanvasLayer/VBoxContainer/HBoxContainer/Button" to="." method="plane_pressed"]
 [connection signal="pressed" from="CanvasLayer/VBoxContainer/HBoxContainer/Button2" to="." method="cube_pressed"]
 [connection signal="pressed" from="CanvasLayer/VBoxContainer/HBoxContainer/Button3" to="." method="polygon_pressed"]
@@ -379,4 +390,5 @@ text = "New Level"
 [connection signal="input_event" from="XYZPos/Y/Area3D" to="XYZPos" method="y_clicked"]
 [connection signal="input_event" from="XYZPos/Z/Area3D" to="XYZPos" method="z_clicked"]
 [connection signal="new_shape_selected" from="UI/Parts" to="." method="shape_selected"]
+[connection signal="tab_changed" from="UI/Sections/VBoxContainer/TabBar" to="UI/Sections" method="tab_changed"]
 [connection signal="level_selected" from="UI/LevelSelect" to="." method="level_selected"]

@@ -15,13 +15,11 @@ var selected_section : section = section.GEOMETRY
 
 var selected_part = null
 @onready var selected_shape : ProcMesh = $SelectedShape
-
 @onready var level_select : VBoxContainer = $UI/LevelSelect
-
 @onready var XYZpos = $XYZPos
-
 @onready var camera : Camera3D = $CameraPivot/Camera3D
 
+signal level_loaded
 
 func _ready() -> void:
 	XYZpos.visible = false
@@ -55,23 +53,8 @@ func open_level_select():
 
 func part_selected() -> void:
 	XYZpos.visible = true
-	if selected_shape.shape_info.size() != 0:
+	if selected_part == null:
 		XYZpos.position = selected_shape.shape_info[0].total_offset
-
-func plane_pressed() -> void:
-	selected_shape.clear_mesh()
-	selected_shape.add_shape(plane.new())
-	part_selected()
-
-func cube_pressed() -> void:
-	selected_shape.clear_mesh()
-	selected_shape.add_shape(cube.new())
-	part_selected()
-
-func polygon_pressed() -> void:
-	selected_shape.clear_mesh()
-	selected_shape.add_shape(polygon.new())
-	part_selected()
 
 func add_pressed() -> void:
 	if selected_part is shape_resource:
@@ -123,6 +106,7 @@ func level_selected(level_info : level_resource) -> void:
 	level_base = chosen_level.associated_scene.instantiate()
 	add_child(level_base)
 	level_base.open_editor()
+	level_loaded.emit(level_base)
 
 func shape_selected(shape : shape_resource) -> void:
 	selected_shape.clear_mesh()

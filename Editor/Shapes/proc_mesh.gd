@@ -1,6 +1,8 @@
 extends MeshInstance3D
 class_name ProcMesh
 
+var mesh_name : String = "Proc Mesh"
+
 var shape_info : Array[shape_resource]
 var array_mesh : ArrayMesh
 
