@@ -86,7 +86,7 @@ cast_shadow = 0
 mesh = SubResource("BoxMesh_5yxar")
 skeleton = NodePath("")
 
-[node name="ShapePreview" parent="." instance=ExtResource("4_stuxe")]
+[node name="SelectedShape" parent="." instance=ExtResource("4_stuxe")]
 
 [node name="XYZPos" type="Node3D" parent="."]
 script = ExtResource("4_vj7w4")
@@ -206,23 +206,6 @@ max_length = 24
 layout_mode = 2
 text = " Position: 0,0,0"
 fit_content = true
-
-[node name="ShapeSides" type="HBoxContainer" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties"]
-layout_mode = 2
-
-[node name="RichTextLabel" type="RichTextLabel" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeSides"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.5
-text = "Sides:"
-fit_content = true
-
-[node name="Sides" type="SpinBox" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeSides"]
-layout_mode = 2
-size_flags_horizontal = 3
-min_value = 5.0
-max_value = 20.0
-value = 5.0
 
 [node name="Parts" type="Panel" parent="UI"]
 layout_mode = 0
@@ -356,35 +339,22 @@ size_flags_horizontal = 3
 layout_mode = 2
 text = "New Level"
 
-[node name="Button" type="Button" parent="UI"]
-visible = false
-layout_mode = 0
-offset_left = 301.0
-offset_right = 337.0
-offset_bottom = 32.0
-
 [connection signal="level_loaded" from="." to="UI/Sections" method="_on_level_loaded"]
-[connection signal="new_part_selected" from="." to="UI/Properties" method="part_selected"]
-[connection signal="new_shape_selected" from="." to="UI/Properties" method="shape_selected"]
 [connection signal="shape_placed" from="." to="UI/Sections" method="add_shape"]
-[connection signal="pos_changed" from="ShapePreview" to="XYZPos" method="shape_pos_changed"]
-[connection signal="pos_changed" from="ShapePreview" to="UI/Properties" method="shape_pos_changed"]
-[connection signal="movement_detected" from="XYZPos" to="ShapePreview" method="movement_detected"]
+[connection signal="pos_changed" from="SelectedShape" to="XYZPos" method="shape_pos_changed"]
+[connection signal="pos_changed" from="SelectedShape" to="UI/Properties" method="shape_pos_changed"]
+[connection signal="movement_detected" from="XYZPos" to="SelectedShape" method="movement_detected"]
 [connection signal="input_event" from="XYZPos/X/Area3D" to="XYZPos" method="x_clicked"]
 [connection signal="input_event" from="XYZPos/Y/Area3D" to="XYZPos" method="y_clicked"]
 [connection signal="input_event" from="XYZPos/Z/Area3D" to="XYZPos" method="z_clicked"]
-[connection signal="shape_name_changed" from="UI/Properties" to="ShapePreview" method="name_changed"]
+[connection signal="shape_name_changed" from="UI/Properties" to="SelectedShape" method="name_changed"]
 [connection signal="item_selected" from="UI/Properties/VBoxContainer/OptionButton" to="UI/Properties" method="property_group_changed"]
-[connection signal="text_submitted" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/PartProperties/PartName" to="." method="part_name_changed"]
+[connection signal="text_submitted" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/PartProperties/PartName" to="UI/Properties" method="shape_name_submitted"]
 [connection signal="text_submitted" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeName" to="UI/Properties" method="shape_name_submitted"]
-[connection signal="value_changed" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeSides/Sides" to="ShapePreview" method="sides_changed"]
 [connection signal="new_shape_selected" from="UI/Parts" to="." method="shape_selected"]
-[connection signal="part_selected" from="UI/Sections" to="." method="part_selected"]
-[connection signal="shape_selected" from="UI/Sections" to="." method="shape_selected"]
 [connection signal="tab_changed" from="UI/Sections/VBoxContainer/TabBar" to="UI/Sections" method="tab_changed"]
 [connection signal="pressed" from="UI/Sections/VBoxContainer/Take" to="UI/Sections" method="_on_take_pressed"]
 [connection signal="pressed" from="UI/Sections/VBoxContainer/Place" to="." method="_on_place_pressed"]
-[connection signal="pressed" from="UI/Sections/VBoxContainer/Place" to="UI/Properties" method="shape_unselected"]
 [connection signal="pressed" from="UI/Sections/VBoxContainer/NewMesh" to="UI/Sections" method="_on_new_mesh_pressed"]
 [connection signal="level_selected" from="UI/LevelSelect" to="." method="level_selected"]
 [connection signal="pressed" from="UI/LevelSelect/VBoxContainer/NewLevel" to="UI/LevelSelect/VBoxContainer" method="new_level"]

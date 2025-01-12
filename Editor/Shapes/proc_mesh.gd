@@ -8,6 +8,8 @@ var array_mesh : ArrayMesh
 
 var tri_count : int = 0
 
+var is_preview := false
+
 signal pos_changed
 
 func clear_mesh() -> void:
@@ -19,33 +21,63 @@ func add_shape(new_shape : shape_resource) -> void:
 	shape_info.append(new_shape)
 	regenerate_mesh()
 
+func remove_shape(shape : shape_resource) -> void:
+	for n : int in range(shape_info.size() - 1):
+		if shape_info[n] == shape:
+			shape_info.remove_at(n)
+	regenerate_mesh()
+
 func regenerate_mesh() -> void:
 	if !array_mesh:
 		array_mesh = ArrayMesh.new()
 		mesh = array_mesh
 	array_mesh.clear_surfaces()
-	var surface_array : Array = []
-	var index_offset : int = 0
+	
 	if shape_info.size() != 0:
+		var index_offset : int = 0
+		
+		var surface_array : Array = []
+		surface_array.resize(Mesh.ARRAY_MAX)
+		var positions := PackedVector3Array()
+		var normals := PackedVector3Array()
+		var indices := PackedInt32Array()
+		
+		var surface_holder : Array
 		for n in shape_info:
-			surface_array += n.get_surface_array(index_offset)
-			index_offset = surface_array[Mesh.ARRAY_VERTEX].size()
-		tri_count = surface_array[Mesh.ARRAY_INDEX].size() / 3
+			surface_holder = n.get_surface_array(index_offset)
+			
+			positions.append_array(surface_holder[Mesh.ARRAY_VERTEX])
+			normals.append_array(surface_holder[Mesh.ARRAY_NORMAL])
+			indices.append_array(surface_holder[Mesh.ARRAY_INDEX])
+			
+			index_offset = positions.size()
+			
+		surface_array[Mesh.ARRAY_VERTEX] = positions
+		surface_array[Mesh.ARRAY_NORMAL] = normals
+		surface_array[Mesh.ARRAY_INDEX] = indices
+		
+		
 		array_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, surface_array)
 
 func cull() -> void:
 	pass
 
-func movement_detected(pos_change : Vector3) -> void:
-	if pos_change.x != 0:
-		shape_info[0].total_offset.x = pos_change.x
+func movement_detected(pos_change : Vector3, axis : int) -> void:
+	match axis:
+		0:
+			shape_info[0].total_offset.x = pos_change.x
+		1:
+			shape_info[0].total_offset.y = pos_change.y
+		2:
+			shape_info[0].total_offset.z = pos_change.z
 	
-	if pos_change.y != 0:
-		shape_info[0].total_offset.y = pos_change.y
-	
-	if pos_change.z != 0:
-		shape_info[0].total_offset.z = pos_change.z
-	
-	if pos_change != Vector3.ZERO:
-		regenerate_mesh()
-		pos_changed.emit(shape_info[0].total_offset)
+	regenerate_mesh()
+	pos_changed.emit(shape_info[0].total_offset)
+
+func name_changed(new_name : String) -> void:
+	if shape_info.size() != 0:
+		shape_info[0].shape_name = new_name
+
+func sides_changed(value: float) -> void:
+	shape_info[0].sides = value
+	regenerate_mesh()

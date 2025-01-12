@@ -46,7 +46,6 @@ func get_surface_array(index : int) -> Array:
 		for y : int in subdivisions:
 			var vert_offset := (binormal * x + tangent * y) + offset 
 			var ind_offset := 4 * (x * subdivisions + y) + index
-			
 			positions.append_array([
 				vert_offset * size + total_offset,
 				(vert_offset + tangent) * size + total_offset,

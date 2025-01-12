@@ -1,6 +1,6 @@
 extends Control
 
-@onready var option_container : VBoxContainer = $ScrollContainer/VBoxContainer
+@onready var option_container := $VBoxContainer/ScrollContainer/VBoxContainer
 
 var resource_path : String = "res://Levels/EditorTests/LevelInfo/"
 var scene_path : String = "res://Levels/EditorTests/"
@@ -10,7 +10,6 @@ var levels : Array[level_resource] = []
 signal level_selected
 
 func _ready() -> void:
-	place_control()
 	var dir = DirAccess.open(resource_path)
 	dir.list_dir_begin()
 	var currentLevel : String = dir.get_next()
@@ -26,8 +25,6 @@ func _ready() -> void:
 
 	display_levels()
 
-func place_control() -> void:
-	position.x = get_window().size.x / 2 - size.x / 2
 
 func display_levels() -> void:
 	for n : level_resource in levels:
