@@ -1,12 +1,45 @@
-[gd_scene load_steps=2 format=3 uid="uid://cbkcx2bswrblr"]
+[gd_scene load_steps=2 format=3 uid="uid://c07ml3t05iu7q"]
 
-[ext_resource type="Script" path="res://Levels/Handlers/play_end.gd" id="1_1vy14"]
+[sub_resource type="GDScript" id="GDScript_4j44s"]
+script/source = "extends Node
+
+@onready var level_display = $CenterContainer/VBoxContainer/points
+
+var run_info
+
+func _ready():
+	PlayerInfo.player_data.game_over_count += 1
+	
+	run_info = get_parent().run_info
+	
+	level_display.text = \"[center][rainbow]\"
+	if run_info.current_level > PlayerInfo.player_data.highest_level:
+		level_display.text += \"New Record!\\n\"
+		PlayerInfo.player_data.highest_level = run_info.current_level
+	Global.runBase.timerText.visible = false
+	level_display.text += \"You reached level %d!\" % run_info.current_level
+	PlayerInfo.save_data()
+	
+	get_tree().paused = true
+	run_info.inRun = false
+
+func _process(_delta: float) -> void:
+	if Input.is_action_just_pressed(\"back\"):
+		get_tree().paused = false
+		Global.open_scene(\"main_menu\")
+
+func run_restart() -> void:
+	get_tree().paused = false
+	Global.runBase.timerText.visible = true
+	Global.runBase.start_game()
+	queue_free()
+"
 
 [node name="RunEnd" type="Control"]
 process_mode = 3
 layout_mode = 3
 anchors_preset = 0
-script = ExtResource("1_1vy14")
+script = SubResource("GDScript_4j44s")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 0

@@ -1,8 +1,8 @@
 [gd_scene load_steps=7 format=3 uid="uid://dqdv1dvpasyd"]
 
-[ext_resource type="Script" path="res://Main/main_menu.gd" id="1_hdyms"]
-[ext_resource type="Texture2D" uid="uid://bjenkqfpq1own" path="res://Assets/Settings.png" id="2_2dxc0"]
-[ext_resource type="Texture2D" uid="uid://bklfyfts4w2f4" path="res://Assets/Exit.png" id="3_6i788"]
+[ext_resource type="Script" path="res://Main/Menus/main_menu.gd" id="1_tofsu"]
+[ext_resource type="Texture2D" uid="uid://bjenkqfpq1own" path="res://Assets/Settings.png" id="2_7xohp"]
+[ext_resource type="Texture2D" uid="uid://bklfyfts4w2f4" path="res://Assets/Exit.png" id="3_8sgqc"]
 
 [sub_resource type="Theme" id="Theme_guwbr"]
 
@@ -12,7 +12,7 @@
 
 [node name="MainMenu" type="Node"]
 process_mode = 1
-script = ExtResource("1_hdyms")
+script = ExtResource("1_tofsu")
 
 [node name="PlayContainer" type="VBoxContainer" parent="."]
 offset_left = 568.889
@@ -69,7 +69,7 @@ theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_1el8n")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_1el8n")
 theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_1el8n")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_1el8n")
-icon = ExtResource("2_2dxc0")
+icon = ExtResource("2_7xohp")
 expand_icon = true
 
 [node name="Exit" type="Button" parent="."]
@@ -88,7 +88,7 @@ theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_imfnh")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_imfnh")
 theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_imfnh")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_imfnh")
-icon = ExtResource("3_6i788")
+icon = ExtResource("3_8sgqc")
 expand_icon = true
 
 [connection signal="pressed" from="PlayContainer/Play" to="." method="play_pressed"]

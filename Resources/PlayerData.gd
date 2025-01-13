@@ -15,6 +15,6 @@ func check_info() -> void:
 		player_color = Color(1,1,1)
 
 func open_profile():
-	var toReturn = preload("res://Main/Profile.tscn").instantiate()
+	var toReturn = preload("res://Main/Menus/Profile.tscn").instantiate()
 	toReturn.set_data(self)
 	return toReturn

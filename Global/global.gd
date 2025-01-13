@@ -18,10 +18,10 @@ var main_scene : main
 var runBase : Node3D
 
 var pos_scenes : Dictionary = {
-	"main_menu" : "res://Main/MainMenu.tscn",
-	"settings" : "res://Main/SettingsMenu.tscn",
-	"gallery" : "res://Main/Gallery.tscn",
-	"editor" : "res://Editor/LevelEditor.tscn",
+	"main_menu" : "res://Main/Menus/MainMenu.tscn",
+	"settings" : "res://Main/Menus/SettingsMenu.tscn",
+	"gallery" : "res://Main/Menus/Gallery.tscn",
+	"editor" : "res://Editor/Menus/LevelEditor.tscn",
 	}
 
 

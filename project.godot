@@ -96,6 +96,13 @@ editor_grab={
 ]
 }
 
+[layer_names]
+
+3d_physics/layer_1="Player"
+3d_physics/layer_2="World"
+3d_physics/layer_3="Goal"
+3d_physics/layer_4="Respawner"
+
 [physics]
 
 common/physics_ticks_per_second=120

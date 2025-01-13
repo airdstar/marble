@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://4bfdr3xelqm8"]
+[gd_scene load_steps=11 format=3 uid="uid://4bfdr3xelqm8"]
 
 [ext_resource type="Script" path="res://Levels/Handlers/floor.gd" id="1_6o7sh"]
 [ext_resource type="Script" path="res://Levels/Handlers/level_handler.gd" id="1_q6dl6"]
 [ext_resource type="Script" path="res://Levels/Handlers/run_handler.gd" id="3_2warv"]
 [ext_resource type="Script" path="res://Levels/Handlers/camera.gd" id="4_e22wn"]
 [ext_resource type="Theme" uid="uid://dl6a6mq4q5lda" path="res://Assets/Themes/timer.tres" id="5_yj74y"]
+[ext_resource type="FontFile" uid="uid://tc8t70kcccsk" path="res://Assets/Themes/Fonts/easvhs.ttf" id="6_kmhra"]
 
 [sub_resource type="Sky" id="Sky_0bori"]
 
@@ -33,6 +34,9 @@ adjustment_brightness = 0.75
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_omjb2"]
 size = Vector3(200, 1, 200)
+
+[sub_resource type="Theme" id="Theme_qcwq6"]
+default_font = ExtResource("6_kmhra")
 
 [node name="Floor" type="Node3D"]
 script = ExtResource("1_6o7sh")
@@ -107,6 +111,42 @@ layout_mode = 2
 text = "hi"
 fit_content = true
 
+[node name="End" type="ColorRect" parent="UI"]
+layout_mode = 0
+offset_right = 1293.0
+offset_bottom = 727.0
+theme = SubResource("Theme_qcwq6")
+color = Color(0, 0, 0, 0.7)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/End"]
+layout_mode = 0
+offset_left = 576.0
+offset_top = 576.0
+offset_right = 705.0
+offset_bottom = 641.0
+
+[node name="Restart" type="Button" parent="UI/End/VBoxContainer"]
+layout_mode = 2
+text = "Restart"
+
+[node name="Return" type="Button" parent="UI/End/VBoxContainer"]
+layout_mode = 2
+text = "Return"
+
+[node name="LevelCount" type="RichTextLabel" parent="UI/End"]
+layout_mode = 0
+offset_left = 484.0
+offset_top = 149.0
+offset_right = 805.0
+offset_bottom = 253.0
+theme_override_font_sizes/normal_font_size = 25
+bbcode_enabled = true
+text = "[center]You reached level 11!"
+fit_content = true
+
 [connection signal="level_generated" from="LevelHandler" to="." method="level_generated"]
 [connection signal="difficulty_changed" from="RunHandler" to="LevelHandler" method="set_level_pool"]
+[connection signal="timeout" from="Timer" to="." method="game_over"]
 [connection signal="area_entered" from="KillArea" to="." method="killzone_touched"]
+[connection signal="pressed" from="UI/End/VBoxContainer/Restart" to="." method="start_game"]
+[connection signal="pressed" from="UI/End/VBoxContainer/Return" to="." method="prev_scene"]

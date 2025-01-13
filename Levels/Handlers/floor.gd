@@ -34,15 +34,18 @@ var settings = PlayerInfo.player_settings
 @onready var camera := $camera_y
 @onready var origin := $Origin
 @onready var skybox = $WorldEnvironment.environment
-@onready var timer := $Timer
+@onready var timer : Timer = $Timer
 
-@onready var level_handler := $LevelHandler
-@onready var run_handler := $RunHandler
+@onready var level_handler : LevelHandler = $LevelHandler
+@onready var run_handler : RunHandler = $RunHandler
 
 @onready var timer_text = $UI/Timer
 @onready var name_text = $UI/VBoxContainer/name
 @onready var fps_text = $UI/VBoxContainer/fps
 @onready var speed_text = $UI/VBoxContainer/speed
+
+@onready var end_ui := $UI/End
+@onready var level_count := $UI/End/LevelCount
 
 func _ready() -> void:
 	Global.runBase = self
@@ -107,6 +110,10 @@ func place_control() -> void:
 func start_game() -> void:
 	transitioning = true
 	allow_input = false
+	
+	timer_text.visible = true
+	end_ui.visible = false
+	
 	if is_run:
 		run_handler.reset_run()
 	
@@ -123,7 +130,7 @@ func start_game() -> void:
 	run_handler.inRun = true
 	
 	if marble == null:
-		var holder = preload("res://Main/Marble.tscn").instantiate()
+		var holder = preload("res://Main/Player.tscn").instantiate()
 		add_child(holder)
 		marble = holder
 	
@@ -138,8 +145,9 @@ func next_level() -> void:
 
 	marble.visible = false
 	prev_instance = instanced
-	
 	set_time()
+	
+	run_handler.next_level()
 	
 	level_handler.generate_level(true)
 
@@ -153,9 +161,26 @@ func game_over() -> void:
 		if allow_timer:
 			if !timer.is_stopped():
 				timer.stop()
-		var overlay = preload("res://Levels/Handlers/PlayEnd.tscn").instantiate()
+		
+		run_handler.inRun = false
+		allow_input = false
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-		add_child(overlay)
+		
+		end_ui.visible = true
+		timer_text.visible = false
+		marble.visible = false
+		marble.collision.set_deferred("monitorable", false)
+		
+		PlayerInfo.player_data.game_over_count += 1
+		
+		level_count.text = "[center]"
+		if run_handler.current_level > PlayerInfo.player_data.highest_level:
+			level_count.text += "New Record!\n"
+			PlayerInfo.player_data.highest_level = run_handler.current_level
+		level_count.text += "You reached level %d!" % run_handler.current_level
+		PlayerInfo.save_data()
+	else:
+		prev_scene()
 
 
 func set_time() -> void:
@@ -216,3 +241,5 @@ func level_generated(level_info : level_resource) -> void:
 	
 	instanced.start_level()
 	
+func prev_scene() -> void:
+	Global.open_scene(Global.main_scene.prev_scene)

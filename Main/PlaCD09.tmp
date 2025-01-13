@@ -1,0 +1,44 @@
+[gd_scene load_steps=7 format=3 uid="uid://daqk2roaa6h1v"]
+
+[ext_resource type="Script" path="res://Main/player.gd" id="1_8df3t"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_vmld2"]
+rough = true
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_84e8f"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ge73a"]
+transparency = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_38p8a"]
+render_priority = -1
+next_pass = SubResource("StandardMaterial3D_ge73a")
+transparency = 1
+no_depth_test = true
+albedo_color = Color(64.324, 27.568, 1, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_4hlcw"]
+material = SubResource("StandardMaterial3D_38p8a")
+flip_faces = true
+
+[node name="Player" type="RigidBody3D"]
+mass = 10.0
+physics_material_override = SubResource("PhysicsMaterial_vmld2")
+gravity_scale = 7.5
+angular_damp = 3.5
+script = ExtResource("1_8df3t")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_84e8f")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_4hlcw")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("SphereShape3D_84e8f")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+light_cull_mask = 4293918723
+omni_range = 3.0
