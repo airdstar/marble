@@ -9,7 +9,9 @@ enum difficulty {
 enum floor_type {
 	PLAY,
 	GALLERY,
-	EDITOR
+	EDITOR,
+	PACK,
+	CHALLENGE
 }
 
 var main_scene : main
@@ -101,6 +103,20 @@ func open_floor(type : floor_type, level_pool : Array[level_resource]):
 		floor_type.PLAY:
 			holder.is_run = true
 			holder.allow_timer = true
+		floor_type.GALLERY:
+			holder.set_pool = true
+			#holder.timer_count_up = true
+		floor_type.EDITOR:
+			holder.set_pool = true
+		floor_type.PACK:
+			holder.is_run = true
+			holder.allow_timer = true
+			holder.set_pool = true
+		floor_type.CHALLENGE:
+			holder.is_run = true
+			#holder.timer_count_up = true
+			holder.set_pool = true
+			holder.in_order = true
 
 	holder.call_deferred("start_game")
 

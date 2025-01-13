@@ -1,10 +1,11 @@
 extends Node
 
-var master : Node3D
+var master : floor
 
 var current_level : level_resource
 var level_pool : Array[level_resource] = []
 
+var level_num := 0
 
 signal level_generated
 
@@ -17,7 +18,10 @@ func set_level_pool(new_level_pool : Array[level_resource]) -> void:
 func pick_level() -> void:
 	if level_pool.size() == 0:
 		print_stack()
-	current_level = level_pool.pick_random()
+	if master.in_order:
+		current_level = level_pool[level_num]
+	else:
+		current_level = level_pool.pick_random()
 
 func generate_level(delay : bool) -> void:
 	pick_level()

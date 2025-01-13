@@ -1,15 +1,12 @@
 extends Node3D
 class_name floor
 
-enum prev_scene {
-	MAIN_MENU,
-	GALLERY,
-	EDITOR
-}
-
 #Floor Settings
-var is_run : bool = true
-var allow_timer : bool = false
+var is_run := false
+var set_pool := false
+var in_order := false
+var allow_timer := false
+var timer_count_up := false
 
 #State related
 var transitioning : bool = true

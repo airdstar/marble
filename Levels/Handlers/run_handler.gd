@@ -12,7 +12,12 @@ var current_difficulty : difficulty
 var current_level := 1
 var levels_until_change := 5
 
+var master : floor
+
 signal difficulty_changed
+
+func _ready() -> void:
+	master = get_parent()
 
 func reset_run() -> void:
 	levels_until_change = 5
@@ -22,9 +27,10 @@ func reset_run() -> void:
 
 func next_level() -> void:
 	current_level += 1
-	levels_until_change -= 1
-	if levels_until_change == 0:
-		change_difficulty()
+	if master.set_pool:
+		levels_until_change -= 1
+		if levels_until_change == 0:
+			change_difficulty()
 
 
 func change_difficulty() -> void:
