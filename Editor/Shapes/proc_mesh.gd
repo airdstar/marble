@@ -22,7 +22,7 @@ func add_shape(new_shape : shape_resource) -> void:
 	regenerate_mesh()
 
 func remove_shape(shape : shape_resource) -> void:
-	for n : int in range(shape_info.size() - 1):
+	for n : int in range(shape_info.size()):
 		if shape_info[n] == shape:
 			shape_info.remove_at(n)
 	regenerate_mesh()
@@ -62,17 +62,11 @@ func regenerate_mesh() -> void:
 func cull() -> void:
 	pass
 
-func movement_detected(pos_change : Vector3, axis : int) -> void:
-	match axis:
-		0:
-			shape_info[0].total_offset.x = pos_change.x
-		1:
-			shape_info[0].total_offset.y = pos_change.y
-		2:
-			shape_info[0].total_offset.z = pos_change.z
-	
-	regenerate_mesh()
-	pos_changed.emit(shape_info[0].total_offset)
+func movement_detected(pos_change : Vector3) -> void:
+	if shape_info.size() != 0:
+		shape_info[0].total_offset = pos_change
+		regenerate_mesh()
+		pos_changed.emit(shape_info[0].total_offset)
 
 func name_changed(new_name : String) -> void:
 	if shape_info.size() != 0:

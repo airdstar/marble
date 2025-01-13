@@ -23,12 +23,12 @@ func _process(_delta: float) -> void:
 		if global_pos != null:
 			match axis_grabbed:
 				1:
-					global_pos = Vector3(snapped(global_pos.x - 0.5, 0.5), 0, 0)
+					global_pos = Vector3(snapped(global_pos.x - 0.5, 0.5), position.y, position.z)
 				2:
-					global_pos = Vector3(0, snapped(global_pos.y - 0.5, 0.5), 0)
+					global_pos = Vector3(position.x, snapped(global_pos.y - 0.5, 0.5), position.z)
 				3:
-					global_pos = Vector3(0, 0, snapped(global_pos.z - 0.5, 0.5))
-			movement_detected.emit(global_pos, axis_grabbed - 1)
+					global_pos = Vector3(position.x, position.y, snapped(global_pos.z - 0.5, 0.5))
+			movement_detected.emit(global_pos)
 
 
 func _do_raycast_on_mouse_position(collision_mask: int = 0b00000000_00000000_00000000_00000001):
