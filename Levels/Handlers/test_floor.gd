@@ -12,7 +12,6 @@ func start_game() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	
 	create_level()
-	change_skybox_rotation()
 	
 	if marble == null:
 		var holder = preload("res://Main/Marble.tscn").instantiate()
@@ -40,9 +39,8 @@ func next_level() -> void:
 	reset_marble()
 
 
-
 func create_level() -> void:
-	
+	instanced = level_info.associated_scene.instantiate()
 	origin.add_child(instanced)
 	instanced.start_level()
 	default_camera_skybox()

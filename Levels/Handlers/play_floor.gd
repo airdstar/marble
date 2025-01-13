@@ -5,79 +5,10 @@ class_name play_floor
 @onready var timerText = $Control/Timer
 @onready var run_info : RunInfo = $RunInfo
 
-func secondary_process() -> void:
-	if !transitioning:
-		timerText.text = "[center]" + "%.1f" % timer.time_left
-	else:
-		timerText.text = "[center]" + "%.1f" % timer.wait_time
-	
-	if Input.is_action_just_pressed("back"):
-		game_over()
-
 func place_control() -> void:
 	timerText.set_size(get_window().get_size())
 	timerText.set_position(Vector2(0, get_window().get_size().y / 20))
 
-
-func start_game() -> void:
-	transitioning = true
-	allow_input = false
-	run_info.levels_until_change = 5
-	run_info.current_level = 1
-	run_info.current_difficulty = run_info.difficulty.EASY
-
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	
-	if instanced != null:
-		instanced.queue_free()
-	
-	create_level()
-	set_level_data()
-	change_skybox_rotation()
-	run_info.inRun = true
-	
-	if marble == null:
-		var holder = preload("res://Main/Marble.tscn").instantiate()
-		add_child(holder)
-		marble = holder
-	
-	call_deferred("reset_marble")
-
-func next_level() -> void:
-	run_info.current_level += 1
-	run_info.levels_until_change -= 1
-	if run_info.levels_until_change == 0:
-		run_info.change_difficulty()
-	
-	transitioning = true
-	prev_instance = instanced
-	marble.visible = false
-	
-	create_level()
-	set_level_data()
-	camera.next_level()
-	change_skybox_rotation()
-	
-	await get_tree().create_timer(0.3).timeout
-	allow_input = false
-	
-	await get_tree().create_timer(0.61).timeout
-	
-	reset_marble()
-
-func set_level_data() -> void:
-	name_text.text = level_info.name
-	
-	set_level_time()
-	
-	if run_info.inRun:
-		await get_tree().create_timer(0.3).timeout
-		prev_instance.queue_free()
-	
-	default_camera_skybox()
-	
-	origin.add_child(instanced)
-	instanced.start_level()
 
 func set_level_time():
 	if run_info.inRun:
