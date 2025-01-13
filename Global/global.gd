@@ -6,6 +6,12 @@ enum difficulty {
 	HARD
 }
 
+enum floor_type {
+	PLAY,
+	GALLERY,
+	EDITOR
+}
+
 var main_scene : main
 var runBase : Node3D
 
@@ -16,10 +22,6 @@ var pos_scenes : Dictionary = {
 	"editor" : "res://Editor/LevelEditor.tscn",
 	}
 
-var pos_floors : Dictionary = {
-	"floor_play" : "res://Levels/Handlers/PlayFloor.tscn",
-	"floor_test" : "res://Levels/Handlers/TestFloor.tscn"
-	}
 
 var resolutions_16_9 : Dictionary = {
 	"1920x1080" : Vector2(1920,1080),
@@ -41,7 +43,6 @@ var aspect_ratios : Dictionary = {"16:9" : resolutions_16_9,
 var easy_levels : Array[level_resource] = []
 var medium_levels : Array[level_resource] = []
 var hard_levels : Array[level_resource] = []
-var test_levels : Array[level_resource] = []
 
 func _ready():
 	PlayerInfo.load_info()
@@ -82,25 +83,26 @@ func open_scene(scene : String) -> void:
 		main_scene.child_scene = holder
 		main_scene.add_child(holder)
 
-func open_floor(type : String, level_info : level_resource):
+func open_floor(type : floor_type, level_pool : Array[level_resource]):
 	main_scene.prev_scene = main_scene.cur_scene
-	main_scene.cur_scene = type
+	main_scene.cur_scene = "floor"
 	
 	if main_scene.child_scene != null:
 		main_scene.child_scene.queue_free()
 	
-	var holder = load(pos_floors[type])
-	holder = holder.instantiate()
+	var holder = preload("res://Levels/Handlers/Floor.tscn").instantiate()
 	
-	if holder is test_floor:
-		holder.level_info = level_info
-	
-	if holder != null:
-		main_scene.child_scene = holder
-		main_scene.add_child(holder)
-		if holder is test_floor:
-			holder.set_level_data(level_info)
-		holder.call_deferred("start_game")
+	main_scene.child_scene = holder
+	main_scene.add_child(holder)
+
+	holder.level_handler.set_level_pool(level_pool)
+
+	match type:
+		floor_type.PLAY:
+			holder.is_run = true
+			holder.allow_timer = true
+
+	holder.call_deferred("start_game")
 
 func set_resolution() -> void:
 	get_window().set_size(aspect_ratios[PlayerInfo.player_settings.aspect_ratio][PlayerInfo.player_settings.resolution])

@@ -17,5 +17,4 @@ class_name level_resource
 
 @export_category("Experimental")
 
-@export var max_tilt : float = 35
 @export var gravity : Vector3 = Vector3(0, 9.8, 0)

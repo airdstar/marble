@@ -44,3 +44,7 @@ func create_level() -> void:
 	origin.add_child(instanced)
 	instanced.start_level()
 	default_camera_skybox()
+
+
+func level_generated() -> void:
+	pass # Replace with function body.

@@ -5,11 +5,11 @@
 [ext_resource type="Script" path="res://Levels/Handlers/camera.gd" id="3_acswx"]
 [ext_resource type="Theme" uid="uid://dl6a6mq4q5lda" path="res://Assets/Themes/timer.tres" id="4_db1ct"]
 
-[sub_resource type="Sky" id="Sky_0bori"]
+[sub_resource type="Sky" id="Sky_lohs3"]
 
 [sub_resource type="Environment" id="Environment_s1d85"]
 background_mode = 2
-sky = SubResource("Sky_0bori")
+sky = SubResource("Sky_lohs3")
 ambient_light_source = 2
 ambient_light_color = Color(0.025, 0.1, 0.05, 1)
 ambient_light_energy = 0.5

@@ -24,7 +24,7 @@ func place_control() -> void:
 	
 
 func play_pressed() -> void:
-	Global.open_scene("floor_play")
+	Global.open_floor(Global.floor_type.PLAY, [])
 
 func gallery_pressed() -> void:
 	Global.open_scene("gallery")

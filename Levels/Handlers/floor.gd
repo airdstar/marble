@@ -2,16 +2,18 @@ extends Node3D
 class_name floor
 
 enum prev_scene {
-	MAIN_MENU
-	GALLERY
+	MAIN_MENU,
+	GALLERY,
 	EDITOR
 }
+
+#Floor Settings
+var is_run : bool = true
+var allow_timer : bool = false
 
 #State related
 var transitioning : bool = true
 var allow_input : bool = false
-var testing : bool = false
-var gallery : bool = false
 
 #Tilt related
 var proxy_tilt : Node3D = Node3D.new()
@@ -23,8 +25,7 @@ var relative_skybox_rotation : Vector3 = Vector3.ZERO
 var relative_desired_rotation : Vector3 = Vector3.ZERO
 
 #Instanced related
-var level_info : level_resource
-var level_pool : Array[level_resource]
+var level_type : int
 var instanced : level
 var prev_instance : level
 var marble : player
@@ -35,15 +36,16 @@ var settings = PlayerInfo.player_settings
 
 @onready var camera := $camera_y
 @onready var origin := $Origin
-@onready var skybox := $WorldEnvironment.environment
-@onready var timer := $RemainingTime
-@onready var run_info := $RunInfo
+@onready var skybox = $WorldEnvironment.environment
+@onready var timer := $Timer
 
+@onready var level_handler := $LevelHandler
+@onready var run_handler := $RunHandler
 
-@onready var timer_text = $Control/Timer
-@onready var name_text = $Control/VBoxContainer/name
-@onready var fps_text = $Control/VBoxContainer/fps
-@onready var speed_text = $Control/VBoxContainer/speed
+@onready var timer_text = $UI/Timer
+@onready var name_text = $UI/VBoxContainer/name
+@onready var fps_text = $UI/VBoxContainer/fps
+@onready var speed_text = $UI/VBoxContainer/speed
 
 func _ready() -> void:
 	Global.runBase = self
@@ -59,11 +61,11 @@ func _process(delta: float) -> void:
 	else:
 		input_tilt = Vector2.ZERO
 	
-	if testing:
+	if allow_timer:
 		if !transitioning:
-			timerText.text = "[center]" + "%.1f" % timer.time_left
+			timer_text.text = "[center]" + "%.1f" % timer.time_left
 		else:
-			timerText.text = "[center]" + "%.1f" % timer.wait_time
+			timer_text.text = "[center]" + "%.1f" % timer.wait_time
 	
 	if Input.is_action_just_pressed("back"):
 		game_over()
@@ -74,8 +76,8 @@ func _physics_process(_delta: float) -> void:
 	relative_skybox_rotation += relative_desired_rotation
 	skybox.sky_rotation += relative_desired_rotation
 	
-	input_tilt.x = clamp(input_tilt.x, deg_to_rad(-level_info.max_tilt), deg_to_rad(level_info.max_tilt))
-	input_tilt.y = clamp(input_tilt.y, deg_to_rad(-level_info.max_tilt), deg_to_rad(level_info.max_tilt))
+	input_tilt.x = clamp(input_tilt.x, deg_to_rad(-35), deg_to_rad(35))
+	input_tilt.y = clamp(input_tilt.y, deg_to_rad(-35), deg_to_rad(35))
 	
 	origin_tilt.x = deg_to_rad(input_tilt.x * 20)
 	origin_tilt.y = deg_to_rad(input_tilt.y * 20)
@@ -102,27 +104,26 @@ func handle_tilt(delta : float) -> void:
 
 func place_control() -> void:
 	
-	timerText.set_size(get_window().get_size())
-	timerText.set_position(Vector2(0, get_window().get_size().y / 20))
-
+	timer_text.set_size(get_window().get_size())
+	timer_text.set_position(Vector2(0, get_window().get_size().y / 20))
 
 func start_game() -> void:
 	transitioning = true
 	allow_input = false
-	if testing:
-		run_info.levels_until_change = 5
-		run_info.current_level = 1
-		run_info.current_difficulty = run_info.difficulty.EASY
-
+	if is_run:
+		run_handler.reset_run()
+	
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	
+	set_time()
 	
 	if instanced != null:
 		instanced.queue_free()
 	
-	create_level()
+	level_handler.generate_level(false)
 	
 	change_skybox_rotation()
-	run_info.inRun = true
+	run_handler.inRun = true
 	
 	if marble == null:
 		var holder = preload("res://Main/Marble.tscn").instantiate()
@@ -132,7 +133,6 @@ func start_game() -> void:
 	call_deferred("reset_marble")
 
 func next_level() -> void:
-
 	transitioning = true
 	allow_input = false
 
@@ -140,68 +140,37 @@ func next_level() -> void:
 	change_skybox_rotation()
 
 	marble.visible = false
+	prev_instance = instanced
+	
+	set_time()
+	
+	level_handler.generate_level(true)
 
-	if !testing:
-		run_info.current_level += 1
-		run_info.levels_until_change -= 1
-		if run_info.levels_until_change == 0:
-			run_info.change_difficulty()
-		
-		prev_instance = instanced
-		create_level()
-	else:
-		instanced.reset_state()
-		instanced.choose_spawn()
 
 	await get_tree().create_timer(0.91).timeout
 	
 	reset_marble()
 
 func game_over() -> void:
-	if !testing:
-		if !timer.is_stopped():
-			timer.stop()
+	if is_run:
+		if allow_timer:
+			if !timer.is_stopped():
+				timer.stop()
 		var overlay = preload("res://Levels/Handlers/PlayEnd.tscn").instantiate()
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 		add_child(overlay)
-	else:
-		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-		Global.main.open_gallery()
-
-func set_level_data(level_data : level_resource) -> void:
-	level_info = level_data
-	name_text.text = level_info.name
-	instanced = level_info.associated_scene.instantiate()
 
 
-func pick_level(difficulty : RunInfo.difficulty) -> level_resource:
-	var valid_level := false
-	var picked_level : level_resource
-	while !valid_level:
-		match difficulty:
-			0:
-				picked_level = Global.easy_levels.pick_random()
-			1:
-				picked_level = Global.medium_levels.pick_random()
-			2:
-				picked_level = Global.hard_levels.pick_random()
-	
-	return picked_level
-
-func create_level() -> void:
-	if !testing:
-		set_level_data(pick_level(run_info.current_difficulty))
-
-		if run_info.inRun:
-			await get_tree().create_timer(0.3).timeout
-			prev_instance.queue_free()
-
-	instanced = level_info.associated_scene.instantiate()
-	origin.add_child(instanced)
-	if !testing:
-		instanced.timer_start.connect(start_timer)
-	instanced.start_level()
-	default_camera_skybox()
+func set_time() -> void:
+	if allow_timer:
+		if run_handler.inRun:
+			var remaining_time = timer.time_left
+			timer.stop()
+			var tween = create_tween()
+			tween.tween_method(timer.set_wait_time, remaining_time, remaining_time + 4.5, 1).set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_IN)
+		else:
+			timer.stop()
+			timer.set_wait_time(20)
 
 func start_timer():
 	timer.start()
@@ -211,10 +180,10 @@ func change_skybox_rotation() -> void:
 	relative_desired_rotation = Vector3(randf_range(-0.0003,0.0003),randf_range(-0.0003,0.0003),randf_range(-0.0003,0.0003))
 
 func default_camera_skybox() -> void:
-	match level_info.level_type:
+	match level_type:
 		0:
 			camera.allow_input = true
-			var rot = randf_range(level_info.possible_rotations.x,level_info.possible_rotations.y)
+			var rot = randf_range(0, 360)
 			camera.rotation.y = deg_to_rad(rot)
 			camera.skybox.sky_rotation = Vector3(0, deg_to_rad(rot), 0) + relative_skybox_rotation
 		1:
@@ -236,9 +205,17 @@ func reset_marble() -> void:
 
 func reset_orientation() -> void:
 	allow_input = false
-	if level_info.level_type == 0:
-		camera.rand_rotation(level_info.possible_rotations.x, level_info.possible_rotations.y)
+	if level_type == 0:
+		camera.rand_rotation(0, 360)
 
 func killzone_touched(_area: Area3D) -> void:
 	reset_marble()
 	reset_orientation()
+
+func level_generated(level_info : level_resource) -> void:
+	name_text.text = level_info.name
+	level_type = level_info.level_type
+	default_camera_skybox()
+	
+	instanced.start_level()
+	

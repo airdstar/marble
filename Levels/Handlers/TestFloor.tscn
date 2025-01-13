@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://dfu6x1e4xdaws"]
+[gd_scene load_steps=9 format=3 uid="uid://dfu6x1e4xdaws"]
 
 [ext_resource type="Script" path="res://Levels/Handlers/test_floor.gd" id="1_wbpe5"]
 [ext_resource type="Theme" uid="uid://dl6a6mq4q5lda" path="res://Assets/Themes/timer.tres" id="2_i8qau"]
 [ext_resource type="Script" path="res://Levels/Handlers/camera.gd" id="2_qxws8"]
+[ext_resource type="Script" path="res://Levels/Handlers/level_handler.gd" id="4_bu8xa"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_iugt6"]
 size = Vector3(200, 1, 200)
@@ -109,4 +110,8 @@ transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 15,
 light_energy = 4.0
 spot_range = 160.0
 
+[node name="LevelHandler" type="Node" parent="."]
+script = ExtResource("4_bu8xa")
+
 [connection signal="area_entered" from="Area3D" to="." method="killzone_touched"]
+[connection signal="level_generated" from="LevelHandler" to="." method="level_generated"]

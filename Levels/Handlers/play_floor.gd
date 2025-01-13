@@ -10,16 +10,6 @@ func place_control() -> void:
 	timerText.set_position(Vector2(0, get_window().get_size().y / 20))
 
 
-func set_level_time():
-	if run_info.inRun:
-		var remaining_time = timer.time_left
-		timer.stop()
-		var tween = create_tween()
-		tween.tween_method(timer.set_wait_time, remaining_time, remaining_time + 4.5, 1).set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_IN)
-	else:
-		timer.stop()
-		timer.set_wait_time(20)
-
 func start_timer():
 	timer.start()
 	transitioning = false

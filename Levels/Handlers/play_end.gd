@@ -2,7 +2,7 @@ extends Node
 
 @onready var level_display = $CenterContainer/VBoxContainer/points
 
-var run_info : RunInfo
+var run_info
 
 func _ready():
 	PlayerInfo.player_data.game_over_count += 1

@@ -1,0 +1,112 @@
+[gd_scene load_steps=9 format=3 uid="uid://4bfdr3xelqm8"]
+
+[ext_resource type="Script" path="res://Levels/Handlers/floor.gd" id="1_6o7sh"]
+[ext_resource type="Script" path="res://Levels/Handlers/level_handler.gd" id="1_q6dl6"]
+[ext_resource type="Script" path="res://Levels/Handlers/run_handler.gd" id="3_2warv"]
+[ext_resource type="Script" path="res://Levels/Handlers/camera.gd" id="4_e22wn"]
+[ext_resource type="Theme" uid="uid://dl6a6mq4q5lda" path="res://Assets/Themes/timer.tres" id="5_yj74y"]
+
+[sub_resource type="Sky" id="Sky_0bori"]
+
+[sub_resource type="Environment" id="Environment_5atx4"]
+background_mode = 2
+sky = SubResource("Sky_0bori")
+ambient_light_source = 2
+ambient_light_color = Color(0.025, 0.1, 0.05, 1)
+ambient_light_energy = 0.5
+tonemap_mode = 2
+tonemap_exposure = 0.5
+ssr_fade_in = 0.0652913
+ssao_radius = 11.96
+ssao_intensity = 14.8
+ssao_power = 0.000787934
+ssil_radius = 3.99
+ssil_intensity = 11.61
+ssil_sharpness = 0.0
+glow_strength = 0.1
+glow_bloom = 0.05
+glow_blend_mode = 0
+glow_hdr_threshold = 0.05
+volumetric_fog_enabled = true
+adjustment_enabled = true
+adjustment_brightness = 0.75
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_omjb2"]
+size = Vector3(200, 1, 200)
+
+[node name="Floor" type="Node3D"]
+script = ExtResource("1_6o7sh")
+
+[node name="LevelHandler" type="Node" parent="."]
+script = ExtResource("1_q6dl6")
+
+[node name="RunHandler" type="Node" parent="."]
+script = ExtResource("3_2warv")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_5atx4")
+
+[node name="Origin" type="Node3D" parent="."]
+
+[node name="camera_y" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, 0)
+script = ExtResource("4_e22wn")
+
+[node name="Camera3D" type="Camera3D" parent="camera_y"]
+transform = Transform3D(1, 0, 0, 0, 0.866026, 0.5, 0, -0.5, 0.866026, 0, 0, 15)
+current = true
+fov = 70.0
+
+[node name="SpotLight3D" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 15, 0)
+light_energy = 4.0
+spot_range = 160.0
+
+[node name="KillArea" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -50, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="KillArea"]
+shape = SubResource("BoxShape3D_omjb2")
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="Timer" type="RichTextLabel" parent="UI"]
+layout_mode = 0
+offset_top = 26.0
+offset_right = 1280.0
+offset_bottom = 581.0
+mouse_filter = 2
+theme = ExtResource("5_yj74y")
+bbcode_enabled = true
+text = "[center]0"
+scroll_active = false
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI"]
+layout_mode = 0
+offset_right = 148.0
+offset_bottom = 96.0
+
+[node name="fps" type="RichTextLabel" parent="UI/VBoxContainer"]
+layout_mode = 2
+text = "fps"
+fit_content = true
+
+[node name="speed" type="RichTextLabel" parent="UI/VBoxContainer"]
+layout_mode = 2
+text = "speed:"
+fit_content = true
+
+[node name="name" type="RichTextLabel" parent="UI/VBoxContainer"]
+layout_mode = 2
+text = "hi"
+fit_content = true
+
+[connection signal="level_generated" from="LevelHandler" to="." method="level_generated"]
+[connection signal="difficulty_changed" from="RunHandler" to="LevelHandler" method="set_level_pool"]
+[connection signal="area_entered" from="KillArea" to="." method="killzone_touched"]
