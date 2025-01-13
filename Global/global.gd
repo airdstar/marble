@@ -9,19 +9,26 @@ enum difficulty {
 var main_scene : main
 var runBase : Node3D
 
-var pos_scenes : Dictionary = {"main_menu" : "res://Main/MainMenu.tscn",
-								"settings" : "res://Main/SettingsMenu.tscn",
-								"gallery" : "res://Main/Gallery.tscn",
-								"editor" : "res://Editor/LevelEditor.tscn",
-								"floor_play" : "res://Levels/Handlers/PlayFloor.tscn",
-								"floor_gallery" : "res://Levels/Handlers/GalleryFloor.tscn"}
+var pos_scenes : Dictionary = {
+	"main_menu" : "res://Main/MainMenu.tscn",
+	"settings" : "res://Main/SettingsMenu.tscn",
+	"gallery" : "res://Main/Gallery.tscn",
+	"editor" : "res://Editor/LevelEditor.tscn",
+	}
 
-var resolutions_16_9 : Dictionary = {"1920x1080" : Vector2(1920,1080),
-									"1600x900" : Vector2(1600,900),
-									"1366x768" : Vector2(1366,768),
-									"1280x720" : Vector2(1280,720),
-									"960x540" : Vector2(960,540),
-									"854x480" : Vector2(854,480),}
+var pos_floors : Dictionary = {
+	"floor_play" : "res://Levels/Handlers/PlayFloor.tscn",
+	"floor_test" : "res://Levels/Handlers/TestFloor.tscn"
+	}
+
+var resolutions_16_9 : Dictionary = {
+	"1920x1080" : Vector2(1920,1080),
+	"1600x900" : Vector2(1600,900),
+	"1366x768" : Vector2(1366,768),
+	"1280x720" : Vector2(1280,720),
+	"960x540" : Vector2(960,540),
+	"854x480" : Vector2(854,480),
+	}
 
 var resolutions_16_10 : Dictionary
 
@@ -74,6 +81,26 @@ func open_scene(scene : String) -> void:
 	if holder != null:
 		main_scene.child_scene = holder
 		main_scene.add_child(holder)
+
+func open_floor(type : String, level_info : level_resource):
+	main_scene.prev_scene = main_scene.cur_scene
+	main_scene.cur_scene = type
+	
+	if main_scene.child_scene != null:
+		main_scene.child_scene.queue_free()
+	
+	var holder = load(pos_floors[type])
+	holder = holder.instantiate()
+	
+	if holder is test_floor:
+		holder.level_info = level_info
+	
+	if holder != null:
+		main_scene.child_scene = holder
+		main_scene.add_child(holder)
+		if holder is test_floor:
+			holder.set_level_data(level_info)
+		holder.call_deferred("start_game")
 
 func set_resolution() -> void:
 	get_window().set_size(aspect_ratios[PlayerInfo.player_settings.aspect_ratio][PlayerInfo.player_settings.resolution])

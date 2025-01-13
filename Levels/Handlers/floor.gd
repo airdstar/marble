@@ -36,7 +36,6 @@ func _ready() -> void:
 	Global.runBase = self
 	camera.skybox = skybox
 	place_control()
-	start_game()
 
 func _process(delta: float) -> void:
 	fps_text.text = "FPS %d" % Engine.get_frames_per_second()
@@ -57,8 +56,8 @@ func _physics_process(_delta: float) -> void:
 	relative_skybox_rotation += relative_desired_rotation
 	skybox.sky_rotation += relative_desired_rotation
 	
-	input_tilt.x = clamp(input_tilt.x * settings.invert_tilt_x, deg_to_rad(-level_info.max_tilt), deg_to_rad(level_info.max_tilt))
-	input_tilt.y = clamp(input_tilt.y * settings.invert_tilt_y, deg_to_rad(-level_info.max_tilt), deg_to_rad(level_info.max_tilt))
+	input_tilt.x = clamp(input_tilt.x, deg_to_rad(-level_info.max_tilt), deg_to_rad(level_info.max_tilt))
+	input_tilt.y = clamp(input_tilt.y, deg_to_rad(-level_info.max_tilt), deg_to_rad(level_info.max_tilt))
 	
 	origin_tilt.x = deg_to_rad(input_tilt.x * 20)
 	origin_tilt.y = deg_to_rad(input_tilt.y * 20)
@@ -88,25 +87,32 @@ func place_control() -> void:
 
 
 func start_game() -> void:
-	pass
+	create_level()
 
 func next_level() -> void:
 	pass
 
-func set_level_data() -> void:
-	pass
+func set_level_data(level_data : level_resource) -> void:
+	level_info = level_data
+	instanced = level_info.associated_scene.instantiate()
 
-func set_level_time():
-	pass
 
-func start_timer():
-	pass
-
-func pick_level() -> void:
-	pass
+func pick_level(difficulty : RunInfo.difficulty) -> level_resource:
+	var valid_level := false
+	var picked_level : level_resource
+	while !valid_level:
+		match difficulty:
+			0:
+				picked_level = Global.easy_levels.pick_random()
+			1:
+				picked_level = Global.medium_levels.pick_random()
+			2:
+				picked_level = Global.hard_levels.pick_random()
+	
+	return picked_level
 
 func create_level() -> void:
-	pick_level()
+	pick_level(0)
 	instanced = level_info.associated_scene.instantiate()
 
 func default_camera_skybox() -> void:

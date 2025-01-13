@@ -42,11 +42,7 @@ func show_options() -> void:
 	var total_removed = 0
 	for n in range(option_info.size()):
 		if only_test:
-			if !option_info[n - total_removed].needs_testing:
-				option_info.remove_at(n - total_removed)
-				total_removed += 1
-		else:
-			if !allow_test and option_info[n - total_removed].needs_testing:
+			if option_info[n - total_removed].include_in_pool:
 				option_info.remove_at(n - total_removed)
 				total_removed += 1
 
@@ -54,17 +50,17 @@ func show_options() -> void:
 	sort_options()
 
 func create_options() -> void:
-	for n in option_info:
+	for n : level_resource in option_info:
 		var button_holder = Button.new()
 		options.append(button_holder)
-		button_holder.pressed.connect(option_pressed.bind(button_holder))
+		button_holder.pressed.connect(option_pressed.bind(n))
 		$VBoxContainer/ScrollContainer/VBoxContainer.add_child(button_holder)
 		
 		set_option(button_holder, n)
 		
 
-func option_pressed(button):
-	Global.main.start_gallery("floor_gallery")
+func option_pressed(level_info : level_resource):
+	Global.open_floor("floor_test", level_info)
 
 func sort_options() -> void:
 	pass

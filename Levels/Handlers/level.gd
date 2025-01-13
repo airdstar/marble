@@ -1,9 +1,13 @@
 extends Node
 class_name level
 
-@onready var geometry = $Geometry
+@export var starts : Array[int]
+
+@onready var geometry := $Geometry
 
 var start
+
+signal timer_start
 
 func _ready():
 	pass
@@ -30,7 +34,7 @@ func input_trigger(area: Area3D) -> void:
 func start_timer(area : Area3D) -> void:
 	if area.get_parent() is player:
 		start.set_deferred("monitoring", false)
-		Global.runBase.start_timer()
+		timer_start.emit()
 
 func reset_state() -> void:
 	await get_tree().create_timer(0.7).timeout

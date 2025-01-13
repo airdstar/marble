@@ -89,26 +89,6 @@ func set_level_time():
 		timer.stop()
 		timer.set_wait_time(20)
 
-func pick_level() -> void:
-	var valid_level := false
-	while !valid_level:
-		match run_info.current_difficulty:
-			0:
-				level_info = Global.easy_levels.pick_random()
-			1:
-				level_info = Global.medium_levels.pick_random()
-			2:
-				level_info = Global.hard_levels.pick_random()
-		
-		if !level_info.needs_testing:
-			valid_level = true
-	
-	var id : String = level_info.resource_path.trim_prefix("res://Levels/Info/")
-	if '.tres.remap' in id:
-		id = id.trim_suffix('.tres.remap')
-	else:
-		id = id.trim_suffix('.tres')
-
 func start_timer():
 	timer.start()
 	transitioning = false

@@ -25,6 +25,7 @@ layout_mode = 2
 text = "Play"
 
 [node name="Editor" type="Button" parent="PlayContainer"]
+visible = false
 layout_mode = 2
 text = "Editor"
 
@@ -41,6 +42,11 @@ text = "Multiplayer"
 [node name="Gallery" type="Button" parent="PlayContainer"]
 layout_mode = 2
 text = "Gallery"
+
+[node name="Customization" type="Button" parent="PlayContainer"]
+visible = false
+layout_mode = 2
+text = "Customization"
 
 [node name="Profile" type="Button" parent="PlayContainer"]
 layout_mode = 2

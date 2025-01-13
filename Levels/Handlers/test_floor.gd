@@ -1,5 +1,5 @@
 extends floor
-class_name gallery_floor
+class_name test_floor
 
 func secondary_process() -> void:
 	if Input.is_action_just_pressed("back"):
@@ -12,9 +12,7 @@ func start_game() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	
 	create_level()
-	set_level_data()
 	change_skybox_rotation()
-	RunInfo.inRun = true
 	
 	if marble == null:
 		var holder = preload("res://Main/Marble.tscn").instantiate()
@@ -41,13 +39,10 @@ func next_level() -> void:
 	allow_input = false
 	reset_marble()
 
-func set_level_data() -> void:
-	$CanvasLayer/VBoxContainer/tagline.text = level_info.tagline
-	
-	default_camera_skybox()
+
+
+func create_level() -> void:
 	
 	origin.add_child(instanced)
 	instanced.start_level()
-
-func pick_level() -> void:
-	pass
+	default_camera_skybox()
