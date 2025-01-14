@@ -106,12 +106,14 @@ func place_control() -> void:
 	
 	timer_text.set_size(get_window().get_size())
 	timer_text.set_position(Vector2(0, get_window().get_size().y / 20))
+	
+	timer_text.visible = false
+	
 
 func start_game() -> void:
 	transitioning = true
 	allow_input = false
 	
-	timer_text.visible = true
 	end_ui.visible = false
 	
 	if is_run:
@@ -139,7 +141,7 @@ func start_game() -> void:
 func next_level() -> void:
 	transitioning = true
 	allow_input = false
-
+	
 	camera.next_level()
 	change_skybox_rotation()
 
@@ -185,6 +187,7 @@ func game_over() -> void:
 
 func set_time() -> void:
 	if allow_timer:
+		timer_text.visible = true
 		if run_handler.inRun:
 			var remaining_time = timer.time_left
 			timer.stop()
@@ -242,4 +245,5 @@ func level_generated(level_info : level_resource) -> void:
 	instanced.start_level()
 	
 func prev_scene() -> void:
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	Global.open_scene(Global.main_scene.prev_scene)

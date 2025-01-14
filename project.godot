@@ -35,6 +35,12 @@ window/size/viewport_width=1280
 window/size/viewport_height=720
 window/size/resizable=false
 
+[global_group]
+
+Player=""
+Respawner=""
+Goal=""
+
 [input]
 
 tilt_up={

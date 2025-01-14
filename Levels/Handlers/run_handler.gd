@@ -35,7 +35,6 @@ func next_level() -> void:
 
 
 func change_difficulty() -> void:
-	print("heloooo")
 	match current_difficulty:
 		difficulty.EASY:
 			current_difficulty = difficulty.MEDIUM

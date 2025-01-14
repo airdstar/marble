@@ -27,7 +27,8 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("back"):
-		Global.open_scene(Global.main_scene.prev_scene)
+		Global.open_scene("main_menu")
+		
 
 func show_options() -> void:
 	clear_options()
@@ -60,7 +61,7 @@ func create_options() -> void:
 		
 
 func option_pressed(level_info : level_resource):
-	Global.open_floor("floor_test", level_info)
+	Global.open_floor(Global.floor_type.GALLERY, [level_info])
 
 func sort_options() -> void:
 	pass

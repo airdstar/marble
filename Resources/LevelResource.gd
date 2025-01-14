@@ -6,9 +6,6 @@ class_name level_resource
 
 @export var level_difficulty : Global.difficulty = Global.difficulty.EASY
 
-## Possible rotations that the level can default to
-@export var possible_rotations : Vector2 = Vector2(0,360)
-
 @export_enum("Platform", "2D") var level_type : int = 0
 
 @export var associated_scene : PackedScene 

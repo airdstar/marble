@@ -42,3 +42,6 @@ shape = SubResource("SphereShape3D_84e8f")
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
 light_cull_mask = 4293918723
 omni_range = 3.0
+
+[node name="RayCast3D" type="RayCast3D" parent="."]
+target_position = Vector3(0, -0.55, 0)
