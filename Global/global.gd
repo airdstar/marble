@@ -21,7 +21,7 @@ var pos_scenes : Dictionary = {
 	"main_menu" : "res://Main/Menus/MainMenu.tscn",
 	"settings" : "res://Main/Menus/SettingsMenu.tscn",
 	"gallery" : "res://Main/Menus/Gallery.tscn",
-	"editor" : "res://Editor/Menus/LevelEditor.tscn",
+	"editor" : "res://Editor/LevelEditor.tscn",
 	}
 
 

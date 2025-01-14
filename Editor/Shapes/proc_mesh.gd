@@ -75,3 +75,11 @@ func name_changed(new_name : String) -> void:
 func sides_changed(value: float) -> void:
 	shape_info[0].sides = value
 	regenerate_mesh()
+
+func orientation_changed(index : int) -> void:
+	shape_info[0].orientation = index
+	regenerate_mesh()
+
+func flip_orientation_changed(toggled_on: bool) -> void:
+	shape_info[0].flip_orientation = toggled_on
+	regenerate_mesh()

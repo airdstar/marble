@@ -29,19 +29,24 @@ angular_damp = 3.5
 script = ExtResource("1_8df3t")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+visible = false
 shape = SubResource("SphereShape3D_84e8f")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+visible = false
 mesh = SubResource("SphereMesh_4hlcw")
 
 [node name="Area3D" type="Area3D" parent="."]
+visible = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 shape = SubResource("SphereShape3D_84e8f")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
+visible = false
 light_cull_mask = 4293918723
 omni_range = 3.0
 
 [node name="RayCast3D" type="RayCast3D" parent="."]
 target_position = Vector3(0, -0.55, 0)
+debug_shape_thickness = 5

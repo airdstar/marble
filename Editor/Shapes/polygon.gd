@@ -1,7 +1,7 @@
 extends shape_resource
 class_name polygon
 
-@export_range(5, 32) var sides := 5
+@export_range(3, 32) var sides := 3
 
 func get_surface_array(index : int) -> Array:
 	var surface_array : Array = []

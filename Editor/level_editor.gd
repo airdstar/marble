@@ -106,7 +106,11 @@ func _on_place_pressed() -> void:
 			shape_unselected()
 			
 
+func switch_hold() -> void:
+	pass # Replace with function body.
+
 func part_name_changed(new_text: String) -> void:
 	if new_text != "":
 		if selected_part is ProcMesh:
 			selected_part.mesh_name == new_text
+			sections.get_selected_part().text = new_text

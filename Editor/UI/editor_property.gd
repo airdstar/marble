@@ -9,6 +9,10 @@ extends Control
 @onready var shape_pos := $VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapePos
 @onready var shape_sides_holder := $VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeSides
 @onready var shape_sides := $VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeSides/Sides
+@onready var shape_orientation_holder := $VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeOrientation
+@onready var shape_orientation := $VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeOrientation/ShapeOrientation
+@onready var shape_flip_orientation_holder := $VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeFlipOrientation
+@onready var shape_flip_orientation := $VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeFlipOrientation/ShapeFlipOrientation
 
 signal shape_name_changed
 
@@ -53,3 +57,15 @@ func display_shape_properties(shape : shape_resource) -> void:
 		shape_sides.value = shape.sides
 	else:
 		shape_sides_holder.visible = false
+	
+	if "orientation" in shape:
+		shape_orientation_holder.visible = true
+		shape_orientation.selected = shape.orientation
+	else:
+		shape_orientation_holder.visible = false
+	
+	if "flip_orientation" in shape:
+		shape_flip_orientation_holder.visible = true
+		shape_flip_orientation.button_pressed = shape.flip_orientation
+	else:
+		shape_flip_orientation_holder.visible = false

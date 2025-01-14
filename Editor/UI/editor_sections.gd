@@ -5,6 +5,8 @@ var level_info : level
 var selected_geometry : ProcMesh
 var selected_shape : shape_resource
 
+@onready var tab := $VBoxContainer/TabBar
+
 @onready var geometry_holder : VBoxContainer = $VBoxContainer/HBoxContainer/ScrollContainer/VBoxContainer/Geometry
 @onready var start_holder : VBoxContainer = $VBoxContainer/HBoxContainer/ScrollContainer/VBoxContainer/Starts
 @onready var misc_holder : VBoxContainer = $VBoxContainer/HBoxContainer/ScrollContainer/VBoxContainer/Misc
@@ -111,3 +113,13 @@ func _on_take_pressed() -> void:
 		for n : shape_resource in selected_geometry.shape_info:
 			add_shape(n)
 		selected_shape = null
+
+func get_selected_part() -> Button:
+	match tab.current_tab:
+		0:
+			for n : Button in geometry_holder.get_children():
+				if n.button_pressed:
+					return n
+		1:
+			pass
+	return null

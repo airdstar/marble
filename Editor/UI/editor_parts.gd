@@ -3,7 +3,8 @@ extends Control
 var shapes : Dictionary = {
 	"Plane" : plane,
 	"Cube" : cube,
-	"Polygon" : polygon
+	"Polygon" : polygon,
+	"Cone" : cone
 }
 
 var shape_buttons : Array[Button] = []

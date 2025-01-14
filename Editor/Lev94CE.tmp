@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://1yq80goel736"]
+[gd_scene load_steps=22 format=3 uid="uid://1yq80goel736"]
 
 [ext_resource type="Script" path="res://Editor/level_editor.gd" id="1_gkh0n"]
 [ext_resource type="Texture2D" uid="uid://d0fbpahnke75l" path="res://Assets/grid.png" id="4_33n1c"]
@@ -10,7 +10,6 @@
 [ext_resource type="Script" path="res://Editor/UI/editor_property.gd" id="6_mogux"]
 [ext_resource type="Script" path="res://Editor/UI/editor_parts.gd" id="6_xrgr4"]
 [ext_resource type="Script" path="res://Editor/UI/editor_sections.gd" id="7_2n8hv"]
-[ext_resource type="Script" path="res://Editor/UI/editor_tools.gd" id="8_pcger"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lopki"]
 transparency = 1
@@ -148,6 +147,17 @@ offset_bottom = 300.0
 [node name="MarginContainer2" type="MarginContainer" parent="UI/Properties/VBoxContainer"]
 layout_mode = 2
 
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/Properties/VBoxContainer"]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="UI/Properties/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Pos"
+
+[node name="Button2" type="Button" parent="UI/Properties/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Size"
+
 [node name="OptionButton" type="OptionButton" parent="UI/Properties/VBoxContainer"]
 layout_mode = 2
 selected = 0
@@ -183,7 +193,6 @@ text = " Position: 0,0,0"
 fit_content = true
 
 [node name="ShapeProperties" type="VBoxContainer" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer"]
-visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -236,6 +245,7 @@ popup/item_2/text = "Z"
 popup/item_2/id = 2
 
 [node name="ShapeFlipOrientation" type="HBoxContainer" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties"]
+visible = false
 layout_mode = 2
 
 [node name="RichTextLabel" type="RichTextLabel" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeFlipOrientation"]
@@ -356,42 +366,6 @@ text = "Place Shape"
 layout_mode = 2
 text = "Create new ProcMesh"
 
-[node name="Tools" type="Panel" parent="UI"]
-layout_mode = 0
-offset_left = 308.0
-offset_top = 8.0
-offset_right = 495.0
-offset_bottom = 47.0
-script = ExtResource("8_pcger")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/Tools"]
-layout_mode = 0
-offset_right = 185.0
-offset_bottom = 40.0
-
-[node name="MarginContainer" type="MarginContainer" parent="UI/Tools/VBoxContainer"]
-layout_mode = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="UI/Tools/VBoxContainer"]
-layout_mode = 2
-
-[node name="Position" type="Button" parent="UI/Tools/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-toggle_mode = true
-text = "Pos"
-
-[node name="Size" type="Button" parent="UI/Tools/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-toggle_mode = true
-text = "Size"
-
-[node name="Hold" type="Button" parent="UI/Tools/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Hold"
-
 [node name="LevelSelect" type="Panel" parent="UI"]
 layout_mode = 0
 offset_left = 363.0
@@ -417,6 +391,13 @@ size_flags_horizontal = 3
 layout_mode = 2
 text = "New Level"
 
+[node name="Button" type="Button" parent="UI"]
+visible = false
+layout_mode = 0
+offset_left = 301.0
+offset_right = 337.0
+offset_bottom = 32.0
+
 [connection signal="level_loaded" from="." to="UI/Sections" method="_on_level_loaded"]
 [connection signal="new_part_selected" from="." to="UI/Properties" method="part_selected"]
 [connection signal="new_shape_selected" from="." to="UI/Properties" method="shape_selected"]
@@ -433,7 +414,6 @@ text = "New Level"
 [connection signal="text_submitted" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeName" to="UI/Properties" method="shape_name_submitted"]
 [connection signal="value_changed" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeSides/Sides" to="ShapePreview" method="sides_changed"]
 [connection signal="item_selected" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeOrientation/ShapeOrientation" to="ShapePreview" method="orientation_changed"]
-[connection signal="toggled" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeFlipOrientation/ShapeFlipOrientation" to="ShapePreview" method="flip_orientation_changed"]
 [connection signal="new_shape_selected" from="UI/Parts" to="." method="shape_selected"]
 [connection signal="part_selected" from="UI/Sections" to="." method="part_selected"]
 [connection signal="shape_selected" from="UI/Sections" to="." method="shape_selected"]
@@ -442,8 +422,5 @@ text = "New Level"
 [connection signal="pressed" from="UI/Sections/VBoxContainer/Place" to="." method="_on_place_pressed"]
 [connection signal="pressed" from="UI/Sections/VBoxContainer/Place" to="UI/Properties" method="shape_unselected"]
 [connection signal="pressed" from="UI/Sections/VBoxContainer/NewMesh" to="UI/Sections" method="_on_new_mesh_pressed"]
-[connection signal="toggled" from="UI/Tools/VBoxContainer/HBoxContainer/Position" to="UI/Tools" method="pos_toggled"]
-[connection signal="toggled" from="UI/Tools/VBoxContainer/HBoxContainer/Size" to="UI/Tools" method="size_toggled"]
-[connection signal="pressed" from="UI/Tools/VBoxContainer/HBoxContainer/Hold" to="." method="switch_hold"]
 [connection signal="level_selected" from="UI/LevelSelect" to="." method="level_selected"]
 [connection signal="pressed" from="UI/LevelSelect/VBoxContainer/NewLevel" to="UI/LevelSelect/VBoxContainer" method="new_level"]
