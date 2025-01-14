@@ -1,9 +1,10 @@
-[gd_scene load_steps=23 format=3 uid="uid://1yq80goel736"]
+[gd_scene load_steps=24 format=3 uid="uid://1yq80goel736"]
 
 [ext_resource type="Script" path="res://Editor/level_editor.gd" id="1_gkh0n"]
 [ext_resource type="Texture2D" uid="uid://d0fbpahnke75l" path="res://Assets/grid.png" id="4_33n1c"]
 [ext_resource type="PackedScene" uid="uid://2nsb0c22moeb" path="res://Editor/Shapes/ProcMesh.tscn" id="4_stuxe"]
 [ext_resource type="Script" path="res://Editor/XYZ_pos.gd" id="4_vj7w4"]
+[ext_resource type="Script" path="res://Editor/editor_adjust.gd" id="5_6wt44"]
 [ext_resource type="Script" path="res://Editor/UI/editor_level_select.gd" id="5_kbbl2"]
 [ext_resource type="Theme" uid="uid://dyhnu7yerr3w2" path="res://Assets/Themes/Editor.tres" id="5_msf75"]
 [ext_resource type="Script" path="res://Editor/UI/editor_ui.gd" id="6_mhsjx"]
@@ -124,6 +125,14 @@ input_capture_on_drag = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="XYZPos/Z/Area3D"]
 shape = SubResource("BoxShape3D_x408b")
+
+[node name="Adjust" type="Node3D" parent="."]
+visible = false
+script = ExtResource("5_6wt44")
+
+[node name="Position" type="Node3D" parent="Adjust"]
+
+[node name="Size" type="Node3D" parent="Adjust"]
 
 [node name="UI" type="Control" parent="."]
 layout_mode = 3
@@ -423,11 +432,12 @@ text = "New Level"
 [connection signal="shape_placed" from="." to="UI/Sections" method="add_shape"]
 [connection signal="pos_changed" from="ShapePreview" to="XYZPos" method="shape_pos_changed"]
 [connection signal="pos_changed" from="ShapePreview" to="UI/Properties" method="shape_pos_changed"]
-[connection signal="movement_detected" from="XYZPos" to="ShapePreview" method="movement_detected"]
+[connection signal="movement_detected" from="XYZPos" to="." method="movement_detected"]
 [connection signal="input_event" from="XYZPos/X/Area3D" to="XYZPos" method="x_clicked"]
 [connection signal="input_event" from="XYZPos/Y/Area3D" to="XYZPos" method="y_clicked"]
 [connection signal="input_event" from="XYZPos/Z/Area3D" to="XYZPos" method="z_clicked"]
 [connection signal="shape_name_changed" from="UI/Properties" to="ShapePreview" method="name_changed"]
+[connection signal="item_selected" from="UI/Properties/VBoxContainer/OptionButton" to="." method="adjustable_changed"]
 [connection signal="item_selected" from="UI/Properties/VBoxContainer/OptionButton" to="UI/Properties" method="property_group_changed"]
 [connection signal="text_submitted" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/PartProperties/PartName" to="." method="part_name_changed"]
 [connection signal="text_submitted" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeName" to="UI/Properties" method="shape_name_submitted"]
@@ -442,6 +452,7 @@ text = "New Level"
 [connection signal="pressed" from="UI/Sections/VBoxContainer/Place" to="." method="_on_place_pressed"]
 [connection signal="pressed" from="UI/Sections/VBoxContainer/Place" to="UI/Properties" method="shape_unselected"]
 [connection signal="pressed" from="UI/Sections/VBoxContainer/NewMesh" to="UI/Sections" method="_on_new_mesh_pressed"]
+[connection signal="position_selected" from="UI/Tools" to="Adjust" method="adjust_pos"]
 [connection signal="toggled" from="UI/Tools/VBoxContainer/HBoxContainer/Position" to="UI/Tools" method="pos_toggled"]
 [connection signal="toggled" from="UI/Tools/VBoxContainer/HBoxContainer/Size" to="UI/Tools" method="size_toggled"]
 [connection signal="pressed" from="UI/Tools/VBoxContainer/HBoxContainer/Hold" to="." method="switch_hold"]

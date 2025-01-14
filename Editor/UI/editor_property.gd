@@ -15,6 +15,7 @@ extends Control
 @onready var shape_flip_orientation := $VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeFlipOrientation/ShapeFlipOrientation
 
 signal shape_name_changed
+signal group_changed
 
 func _ready() -> void:
 	property_options.set_item_disabled(1, true)
@@ -27,6 +28,8 @@ func property_group_changed(index: int) -> void:
 			part_properties.visible = true
 		1:
 			shape_properties.visible = true
+	
+	group_changed.emit()
 
 
 func shape_name_submitted(new_text: String) -> void:

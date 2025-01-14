@@ -62,7 +62,7 @@ func regenerate_mesh() -> void:
 func cull() -> void:
 	pass
 
-func movement_detected(pos_change : Vector3) -> void:
+func offset_changed(pos_change : Vector3) -> void:
 	if shape_info.size() != 0:
 		shape_info[0].total_offset = pos_change
 		regenerate_mesh()

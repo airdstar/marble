@@ -1,5 +1,8 @@
 extends Control
 
+@onready var tools := $Tools
+@onready var tools_container := $Tools/VBoxContainer
+
 @onready var properties := $Properties
 @onready var property_container := $Properties/VBoxContainer
 

@@ -4,7 +4,8 @@ var shapes : Dictionary = {
 	"Plane" : plane,
 	"Cube" : cube,
 	"Polygon" : polygon,
-	"Cone" : cone
+	"Cone" : cone,
+	"Torus" : torus
 }
 
 var shape_buttons : Array[Button] = []

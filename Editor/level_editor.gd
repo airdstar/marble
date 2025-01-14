@@ -1,5 +1,11 @@
 extends Node
 
+enum adjustable {
+	PART,
+	SHAPE,
+	SHAPE_HOLE
+}
+
 enum section {
 	GEOMETRY,
 	STARTS,
@@ -12,6 +18,8 @@ var chosen_level : level_resource
 var level_base : RigidBody3D
 var selected_section : section = section.GEOMETRY
 
+var held_shape : shape_resource = null
+var adjusting : adjustable = adjustable.PART
 
 var selected_part : Node3D = null
 var selected_shape : shape_resource = null
@@ -85,6 +93,9 @@ func level_selected(level_info : level_resource) -> void:
 	UI.show_all()
 
 func shape_selected(shape : shape_resource) -> void:
+	adjusting = adjustable.SHAPE
+	if selected_shape != null:
+		held_shape = selected_shape
 	selected_shape = shape
 	shape_preview.clear_mesh()
 	shape_preview.add_shape(shape)
@@ -93,6 +104,8 @@ func shape_selected(shape : shape_resource) -> void:
 	new_shape_selected.emit(shape)
 
 func shape_unselected() -> void:
+	if selected_part != null:
+		adjusting = adjustable.PART
 	shape_preview.clear_mesh()
 	selected_shape = null
 	XYZpos.visible = false
@@ -107,10 +120,28 @@ func _on_place_pressed() -> void:
 			
 
 func switch_hold() -> void:
-	pass # Replace with function body.
+	if held_shape != null:
+		shape_selected(held_shape)
+	else:
+		shape_preview.remove_shape(selected_shape)
+		held_shape = selected_shape
+		selected_shape = null
+		shape_preview.clear_mesh()
+		
 
 func part_name_changed(new_text: String) -> void:
 	if new_text != "":
 		if selected_part is ProcMesh:
 			selected_part.mesh_name == new_text
 			sections.get_selected_part().text = new_text
+
+func adjustable_changed(index: int) -> void:
+	adjusting = index
+
+
+func movement_detected(pos_change : Vector3) -> void:
+	match adjusting:
+		adjustable.PART:
+			selected_part.position = pos_change
+		adjustable.SHAPE:
+			shape_preview.offset_changed(pos_change)
