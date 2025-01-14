@@ -25,6 +25,7 @@ func remove_shape(shape : shape_resource) -> void:
 	for n : int in range(shape_info.size()):
 		if shape_info[n] == shape:
 			shape_info.remove_at(n)
+			break
 	regenerate_mesh()
 
 func regenerate_mesh() -> void:

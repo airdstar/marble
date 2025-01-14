@@ -104,8 +104,8 @@ func _on_new_mesh_pressed() -> void:
 func _on_take_pressed() -> void:
 	if selected_shape != null:
 		selected_shape.locked = false
-		shape_selected.emit(selected_shape)
 		selected_geometry.remove_shape(selected_shape)
+		shape_selected.emit(selected_shape)
 		
 		for n : Button in shape_holder.get_children():
 			n.queue_free()

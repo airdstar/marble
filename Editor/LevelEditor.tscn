@@ -160,10 +160,12 @@ layout_mode = 2
 [node name="OptionButton" type="OptionButton" parent="UI/Properties/VBoxContainer"]
 layout_mode = 2
 selected = 0
-item_count = 2
+item_count = 3
 popup/item_0/text = "Part Properties"
 popup/item_1/text = "Shape Properties"
 popup/item_1/id = 1
+popup/item_2/text = "Hole Properties"
+popup/item_2/id = 2
 
 [node name="MarginContainer3" type="MarginContainer" parent="UI/Properties/VBoxContainer"]
 layout_mode = 2
@@ -188,7 +190,12 @@ max_length = 24
 
 [node name="PartPos" type="RichTextLabel" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/PartProperties"]
 layout_mode = 2
-text = " Position: 0,0,0"
+text = " Position: 0.0, 0.0, 0.0"
+fit_content = true
+
+[node name="PartSize" type="RichTextLabel" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/PartProperties"]
+layout_mode = 2
+text = " Size: 1.0, 1.0, 1.0"
 fit_content = true
 
 [node name="ShapeProperties" type="VBoxContainer" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer"]
@@ -257,6 +264,16 @@ fit_content = true
 [node name="ShapeFlipOrientation" type="CheckButton" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeFlipOrientation"]
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="HoleProperties" type="VBoxContainer" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HoleSize" type="RichTextLabel" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/HoleProperties"]
+layout_mode = 2
+text = "Size: 2"
+fit_content = true
 
 [node name="Parts" type="Panel" parent="UI"]
 layout_mode = 0
@@ -401,6 +418,11 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "Hold"
 
+[node name="Settings" type="Panel" parent="UI"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
 [node name="LevelSelect" type="Panel" parent="UI"]
 layout_mode = 0
 offset_left = 363.0
@@ -431,11 +453,12 @@ text = "New Level"
 [connection signal="new_shape_selected" from="." to="UI/Properties" method="shape_selected"]
 [connection signal="shape_placed" from="." to="UI/Sections" method="add_shape"]
 [connection signal="pos_changed" from="ShapePreview" to="XYZPos" method="shape_pos_changed"]
-[connection signal="pos_changed" from="ShapePreview" to="UI/Properties" method="shape_pos_changed"]
+[connection signal="pos_changed" from="ShapePreview" to="UI/Properties" method="pos_changed"]
 [connection signal="movement_detected" from="XYZPos" to="." method="movement_detected"]
 [connection signal="input_event" from="XYZPos/X/Area3D" to="XYZPos" method="x_clicked"]
 [connection signal="input_event" from="XYZPos/Y/Area3D" to="XYZPos" method="y_clicked"]
 [connection signal="input_event" from="XYZPos/Z/Area3D" to="XYZPos" method="z_clicked"]
+[connection signal="group_changed" from="UI/Properties" to="." method="property_group_set"]
 [connection signal="shape_name_changed" from="UI/Properties" to="ShapePreview" method="name_changed"]
 [connection signal="item_selected" from="UI/Properties/VBoxContainer/OptionButton" to="." method="adjustable_changed"]
 [connection signal="item_selected" from="UI/Properties/VBoxContainer/OptionButton" to="UI/Properties" method="property_group_changed"]

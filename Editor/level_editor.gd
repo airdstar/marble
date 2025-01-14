@@ -93,7 +93,6 @@ func level_selected(level_info : level_resource) -> void:
 	UI.show_all()
 
 func shape_selected(shape : shape_resource) -> void:
-	adjusting = adjustable.SHAPE
 	if selected_shape != null:
 		held_shape = selected_shape
 	selected_shape = shape
@@ -104,8 +103,6 @@ func shape_selected(shape : shape_resource) -> void:
 	new_shape_selected.emit(shape)
 
 func shape_unselected() -> void:
-	if selected_part != null:
-		adjusting = adjustable.PART
 	shape_preview.clear_mesh()
 	selected_shape = null
 	XYZpos.visible = false
@@ -143,5 +140,10 @@ func movement_detected(pos_change : Vector3) -> void:
 	match adjusting:
 		adjustable.PART:
 			selected_part.position = pos_change
+			UI.properties.pos_changed(pos_change)
 		adjustable.SHAPE:
 			shape_preview.offset_changed(pos_change)
+
+
+func property_group_set(adjust_to) -> void:
+	adjusting = adjust_to

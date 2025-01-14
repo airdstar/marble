@@ -5,6 +5,8 @@ extends Control
 @onready var part_properties := $VBoxContainer/ScrollContainer/VBoxContainer/PartProperties
 @onready var shape_properties := $VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties
 
+@onready var part_pos := $VBoxContainer/ScrollContainer/VBoxContainer/PartProperties/PartPos
+
 @onready var shape_name := $VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeName
 @onready var shape_pos := $VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapePos
 @onready var shape_sides_holder := $VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeSides
@@ -29,24 +31,29 @@ func property_group_changed(index: int) -> void:
 		1:
 			shape_properties.visible = true
 	
-	group_changed.emit()
+	group_changed.emit(index)
 
+func part_selected(part : Node3D) -> void:
+	property_options.selected = 0
+	property_group_changed(0)
+
+func pos_changed(new_pos : Vector3) -> void:
+	match property_options.selected:
+		0:
+			part_pos.text = " Position: %.1f" % new_pos.x + ", %.1f" % new_pos.y + ", %.1f" % new_pos.z
+		1:
+			shape_pos.text = " Position: %.1f" % new_pos.x + ", %.1f" % new_pos.y + ", %.1f" % new_pos.z
+
+func shape_selected(shape : shape_resource) -> void:
+	property_options.set_item_disabled(1, false)
+	property_options.selected = 1
+	property_group_changed(1)
+	display_shape_properties(shape)
 
 func shape_name_submitted(new_text: String) -> void:
 	if new_text != "":
 		shape_name_changed.emit(new_text)
 
-func shape_pos_changed(new_pos : Vector3) -> void:
-	shape_pos.text = "Position: %.1f" % new_pos.x + ", %.1f" % new_pos.y + ", %.1f" % new_pos.z
-
-func part_selected(part : Node3D) -> void:
-	if part is ProcMesh:
-		property_options.set_deferred("selected", 0)
-
-
-func shape_selected(shape : shape_resource) -> void:
-	property_options.set_item_disabled(1, false)
-	display_shape_properties(shape)
 
 func shape_unselected() -> void:
 	property_options.set_item_disabled(1, true)

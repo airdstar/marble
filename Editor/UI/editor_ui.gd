@@ -32,8 +32,10 @@ func hide_all() -> void:
 	properties.visible = false
 	parts.visible = false
 	sections.visible = false
+	tools.visible = false
 
 func show_all() -> void:
 	properties.visible = true
 	sections.visible = true
 	parts.visible = true
+	tools.visible = true
