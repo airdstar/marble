@@ -28,11 +28,11 @@ func place_control() -> void:
 	
 	tools.set_size(Vector2(get_window().size.x / 5, get_window().size.y / 10))
 	tools_container.set_size(tools.size)
-	tools.set_position(Vector2(get_window().size.x / 2 - tools.size.x / 2, get_window.size.y / 20))
+	tools.set_position(Vector2(get_window().size.x / 2 - tools.size.x / 2, get_window().size.y / 20))
 
 	sections.set_size(Vector2(get_window().size.x / 4, get_window().size.y / 1.25))
 	section_container.set_size(sections.size)
-	sections.set_position(Vector2(get_window().size.x * 19 / 20 - tools.size.x / 2, get_window.size.y / 20))
+	sections.set_position(Vector2(get_window().size.x * 19 / 20 - tools.size.x, get_window().size.y / 20))
 
 	
 	

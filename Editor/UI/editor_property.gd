@@ -23,13 +23,9 @@ extends Control
 @onready var shape_flip_orientation_holder := $VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeFlipOrientation
 @onready var shape_flip_orientation := $VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeFlipOrientation/ShapeFlipOrientation
 
-@onready var shape_pointed_holder
-@onready var shape_pointed
-@onready var shape_pointed_direction
+@onready var shape_modifier_holder := $VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeModifier
+@onready var shape_modifier := $VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeModifier/Modifier
 
-@onready var shape_hole_holder
-@onready var shape_hole
-@onready var shape_hole_size
 
 signal shape_name_changed
 signal group_changed
@@ -73,8 +69,17 @@ func shape_unselected() -> void:
 	property_options.set_item_disabled(1, true)
 
 func display_shape_properties(shape : shape_resource) -> void:
+	shape.set_mods()
 	shape_name.text = shape.shape_name
 	shape_pos.text = " Position: %.1f" % shape.total_offset.x + ", %.1f" % shape.total_offset.y + ", %.1f" % shape.total_offset.z
+	
+	if shape.usable_mods.size() > 1:
+		shape_modifier_holder.visible = true
+		shape_modifier.clear()
+		for n in shape.usable_mods:
+			shape_modifier.add_item(n)
+	else:
+		shape_modifier_holder.visible = false
 	
 	if "sides" in shape:
 		shape_sides_holder.visible = true

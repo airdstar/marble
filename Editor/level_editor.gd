@@ -2,8 +2,7 @@ extends Node
 
 enum adjustable {
 	PART,
-	SHAPE,
-	SHAPE_HOLE
+	SHAPE
 }
 
 enum section {
@@ -27,6 +26,7 @@ var selected_shape : shape_resource = null
 
 @onready var level_select := $UI/LevelSelect
 @onready var XYZpos := $XYZPos
+@onready var adjuster := $Adjust
 @onready var camera : Camera3D = $CameraPivot/Camera3D
 
 @onready var UI : Control = $UI
@@ -97,6 +97,7 @@ func shape_selected(shape : shape_resource) -> void:
 	shape_preview.clear_mesh()
 	shape_preview.add_shape(shape)
 	XYZpos.position = shape.total_offset
+	adjuster.pos.position = shape.total_offset
 	new_shape_selected.emit(shape)
 
 func shape_unselected() -> void:

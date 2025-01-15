@@ -19,6 +19,8 @@ var current_adjustment : adjust_type = adjust_type.NOTHING
 @onready var size_y
 @onready var size_z
 
+var snapping := 0.5
+
 var axis_grabbed : int = 0
 const RAY_LENGTH := 40
 
@@ -36,11 +38,11 @@ func _process(_delta : float) -> void:
 				if global_pos != null:
 					match axis_grabbed:
 						1:
-							global_pos = Vector3(snapped(global_pos.x - 0.5, 0.5), position.y, position.z)
+							global_pos = Vector3(snapped(global_pos.x - 0.5, snapping), position.y, position.z)
 						2:
-							global_pos = Vector3(position.x, snapped(global_pos.y - 0.5, 0.5), position.z)
+							global_pos = Vector3(position.x, snapped(global_pos.y - 0.5, snapping), position.z)
 						3:
-							global_pos = Vector3(position.x, position.y, snapped(global_pos.z - 0.5, 0.5))
+							global_pos = Vector3(position.x, position.y, snapped(global_pos.z - 0.5, snapping))
 					pos_changed.emit(global_pos)
 		adjust_type.SIZE:
 			pass

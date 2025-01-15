@@ -132,39 +132,6 @@ script = ExtResource("5_6wt44")
 
 [node name="Position" type="Node3D" parent="Adjust"]
 
-[node name="X" type="MeshInstance3D" parent="Adjust/Position"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0)
-mesh = SubResource("BoxMesh_oyjqt")
-skeleton = NodePath("../..")
-
-[node name="Area3D" type="Area3D" parent="Adjust/Position/X"]
-input_capture_on_drag = true
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Adjust/Position/X/Area3D"]
-shape = SubResource("BoxShape3D_cygxg")
-
-[node name="Y" type="MeshInstance3D" parent="Adjust/Position"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
-mesh = SubResource("BoxMesh_fcbbq")
-skeleton = NodePath("../..")
-
-[node name="Area3D" type="Area3D" parent="Adjust/Position/Y"]
-input_capture_on_drag = true
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Adjust/Position/Y/Area3D"]
-shape = SubResource("BoxShape3D_rw5tg")
-
-[node name="Z" type="MeshInstance3D" parent="Adjust/Position"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5)
-mesh = SubResource("BoxMesh_ixdoo")
-skeleton = NodePath("../..")
-
-[node name="Area3D" type="Area3D" parent="Adjust/Position/Z"]
-input_capture_on_drag = true
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Adjust/Position/Z/Area3D"]
-shape = SubResource("BoxShape3D_x408b")
-
 [node name="Size" type="Node3D" parent="Adjust"]
 
 [node name="UI" type="Control" parent="."]
@@ -230,6 +197,7 @@ text = " Size: 1.0, 1.0, 1.0"
 fit_content = true
 
 [node name="ShapeProperties" type="VBoxContainer" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -237,27 +205,6 @@ size_flags_horizontal = 3
 layout_mode = 2
 placeholder_text = "Enter shape name"
 max_length = 24
-
-[node name="ShapeModifier" type="HBoxContainer" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties"]
-layout_mode = 2
-
-[node name="RichTextLabel" type="RichTextLabel" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeModifier"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Modifier:"
-fit_content = true
-
-[node name="Modifier" type="OptionButton" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeModifier"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 1.4
-selected = 0
-item_count = 3
-popup/item_0/text = "None"
-popup/item_1/text = "Hole"
-popup/item_1/id = 1
-popup/item_2/text = "Pointed"
-popup/item_2/id = 2
 
 [node name="ShapePos" type="RichTextLabel" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties"]
 layout_mode = 2

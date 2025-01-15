@@ -69,6 +69,12 @@ func offset_changed(pos_change : Vector3) -> void:
 		regenerate_mesh()
 		pos_changed.emit(shape_info[0].total_offset)
 
+func size_changed(new_size : Vector3) -> void:
+	if shape_info.size() != 0:
+		shape_info[0].size = new_size
+		regenerate_mesh()
+		pos_changed.emit(shape_info[0].size)
+
 func name_changed(new_name : String) -> void:
 	if shape_info.size() != 0:
 		shape_info[0].shape_name = new_name
