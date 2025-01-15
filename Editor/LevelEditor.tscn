@@ -160,12 +160,10 @@ layout_mode = 2
 [node name="OptionButton" type="OptionButton" parent="UI/Properties/VBoxContainer"]
 layout_mode = 2
 selected = 0
-item_count = 3
+item_count = 2
 popup/item_0/text = "Part Properties"
 popup/item_1/text = "Shape Properties"
 popup/item_1/id = 1
-popup/item_2/text = "Hole Properties"
-popup/item_2/id = 2
 
 [node name="MarginContainer3" type="MarginContainer" parent="UI/Properties/VBoxContainer"]
 layout_mode = 2
@@ -264,16 +262,6 @@ fit_content = true
 [node name="ShapeFlipOrientation" type="CheckButton" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeFlipOrientation"]
 layout_mode = 2
 size_flags_horizontal = 3
-
-[node name="HoleProperties" type="VBoxContainer" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer"]
-visible = false
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="HoleSize" type="RichTextLabel" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/HoleProperties"]
-layout_mode = 2
-text = "Size: 2"
-fit_content = true
 
 [node name="Parts" type="Panel" parent="UI"]
 layout_mode = 0
@@ -460,7 +448,6 @@ text = "New Level"
 [connection signal="input_event" from="XYZPos/Z/Area3D" to="XYZPos" method="z_clicked"]
 [connection signal="group_changed" from="UI/Properties" to="." method="property_group_set"]
 [connection signal="shape_name_changed" from="UI/Properties" to="ShapePreview" method="name_changed"]
-[connection signal="item_selected" from="UI/Properties/VBoxContainer/OptionButton" to="." method="adjustable_changed"]
 [connection signal="item_selected" from="UI/Properties/VBoxContainer/OptionButton" to="UI/Properties" method="property_group_changed"]
 [connection signal="text_submitted" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/PartProperties/PartName" to="." method="part_name_changed"]
 [connection signal="text_submitted" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeName" to="UI/Properties" method="shape_name_submitted"]

@@ -5,16 +5,31 @@ extends Control
 @onready var part_properties := $VBoxContainer/ScrollContainer/VBoxContainer/PartProperties
 @onready var shape_properties := $VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties
 
+
 @onready var part_pos := $VBoxContainer/ScrollContainer/VBoxContainer/PartProperties/PartPos
+@onready var part_size
+
 
 @onready var shape_name := $VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeName
 @onready var shape_pos := $VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapePos
+@onready var shape_size
+
 @onready var shape_sides_holder := $VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeSides
 @onready var shape_sides := $VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeSides/Sides
+
 @onready var shape_orientation_holder := $VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeOrientation
 @onready var shape_orientation := $VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeOrientation/ShapeOrientation
+
 @onready var shape_flip_orientation_holder := $VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeFlipOrientation
 @onready var shape_flip_orientation := $VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeFlipOrientation/ShapeFlipOrientation
+
+@onready var shape_pointed_holder
+@onready var shape_pointed
+@onready var shape_pointed_direction
+
+@onready var shape_hole_holder
+@onready var shape_hole
+@onready var shape_hole_size
 
 signal shape_name_changed
 signal group_changed
@@ -30,7 +45,6 @@ func property_group_changed(index: int) -> void:
 			part_properties.visible = true
 		1:
 			shape_properties.visible = true
-	
 	group_changed.emit(index)
 
 func part_selected(part : Node3D) -> void:

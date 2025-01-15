@@ -76,8 +76,6 @@ func part_selected(part : Node3D) -> void:
 			holder = selected_part
 	
 	selected_part = part
-	XYZpos.visible = true
-	
 	new_part_selected.emit(selected_part)
 
 func reset_camera() -> void:
@@ -98,14 +96,14 @@ func shape_selected(shape : shape_resource) -> void:
 	selected_shape = shape
 	shape_preview.clear_mesh()
 	shape_preview.add_shape(shape)
-	XYZpos.visible = true
 	XYZpos.position = shape.total_offset
 	new_shape_selected.emit(shape)
 
 func shape_unselected() -> void:
 	shape_preview.clear_mesh()
 	selected_shape = null
-	XYZpos.visible = false
+	UI.properties.property_options.selected = 0
+	UI.properties.property_group_changed(0)
 
 func _on_place_pressed() -> void:
 	if sections.selected_geometry != null:
@@ -132,10 +130,6 @@ func part_name_changed(new_text: String) -> void:
 			selected_part.mesh_name == new_text
 			sections.get_selected_part().text = new_text
 
-func adjustable_changed(index: int) -> void:
-	adjusting = index
-
-
 func movement_detected(pos_change : Vector3) -> void:
 	match adjusting:
 		adjustable.PART:
@@ -146,4 +140,12 @@ func movement_detected(pos_change : Vector3) -> void:
 
 
 func property_group_set(adjust_to) -> void:
-	adjusting = adjust_to
+	if adjust_to == 0:
+		if selected_part is not ProcMesh:
+			adjusting = adjust_to
+			XYZpos.visible = true
+		else:
+			XYZpos.visible = false
+	else:
+		adjusting = adjust_to
+		XYZpos.visible = true
