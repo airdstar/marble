@@ -90,3 +90,7 @@ func orientation_changed(index : int) -> void:
 func flip_orientation_changed(toggled_on: bool) -> void:
 	shape_info[0].flip_orientation = toggled_on
 	regenerate_mesh()
+
+func modifier_changed(index: int) -> void:
+	shape_info[0].modifier = index
+	regenerate_mesh()

@@ -19,13 +19,13 @@ var selected_section : section = section.GEOMETRY
 
 var held_shape : shape_resource = null
 var adjusting : adjustable = adjustable.PART
+var selected_tool : editor.tool = editor.tool.NONE
 
 var selected_part : Node3D = null
 var selected_shape : shape_resource = null
 @onready var shape_preview : ProcMesh = $ShapePreview
 
 @onready var level_select := $UI/LevelSelect
-@onready var XYZpos := $XYZPos
 @onready var adjuster := $Adjust
 @onready var camera : Camera3D = $CameraPivot/Camera3D
 
@@ -40,7 +40,7 @@ signal new_shape_selected
 
 func _ready() -> void:
 	shape_preview.is_preview = true
-	XYZpos.visible = false
+	tool_visible(false)
 	open_level_select()
 
 func _process(delta : float) -> void:
@@ -69,15 +69,6 @@ func _process(delta : float) -> void:
 func open_level_select():
 	level_select.visible = true
 
-func part_selected(part : Node3D) -> void:
-	var holder : Node3D
-	if part is ProcMesh:
-		if part.is_preview:
-			holder = selected_part
-	
-	selected_part = part
-	new_part_selected.emit(selected_part)
-
 func reset_camera() -> void:
 	$CameraPivot.rotation = Vector3(deg_to_rad(-10), 0, 0)
 
@@ -90,13 +81,21 @@ func level_selected(level_info : level_resource) -> void:
 	level_loaded.emit(level_base)
 	UI.show_all()
 
+func part_selected(part : Node3D) -> void:
+	var holder : Node3D
+	if part is ProcMesh:
+		if part.is_preview:
+			holder = selected_part
+	
+	selected_part = part
+	new_part_selected.emit(selected_part)
+
 func shape_selected(shape : shape_resource) -> void:
 	if selected_shape != null:
 		held_shape = selected_shape
 	selected_shape = shape
 	shape_preview.clear_mesh()
 	shape_preview.add_shape(shape)
-	XYZpos.position = shape.total_offset
 	adjuster.pos.position = shape.total_offset
 	new_shape_selected.emit(shape)
 
@@ -116,13 +115,13 @@ func _on_place_pressed() -> void:
 			
 
 func switch_hold() -> void:
-	if held_shape != null:
+	if held_shape != null and held_shape != selected_shape:
 		shape_selected(held_shape)
 	else:
 		shape_preview.remove_shape(selected_shape)
 		held_shape = selected_shape
 		selected_shape = null
-		shape_preview.clear_mesh()
+		tool_visible(false)
 		
 
 func part_name_changed(new_text: String) -> void:
@@ -144,9 +143,23 @@ func property_group_set(adjust_to) -> void:
 	if adjust_to == 0:
 		if selected_part is not ProcMesh:
 			adjusting = adjust_to
-			XYZpos.visible = true
+			tool_visible(true)
 		else:
-			XYZpos.visible = false
+			tool_visible(false)
 	else:
 		adjusting = adjust_to
-		XYZpos.visible = true
+		tool_visible(true)
+
+func tool_visible(make_visible : bool) -> void:
+	adjuster.pos.visible = false
+	adjuster.size.visible = false
+	if make_visible:
+		match selected_tool:
+			editor.tool.POS:
+				adjuster.pos.visible = true
+			editor.tool.SIZE:
+				adjuster.size.visible = true
+
+func tool_selected(tool : editor.tool) -> void:
+	selected_tool = tool
+	property_group_set(adjusting)

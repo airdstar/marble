@@ -8,7 +8,6 @@ extends Node3D
 @onready var Ycol : CollisionShape3D = $Y/Area3D/CollisionShape3D
 @onready var Zcol : CollisionShape3D = $Z/Area3D/CollisionShape3D
 
-
 var axis_grabbed : int = 0
 const RAY_LENGTH := 40
 

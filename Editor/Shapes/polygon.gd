@@ -3,7 +3,7 @@ class_name polygon
 
 @export_range(3, 32) var sides := 3
 
-@export_enum("UP", "DOWN") var point_direction := 0
+@export var point_direction := 1
 
 @export var hole_size : float = 2
 @export var hole_offset := Vector3.ZERO
@@ -143,37 +143,37 @@ func create_top_bottom() -> Array:
 		mod.POINT:
 			for n : float in sides:
 				positions.append_array([
-					Vector3(0, size.y / 2, 0) + total_offset,
-					Vector3(cos(n/sides * PI * 2.0) * (-size.x / 2), -size.y / 2, sin(n/sides * PI * 2.0) * (-size.z / 2)) + total_offset,
-					Vector3(cos((n + 1)/sides * PI * 2.0) * (-size.x / 2), -size.y / 2, sin((n + 1)/sides * PI * 2.0) * (-size.z / 2)) + total_offset 
+					Vector3(0, size.y / 2 * point_direction, 0) + total_offset,
+					Vector3(cos(n/sides * PI * 2.0) * (-size.x / 2), -size.y / 2 * point_direction, sin(n/sides * PI * 2.0) * (-size.z / 2)) + total_offset,
+					Vector3(cos((n + 1)/sides * PI * 2.0) * (-size.x / 2), -size.y / 2 * point_direction, sin((n + 1)/sides * PI * 2.0) * (-size.z / 2)) + total_offset 
 				])
 				normals.append_array([
-						Vector3.UP,
-						Vector3.UP,
-						Vector3.UP
+						Vector3.UP * point_direction,
+						Vector3.UP * point_direction,
+						Vector3.UP * point_direction
 					])
 				indices.append_array([
 					index_offset + 2 + 3 * n,
-					index_offset + 1 + 3 * n,
-					index_offset + 3 * n
+					index_offset + 3 * n,
+					index_offset + 1 + 3 * n
 					])
 				
 			index_offset += sides * 3
 			
 			for n : float in sides:
 				positions.append_array([
-					Vector3(0, -size.y / 2, 0) + total_offset,
-					Vector3(cos(n/sides * PI * 2.0) * (-size.x / 2), -size.y / 2, sin(n/sides * PI * 2.0) * (size.z / 2)) + total_offset,
-					Vector3(cos((n + 1)/sides * PI * 2.0) * (-size.x / 2), -size.y / 2, sin((n + 1)/sides * PI * 2.0) * (-size.z / 2)) + total_offset 
+					Vector3(0, -size.y / 2 * point_direction, 0) + total_offset,
+					Vector3(cos(n/sides * PI * 2.0) * (-size.x / 2), -size.y / 2 * point_direction, sin(n/sides * PI * 2.0) * (-size.z / 2)) + total_offset,
+					Vector3(cos((n + 1)/sides * PI * 2.0) * (-size.x / 2), -size.y / 2 * point_direction, sin((n + 1)/sides * PI * 2.0) * (-size.z / 2)) + total_offset 
 				])
 				normals.append_array([
-						Vector3.DOWN,
-						Vector3.DOWN,
-						Vector3.DOWN
+						Vector3.DOWN * point_direction,
+						Vector3.DOWN * point_direction,
+						Vector3.DOWN * point_direction
 					])
 				indices.append_array([
-					index_offset + 3 * n,
 					index_offset + 1 + 3 * n,
+					index_offset + 3 * n,
 					index_offset + 2 + 3 * n
 					])
 			
@@ -233,12 +233,12 @@ func create_sides() -> Array:
 							Vector3.BACK
 						])
 					indices.append_array([
+						index_offset + 1 + 4 * n,
+						index_offset + 2 + 4 * n,
 						index_offset + 4 * n,
+						index_offset + 3 + 4 * n,
 						index_offset + 2 + 4 * n,
-						index_offset + 1 + 4 * n,
-						index_offset + 1 + 4 * n,
-						index_offset + 2 + 4 * n,
-						index_offset + 3 + 4 * n
+						index_offset + 1 + 4 * n
 						])
 				index_offset += 4 * sides
 			

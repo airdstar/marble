@@ -14,6 +14,9 @@ extends Node
 @onready var visual_changers : VBoxContainer = $Settings/HSplitContainer/HSplitContainer/ValueChangers/VisualSettings
 @onready var visual_values : VBoxContainer = $Settings/HSplitContainer/Values/VisualSettings
 
+@onready var bind_labels : VBoxContainer
+@onready var bind_changers
+@onready var bind_values
 
 @onready var tilt_slider : HSlider = $Settings/HSplitContainer/HSplitContainer/ValueChangers/ControlSettings/TiltSlider
 @onready var camera_slider : HSlider = $Settings/HSplitContainer/HSplitContainer/ValueChangers/ControlSettings/CameraSlider

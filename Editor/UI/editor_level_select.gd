@@ -2,6 +2,9 @@ extends Control
 
 @onready var option_container := $VBoxContainer/ScrollContainer/VBoxContainer
 
+@onready var level_select := $LevelSelect
+@onready var new_level := $NewLevel
+
 var resource_path : String = "res://Levels/EditorTests/LevelInfo/"
 var scene_path : String = "res://Levels/EditorTests/"
 
@@ -19,10 +22,11 @@ func _ready() -> void:
 		var holder = ResourceLoader.load(resource_path + currentLevel)
 		
 		levels.append(holder)
-
+		
+		new_level_popup.unavailable_names.append(holder.name)
+		
 		currentLevel = dir.get_next()
 	dir.list_dir_end()
-
 	display_levels()
 
 
@@ -44,5 +48,6 @@ func level_chosen(level_info : level_resource) -> void:
 	visible = false
 
 func new_level() -> void:
-	pass
+	level_select.visible = false
+	new_level.visible = true
 	#ResourceSaver.save(player_data, resource_path + chosen_name)

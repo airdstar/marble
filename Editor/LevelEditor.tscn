@@ -3,7 +3,6 @@
 [ext_resource type="Script" path="res://Editor/level_editor.gd" id="1_gkh0n"]
 [ext_resource type="Texture2D" uid="uid://d0fbpahnke75l" path="res://Assets/grid.png" id="4_33n1c"]
 [ext_resource type="PackedScene" uid="uid://2nsb0c22moeb" path="res://Editor/Shapes/ProcMesh.tscn" id="4_stuxe"]
-[ext_resource type="Script" path="res://Editor/XYZ_pos.gd" id="4_vj7w4"]
 [ext_resource type="Script" path="res://Editor/editor_adjust.gd" id="5_6wt44"]
 [ext_resource type="Script" path="res://Editor/UI/editor_level_select.gd" id="5_kbbl2"]
 [ext_resource type="Theme" uid="uid://dyhnu7yerr3w2" path="res://Assets/Themes/Editor.tres" id="5_msf75"]
@@ -12,6 +11,7 @@
 [ext_resource type="Script" path="res://Editor/UI/editor_parts.gd" id="6_xrgr4"]
 [ext_resource type="Script" path="res://Editor/UI/editor_sections.gd" id="7_2n8hv"]
 [ext_resource type="Script" path="res://Editor/UI/editor_tools.gd" id="8_pcger"]
+[ext_resource type="Script" path="res://Editor/UI/editor_new_level.gd" id="12_hpcey"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lopki"]
 transparency = 1
@@ -90,44 +90,7 @@ skeleton = NodePath("")
 
 [node name="ShapePreview" parent="." instance=ExtResource("4_stuxe")]
 
-[node name="XYZPos" type="Node3D" parent="."]
-script = ExtResource("4_vj7w4")
-
-[node name="X" type="MeshInstance3D" parent="XYZPos"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0)
-mesh = SubResource("BoxMesh_oyjqt")
-skeleton = NodePath("../..")
-
-[node name="Area3D" type="Area3D" parent="XYZPos/X"]
-input_capture_on_drag = true
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="XYZPos/X/Area3D"]
-shape = SubResource("BoxShape3D_cygxg")
-
-[node name="Y" type="MeshInstance3D" parent="XYZPos"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
-mesh = SubResource("BoxMesh_fcbbq")
-skeleton = NodePath("../..")
-
-[node name="Area3D" type="Area3D" parent="XYZPos/Y"]
-input_capture_on_drag = true
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="XYZPos/Y/Area3D"]
-shape = SubResource("BoxShape3D_rw5tg")
-
-[node name="Z" type="MeshInstance3D" parent="XYZPos"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5)
-mesh = SubResource("BoxMesh_ixdoo")
-skeleton = NodePath("../..")
-
-[node name="Area3D" type="Area3D" parent="XYZPos/Z"]
-input_capture_on_drag = true
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="XYZPos/Z/Area3D"]
-shape = SubResource("BoxShape3D_x408b")
-
 [node name="Adjust" type="Node3D" parent="."]
-visible = false
 script = ExtResource("5_6wt44")
 
 [node name="Position" type="Node3D" parent="Adjust"]
@@ -244,7 +207,7 @@ layout_mode = 2
 [node name="RichTextLabel" type="RichTextLabel" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeModifier"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Modifier:"
+text = " Modifier:"
 fit_content = true
 
 [node name="Modifier" type="OptionButton" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeModifier"]
@@ -371,8 +334,8 @@ layout_mode = 2
 current_tab = 0
 tab_count = 3
 tab_0/title = "Geometry"
-tab_1/title = "Starts"
-tab_2/title = "Misc"
+tab_1/title = "Important"
+tab_2/title = "Props"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="UI/Sections/VBoxContainer"]
 layout_mode = 2
@@ -464,6 +427,33 @@ layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Settings"]
+offset_right = 185.0
+offset_bottom = 40.0
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/Settings/VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/Settings/VBoxContainer"]
+layout_mode = 2
+
+[node name="Save" type="Button" parent="UI/Settings/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+toggle_mode = true
+text = "Save"
+
+[node name="Test" type="Button" parent="UI/Settings/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+toggle_mode = true
+text = "Test"
+
+[node name="Settings" type="Button" parent="UI/Settings/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Settings"
+
 [node name="LevelSelect" type="Panel" parent="UI"]
 layout_mode = 0
 offset_left = 363.0
@@ -472,38 +462,73 @@ offset_right = 493.0
 offset_bottom = 322.0
 script = ExtResource("5_kbbl2")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/LevelSelect"]
+[node name="LevelSelect" type="VBoxContainer" parent="UI/LevelSelect"]
 layout_mode = 0
 offset_right = 130.0
 offset_bottom = 265.0
 
-[node name="ScrollContainer" type="ScrollContainer" parent="UI/LevelSelect/VBoxContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="UI/LevelSelect/LevelSelect"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/LevelSelect/VBoxContainer/ScrollContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/LevelSelect/LevelSelect/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="NewLevel" type="Button" parent="UI/LevelSelect/VBoxContainer"]
+[node name="NewLevel" type="Button" parent="UI/LevelSelect/LevelSelect"]
 layout_mode = 2
 text = "New Level"
+
+[node name="NewLevel" type="VBoxContainer" parent="UI/LevelSelect"]
+layout_mode = 0
+offset_left = 232.0
+offset_top = 30.0
+offset_right = 382.0
+offset_bottom = 158.0
+script = ExtResource("12_hpcey")
+
+[node name="Back" type="Button" parent="UI/LevelSelect/NewLevel"]
+layout_mode = 2
+text = "Back"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/LevelSelect/NewLevel"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/LevelSelect/NewLevel/VBoxContainer"]
+layout_mode = 2
+
+[node name="LineEdit" type="LineEdit" parent="UI/LevelSelect/NewLevel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Level Name"
+
+[node name="OptionButton" type="OptionButton" parent="UI/LevelSelect/NewLevel/VBoxContainer"]
+layout_mode = 2
+selected = 0
+item_count = 1
+popup/item_0/text = "Platform"
+
+[node name="Button" type="Button" parent="UI/LevelSelect/NewLevel/VBoxContainer"]
+layout_mode = 2
+text = "Create Level"
 
 [connection signal="level_loaded" from="." to="UI/Sections" method="_on_level_loaded"]
 [connection signal="new_part_selected" from="." to="UI/Properties" method="part_selected"]
 [connection signal="new_shape_selected" from="." to="UI/Properties" method="shape_selected"]
 [connection signal="shape_placed" from="." to="UI/Sections" method="add_shape"]
-[connection signal="pos_changed" from="ShapePreview" to="XYZPos" method="shape_pos_changed"]
+[connection signal="pos_changed" from="ShapePreview" to="Adjust" method="selected_pos_changed"]
 [connection signal="pos_changed" from="ShapePreview" to="UI/Properties" method="pos_changed"]
-[connection signal="movement_detected" from="XYZPos" to="." method="movement_detected"]
-[connection signal="input_event" from="XYZPos/X/Area3D" to="XYZPos" method="x_clicked"]
-[connection signal="input_event" from="XYZPos/Y/Area3D" to="XYZPos" method="y_clicked"]
-[connection signal="input_event" from="XYZPos/Z/Area3D" to="XYZPos" method="z_clicked"]
+[connection signal="pos_changed" from="Adjust" to="." method="movement_detected"]
+[connection signal="input_event" from="Adjust/Position/X/Area3D" to="Adjust" method="x_pos_grabbed"]
+[connection signal="input_event" from="Adjust/Position/Y/Area3D" to="Adjust" method="y_pos_grabbed"]
+[connection signal="input_event" from="Adjust/Position/Z/Area3D" to="Adjust" method="z_pos_grabbed"]
 [connection signal="group_changed" from="UI/Properties" to="." method="property_group_set"]
 [connection signal="shape_name_changed" from="UI/Properties" to="ShapePreview" method="name_changed"]
 [connection signal="item_selected" from="UI/Properties/VBoxContainer/OptionButton" to="UI/Properties" method="property_group_changed"]
 [connection signal="text_submitted" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/PartProperties/PartName" to="." method="part_name_changed"]
 [connection signal="text_submitted" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeName" to="UI/Properties" method="shape_name_submitted"]
+[connection signal="item_selected" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeModifier/Modifier" to="ShapePreview" method="modifier_changed"]
 [connection signal="value_changed" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeSides/Sides" to="ShapePreview" method="sides_changed"]
 [connection signal="item_selected" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeOrientation/ShapeOrientation" to="ShapePreview" method="orientation_changed"]
 [connection signal="toggled" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeFlipOrientation/ShapeFlipOrientation" to="ShapePreview" method="flip_orientation_changed"]
@@ -515,9 +540,9 @@ text = "New Level"
 [connection signal="pressed" from="UI/Sections/VBoxContainer/Place" to="." method="_on_place_pressed"]
 [connection signal="pressed" from="UI/Sections/VBoxContainer/Place" to="UI/Properties" method="shape_unselected"]
 [connection signal="pressed" from="UI/Sections/VBoxContainer/NewMesh" to="UI/Sections" method="_on_new_mesh_pressed"]
-[connection signal="position_selected" from="UI/Tools" to="Adjust" method="adjust_pos"]
+[connection signal="tool_selected" from="UI/Tools" to="." method="tool_selected"]
 [connection signal="toggled" from="UI/Tools/VBoxContainer/HBoxContainer/Position" to="UI/Tools" method="pos_toggled"]
 [connection signal="toggled" from="UI/Tools/VBoxContainer/HBoxContainer/Size" to="UI/Tools" method="size_toggled"]
 [connection signal="pressed" from="UI/Tools/VBoxContainer/HBoxContainer/Hold" to="." method="switch_hold"]
 [connection signal="level_selected" from="UI/LevelSelect" to="." method="level_selected"]
-[connection signal="pressed" from="UI/LevelSelect/VBoxContainer/NewLevel" to="UI/LevelSelect/VBoxContainer" method="new_level"]
+[connection signal="pressed" from="UI/LevelSelect/LevelSelect/NewLevel" to="UI/LevelSelect/LevelSelect" method="new_level"]
