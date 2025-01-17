@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://1yq80goel736"]
+[gd_scene load_steps=24 format=3 uid="uid://1yq80goel736"]
 
 [ext_resource type="Script" path="res://Editor/level_editor.gd" id="1_gkh0n"]
 [ext_resource type="Texture2D" uid="uid://d0fbpahnke75l" path="res://Assets/grid.png" id="4_33n1c"]
@@ -25,7 +25,7 @@ size = Vector3(20, 0.01, 20)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ytq3e"]
 no_depth_test = true
-albedo_color = Color(0.85, 0, 0.1, 1)
+albedo_color = Color(0.824894, 0, 0.143332, 1)
 backlight_enabled = true
 backlight = Color(1, 1, 1, 1)
 
@@ -38,7 +38,7 @@ size = Vector3(0.95, 0.25, 0.25)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_n08y7"]
 no_depth_test = true
-albedo_color = Color(0, 0.85, 0.1, 1)
+albedo_color = Color(0, 0.532594, 0.147573, 1)
 backlight_enabled = true
 backlight = Color(1, 1, 1, 1)
 
@@ -51,7 +51,7 @@ size = Vector3(0.25, 0.95, 0.25)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_t87mf"]
 no_depth_test = true
-albedo_color = Color(0.1, 0, 0.85, 1)
+albedo_color = Color(0.179355, 0.341728, 1, 1)
 backlight_enabled = true
 backlight = Color(1, 1, 1, 1)
 
@@ -61,17 +61,6 @@ size = Vector3(0.05, 0.05, 0.95)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_x408b"]
 size = Vector3(0.25, 0.25, 0.95)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vcep1"]
-no_depth_test = true
-albedo_color = Color(0.85, 0, 0.1, 1)
-backlight_enabled = true
-backlight = Color(1, 1, 1, 1)
-
-[sub_resource type="SphereMesh" id="SphereMesh_8u5sg"]
-material = SubResource("StandardMaterial3D_vcep1")
-radius = 0.1
-height = 0.2
 
 [node name="LevelEditor" type="Node3D"]
 script = ExtResource("1_gkh0n")
@@ -105,7 +94,6 @@ skeleton = NodePath("")
 script = ExtResource("5_6wt44")
 
 [node name="Position" type="Node3D" parent="Adjust"]
-visible = false
 
 [node name="X" type="MeshInstance3D" parent="Adjust/Position"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0)
@@ -141,9 +129,6 @@ input_capture_on_drag = true
 shape = SubResource("BoxShape3D_x408b")
 
 [node name="Size" type="Node3D" parent="Adjust"]
-
-[node name="X" type="MeshInstance3D" parent="Adjust/Size"]
-mesh = SubResource("SphereMesh_8u5sg")
 
 [node name="UI" type="Control" parent="."]
 layout_mode = 3
@@ -496,10 +481,11 @@ layout_mode = 2
 text = "New Level"
 
 [node name="NewLevel" type="VBoxContainer" parent="UI/LevelSelect"]
-visible = false
 layout_mode = 0
-offset_right = 150.0
-offset_bottom = 128.0
+offset_left = 232.0
+offset_top = 30.0
+offset_right = 382.0
+offset_bottom = 158.0
 script = ExtResource("12_hpcey")
 
 [node name="Back" type="Button" parent="UI/LevelSelect/NewLevel"]
@@ -524,7 +510,7 @@ selected = 0
 item_count = 1
 popup/item_0/text = "Platform"
 
-[node name="Create" type="Button" parent="UI/LevelSelect/NewLevel/VBoxContainer"]
+[node name="Button" type="Button" parent="UI/LevelSelect/NewLevel/VBoxContainer"]
 layout_mode = 2
 text = "Create Level"
 
@@ -560,7 +546,4 @@ text = "Create Level"
 [connection signal="toggled" from="UI/Tools/VBoxContainer/HBoxContainer/Size" to="UI/Tools" method="size_toggled"]
 [connection signal="pressed" from="UI/Tools/VBoxContainer/HBoxContainer/Hold" to="." method="switch_hold"]
 [connection signal="level_selected" from="UI/LevelSelect" to="." method="level_selected"]
-[connection signal="pressed" from="UI/LevelSelect/LevelSelect/NewLevel" to="UI/LevelSelect" method="new_level_pressed"]
-[connection signal="level_created" from="UI/LevelSelect/NewLevel" to="UI/LevelSelect" method="level_created"]
-[connection signal="pressed" from="UI/LevelSelect/NewLevel/Back" to="UI/LevelSelect" method="level_select_show"]
-[connection signal="pressed" from="UI/LevelSelect/NewLevel/VBoxContainer/Create" to="UI/LevelSelect/NewLevel" method="create_pressed"]
+[connection signal="pressed" from="UI/LevelSelect/LevelSelect/NewLevel" to="UI/LevelSelect/LevelSelect" method="new_level"]

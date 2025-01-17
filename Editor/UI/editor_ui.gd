@@ -16,7 +16,8 @@ extends Control
 @onready var settings_container := $Settings/VBoxContainer
 
 @onready var level_select : Panel = $LevelSelect
-@onready var level_select_container := $LevelSelect/VBoxContainer
+@onready var level_select_container := $LevelSelect/LevelSelect
+@onready var level_select_new_container := $LevelSelect/NewLevel
 
 
 func _ready() -> void:
@@ -34,6 +35,7 @@ func place_control() -> void:
 	level_select.set_size(Vector2(get_window().size.x / 5, get_window().size.y / 2))
 	level_select.set_position(Vector2(get_window().size.x / 2 - level_select.size.x / 2, get_window().size.y / 4))
 	level_select_container.set_size(level_select.size)
+	level_select_new_container.set_size(level_select.size)
 	
 	tools.set_size(Vector2(get_window().size.x / 5, get_window().size.y / 20))
 	tools.set_position(Vector2(get_window().size.x / 2 - tools.size.x / 2, top_border))

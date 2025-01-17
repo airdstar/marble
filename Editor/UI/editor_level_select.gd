@@ -1,6 +1,6 @@
 extends Control
 
-@onready var option_container := $VBoxContainer/ScrollContainer/VBoxContainer
+@onready var option_container := $LevelSelect/ScrollContainer/VBoxContainer
 
 @onready var level_select := $LevelSelect
 @onready var new_level := $NewLevel
@@ -23,7 +23,7 @@ func _ready() -> void:
 		
 		levels.append(holder)
 		
-		new_level_popup.unavailable_names.append(holder.name)
+		new_level.unavailable_names.append(holder.name)
 		
 		currentLevel = dir.get_next()
 	dir.list_dir_end()
@@ -47,7 +47,23 @@ func level_chosen(level_info : level_resource) -> void:
 	level_selected.emit(level_info)
 	visible = false
 
-func new_level() -> void:
+func level_created(level_info : level_resource) -> void:
+	var saving = ResourceSaver.save(level_info, resource_path + level_info.name + ".tres")
+	if saving != OK:
+		print("Error")
+	else:
+		add_level(level_info)
+		level_select_show()
+
+func new_level_pressed() -> void:
 	level_select.visible = false
 	new_level.visible = true
-	#ResourceSaver.save(player_data, resource_path + chosen_name)
+
+func level_select_show() -> void:
+	level_select.visible = true
+	new_level.visible = false
+	new_level.reset_fields()
+
+
+
+	
