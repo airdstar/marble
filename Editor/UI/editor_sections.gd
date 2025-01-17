@@ -27,8 +27,10 @@ func _on_level_loaded(loaded_level : level) -> void:
 	level_info = loaded_level
 	for n : ProcMesh in loaded_level.geometry.get_children():
 		add_geometry(n)
+		
 	
 	geometry_holder.get_child(0).button_pressed = true
+	
 
 
 func add_geometry(proc_mesh : ProcMesh) -> void:
@@ -94,11 +96,6 @@ func tab_changed(tab: int) -> void:
 		2:
 			misc_holder.visible = true
 
-
-func _on_new_mesh_pressed() -> void:
-	var holder = preload("res://Editor/Shapes/ProcMesh.tscn").instantiate()
-	level_info.geometry.add_child(holder)
-	add_geometry(holder)
 
 
 func _on_take_pressed() -> void:

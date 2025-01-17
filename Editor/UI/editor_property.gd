@@ -12,7 +12,7 @@ extends Control
 
 @onready var shape_name := $VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeName
 @onready var shape_pos := $VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapePos
-@onready var shape_size
+@onready var shape_size := $VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeSize
 
 @onready var shape_sides_holder := $VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeSides
 @onready var shape_sides := $VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeSides/Sides
@@ -53,6 +53,13 @@ func pos_changed(new_pos : Vector3) -> void:
 			part_pos.text = " Position: %.1f" % new_pos.x + ", %.1f" % new_pos.y + ", %.1f" % new_pos.z
 		1:
 			shape_pos.text = " Position: %.1f" % new_pos.x + ", %.1f" % new_pos.y + ", %.1f" % new_pos.z
+
+func size_changed(new_size : Vector3) -> void:
+	match property_options.selected:
+		0:
+			pass
+		1:
+			shape_size.text = " Size: %.1f" % new_size.x + ", %.1f" % new_size.y + ", %.1f" % new_size.z
 
 func shape_selected(shape : shape_resource) -> void:
 	property_options.set_item_disabled(1, false)

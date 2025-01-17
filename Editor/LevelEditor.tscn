@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://1yq80goel736"]
+[gd_scene load_steps=34 format=3 uid="uid://1yq80goel736"]
 
 [ext_resource type="Script" path="res://Editor/level_editor.gd" id="1_gkh0n"]
 [ext_resource type="Texture2D" uid="uid://d0fbpahnke75l" path="res://Assets/grid.png" id="4_33n1c"]
@@ -11,6 +11,7 @@
 [ext_resource type="Script" path="res://Editor/UI/editor_parts.gd" id="6_xrgr4"]
 [ext_resource type="Script" path="res://Editor/UI/editor_sections.gd" id="7_2n8hv"]
 [ext_resource type="Script" path="res://Editor/UI/editor_tools.gd" id="8_pcger"]
+[ext_resource type="Script" path="res://Editor/UI/editor_settings.gd" id="11_dvs47"]
 [ext_resource type="Script" path="res://Editor/UI/editor_new_level.gd" id="12_hpcey"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lopki"]
@@ -62,16 +63,47 @@ size = Vector3(0.05, 0.05, 0.95)
 [sub_resource type="BoxShape3D" id="BoxShape3D_x408b"]
 size = Vector3(0.25, 0.25, 0.95)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vcep1"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_14jxn"]
 no_depth_test = true
 albedo_color = Color(0.85, 0, 0.1, 1)
 backlight_enabled = true
 backlight = Color(1, 1, 1, 1)
 
 [sub_resource type="SphereMesh" id="SphereMesh_8u5sg"]
-material = SubResource("StandardMaterial3D_vcep1")
+material = SubResource("StandardMaterial3D_14jxn")
 radius = 0.1
 height = 0.2
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_p3l4i"]
+size = Vector3(0.95, 0.25, 0.25)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gf1hw"]
+no_depth_test = true
+albedo_color = Color(0, 0.85, 0.1, 1)
+backlight_enabled = true
+backlight = Color(1, 1, 1, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_4kkim"]
+material = SubResource("StandardMaterial3D_gf1hw")
+radius = 0.1
+height = 0.2
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_rhtl5"]
+size = Vector3(0.25, 0.95, 0.25)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6gd3d"]
+no_depth_test = true
+albedo_color = Color(0.1, 0, 0.85, 1)
+backlight_enabled = true
+backlight = Color(1, 1, 1, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_ultul"]
+material = SubResource("StandardMaterial3D_6gd3d")
+radius = 0.1
+height = 0.2
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_vdcb3"]
+size = Vector3(0.25, 0.25, 0.95)
 
 [node name="LevelEditor" type="Node3D"]
 script = ExtResource("1_gkh0n")
@@ -144,6 +176,30 @@ shape = SubResource("BoxShape3D_x408b")
 
 [node name="X" type="MeshInstance3D" parent="Adjust/Size"]
 mesh = SubResource("SphereMesh_8u5sg")
+
+[node name="Area3D" type="Area3D" parent="Adjust/Size/X"]
+input_capture_on_drag = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Adjust/Size/X/Area3D"]
+shape = SubResource("BoxShape3D_p3l4i")
+
+[node name="Y" type="MeshInstance3D" parent="Adjust/Size"]
+mesh = SubResource("SphereMesh_4kkim")
+
+[node name="Area3D" type="Area3D" parent="Adjust/Size/Y"]
+input_capture_on_drag = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Adjust/Size/Y/Area3D"]
+shape = SubResource("BoxShape3D_rhtl5")
+
+[node name="Z" type="MeshInstance3D" parent="Adjust/Size"]
+mesh = SubResource("SphereMesh_ultul")
+
+[node name="Area3D" type="Area3D" parent="Adjust/Size/Z"]
+input_capture_on_drag = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Adjust/Size/Z/Area3D"]
+shape = SubResource("BoxShape3D_vdcb3")
 
 [node name="UI" type="Control" parent="."]
 layout_mode = 3
@@ -242,6 +298,11 @@ layout_mode = 2
 text = " Position: 0,0,0"
 fit_content = true
 
+[node name="ShapeSize" type="RichTextLabel" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties"]
+layout_mode = 2
+text = " Size: 1.0, 1.0, 1.0"
+fit_content = true
+
 [node name="ShapeSides" type="HBoxContainer" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties"]
 layout_mode = 2
 
@@ -328,12 +389,14 @@ offset_left = 900.0
 offset_top = 20.0
 offset_right = 1250.0
 offset_bottom = 620.0
+mouse_filter = 2
 script = ExtResource("7_2n8hv")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UI/Sections"]
 layout_mode = 0
 offset_right = 350.0
 offset_bottom = 600.0
+mouse_filter = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="UI/Sections/VBoxContainer"]
 layout_mode = 2
@@ -355,35 +418,43 @@ tab_2/title = "Props"
 [node name="HBoxContainer" type="HBoxContainer" parent="UI/Sections/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+mouse_filter = 2
 
 [node name="ScrollContainer" type="ScrollContainer" parent="UI/Sections/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+mouse_filter = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UI/Sections/VBoxContainer/HBoxContainer/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_filter = 2
 
 [node name="Geometry" type="VBoxContainer" parent="UI/Sections/VBoxContainer/HBoxContainer/ScrollContainer/VBoxContainer"]
 layout_mode = 2
+mouse_filter = 2
 
 [node name="Starts" type="VBoxContainer" parent="UI/Sections/VBoxContainer/HBoxContainer/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_filter = 2
 
 [node name="Misc" type="VBoxContainer" parent="UI/Sections/VBoxContainer/HBoxContainer/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_filter = 2
 
 [node name="Shapes" type="ScrollContainer" parent="UI/Sections/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+mouse_filter = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UI/Sections/VBoxContainer/HBoxContainer/Shapes"]
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_filter = 2
 
 [node name="MarginContainer2" type="MarginContainer" parent="UI/Sections/VBoxContainer"]
 layout_mode = 2
@@ -441,6 +512,7 @@ text = "Hold"
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
+script = ExtResource("11_dvs47")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UI/Settings"]
 layout_mode = 0
@@ -532,12 +604,18 @@ text = "Create Level"
 [connection signal="new_part_selected" from="." to="UI/Properties" method="part_selected"]
 [connection signal="new_shape_selected" from="." to="UI/Properties" method="shape_selected"]
 [connection signal="shape_placed" from="." to="UI/Sections" method="add_shape"]
-[connection signal="pos_changed" from="ShapePreview" to="Adjust" method="selected_pos_changed"]
-[connection signal="pos_changed" from="ShapePreview" to="UI/Properties" method="pos_changed"]
+[connection signal="offset_change_successful" from="ShapePreview" to="Adjust" method="selected_pos_changed"]
+[connection signal="offset_change_successful" from="ShapePreview" to="UI/Properties" method="pos_changed"]
+[connection signal="size_change_successful" from="ShapePreview" to="Adjust" method="selected_size_changed"]
+[connection signal="size_change_successful" from="ShapePreview" to="UI/Properties" method="size_changed"]
 [connection signal="pos_changed" from="Adjust" to="." method="movement_detected"]
+[connection signal="size_changed" from="Adjust" to="." method="resize_detected"]
 [connection signal="input_event" from="Adjust/Position/X/Area3D" to="Adjust" method="x_pos_grabbed"]
 [connection signal="input_event" from="Adjust/Position/Y/Area3D" to="Adjust" method="y_pos_grabbed"]
 [connection signal="input_event" from="Adjust/Position/Z/Area3D" to="Adjust" method="z_pos_grabbed"]
+[connection signal="input_event" from="Adjust/Size/X/Area3D" to="Adjust" method="x_size_grabbed"]
+[connection signal="input_event" from="Adjust/Size/Y/Area3D" to="Adjust" method="y_size_grabbed"]
+[connection signal="input_event" from="Adjust/Size/Z/Area3D" to="Adjust" method="z_size_grabbed"]
 [connection signal="group_changed" from="UI/Properties" to="." method="property_group_set"]
 [connection signal="shape_name_changed" from="UI/Properties" to="ShapePreview" method="name_changed"]
 [connection signal="item_selected" from="UI/Properties/VBoxContainer/OptionButton" to="UI/Properties" method="property_group_changed"]
@@ -554,11 +632,13 @@ text = "Create Level"
 [connection signal="pressed" from="UI/Sections/VBoxContainer/Take" to="UI/Sections" method="_on_take_pressed"]
 [connection signal="pressed" from="UI/Sections/VBoxContainer/Place" to="." method="_on_place_pressed"]
 [connection signal="pressed" from="UI/Sections/VBoxContainer/Place" to="UI/Properties" method="shape_unselected"]
+[connection signal="pressed" from="UI/Sections/VBoxContainer/NewMesh" to="." method="new_procmesh_created"]
 [connection signal="pressed" from="UI/Sections/VBoxContainer/NewMesh" to="UI/Sections" method="_on_new_mesh_pressed"]
 [connection signal="tool_selected" from="UI/Tools" to="." method="tool_selected"]
 [connection signal="toggled" from="UI/Tools/VBoxContainer/HBoxContainer/Position" to="UI/Tools" method="pos_toggled"]
 [connection signal="toggled" from="UI/Tools/VBoxContainer/HBoxContainer/Size" to="UI/Tools" method="size_toggled"]
 [connection signal="pressed" from="UI/Tools/VBoxContainer/HBoxContainer/Hold" to="." method="switch_hold"]
+[connection signal="pressed" from="UI/Settings/VBoxContainer/HBoxContainer/Save" to="." method="save_level"]
 [connection signal="level_selected" from="UI/LevelSelect" to="." method="level_selected"]
 [connection signal="pressed" from="UI/LevelSelect/LevelSelect/NewLevel" to="UI/LevelSelect" method="new_level_pressed"]
 [connection signal="level_created" from="UI/LevelSelect/NewLevel" to="UI/LevelSelect" method="level_created"]

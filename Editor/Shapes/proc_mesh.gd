@@ -3,14 +3,15 @@ class_name ProcMesh
 
 var mesh_name : String = "Proc Mesh"
 
-var shape_info : Array[shape_resource]
+@export var shape_info : Array[shape_resource]
 var array_mesh : ArrayMesh
 
 var tri_count : int = 0
 
 var is_preview := false
 
-signal pos_changed
+signal offset_change_successful
+signal size_change_successful
 
 func clear_mesh() -> void:
 	shape_info.clear()
@@ -67,13 +68,13 @@ func offset_changed(pos_change : Vector3) -> void:
 	if shape_info.size() != 0:
 		shape_info[0].total_offset = pos_change
 		regenerate_mesh()
-		pos_changed.emit(shape_info[0].total_offset)
+		offset_change_successful.emit(shape_info[0].total_offset)
 
 func size_changed(new_size : Vector3) -> void:
 	if shape_info.size() != 0:
 		shape_info[0].size = new_size
 		regenerate_mesh()
-		pos_changed.emit(shape_info[0].size)
+		size_change_successful.emit(shape_info[0].size)
 
 func name_changed(new_name : String) -> void:
 	if shape_info.size() != 0:

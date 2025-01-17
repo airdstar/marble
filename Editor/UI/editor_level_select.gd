@@ -6,7 +6,6 @@ extends Control
 @onready var new_level := $NewLevel
 
 var resource_path : String = "res://Levels/EditorTests/LevelInfo/"
-var scene_path : String = "res://Levels/EditorTests/"
 
 var levels : Array[level_resource] = []
 
@@ -42,6 +41,7 @@ func add_level(level_info : level_resource) -> void:
 
 func level_chosen(level_info : level_resource) -> void:
 	if level_info.associated_scene == null:
+		print("No associated level")
 		var holder = preload("res://Editor/LevelBase.tscn")
 		level_info.associated_scene = holder
 	level_selected.emit(level_info)

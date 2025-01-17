@@ -2,6 +2,8 @@ extends Node
 class_name level
 
 @export var starts : Array[int]
+@export var goals : Array[int]
+@export var proc_mesh : Array[ProcMesh]
 
 @onready var geometry := $Geometry
 

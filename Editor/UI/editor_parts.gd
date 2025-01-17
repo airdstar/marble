@@ -2,7 +2,7 @@ extends Control
 
 var shapes : Dictionary = {
 	"Plane" : plane,
-	"Cube" : cube,
+	"Cube (No modifiers)" : cube,
 	"Polygon" : polygon,
 	"Sphere" : sphere
 }

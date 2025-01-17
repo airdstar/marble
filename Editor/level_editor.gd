@@ -11,10 +11,13 @@ enum section {
 	MISC
 }
 
+var scene_path : String = "res://Levels/EditorTests/"
+var resource_path : String = "res://Levels/EditorTests/LevelInfo/"
+
 var allow_camera_movement := false
 
 var chosen_level : level_resource
-var level_base : RigidBody3D
+var level_base : level
 var selected_section : section = section.GEOMETRY
 
 var held_shape : shape_resource = null
@@ -78,6 +81,12 @@ func level_selected(level_info : level_resource) -> void:
 	level_base = chosen_level.associated_scene.instantiate()
 	add_child(level_base)
 	level_base.open_editor()
+	
+	if level_base.proc_mesh.size() == 0:
+		var holder = preload("res://Editor/Shapes/ProcMesh.tscn").instantiate()
+		level_base.proc_mesh.append(holder)
+		level_base.geometry.add_child(holder)
+	
 	level_loaded.emit(level_base)
 	UI.show_all()
 
@@ -87,16 +96,21 @@ func part_selected(part : Node3D) -> void:
 		if part.is_preview:
 			holder = selected_part
 	
+
+
 	selected_part = part
 	new_part_selected.emit(selected_part)
 
 func shape_selected(shape : shape_resource) -> void:
 	if selected_shape != null:
 		held_shape = selected_shape
+	
 	selected_shape = shape
 	shape_preview.clear_mesh()
 	shape_preview.add_shape(shape)
-	adjuster.pos.position = shape.total_offset
+
+	adjuster.selected_pos_changed(shape.total_offset)
+	adjuster.selected_size_changed(shape.size)
 	new_shape_selected.emit(shape)
 
 func shape_unselected() -> void:
@@ -124,6 +138,12 @@ func switch_hold() -> void:
 		tool_visible(false)
 		
 
+func new_procmesh_created() -> void:
+	var holder = preload("res://Editor/Shapes/ProcMesh.tscn").instantiate()
+	level_base.geometry.add_child(holder)
+	level_base.proc_mesh.append(holder)
+	sections.add_geometry(holder)
+
 func part_name_changed(new_text: String) -> void:
 	if new_text != "":
 		if selected_part is ProcMesh:
@@ -138,6 +158,13 @@ func movement_detected(pos_change : Vector3) -> void:
 		adjustable.SHAPE:
 			shape_preview.offset_changed(pos_change)
 
+func resize_detected(size_change : Vector3) -> void:
+	match adjusting:
+		adjustable.PART:
+			selected_part.size = size_change
+			UI.properties.size_changed(size_change)
+		adjustable.SHAPE:
+			shape_preview.size_changed(size_change)
 
 func property_group_set(adjust_to) -> void:
 	if adjust_to == 0:
@@ -163,3 +190,25 @@ func tool_visible(make_visible : bool) -> void:
 func tool_selected(tool : editor.tool) -> void:
 	selected_tool = tool
 	property_group_set(adjusting)
+
+func save_level() -> void:
+	rec_set_owner(level_base)
+	
+	var to_save := PackedScene.new()
+	to_save.pack(level_base)
+	var saving = ResourceSaver.save(to_save, scene_path + chosen_level.name + ".tscn")
+	if saving != OK:
+		print("Error with scene")
+	
+	chosen_level.associated_scene = ResourceLoader.load(scene_path + chosen_level.name + ".tscn")
+	
+	saving = ResourceSaver.save(chosen_level, resource_path + chosen_level.name + ".tres")
+	if saving != OK:
+		print("Error with resource")
+	
+
+func rec_set_owner(parent_node : Node) -> void:
+	for n in parent_node.get_children():
+		n.owner = parent_node
+		if n.get_child_count() != 0:
+			rec_set_owner(n)
