@@ -82,10 +82,10 @@ func level_selected(level_info : level_resource) -> void:
 	add_child(level_base)
 	level_base.open_editor()
 	
-	if level_base.proc_mesh.size() == 0:
+	if level_base.geometry.get_child_count() == 0:
 		var holder = preload("res://Editor/Shapes/ProcMesh.tscn").instantiate()
-		level_base.proc_mesh.append(holder)
 		level_base.geometry.add_child(holder)
+		holder.set_owner(level_base)
 	
 	level_loaded.emit(level_base)
 	UI.show_all()
@@ -96,8 +96,6 @@ func part_selected(part : Node3D) -> void:
 		if part.is_preview:
 			holder = selected_part
 	
-
-
 	selected_part = part
 	new_part_selected.emit(selected_part)
 
@@ -141,7 +139,7 @@ func switch_hold() -> void:
 func new_procmesh_created() -> void:
 	var holder = preload("res://Editor/Shapes/ProcMesh.tscn").instantiate()
 	level_base.geometry.add_child(holder)
-	level_base.proc_mesh.append(holder)
+	holder.set_owner(level_base)
 	sections.add_geometry(holder)
 
 func part_name_changed(new_text: String) -> void:
@@ -192,7 +190,6 @@ func tool_selected(tool : editor.tool) -> void:
 	property_group_set(adjusting)
 
 func save_level() -> void:
-	rec_set_owner(level_base)
 	
 	var to_save := PackedScene.new()
 	to_save.pack(level_base)
@@ -206,9 +203,3 @@ func save_level() -> void:
 	if saving != OK:
 		print("Error with resource")
 	
-
-func rec_set_owner(parent_node : Node) -> void:
-	for n in parent_node.get_children():
-		n.owner = parent_node
-		if n.get_child_count() != 0:
-			rec_set_owner(n)

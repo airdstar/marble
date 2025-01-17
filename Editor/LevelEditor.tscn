@@ -415,6 +415,10 @@ tab_0/title = "Geometry"
 tab_1/title = "Important"
 tab_2/title = "Props"
 
+[node name="Delete" type="Button" parent="UI/Sections/VBoxContainer"]
+layout_mode = 2
+text = "Delete Part"
+
 [node name="HBoxContainer" type="HBoxContainer" parent="UI/Sections/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
