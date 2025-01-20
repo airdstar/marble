@@ -1,98 +1,122 @@
-[gd_scene load_steps=7 format=3 uid="uid://dqdv1dvpasyd"]
+[gd_scene load_steps=5 format=3 uid="uid://dqdv1dvpasyd"]
 
+[ext_resource type="Theme" uid="uid://bblhstx3bttr7" path="res://Assets/Themes/MainMenu.tres" id="1_lrwul"]
 [ext_resource type="Script" path="res://Main/Menus/main_menu.gd" id="1_tofsu"]
-[ext_resource type="Texture2D" uid="uid://bjenkqfpq1own" path="res://Assets/Settings.png" id="2_7xohp"]
-[ext_resource type="Texture2D" uid="uid://bklfyfts4w2f4" path="res://Assets/Exit.png" id="3_8sgqc"]
+[ext_resource type="Texture2D" uid="uid://d2lssy42jcrl5" path="res://Assets/Logo middle.png" id="5_lcnhj"]
+[ext_resource type="Texture2D" uid="uid://bwv7mtqpdc47l" path="res://Assets/Logo spin.png" id="6_yv5bw"]
 
-[sub_resource type="Theme" id="Theme_guwbr"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1el8n"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_imfnh"]
-
-[node name="MainMenu" type="Node"]
+[node name="MainMenu" type="Control" node_paths=PackedStringArray("menu_container", "important_container", "logo", "rotate_logo")]
 process_mode = 1
+layout_mode = 3
+anchors_preset = 0
+theme = ExtResource("1_lrwul")
 script = ExtResource("1_tofsu")
+menu_container = NodePath("VBoxContainer")
+important_container = NodePath("VBoxContainer2")
+logo = NodePath("Sprite2D")
+rotate_logo = NodePath("Sprite2D/Sprite2D2")
 
-[node name="PlayContainer" type="VBoxContainer" parent="."]
-offset_left = 568.889
-offset_right = 750.889
-offset_bottom = 720.0
-alignment = 2
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+offset_right = 364.0
+offset_bottom = 162.0
 
-[node name="Play" type="Button" parent="PlayContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
 layout_mode = 2
-text = "Play"
 
-[node name="Editor" type="Button" parent="PlayContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
-text = "Editor"
+size_flags_vertical = 3
 
-[node name="Button3" type="Button" parent="PlayContainer"]
-visible = false
+[node name="Gallery" type="Button" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
-text = "Challenges"
-
-[node name="Button4" type="Button" parent="PlayContainer"]
-visible = false
-layout_mode = 2
-text = "Multiplayer"
-
-[node name="Gallery" type="Button" parent="PlayContainer"]
-layout_mode = 2
+size_flags_horizontal = 3
 text = "Gallery"
 
-[node name="Customization" type="Button" parent="PlayContainer"]
-visible = false
+[node name="MarginContainer7" type="MarginContainer" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
-text = "Customization"
+theme_override_constants/margin_left = 35
 
-[node name="Profile" type="Button" parent="PlayContainer"]
+[node name="Play" type="Button" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 3
+text = "Play"
+
+[node name="MarginContainer6" type="MarginContainer" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 35
+
+[node name="Editor" type="Button" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Editor"
+
+[node name="MarginContainer3" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_bottom = 10
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MarginContainer3" type="MarginContainer" parent="VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+
+[node name="Profile" type="Button" parent="VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
 text = "Profile"
 expand_icon = true
 
-[node name="Settings" type="Button" parent="."]
-offset_top = 648.0
-offset_right = 72.0
-offset_bottom = 720.0
-theme = SubResource("Theme_guwbr")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_1el8n")
-theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_1el8n")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_1el8n")
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_1el8n")
-theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_1el8n")
-theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_1el8n")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_1el8n")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_1el8n")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_1el8n")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_1el8n")
-theme_override_styles/normal = SubResource("StyleBoxEmpty_1el8n")
-icon = ExtResource("2_7xohp")
+[node name="MarginContainer4" type="MarginContainer" parent="VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+theme_override_constants/margin_left = 35
+
+[node name="Customization" type="Button" parent="VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Customization"
+
+[node name="MarginContainer5" type="MarginContainer" parent="VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+theme_override_constants/margin_left = 35
+
+[node name="MarginContainer2" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(628, 258)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("5_lcnhj")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Sprite2D"]
+texture = ExtResource("6_yv5bw")
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 124.0
+offset_bottom = 133.0
+
+[node name="Exit" type="Button" parent="VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Exit"
+
+[node name="MarginContainer6" type="MarginContainer" parent="VBoxContainer2"]
+layout_mode = 2
+theme_override_constants/margin_bottom = 10
+
+[node name="Settings" type="Button" parent="VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Settings"
 expand_icon = true
 
-[node name="Exit" type="Button" parent="."]
-offset_left = 74.0
-offset_top = 652.0
-offset_right = 138.0
-offset_bottom = 716.0
-theme_override_styles/focus = SubResource("StyleBoxEmpty_imfnh")
-theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_imfnh")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_imfnh")
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_imfnh")
-theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_imfnh")
-theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_imfnh")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_imfnh")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_imfnh")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_imfnh")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_imfnh")
-theme_override_styles/normal = SubResource("StyleBoxEmpty_imfnh")
-icon = ExtResource("3_8sgqc")
-expand_icon = true
-
-[connection signal="pressed" from="PlayContainer/Play" to="." method="play_pressed"]
-[connection signal="pressed" from="PlayContainer/Editor" to="." method="editor_pressed"]
-[connection signal="pressed" from="PlayContainer/Gallery" to="." method="gallery_pressed"]
-[connection signal="pressed" from="PlayContainer/Profile" to="." method="profile_pressed"]
-[connection signal="pressed" from="Settings" to="." method="settings_pressed"]
-[connection signal="pressed" from="Exit" to="." method="exit_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/Gallery" to="." method="gallery_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/Play" to="." method="play_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/Editor" to="." method="editor_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer2/Profile" to="." method="profile_pressed"]
+[connection signal="pressed" from="VBoxContainer2/Exit" to="." method="exit_pressed"]
+[connection signal="pressed" from="VBoxContainer2/Settings" to="." method="settings_pressed"]

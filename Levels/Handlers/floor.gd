@@ -54,7 +54,7 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	fps_text.text = "FPS %d" % Engine.get_frames_per_second()
-	speed_text.text = "Speed %.01f" % (abs(marble.angular_velocity.x) + abs(marble.angular_velocity.y) + abs(marble.angular_velocity.z))
+	speed_text.text = "Speed %.2f" % (abs(marble.angular_velocity.x) + abs(marble.angular_velocity.y) + abs(marble.angular_velocity.z))
 	
 	if allow_input:
 		handle_tilt(delta)
@@ -63,9 +63,9 @@ func _process(delta: float) -> void:
 	
 	if allow_timer:
 		if !transitioning:
-			timer_text.text = "[center]" + "%.1f" % timer.time_left
+			timer_text.text = "[center]" + "%.2f" % timer.time_left
 		else:
-			timer_text.text = "[center]" + "%.1f" % timer.wait_time
+			timer_text.text = "[center]" + "%.2f" % timer.wait_time
 	
 	if Input.is_action_just_pressed("back"):
 		game_over()

@@ -1,8 +1,6 @@
 extends MeshInstance3D
 class_name ProcMesh
 
-var mesh_name : String = "Proc Mesh"
-
 @export var shape_info : Array[shape_resource]
 var array_mesh : ArrayMesh
 
@@ -66,6 +64,7 @@ func cull() -> void:
 
 func offset_changed(pos_change : Vector3) -> void:
 	if shape_info.size() != 0:
+		print("hi")
 		shape_info[0].total_offset = pos_change
 		regenerate_mesh()
 		offset_change_successful.emit(shape_info[0].total_offset)

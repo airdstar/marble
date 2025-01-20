@@ -5,23 +5,25 @@ var enable_gallery : bool = false
 #var enable_challenges : bool = false
 #var enable_multiplayer : bool = false
 
-@onready var play_container : VBoxContainer = $PlayContainer
-@onready var settings_button : Button = $Settings
-@onready var exit_button : Button = $Exit
+@export var menu_container : VBoxContainer
+@export var important_container : VBoxContainer
+@export var logo : Sprite2D
+@export var rotate_logo : Sprite2D
 
 func _ready() -> void:
 	place_control()
 
 func place_control() -> void:
-	play_container.call_deferred("set_size", Vector2(get_window().get_size().x / 7, get_window().get_size().y * 5 / 6))
-	play_container.call_deferred("set_position", Vector2(get_window().get_size().x / 2 - get_window().get_size().x / 14, 0))
+	menu_container.set_size(Vector2(get_window().get_size().x * 2 / 6, get_window().get_size().y / 6))
+	menu_container.set_position(Vector2(get_window().get_size().x / 2 - (menu_container.size.x / 2), get_window().get_size().y / 2 + get_window().get_size().y / 10))
 	
-	settings_button.set_size(Vector2(get_window().get_size().y / 16, get_window().get_size().y / 16))
-	settings_button.set_position(Vector2.ZERO)
+	important_container.set_size(Vector2(get_window().get_size().x / 15, get_window().get_size().y / 10))
+	
+	logo.set_scale(Vector2(float(get_window().get_size().x) / 4000, float(get_window().get_size().x) / 4000))
+	logo.set_position(Vector2(get_window().get_size().x / 2, get_window().get_size().y / 4))
 
-	exit_button.set_size(settings_button.size)
-	exit_button.set_position(Vector2(get_window().get_size().x - exit_button.size.x, 0))
-	
+func _process(delta: float) -> void:
+	rotate_logo.rotation = (rotate_logo.rotation + 0.5 * delta)
 
 func play_pressed() -> void:
 	Global.open_floor(Global.floor_type.PLAY, [])

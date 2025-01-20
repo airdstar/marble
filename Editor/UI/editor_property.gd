@@ -1,6 +1,6 @@
 extends Control
 
-@onready var property_options := $VBoxContainer/OptionButton
+@export var property_options : TabBar
 
 @onready var part_properties := $VBoxContainer/ScrollContainer/VBoxContainer/PartProperties
 @onready var shape_properties := $VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties
@@ -31,49 +31,86 @@ signal shape_name_changed
 signal group_changed
 
 func _ready() -> void:
-	property_options.set_item_disabled(1, true)
+	pass
 
 func property_group_changed(index: int) -> void:
 	part_properties.visible = false
 	shape_properties.visible = false
-	match index:
-		0:
-			part_properties.visible = true
-		1:
-			shape_properties.visible = true
-	group_changed.emit(index)
+	if index == -1:
+		visible = false
+	else:
+		visible = true
+		match property_options.get_tab_title(index):
+			"Part":
+				part_properties.visible = true
+			"Shape":
+				shape_properties.visible = true
+		group_changed.emit(property_options.get_tab_title(index))
 
-func part_selected(part : Node3D) -> void:
-	property_options.selected = 0
-	property_group_changed(0)
 
 func pos_changed(new_pos : Vector3) -> void:
-	match property_options.selected:
-		0:
+	match property_options.get_tab_title(property_options.current_tab):
+		"Part":
 			part_pos.text = " Position: %.1f" % new_pos.x + ", %.1f" % new_pos.y + ", %.1f" % new_pos.z
-		1:
+		"Shape":
 			shape_pos.text = " Position: %.1f" % new_pos.x + ", %.1f" % new_pos.y + ", %.1f" % new_pos.z
 
 func size_changed(new_size : Vector3) -> void:
-	match property_options.selected:
-		0:
+	match property_options.get_tab_title(property_options.current_tab):
+		"Part":
 			pass
-		1:
+		"Shape":
 			shape_size.text = " Size: %.1f" % new_size.x + ", %.1f" % new_size.y + ", %.1f" % new_size.z
 
+func part_selected(part : Node3D) -> void:
+	var select_tab : int = get_tab("Part")
+	if select_tab == -1:
+		select_tab = property_options.tab_count
+		property_options.add_tab("Part")
+	
+	property_options.current_tab = select_tab
+	
+	property_group_changed(select_tab)
+
+func part_unselected() -> void:
+	if get_tab("Part") != -1:
+		property_options.remove_tab(get_tab("Part"))
+	
+	if property_options.tab_count > 0:
+		property_options.current_tab = 0
+	else:
+		property_options.current_tab = -1
+	
+
 func shape_selected(shape : shape_resource) -> void:
-	property_options.set_item_disabled(1, false)
-	property_options.selected = 1
-	property_group_changed(1)
+	var select_tab : int = get_tab("Shape")
+	if select_tab == -1:
+		select_tab = property_options.tab_count
+		property_options.add_tab("Shape")
+	
+	property_options.current_tab = select_tab
+	
+	property_group_changed(select_tab)
 	display_shape_properties(shape)
+
+func shape_unselected() -> void:
+	if get_tab("Shape") != -1:
+		property_options.remove_tab(get_tab("Shape"))
+	
+	if property_options.tab_count > 0:
+		property_options.current_tab = 0
+	else:
+		property_options.current_tab = -1
 
 func shape_name_submitted(new_text: String) -> void:
 	if new_text != "":
 		shape_name_changed.emit(new_text)
 
-
-func shape_unselected() -> void:
-	property_options.set_item_disabled(1, true)
+func get_tab(tab_name : String) -> int:
+	for n in property_options.tab_count:
+		if property_options.get_tab_title(n) == tab_name:
+			return n
+	return -1
 
 func display_shape_properties(shape : shape_resource) -> void:
 	shape.set_mods()

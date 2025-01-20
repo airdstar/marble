@@ -5,9 +5,11 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_ndgqk"]
 size = Vector3(3, 1, 3)
 
-[node name="LevelBase" type="RigidBody3D"]
+[node name="LevelBase" type="RigidBody3D" node_paths=PackedStringArray("geometry", "start_node")]
 freeze = true
 script = ExtResource("1_x3uw1")
+geometry = NodePath("Geometry")
+start_node = NodePath("Starts")
 
 [node name="Geometry" type="Node3D" parent="."]
 
@@ -17,7 +19,5 @@ script = ExtResource("1_x3uw1")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="InputTrigger"]
 shape = SubResource("BoxShape3D_ndgqk")
-
-[node name="Misc" type="Node3D" parent="."]
 
 [connection signal="area_entered" from="InputTrigger" to="." method="input_trigger"]

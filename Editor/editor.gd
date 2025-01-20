@@ -9,6 +9,7 @@ enum tool {
 }
 
 enum adjustable {
+	NONE,
 	PART,
 	SHAPE
 }

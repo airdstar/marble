@@ -1,13 +1,13 @@
 [gd_resource type="Resource" script_class="level_resource" load_steps=3 format=3]
 
-[ext_resource type="Script" path="res://Resources/LevelResource.gd" id="1_2qasq"]
-[ext_resource type="PackedScene" path="res://Levels/EditorTests/test.tscn" id="1_vocce"]
+[ext_resource type="Script" path="res://Resources/LevelResource.gd" id="1_5ybsg"]
+[ext_resource type="PackedScene" path="res://Levels/EditorTests/Levels/Test.tscn" id="1_oc8vf"]
 
 [resource]
-script = ExtResource("1_2qasq")
-name = "test"
+script = ExtResource("1_5ybsg")
+name = "Test"
 level_difficulty = 0
 level_type = 0
-associated_scene = ExtResource("1_vocce")
+associated_scene = ExtResource("1_oc8vf")
 include_in_pool = false
 gravity = Vector3(0, 9.8, 0)

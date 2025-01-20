@@ -9,6 +9,8 @@ var resource_path : String = "res://Levels/EditorTests/LevelInfo/"
 
 var levels : Array[level_resource] = []
 
+var selected_level : level_resource = null
+
 signal level_selected
 
 func _ready() -> void:
@@ -36,24 +38,38 @@ func display_levels() -> void:
 func add_level(level_info : level_resource) -> void:
 	var option : Button = Button.new()
 	option.text = level_info.name
+	option.toggle_mode = true
 	option_container.add_child(option)
-	option.pressed.connect(level_chosen.bind(level_info))
+	option.toggled.connect(level_pressed.bind(level_info, option))
 
-func level_chosen(level_info : level_resource) -> void:
-	if level_info.associated_scene == null:
-		print("No associated level")
-		var holder = preload("res://Editor/LevelBase.tscn")
-		level_info.associated_scene = holder
-	level_selected.emit(level_info)
-	visible = false
+func delete_level():
+	for n : Button in option_container.get_children():
+		if n.button_pressed:
+			new_level.unavailable_names.remove_at(new_level.unavailable_names.find(n.text))
+			n.queue_free()
+			break
+
+func level_pressed(toggled_on : bool, level_info : level_resource, option_button : Button) -> void:
+	if toggled_on:
+		selected_level = level_info
+		
+		for n in option_container.get_children():
+			if n == option_button:
+				continue
+			n.pressed = false
+	else:
+		if selected_level == level_info:
+			selected_level = null
 
 func level_created(level_info : level_resource) -> void:
-	var saving = ResourceSaver.save(level_info, resource_path + level_info.name + ".tres")
+	var saving = ResourceSaver.save(level_info, Global.level_resource_path + level_info.name + ".tres")
 	if saving != OK:
-		print("Error")
+		print("Error creating level")
 	else:
 		add_level(level_info)
 		level_select_show()
+
+
 
 func new_level_pressed() -> void:
 	level_select.visible = false
@@ -64,6 +80,17 @@ func level_select_show() -> void:
 	new_level.visible = false
 	new_level.reset_fields()
 
+func edit_pressed() -> void:
+	if selected_level != null:
+		if selected_level.associated_scene == null:
+			var holder = preload("res://Editor/LevelBase.tscn")
+			selected_level.associated_scene = holder
+		level_selected.emit(selected_level)
+		visible = false
 
-
-	
+func delete_pressed() -> void:
+	if selected_level != null:
+		delete_level()
+		DirAccess.remove_absolute(Global.level_resource_path + selected_level.name + ".tres")
+		if FileAccess.file_exists(Global.level_scene_path + selected_level.name + ".tscn"):
+			DirAccess.remove_absolute(Global.level_scene_path + selected_level.name + ".tscn")

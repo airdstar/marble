@@ -37,11 +37,12 @@ func _process(_delta : float) -> void:
 			if global_pos != null:
 				match axis_grabbed:
 					1:
-						global_pos = Vector3(clamp(snapped(global_pos.x - 0.5, snapping), -pos_cap, pos_cap), pos.position.y, pos.position.z)
+						global_pos = Vector3(clamp(snapped(global_pos.x - 0.5, snapping), -pos_cap, pos_cap), position.y, position.z)
 					2:
-						global_pos = Vector3(pos.position.x, clamp(snapped(global_pos.y - 0.5, snapping), -pos_cap, pos_cap), pos.position.z)
+						global_pos = Vector3(position.x, clamp(snapped(global_pos.y - 0.5, snapping), -pos_cap, pos_cap), position.z)
 					3:
-						global_pos = Vector3(pos.position.x, pos.position.y, clamp(snapped(global_pos.z - 0.5, snapping), -pos_cap, pos_cap))
+						global_pos = Vector3(position.x, position.y, clamp(snapped(global_pos.z - 0.5, snapping), -pos_cap, pos_cap))
+				
 				pos_changed.emit(global_pos)
 	elif size.visible:
 		if axis_grabbed != 0:

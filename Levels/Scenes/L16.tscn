@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Levels/Handlers/level.gd" id="1_p227n"]
 [ext_resource type="PackedScene" uid="uid://1eeeduytkkbm" path="res://Levels/Parts/FalseEndZone.tscn" id="3_msh67"]
-[ext_resource type="PackedScene" uid="uid://df3msx1k8vfiy" path="res://Levels/Parts/EndZone.tscn" id="4_wio52"]
+[ext_resource type="PackedScene" uid="uid://df3msx1k8vfiy" path="res://Editor/Parts/Important/EndZone.tscn" id="4_wio52"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_5w47p"]
 friction = 0.2

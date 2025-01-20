@@ -17,6 +17,9 @@ enum floor_type {
 var main_scene : main
 var runBase : Node3D
 
+var level_scene_path : String = "res://Levels/EditorTests/Levels/"
+var level_resource_path : String = "res://Levels/EditorTests/LevelInfo/"
+
 var pos_scenes : Dictionary = {
 	"main_menu" : "res://Main/Menus/MainMenu.tscn",
 	"settings" : "res://Main/Menus/SettingsMenu.tscn",

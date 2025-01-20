@@ -1,18 +1,10 @@
 extends Node
 
-enum adjustable {
-	PART,
-	SHAPE
-}
-
 enum section {
 	GEOMETRY,
 	STARTS,
 	MISC
 }
-
-var scene_path : String = "res://Levels/EditorTests/"
-var resource_path : String = "res://Levels/EditorTests/LevelInfo/"
 
 var allow_camera_movement := false
 
@@ -21,7 +13,7 @@ var level_base : level
 var selected_section : section = section.GEOMETRY
 
 var held_shape : shape_resource = null
-var adjusting : adjustable = adjustable.PART
+var adjusting : editor.adjustable = editor.adjustable.NONE
 var selected_tool : editor.tool = editor.tool.NONE
 
 var selected_part : Node3D = null
@@ -54,6 +46,12 @@ func _process(delta : float) -> void:
 		allow_camera_movement = false
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	
+	if Input.is_action_just_pressed("back"):
+			print(selected_part)
+			print(selected_shape)
+			print(selected_tool)
+			print(adjusting)
+	
 	if allow_camera_movement:
 		var input = Input.get_last_mouse_velocity()
 		$CameraPivot.rotation.y += -input.x * 0.002 * delta
@@ -68,6 +66,8 @@ func _process(delta : float) -> void:
 			camera.position.z += 100 * delta
 			if camera.position.z > 25:
 				camera.position.z = 25
+		
+		
 
 func open_level_select():
 	level_select.visible = true
@@ -81,12 +81,7 @@ func level_selected(level_info : level_resource) -> void:
 	level_base = chosen_level.associated_scene.instantiate()
 	add_child(level_base)
 	level_base.open_editor()
-	
-	if level_base.geometry.get_child_count() == 0:
-		var holder = preload("res://Editor/Shapes/ProcMesh.tscn").instantiate()
-		level_base.geometry.add_child(holder)
-		holder.set_owner(level_base)
-	
+
 	level_loaded.emit(level_base)
 	UI.show_all()
 
@@ -96,8 +91,18 @@ func part_selected(part : Node3D) -> void:
 		if part.is_preview:
 			holder = selected_part
 	
+	adjuster.selected_pos_changed(part.position)
+
+	if part is not start and part is not ProcMesh:
+		adjuster.selected_size_changed(Vector3(1,1,1) * part.scale)
+	
 	selected_part = part
 	new_part_selected.emit(selected_part)
+
+func part_unselected() -> void:
+	selected_part = null
+	adjusting = editor.adjustable.NONE
+	tool_visible(false)
 
 func shape_selected(shape : shape_resource) -> void:
 	if selected_shape != null:
@@ -114,16 +119,17 @@ func shape_selected(shape : shape_resource) -> void:
 func shape_unselected() -> void:
 	shape_preview.clear_mesh()
 	selected_shape = null
-	UI.properties.property_options.selected = 0
-	UI.properties.property_group_changed(0)
+	if selected_part != null:
+		UI.properties.part_selected(selected_part)
 
 func _on_place_pressed() -> void:
-	if sections.selected_geometry != null:
-		if selected_shape != null:
-			selected_shape.locked = true
-			sections.selected_geometry.add_shape(selected_shape)
-			shape_placed.emit(selected_shape)
-			shape_unselected()
+	if sections.selected_part != null:
+		if sections.selected_part is ProcMesh:
+			if selected_shape != null:
+				selected_shape.locked = true
+				sections.selected_part.add_shape(selected_shape)
+				shape_placed.emit(selected_shape)
+				shape_unselected()
 			
 
 func switch_hold() -> void:
@@ -133,47 +139,60 @@ func switch_hold() -> void:
 		shape_preview.remove_shape(selected_shape)
 		held_shape = selected_shape
 		selected_shape = null
+		UI.properties.shape_unselected()
 		tool_visible(false)
-		
+
 
 func new_procmesh_created() -> void:
-	var holder = preload("res://Editor/Shapes/ProcMesh.tscn").instantiate()
-	level_base.geometry.add_child(holder)
-	holder.set_owner(level_base)
-	sections.add_geometry(holder)
+	var holder = preload("res://Editor/Parts/ProcMesh.tscn").instantiate()
+	new_part_created(holder)
+
+func new_part_created(part : Node3D) -> void:
+	level_base.parts.append(part)
+	if part is ProcMesh:
+		level_base.geometry.add_child(part)
+	elif part is start:
+		level_base.start_node.add_child(part)
+	else:
+		level_base.add_child(part)
+	part.set_owner(level_base)
+	sections.add_part(part, true)
 
 func part_name_changed(new_text: String) -> void:
 	if new_text != "":
-		if selected_part is ProcMesh:
-			selected_part.mesh_name == new_text
-			sections.get_selected_part().text = new_text
+		selected_part.set_meta("part_name", new_text)
+		sections.get_selected_part().text = new_text
 
 func movement_detected(pos_change : Vector3) -> void:
 	match adjusting:
-		adjustable.PART:
+		editor.adjustable.PART:
 			selected_part.position = pos_change
+			adjuster.selected_pos_changed(pos_change)
 			UI.properties.pos_changed(pos_change)
-		adjustable.SHAPE:
+		editor.adjustable.SHAPE:
 			shape_preview.offset_changed(pos_change)
 
 func resize_detected(size_change : Vector3) -> void:
 	match adjusting:
-		adjustable.PART:
-			selected_part.size = size_change
-			UI.properties.size_changed(size_change)
-		adjustable.SHAPE:
+		editor.adjustable.PART:
+			if selected_part is not start and selected_part is not endzone:
+				selected_part.size = size_change
+				UI.properties.size_changed(size_change)
+		editor.adjustable.SHAPE:
 			shape_preview.size_changed(size_change)
 
-func property_group_set(adjust_to) -> void:
-	if adjust_to == 0:
-		if selected_part is not ProcMesh:
-			adjusting = adjust_to
+func property_group_set(adjust_to : String) -> void:
+	match adjust_to:
+		"Part":
+			if selected_part is not ProcMesh:
+				adjusting = editor.adjustable.PART
+				tool_visible(true)
+			else:
+				tool_visible(false)
+		"Shape":
+			adjusting = editor.adjustable.SHAPE
 			tool_visible(true)
-		else:
-			tool_visible(false)
-	else:
-		adjusting = adjust_to
-		tool_visible(true)
+
 
 func tool_visible(make_visible : bool) -> void:
 	adjuster.pos.visible = false
@@ -187,19 +206,24 @@ func tool_visible(make_visible : bool) -> void:
 
 func tool_selected(tool : editor.tool) -> void:
 	selected_tool = tool
-	property_group_set(adjusting)
+	var adjust_to : String
+	match adjusting:
+		editor.adjustable.PART:
+			adjust_to = "Part"
+		editor.adjustable.SHAPE:
+			adjust_to = "Shape"
+	property_group_set(adjust_to)
 
 func save_level() -> void:
-	
 	var to_save := PackedScene.new()
 	to_save.pack(level_base)
-	var saving = ResourceSaver.save(to_save, scene_path + chosen_level.name + ".tscn")
+	var saving = ResourceSaver.save(to_save, Global.level_scene_path + chosen_level.name + ".tscn")
 	if saving != OK:
-		print("Error with scene")
-	
-	chosen_level.associated_scene = ResourceLoader.load(scene_path + chosen_level.name + ".tscn")
-	
-	saving = ResourceSaver.save(chosen_level, resource_path + chosen_level.name + ".tres")
-	if saving != OK:
-		print("Error with resource")
+		print("Error with saving scene")
+	else:
+		chosen_level.associated_scene = ResourceLoader.load(Global.level_scene_path + chosen_level.name + ".tscn")
+		
+		saving = ResourceSaver.save(chosen_level, Global.level_resource_path + chosen_level.name + ".tres")
+		if saving != OK:
+			print("Error with saving resource")
 	

@@ -1,11 +1,11 @@
 extends Node
 class_name level
 
-@export var starts : Array[int]
-@export var goals : Array[int]
-@export var proc_mesh : Array[ProcMesh]
+@export var parts : Array[Node3D]
 
-@onready var geometry := $Geometry
+@export var geometry : Node3D
+@export var start_node : Area3D
+
 
 var start
 
@@ -16,6 +16,9 @@ func _ready():
 
 func open_editor():
 	$InputTrigger.visible = false
+	for n : Node3D in parts:
+		if "collider" in n:
+			n.collider.disabled = true
 
 func start_level():
 	start = $Starts/Area3D

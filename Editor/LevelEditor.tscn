@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Editor/level_editor.gd" id="1_gkh0n"]
 [ext_resource type="Texture2D" uid="uid://d0fbpahnke75l" path="res://Assets/grid.png" id="4_33n1c"]
-[ext_resource type="PackedScene" uid="uid://2nsb0c22moeb" path="res://Editor/Shapes/ProcMesh.tscn" id="4_stuxe"]
+[ext_resource type="PackedScene" uid="uid://2nsb0c22moeb" path="res://Editor/Parts/ProcMesh.tscn" id="4_stuxe"]
 [ext_resource type="Script" path="res://Editor/editor_adjust.gd" id="5_6wt44"]
 [ext_resource type="Script" path="res://Editor/UI/editor_level_select.gd" id="5_kbbl2"]
 [ext_resource type="Theme" uid="uid://dyhnu7yerr3w2" path="res://Assets/Themes/Editor.tres" id="5_msf75"]
@@ -137,7 +137,6 @@ skeleton = NodePath("")
 script = ExtResource("5_6wt44")
 
 [node name="Position" type="Node3D" parent="Adjust"]
-visible = false
 
 [node name="X" type="MeshInstance3D" parent="Adjust/Position"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0)
@@ -209,12 +208,13 @@ offset_bottom = 40.0
 theme = ExtResource("5_msf75")
 script = ExtResource("6_mhsjx")
 
-[node name="Properties" type="Panel" parent="UI"]
+[node name="Properties" type="Panel" parent="UI" node_paths=PackedStringArray("property_options")]
 layout_mode = 0
 offset_top = 400.0
 offset_right = 300.0
 offset_bottom = 700.0
 script = ExtResource("6_mogux")
+property_options = NodePath("VBoxContainer/TabBar")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UI/Properties"]
 layout_mode = 0
@@ -222,6 +222,15 @@ offset_right = 300.0
 offset_bottom = 300.0
 
 [node name="MarginContainer2" type="MarginContainer" parent="UI/Properties/VBoxContainer"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="UI/Properties/VBoxContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[center]Properties"
+fit_content = true
+
+[node name="TabBar" type="TabBar" parent="UI/Properties/VBoxContainer"]
 layout_mode = 2
 
 [node name="OptionButton" type="OptionButton" parent="UI/Properties/VBoxContainer"]
@@ -264,6 +273,7 @@ text = " Size: 1.0, 1.0, 1.0"
 fit_content = true
 
 [node name="ShapeProperties" type="VBoxContainer" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -271,6 +281,16 @@ size_flags_horizontal = 3
 layout_mode = 2
 placeholder_text = "Enter shape name"
 max_length = 24
+
+[node name="ShapePos" type="RichTextLabel" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties"]
+layout_mode = 2
+text = " Position: 0,0,0"
+fit_content = true
+
+[node name="ShapeSize" type="RichTextLabel" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties"]
+layout_mode = 2
+text = " Size: 1.0, 1.0, 1.0"
+fit_content = true
 
 [node name="ShapeModifier" type="HBoxContainer" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties"]
 layout_mode = 2
@@ -292,16 +312,6 @@ popup/item_1/text = "Hole"
 popup/item_1/id = 1
 popup/item_2/text = "Pointed"
 popup/item_2/id = 2
-
-[node name="ShapePos" type="RichTextLabel" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties"]
-layout_mode = 2
-text = " Position: 0,0,0"
-fit_content = true
-
-[node name="ShapeSize" type="RichTextLabel" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties"]
-layout_mode = 2
-text = " Size: 1.0, 1.0, 1.0"
-fit_content = true
 
 [node name="ShapeSides" type="HBoxContainer" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties"]
 layout_mode = 2
@@ -355,11 +365,14 @@ fit_content = true
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Parts" type="Panel" parent="UI"]
+[node name="Parts" type="Panel" parent="UI" node_paths=PackedStringArray("shape_holder", "important_holder")]
+visible = false
 layout_mode = 0
 offset_right = 300.0
 offset_bottom = 300.0
 script = ExtResource("6_xrgr4")
+shape_holder = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/Shapes")
+important_holder = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/ImportantParts")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UI/Parts"]
 layout_mode = 0
@@ -382,8 +395,20 @@ size_flags_vertical = 3
 [node name="VBoxContainer" type="VBoxContainer" parent="UI/Parts/VBoxContainer/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_vertical = 3
 
-[node name="Sections" type="Panel" parent="UI"]
+[node name="Shapes" type="VBoxContainer" parent="UI/Parts/VBoxContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ImportantParts" type="VBoxContainer" parent="UI/Parts/VBoxContainer/ScrollContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Sections" type="Panel" parent="UI" node_paths=PackedStringArray("tab_bar", "geometry_holder", "shape_holder", "geometry_options", "important_holder")]
 layout_mode = 0
 offset_left = 900.0
 offset_top = 20.0
@@ -391,6 +416,11 @@ offset_right = 1250.0
 offset_bottom = 620.0
 mouse_filter = 2
 script = ExtResource("7_2n8hv")
+tab_bar = NodePath("VBoxContainer/TabBar")
+geometry_holder = NodePath("VBoxContainer/HBoxContainer/ScrollContainer/VBoxContainer/Geometry")
+shape_holder = NodePath("VBoxContainer/HBoxContainer/Shapes/VBoxContainer")
+geometry_options = NodePath("VBoxContainer/GeometryOptions")
+important_holder = NodePath("VBoxContainer/HBoxContainer/ScrollContainer/VBoxContainer/Important")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UI/Sections"]
 layout_mode = 0
@@ -410,10 +440,9 @@ fit_content = true
 [node name="TabBar" type="TabBar" parent="UI/Sections/VBoxContainer"]
 layout_mode = 2
 current_tab = 0
-tab_count = 3
+tab_count = 2
 tab_0/title = "Geometry"
 tab_1/title = "Important"
-tab_2/title = "Props"
 
 [node name="Delete" type="Button" parent="UI/Sections/VBoxContainer"]
 layout_mode = 2
@@ -439,7 +468,7 @@ mouse_filter = 2
 layout_mode = 2
 mouse_filter = 2
 
-[node name="Starts" type="VBoxContainer" parent="UI/Sections/VBoxContainer/HBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="Important" type="VBoxContainer" parent="UI/Sections/VBoxContainer/HBoxContainer/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
@@ -464,17 +493,20 @@ mouse_filter = 2
 layout_mode = 2
 theme_override_constants/margin_bottom = 10
 
-[node name="Take" type="Button" parent="UI/Sections/VBoxContainer"]
+[node name="GeometryOptions" type="VBoxContainer" parent="UI/Sections/VBoxContainer"]
+layout_mode = 2
+
+[node name="NewMesh" type="Button" parent="UI/Sections/VBoxContainer/GeometryOptions"]
+layout_mode = 2
+text = "Create new ProcMesh"
+
+[node name="Take" type="Button" parent="UI/Sections/VBoxContainer/GeometryOptions"]
 layout_mode = 2
 text = "Take Shape"
 
-[node name="Place" type="Button" parent="UI/Sections/VBoxContainer"]
+[node name="Place" type="Button" parent="UI/Sections/VBoxContainer/GeometryOptions"]
 layout_mode = 2
 text = "Place Shape"
-
-[node name="NewMesh" type="Button" parent="UI/Sections/VBoxContainer"]
-layout_mode = 2
-text = "Create new ProcMesh"
 
 [node name="Tools" type="Panel" parent="UI"]
 layout_mode = 0
@@ -514,8 +546,9 @@ text = "Hold"
 
 [node name="Settings" type="Panel" parent="UI"]
 layout_mode = 0
+offset_top = 300.0
 offset_right = 40.0
-offset_bottom = 40.0
+offset_bottom = 340.0
 script = ExtResource("11_dvs47")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UI/Settings"]
@@ -567,9 +600,23 @@ size_flags_vertical = 3
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="NewLevel" type="Button" parent="UI/LevelSelect/LevelSelect"]
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/LevelSelect/LevelSelect"]
 layout_mode = 2
-text = "New Level"
+
+[node name="New" type="Button" parent="UI/LevelSelect/LevelSelect/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "New"
+
+[node name="Edit" type="Button" parent="UI/LevelSelect/LevelSelect/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Edit"
+
+[node name="Delete" type="Button" parent="UI/LevelSelect/LevelSelect/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Delete"
 
 [node name="NewLevel" type="VBoxContainer" parent="UI/LevelSelect"]
 visible = false
@@ -622,6 +669,7 @@ text = "Create Level"
 [connection signal="input_event" from="Adjust/Size/Z/Area3D" to="Adjust" method="z_size_grabbed"]
 [connection signal="group_changed" from="UI/Properties" to="." method="property_group_set"]
 [connection signal="shape_name_changed" from="UI/Properties" to="ShapePreview" method="name_changed"]
+[connection signal="tab_changed" from="UI/Properties/VBoxContainer/TabBar" to="UI/Properties" method="property_group_changed"]
 [connection signal="item_selected" from="UI/Properties/VBoxContainer/OptionButton" to="UI/Properties" method="property_group_changed"]
 [connection signal="text_submitted" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/PartProperties/PartName" to="." method="part_name_changed"]
 [connection signal="text_submitted" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeName" to="UI/Properties" method="shape_name_submitted"]
@@ -629,22 +677,29 @@ text = "Create Level"
 [connection signal="value_changed" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeSides/Sides" to="ShapePreview" method="sides_changed"]
 [connection signal="item_selected" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeOrientation/ShapeOrientation" to="ShapePreview" method="orientation_changed"]
 [connection signal="toggled" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeFlipOrientation/ShapeFlipOrientation" to="ShapePreview" method="flip_orientation_changed"]
+[connection signal="new_part_selected" from="UI/Parts" to="." method="new_part_created"]
 [connection signal="new_shape_selected" from="UI/Parts" to="." method="shape_selected"]
 [connection signal="part_selected" from="UI/Sections" to="." method="part_selected"]
+[connection signal="part_unselected" from="UI/Sections" to="." method="part_unselected"]
+[connection signal="part_unselected" from="UI/Sections" to="UI/Properties" method="part_unselected"]
 [connection signal="shape_selected" from="UI/Sections" to="." method="shape_selected"]
+[connection signal="tab_changed" from="UI/Sections/VBoxContainer/TabBar" to="UI/Parts" method="tab_changed"]
 [connection signal="tab_changed" from="UI/Sections/VBoxContainer/TabBar" to="UI/Sections" method="tab_changed"]
-[connection signal="pressed" from="UI/Sections/VBoxContainer/Take" to="UI/Sections" method="_on_take_pressed"]
-[connection signal="pressed" from="UI/Sections/VBoxContainer/Place" to="." method="_on_place_pressed"]
-[connection signal="pressed" from="UI/Sections/VBoxContainer/Place" to="UI/Properties" method="shape_unselected"]
-[connection signal="pressed" from="UI/Sections/VBoxContainer/NewMesh" to="." method="new_procmesh_created"]
-[connection signal="pressed" from="UI/Sections/VBoxContainer/NewMesh" to="UI/Sections" method="_on_new_mesh_pressed"]
+[connection signal="pressed" from="UI/Sections/VBoxContainer/Delete" to="UI/Sections" method="remove_selected"]
+[connection signal="pressed" from="UI/Sections/VBoxContainer/GeometryOptions/NewMesh" to="." method="new_procmesh_created"]
+[connection signal="pressed" from="UI/Sections/VBoxContainer/GeometryOptions/NewMesh" to="UI/Sections" method="_on_new_mesh_pressed"]
+[connection signal="pressed" from="UI/Sections/VBoxContainer/GeometryOptions/Take" to="UI/Sections" method="_on_take_pressed"]
+[connection signal="pressed" from="UI/Sections/VBoxContainer/GeometryOptions/Place" to="." method="_on_place_pressed"]
+[connection signal="pressed" from="UI/Sections/VBoxContainer/GeometryOptions/Place" to="UI/Properties" method="shape_unselected"]
 [connection signal="tool_selected" from="UI/Tools" to="." method="tool_selected"]
 [connection signal="toggled" from="UI/Tools/VBoxContainer/HBoxContainer/Position" to="UI/Tools" method="pos_toggled"]
 [connection signal="toggled" from="UI/Tools/VBoxContainer/HBoxContainer/Size" to="UI/Tools" method="size_toggled"]
 [connection signal="pressed" from="UI/Tools/VBoxContainer/HBoxContainer/Hold" to="." method="switch_hold"]
 [connection signal="pressed" from="UI/Settings/VBoxContainer/HBoxContainer/Save" to="." method="save_level"]
 [connection signal="level_selected" from="UI/LevelSelect" to="." method="level_selected"]
-[connection signal="pressed" from="UI/LevelSelect/LevelSelect/NewLevel" to="UI/LevelSelect" method="new_level_pressed"]
+[connection signal="pressed" from="UI/LevelSelect/LevelSelect/HBoxContainer/New" to="UI/LevelSelect" method="new_level_pressed"]
+[connection signal="pressed" from="UI/LevelSelect/LevelSelect/HBoxContainer/Edit" to="UI/LevelSelect" method="edit_pressed"]
+[connection signal="pressed" from="UI/LevelSelect/LevelSelect/HBoxContainer/Delete" to="UI/LevelSelect" method="delete_pressed"]
 [connection signal="level_created" from="UI/LevelSelect/NewLevel" to="UI/LevelSelect" method="level_created"]
 [connection signal="pressed" from="UI/LevelSelect/NewLevel/Back" to="UI/LevelSelect" method="level_select_show"]
 [connection signal="pressed" from="UI/LevelSelect/NewLevel/VBoxContainer/Create" to="UI/LevelSelect/NewLevel" method="create_pressed"]

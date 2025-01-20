@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://cxjqg43na8n6o"]
 
 [ext_resource type="Script" path="res://Levels/Handlers/level.gd" id="1_313ii"]
-[ext_resource type="PackedScene" uid="uid://df3msx1k8vfiy" path="res://Levels/Parts/EndZone.tscn" id="2_qqvbl"]
+[ext_resource type="PackedScene" uid="uid://df3msx1k8vfiy" path="res://Editor/Parts/Important/EndZone.tscn" id="2_qqvbl"]
 [ext_resource type="PackedScene" uid="uid://crkk1kn3cayuw" path="res://Levels/Parts/Components/RotateableComponent.tscn" id="3_2le6w"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_5w47p"]
