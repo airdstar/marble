@@ -11,7 +11,8 @@ enum tool {
 enum adjustable {
 	NONE,
 	PART,
-	SHAPE
+	SHAPE,
+	HOLE
 }
 
 enum section {

@@ -19,7 +19,18 @@ enum mod {
 
 @export var total_offset := Vector3.ZERO
 @export var size := Vector3(1,1,1)
-@export var rotation := Vector3(1,0,0)
+@export var rotation := Vector3(0,0,0)
 
 func set_mods() -> void:
 	pass
+
+func apply_rotation(vertices : Array) -> Array:
+	for n in vertices:
+		pass
+		#n += total_offset
+	return vertices
+
+func apply_offset(vertices : Array) -> Array:
+	for n in vertices:
+		n += total_offset
+	return vertices

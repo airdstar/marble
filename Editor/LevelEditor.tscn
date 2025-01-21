@@ -105,8 +105,9 @@ height = 0.2
 [sub_resource type="BoxShape3D" id="BoxShape3D_vdcb3"]
 size = Vector3(0.25, 0.25, 0.95)
 
-[node name="LevelEditor" type="Node3D"]
+[node name="LevelEditor" type="Node3D" node_paths=PackedStringArray("shape_preview")]
 script = ExtResource("1_gkh0n")
+shape_preview = NodePath("ShapePreview")
 
 [node name="CameraPivot" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.984808, 0.173648, 0, -0.173648, 0.984808, 0, 0, 0)

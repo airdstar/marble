@@ -4,6 +4,8 @@ class_name PlayerData
 @export var highest_level : int = 0
 @export var game_over_count : int = 0
 
+@export var player_customization : Customization = Customization.new()
+
 @export var player_color : Color = Color(1,1,1)
 
 

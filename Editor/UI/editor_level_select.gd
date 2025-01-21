@@ -90,6 +90,8 @@ func level_select_show() -> void:
 func edit_pressed() -> void:
 	if selected_level != null:
 		level_selected.emit(selected_level)
+		for n in option_container.get_children():
+			n.button_pressed = false
 		visible = false
 
 func delete_pressed() -> void:

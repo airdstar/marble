@@ -49,9 +49,13 @@ func place_control() -> void:
 	sections.set_position(Vector2(right_border - sections.size.x, get_window().size.y / 10))
 	sections_container.set_size(sections.size)
 	
-	parts.set_size(Vector2(get_window().size.x / 4, get_window().size.y / 2))
+	parts.set_size(Vector2(get_window().size.x / 4, get_window().size.y / 3))
 	parts.set_position(Vector2(left_border, top_border))
 	parts_container.set_size(parts.size)
+
+	properties.set_size(Vector2(get_window().size.x / 4, get_window().size.y / 3))
+	properties.set_position(Vector2(left_border, bottom_border - properties.size.y))
+	properties_container.set_size(properties.size)
 	
 
 func hide_all() -> void:

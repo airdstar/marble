@@ -18,7 +18,7 @@ var selected_tool : editor.tool = editor.tool.NONE
 
 var selected_part : Node3D = null
 var selected_shape : shape_resource = null
-@onready var shape_preview : ProcMesh = $ShapePreview
+@export var shape_preview : ProcMesh
 
 @onready var level_select := $UI/LevelSelect
 @onready var adjuster := $Adjust
@@ -49,10 +49,10 @@ func _process(delta : float) -> void:
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	
 	if Input.is_action_just_pressed("back"):
-			print(selected_part)
-			print(selected_shape)
-			print(selected_tool)
-			print(adjusting)
+		if !UI.level_select.visible:
+			open_level_select()
+		else:
+			Global.open_scene("main_menu")
 	
 	if allow_camera_movement:
 		var input = Input.get_last_mouse_velocity()
@@ -72,11 +72,20 @@ func _process(delta : float) -> void:
 		
 
 func open_level_select():
-	level_select.visible = true
+	chosen_level = null
+	selected_part = null
+	selected_shape = null
+	held_shape = null
+	adjusting = editor.adjustable.NONE
+	selected_tool = editor.tool.NONE
+	if level_base != null:
+		level_base.queue_free()
+		level_base = null
+	UI.hide_all()
+	UI.level_select.visible = true
 
 func reset_camera() -> void:
 	$CameraPivot.rotation = Vector3(deg_to_rad(-10), 0, 0)
-
 
 func level_selected(level_info : level_resource) -> void:
 	chosen_level = level_info
@@ -182,8 +191,8 @@ func movement_detected(pos_change : Vector3) -> void:
 func resize_detected(size_change : Vector3) -> void:
 	match adjusting:
 		editor.adjustable.PART:
-			if selected_part is not start and selected_part is not endzone:
-				selected_part.size = size_change
+			if selected_part is not start:
+				selected_part.scale = Vector3(1,1,1)
 				UI.properties.size_changed(size_change)
 		editor.adjustable.SHAPE:
 			shape_preview.size_changed(size_change)

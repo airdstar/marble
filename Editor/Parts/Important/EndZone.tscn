@@ -17,6 +17,7 @@ height = 0.5
 radius = 1.0
 
 [node name="EndZone" type="Node3D" node_paths=PackedStringArray("collider")]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
 script = ExtResource("1_at64b")
 collider = NodePath("Area3D/CollisionShape3D")
 metadata/part_name = "Goal"
@@ -26,25 +27,25 @@ layers = 4
 mesh = SubResource("TorusMesh_s3sg4")
 
 [node name="SpotLight3D" type="SpotLight3D" parent="."]
-transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, -3, 0, 3)
+transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, -1.5, 0, 1.5)
 light_color = Color(0, 0.980392, 0.784314, 1)
 spot_range = 10.0
 spot_angle = 40.0
 
 [node name="SpotLight3D2" type="SpotLight3D" parent="."]
-transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 3, 0, 3)
+transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 1.5, 0, 1.5)
 light_color = Color(0, 0.980392, 0.784314, 1)
 spot_range = 10.0
 spot_angle = 40.0
 
 [node name="SpotLight3D3" type="SpotLight3D" parent="."]
-transform = Transform3D(-0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107, 3, 0, -3)
+transform = Transform3D(-0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107, 1.5, 0, -1.5)
 light_color = Color(0, 0.980392, 0.784314, 1)
 spot_range = 10.0
 spot_angle = 40.0
 
 [node name="SpotLight3D4" type="SpotLight3D" parent="."]
-transform = Transform3D(-0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, -0.707107, -3, 0, -3)
+transform = Transform3D(-0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, -0.707107, -1.5, 0, -1.5)
 light_color = Color(0, 0.980392, 0.784314, 1)
 spot_range = 10.0
 spot_angle = 40.0

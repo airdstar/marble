@@ -12,6 +12,7 @@ class_name Settings
 #Visual Settings
 @export var aspect_ratio : String = "16:9"
 @export var resolution : String = "1280x720"
+@export var fullscreen : bool = false
 
 
 func check_info() -> void:

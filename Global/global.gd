@@ -36,9 +36,13 @@ var resolutions_16_9 : Dictionary = {
 	"854x480" : Vector2(854,480),
 	}
 
-var resolutions_16_10 : Dictionary
+var resolutions_16_10 : Dictionary = {
+	"1920x1200" : Vector2(1920,1200)
+	}
 
-var resolutions_4_3 : Dictionary
+var resolutions_4_3 : Dictionary = {
+	"1200x900" : Vector2(1200,900)
+	}
 
 var aspect_ratios : Dictionary = {"16:9" : resolutions_16_9,
 									"4:3" : resolutions_4_3,
@@ -108,6 +112,9 @@ func set_resolution() -> void:
 	var window_size = get_window().get_size_with_decorations()
 	get_window().set_position(screen_center - window_size / 2)
 	
+	if PlayerInfo.player_settings.fullscreen:
+		pass
+
 	adjust_fonts()
 
 func adjust_fonts() -> void:
