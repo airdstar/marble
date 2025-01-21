@@ -1,8 +1,10 @@
 extends MeshInstance3D
 class_name ProcMesh
 
+@export var body : StaticBody3D
+@export var collider : CollisionShape3D
 @export var shape_info : Array[shape_resource]
-var array_mesh : ArrayMesh
+@export var array_mesh : ArrayMesh
 
 var tri_count : int = 0
 
@@ -56,15 +58,17 @@ func regenerate_mesh() -> void:
 		surface_array[Mesh.ARRAY_NORMAL] = normals
 		surface_array[Mesh.ARRAY_INDEX] = indices
 		
-		
 		array_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, surface_array)
+		
+
+func create_collision() -> void:
+	collider.shape = array_mesh.create_trimesh_shape()
 
 func cull() -> void:
 	pass
 
 func offset_changed(pos_change : Vector3) -> void:
 	if shape_info.size() != 0:
-		print("hi")
 		shape_info[0].total_offset = pos_change
 		regenerate_mesh()
 		offset_change_successful.emit(shape_info[0].total_offset)

@@ -25,6 +25,8 @@ func _on_level_loaded(loaded_level : level) -> void:
 	level_info = loaded_level
 	for n : Node3D in loaded_level.parts:
 		add_part(n, false)
+	
+	tab_changed(0)
 
 func remove_selected() -> void:
 	if selected_shape != null:

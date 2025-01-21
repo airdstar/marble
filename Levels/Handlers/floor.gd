@@ -48,7 +48,6 @@ var settings = PlayerInfo.player_settings
 @onready var level_count := $UI/End/LevelCount
 
 func _ready() -> void:
-	Global.runBase = self
 	camera.skybox = skybox
 	place_control()
 

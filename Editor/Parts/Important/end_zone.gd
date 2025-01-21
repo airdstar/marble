@@ -7,4 +7,4 @@ func next_level(area: Area3D) -> void:
 	if area.get_parent() is player:
 		Particle.spawn_reset_particle(area.global_position)
 		area.set_deferred("monitorable", false)
-		Global.runBase.next_level()
+		Global.current_scene.next_level()

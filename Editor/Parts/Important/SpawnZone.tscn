@@ -14,11 +14,12 @@ albedo_texture = ExtResource("1_akh53")
 material = SubResource("StandardMaterial3D_ykvgg")
 size = Vector2(3, 3)
 
-[node name="SpawnZone" type="CollisionShape3D" node_paths=PackedStringArray("collider")]
+[node name="SpawnZone" type="CollisionShape3D" node_paths=PackedStringArray("collider", "editor_visibility")]
 shape = SubResource("BoxShape3D_mcfgt")
 disabled = true
 script = ExtResource("1_ndkgu")
 collider = NodePath(".")
+editor_visibility = NodePath("MeshInstance3D")
 metadata/part_name = "Start"
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]

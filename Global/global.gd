@@ -15,7 +15,7 @@ enum floor_type {
 }
 
 var main_scene : main
-var runBase : Node3D
+var current_scene : Node
 
 var level_scene_path : String = "res://Levels/EditorTests/Levels/"
 var level_resource_path : String = "res://Levels/EditorTests/LevelInfo/"
@@ -26,7 +26,6 @@ var pos_scenes : Dictionary = {
 	"gallery" : "res://Main/Menus/Gallery.tscn",
 	"editor" : "res://Editor/LevelEditor.tscn",
 	}
-
 
 var resolutions_16_9 : Dictionary = {
 	"1920x1080" : Vector2(1920,1080),
@@ -45,30 +44,8 @@ var aspect_ratios : Dictionary = {"16:9" : resolutions_16_9,
 									"4:3" : resolutions_4_3,
 									"16:10" : resolutions_16_10}
 
-var easy_levels : Array[level_resource] = []
-var medium_levels : Array[level_resource] = []
-var hard_levels : Array[level_resource] = []
-
 func _ready():
 	PlayerInfo.load_info()
-	
-	var dir = DirAccess.open("res://Levels/Info/")
-	dir.list_dir_begin()
-	var currentLevel : String = dir.get_next()
-	while currentLevel != "":
-		if '.tres.remap' in currentLevel:
-			currentLevel = currentLevel.trim_suffix('.remap')
-		var holder = ResourceLoader.load("res://Levels/Info/" + currentLevel)
-		
-		if currentLevel.begins_with(str(1)):
-			easy_levels.append(holder)
-		elif currentLevel.begins_with(str(2)):
-			medium_levels.append(holder)
-		elif currentLevel.begins_with(str(3)):
-			hard_levels.append(holder)
-		
-		currentLevel = dir.get_next()
-	dir.list_dir_end()
 
 func set_main(main_in : main) -> void:
 	main_scene = main_in
@@ -85,6 +62,7 @@ func open_scene(scene : String) -> void:
 	holder = holder.instantiate()
 	
 	if holder != null:
+		current_scene = holder
 		main_scene.child_scene = holder
 		main_scene.add_child(holder)
 
@@ -96,7 +74,7 @@ func open_floor(type : floor_type, level_pool : Array[level_resource]):
 		main_scene.child_scene.queue_free()
 	
 	var holder = preload("res://Levels/Handlers/Floor.tscn").instantiate()
-	
+	current_scene = holder
 	main_scene.child_scene = holder
 	main_scene.add_child(holder)
 
@@ -120,8 +98,8 @@ func open_floor(type : floor_type, level_pool : Array[level_resource]):
 			#holder.timer_count_up = true
 			holder.set_pool = true
 			holder.in_order = true
-
-	holder.call_deferred("start_game")
+	
+	current_scene.call_deferred("start_game")
 
 func set_resolution() -> void:
 	get_window().set_size(aspect_ratios[PlayerInfo.player_settings.aspect_ratio][PlayerInfo.player_settings.resolution])

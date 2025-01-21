@@ -39,6 +39,8 @@ func _ready() -> void:
 	open_level_select()
 
 func _process(delta : float) -> void:
+	
+	
 	if Input.is_action_pressed("camera_right"):
 		allow_camera_movement = true
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -155,8 +157,13 @@ func new_part_created(part : Node3D) -> void:
 		level_base.start_node.add_child(part)
 	else:
 		level_base.add_child(part)
-	part.set_owner(level_base)
+	rec_set_owner(part)
 	sections.add_part(part, true)
+
+func rec_set_owner(part : Node3D) -> void:
+	part.set_owner(level_base)
+	for n in part.get_children():
+		rec_set_owner(n)
 
 func part_name_changed(new_text: String) -> void:
 	if new_text != "":
@@ -203,6 +210,8 @@ func tool_visible(make_visible : bool) -> void:
 				adjuster.pos.visible = true
 			editor.tool.SIZE:
 				adjuster.size.visible = true
+			editor.tool.ROTATION:
+				pass
 
 func tool_selected(tool : editor.tool) -> void:
 	selected_tool = tool
@@ -214,16 +223,27 @@ func tool_selected(tool : editor.tool) -> void:
 			adjust_to = "Shape"
 	property_group_set(adjust_to)
 
-func save_level() -> void:
+func pre_save() -> void:
+	for n in level_base.parts:
+		if n is ProcMesh:
+			n.create_collision()
+	
+	call_deferred("save_scene")
+
+func save_scene() -> void:
+	var node_to_save = level_base
 	var to_save := PackedScene.new()
-	to_save.pack(level_base)
+	to_save.pack(node_to_save)
 	var saving = ResourceSaver.save(to_save, Global.level_scene_path + chosen_level.name + ".tscn")
 	if saving != OK:
 		print("Error with saving scene")
 	else:
-		chosen_level.associated_scene = ResourceLoader.load(Global.level_scene_path + chosen_level.name + ".tscn")
-		
+		chosen_level.associated_scene = to_save
 		saving = ResourceSaver.save(chosen_level, Global.level_resource_path + chosen_level.name + ".tres")
 		if saving != OK:
 			print("Error with saving resource")
-	
+		else:
+			chosen_level = ResourceLoader.load(Global.level_resource_path + chosen_level.name + ".tres")
+
+func test_pressed() -> void:
+	Global.open_floor(Global.floor_type.EDITOR, [ResourceLoader.load(Global.level_resource_path + chosen_level.name + ".tres")])

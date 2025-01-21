@@ -24,6 +24,7 @@ func _ready() -> void:
 		
 		levels.append(holder)
 		
+		
 		new_level.unavailable_names.append(holder.name)
 		
 		currentLevel = dir.get_next()
@@ -56,20 +57,26 @@ func level_pressed(toggled_on : bool, level_info : level_resource, option_button
 		for n in option_container.get_children():
 			if n == option_button:
 				continue
-			n.pressed = false
+			n.button_pressed = false
 	else:
 		if selected_level == level_info:
 			selected_level = null
 
 func level_created(level_info : level_resource) -> void:
-	var saving = ResourceSaver.save(level_info, Global.level_resource_path + level_info.name + ".tres")
+	var level_base = preload("res://Editor/LevelBase.tscn").instantiate()
+	var to_save := PackedScene.new()
+	to_save.pack(level_base)
+	var saving = ResourceSaver.save(to_save, Global.level_scene_path + level_info.name + ".tscn")
 	if saving != OK:
 		print("Error creating level")
 	else:
-		add_level(level_info)
-		level_select_show()
-
-
+		level_info.associated_scene = ResourceLoader.load(Global.level_scene_path + level_info.name + ".tscn")
+		saving = ResourceSaver.save(level_info, Global.level_resource_path + level_info.name + ".tres")
+		if saving != OK:
+			print("Error creating level")
+		else:
+			add_level(level_info)
+			level_select_show()
 
 func new_level_pressed() -> void:
 	level_select.visible = false
@@ -82,15 +89,14 @@ func level_select_show() -> void:
 
 func edit_pressed() -> void:
 	if selected_level != null:
-		if selected_level.associated_scene == null:
-			var holder = preload("res://Editor/LevelBase.tscn")
-			selected_level.associated_scene = holder
 		level_selected.emit(selected_level)
 		visible = false
 
 func delete_pressed() -> void:
 	if selected_level != null:
 		delete_level()
+		levels.remove_at(levels.find(selected_level))
 		DirAccess.remove_absolute(Global.level_resource_path + selected_level.name + ".tres")
 		if FileAccess.file_exists(Global.level_scene_path + selected_level.name + ".tscn"):
 			DirAccess.remove_absolute(Global.level_scene_path + selected_level.name + ".tscn")
+		selected_level = null

@@ -137,6 +137,7 @@ skeleton = NodePath("")
 script = ExtResource("5_6wt44")
 
 [node name="Position" type="Node3D" parent="Adjust"]
+visible = false
 
 [node name="X" type="MeshInstance3D" parent="Adjust/Position"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0)
@@ -172,6 +173,7 @@ input_capture_on_drag = true
 shape = SubResource("BoxShape3D_x408b")
 
 [node name="Size" type="Node3D" parent="Adjust"]
+visible = false
 
 [node name="X" type="MeshInstance3D" parent="Adjust/Size"]
 mesh = SubResource("SphereMesh_8u5sg")
@@ -199,6 +201,8 @@ input_capture_on_drag = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Adjust/Size/Z/Area3D"]
 shape = SubResource("BoxShape3D_vdcb3")
+
+[node name="Rotation" type="Node3D" parent="Adjust"]
 
 [node name="UI" type="Control" parent="."]
 layout_mode = 3
@@ -270,6 +274,11 @@ fit_content = true
 [node name="PartSize" type="RichTextLabel" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/PartProperties"]
 layout_mode = 2
 text = " Size: 1.0, 1.0, 1.0"
+fit_content = true
+
+[node name="PartRotation" type="RichTextLabel" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/PartProperties"]
+layout_mode = 2
+text = " Rotation: 0, 0, 0"
 fit_content = true
 
 [node name="ShapeProperties" type="VBoxContainer" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer"]
@@ -498,7 +507,7 @@ layout_mode = 2
 
 [node name="NewMesh" type="Button" parent="UI/Sections/VBoxContainer/GeometryOptions"]
 layout_mode = 2
-text = "Create new ProcMesh"
+text = "New Mesh Base"
 
 [node name="Take" type="Button" parent="UI/Sections/VBoxContainer/GeometryOptions"]
 layout_mode = 2
@@ -531,13 +540,17 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 toggle_mode = true
-text = "Pos"
+text = "Position"
 
 [node name="Size" type="Button" parent="UI/Tools/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 toggle_mode = true
 text = "Size"
+
+[node name="Button" type="Button" parent="UI/Tools/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Rotation"
 
 [node name="Hold" type="Button" parent="UI/Tools/VBoxContainer/HBoxContainer"]
 layout_mode = 2
@@ -695,7 +708,8 @@ text = "Create Level"
 [connection signal="toggled" from="UI/Tools/VBoxContainer/HBoxContainer/Position" to="UI/Tools" method="pos_toggled"]
 [connection signal="toggled" from="UI/Tools/VBoxContainer/HBoxContainer/Size" to="UI/Tools" method="size_toggled"]
 [connection signal="pressed" from="UI/Tools/VBoxContainer/HBoxContainer/Hold" to="." method="switch_hold"]
-[connection signal="pressed" from="UI/Settings/VBoxContainer/HBoxContainer/Save" to="." method="save_level"]
+[connection signal="pressed" from="UI/Settings/VBoxContainer/HBoxContainer/Save" to="." method="pre_save"]
+[connection signal="pressed" from="UI/Settings/VBoxContainer/HBoxContainer/Test" to="." method="test_pressed"]
 [connection signal="level_selected" from="UI/LevelSelect" to="." method="level_selected"]
 [connection signal="pressed" from="UI/LevelSelect/LevelSelect/HBoxContainer/New" to="UI/LevelSelect" method="new_level_pressed"]
 [connection signal="pressed" from="UI/LevelSelect/LevelSelect/HBoxContainer/Edit" to="UI/LevelSelect" method="edit_pressed"]

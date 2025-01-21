@@ -19,7 +19,7 @@ func _process(delta: float) -> void:
 
 func rand_rotation(lowerbound : float, upperbound : float):
 	var rotationAmount = deg_to_rad(randf_range(lowerbound, upperbound))
-	rotationAmount -= deg_to_rad(fmod(rad_to_deg(Global.runBase.camera.rotation.y), 360))
+	rotationAmount -= deg_to_rad(fmod(rad_to_deg(Global.current_scene.camera.rotation.y), 360))
 	
 	var tween = create_tween()
 	tween.tween_property(self, "rotation", self.rotation + Vector3(0,rotationAmount + 2,0), 1.5).set_trans(Tween.TRANS_SPRING).set_ease(Tween.EASE_OUT)

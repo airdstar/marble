@@ -2,6 +2,13 @@
 
 [ext_resource type="Script" path="res://Editor/Parts/proc_mesh.gd" id="1_gq2ps"]
 
-[node name="ProcMesh" type="MeshInstance3D"]
+[node name="ProcMesh" type="MeshInstance3D" node_paths=PackedStringArray("body", "collider")]
 script = ExtResource("1_gq2ps")
+body = NodePath("StaticBody3D")
+collider = NodePath("StaticBody3D/CollisionShape3D")
 metadata/part_name = "Proc Mesh"
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+disabled = true
