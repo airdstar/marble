@@ -302,19 +302,19 @@ layout_mode = 2
 layout_mode = 2
 min_value = -360.0
 max_value = 360.0
-step = 30.0
+step = 5.0
 
 [node name="SpinBox2" type="SpinBox" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/HBoxContainer"]
 layout_mode = 2
 min_value = -360.0
 max_value = 360.0
-step = 30.0
+step = 5.0
 
 [node name="SpinBox3" type="SpinBox" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/HBoxContainer"]
 layout_mode = 2
 min_value = -360.0
 max_value = 360.0
-step = 30.0
+step = 5.0
 
 [node name="ShapeModifier" type="HBoxContainer" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties"]
 layout_mode = 2

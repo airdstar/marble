@@ -5,7 +5,7 @@ class_name polygon
 
 @export var point_direction := 1
 
-@export var hole_size : float = 2
+@export var hole_size : float = 0.5
 @export var hole_offset := Vector3.ZERO
 
 var index_offset : int
@@ -40,14 +40,14 @@ func get_surface_array(index : int) -> Array:
 	normals.append_array(surface_holder[Mesh.ARRAY_NORMAL])
 	indices.append_array(surface_holder[Mesh.ARRAY_INDEX])
 	
-	
-	positions = apply_rotation(positions)
+	#positions = apply_rotation(positions)
+	positions = apply_size(positions)
 	positions = apply_offset(positions)
 	
 	surface_array[Mesh.ARRAY_VERTEX] = positions
 	surface_array[Mesh.ARRAY_NORMAL] = normals
 	surface_array[Mesh.ARRAY_INDEX] = indices
-
+	
 	return surface_array
 
 func create_top_bottom() -> Array:
@@ -62,9 +62,9 @@ func create_top_bottom() -> Array:
 		mod.NONE:
 			for n : float in sides:
 				positions.append_array([
-					Vector3(0, size.y / 2, 0),
-					Vector3(cos(n/sides * PI * 2.0) * (size.x / 2), size.y / 2, sin(n/sides * PI * 2.0) * (size.z / 2)),
-					Vector3(cos((n + 1)/sides * PI * 2.0) * (size.x / 2), size.y / 2, sin((n + 1)/sides * PI * 2.0) * (size.z / 2))  
+					Vector3(0, 0.5, 0),
+					Vector3(cos(n/sides * PI * 2.0) / 2, 0.5, sin(n/sides * PI * 2.0) / 2),
+					Vector3(cos((n + 1)/sides * PI * 2.0) / 2, 0.5, sin((n + 1)/sides * PI * 2.0) / 2)  
 				])
 				normals.append_array([
 						Vector3.UP,
@@ -81,9 +81,9 @@ func create_top_bottom() -> Array:
 			
 			for n : float in sides:
 				positions.append_array([
-					Vector3(0, -size.y / 2, 0) ,
-					Vector3(cos(n/sides * PI * 2.0) * (size.x / 2), -size.y / 2, sin(n/sides * PI * 2.0) * (size.z / 2)) ,
-					Vector3(cos((n + 1)/sides * PI * 2.0) * (size.x / 2), -size.y / 2, sin((n + 1)/sides * PI * 2.0) * (size.z / 2))  
+					Vector3(0, -0.5, 0) ,
+					Vector3(cos(n/sides * PI * 2.0) / 2, -0.5, sin(n/sides * PI * 2.0) / 2) ,
+					Vector3(cos((n + 1)/sides * PI * 2.0) / 2, -0.5, sin((n + 1)/sides * PI * 2.0) / 2)  
 				])
 				normals.append_array([
 						Vector3.DOWN,
@@ -99,10 +99,10 @@ func create_top_bottom() -> Array:
 		mod.HOLE:
 			for n : float in sides:
 				positions.append_array([
-					Vector3(cos(n/sides * PI * 2.0) * (size.x / 2) / hole_size + hole_offset.x, size.y / 2, sin(n/sides * PI * 2.0) * (size.z / 2) / hole_size + hole_offset.z) ,
-					Vector3(cos((n + 1)/sides * PI * 2.0) * (size.x / 2) / hole_size + hole_offset.x, size.y / 2, sin((n + 1)/sides * PI * 2.0) * (size.z / 2) / hole_size + hole_offset.z) ,
-					Vector3(cos(n/sides * PI * 2.0) * (size.x / 2), size.y / 2, sin(n/sides * PI * 2.0) * (size.z / 2)) ,
-					Vector3(cos((n + 1)/sides * PI * 2.0) * (size.x / 2), size.y / 2, sin((n + 1)/sides * PI * 2.0) * (size.z / 2))  
+					Vector3(cos(n/sides * PI * 2.0) / 2 * hole_size + hole_offset.x, 0.5, sin(n/sides * PI * 2.0) / 2 * hole_size + hole_offset.z) ,
+					Vector3(cos((n + 1)/sides * PI * 2.0) / 2 * hole_size + hole_offset.x, 0.5, sin((n + 1)/sides * PI * 2.0) / 2 * hole_size + hole_offset.z) ,
+					Vector3(cos(n/sides * PI * 2.0) / 2, 0.5, sin(n/sides * PI * 2.0) / 2) ,
+					Vector3(cos((n + 1)/sides * PI * 2.0) / 2, 0.5, sin((n + 1)/sides * PI * 2.0) / 2)  
 				])
 				normals.append_array([
 						Vector3.UP,
@@ -123,10 +123,10 @@ func create_top_bottom() -> Array:
 			
 			for n : float in sides:
 				positions.append_array([
-					Vector3(cos(n/sides * PI * 2.0) * (size.x / 2) / hole_size + hole_offset.x, -size.y / 2, sin(n/sides * PI * 2.0) * (size.z / 2) / hole_size + hole_offset.z) ,
-					Vector3(cos((n + 1)/sides * PI * 2.0) * (size.x / 2) / hole_size + hole_offset.x, -size.y / 2, sin((n + 1)/sides * PI * 2.0) * (size.z / 2) / hole_size + hole_offset.z) ,
-					Vector3(cos(n/sides * PI * 2.0) * (size.x / 2), -size.y / 2, sin(n/sides * PI * 2.0) * (size.z / 2)) ,
-					Vector3(cos((n + 1)/sides * PI * 2.0) * (size.x / 2), -size.y / 2, sin((n + 1)/sides * PI * 2.0) * (size.z / 2))  
+					Vector3(cos(n/sides * PI * 2.0) / 2 * hole_size + hole_offset.x, -0.5, sin(n/sides * PI * 2.0) / 2 * hole_size + hole_offset.z) ,
+					Vector3(cos((n + 1)/sides * PI * 2.0) / 2 * hole_size + hole_offset.x, -0.5, sin((n + 1)/sides * PI * 2.0) / 2 * hole_size + hole_offset.z) ,
+					Vector3(cos(n/sides * PI * 2.0) / 2, -0.5, sin(n/sides * PI * 2.0) / 2) ,
+					Vector3(cos((n + 1)/sides * PI * 2.0) / 2, -0.5, sin((n + 1)/sides * PI * 2.0) / 2)  
 				])
 				normals.append_array([
 						Vector3.DOWN,
@@ -147,9 +147,9 @@ func create_top_bottom() -> Array:
 		mod.POINT:
 			for n : float in sides:
 				positions.append_array([
-					Vector3(0, size.y / 2 * point_direction, 0) ,
-					Vector3(cos(n/sides * PI * 2.0) * (-size.x / 2), -size.y / 2 * point_direction, sin(n/sides * PI * 2.0) * (-size.z / 2)) ,
-					Vector3(cos((n + 1)/sides * PI * 2.0) * (-size.x / 2), -size.y / 2 * point_direction, sin((n + 1)/sides * PI * 2.0) * (-size.z / 2))  
+					Vector3(0, 0.5 * point_direction, 0) ,
+					Vector3(cos(n/sides * PI * 2.0) / -2, -0.5 * point_direction, sin(n/sides * PI * 2.0) / -2) ,
+					Vector3(cos((n + 1)/sides * PI * 2.0) / -2, -0.5 * point_direction, sin((n + 1)/sides * PI * 2.0) / -2)  
 				])
 				normals.append_array([
 						Vector3.UP * point_direction,
@@ -166,9 +166,9 @@ func create_top_bottom() -> Array:
 			
 			for n : float in sides:
 				positions.append_array([
-					Vector3(0, -size.y / 2 * point_direction, 0) ,
-					Vector3(cos(n/sides * PI * 2.0) * (-size.x / 2), -size.y / 2 * point_direction, sin(n/sides * PI * 2.0) * (-size.z / 2)) ,
-					Vector3(cos((n + 1)/sides * PI * 2.0) * (-size.x / 2), -size.y / 2 * point_direction, sin((n + 1)/sides * PI * 2.0) * (-size.z / 2))  
+					Vector3(0, -0.5 * point_direction, 0),
+					Vector3(cos(n/sides * PI * 2.0) / -2, -0.5 * point_direction, sin(n/sides * PI * 2.0) / -2),
+					Vector3(cos((n + 1)/sides * PI * 2.0) / -2, -0.5 * point_direction, sin((n + 1)/sides * PI * 2.0) / -2)  
 				])
 				normals.append_array([
 						Vector3.DOWN * point_direction,
@@ -199,10 +199,10 @@ func create_sides() -> Array:
 	if modifier != mod.POINT:
 		for n : float in sides:
 			positions.append_array([
-				Vector3(cos(n/sides * PI * 2.0) * (size.x / 2), size.y / 2, sin(n/sides * PI * 2.0) * (size.z / 2)) ,
-				Vector3(cos((n + 1)/sides * PI * 2.0) * (size.x / 2), size.y / 2, sin((n + 1)/sides * PI * 2.0) * (size.z / 2)) ,
-				Vector3(cos(n/sides * PI * 2.0) * (size.x / 2), -size.y / 2, sin(n/sides * PI * 2.0) * (size.z / 2)) ,
-				Vector3(cos((n + 1)/sides * PI * 2.0) * (size.x / 2), -size.y / 2, sin((n + 1)/sides * PI * 2.0) * (size.z / 2))  
+				Vector3(cos(n/sides * PI * 2.0) / 2, 0.5, sin(n/sides * PI * 2.0) / 2) ,
+				Vector3(cos((n + 1)/sides * PI * 2.0) / 2, 0.5, sin((n + 1)/sides * PI * 2.0) / 2) ,
+				Vector3(cos(n/sides * PI * 2.0) / 2, -0.5, sin(n/sides * PI * 2.0) / 2) ,
+				Vector3(cos((n + 1)/sides * PI * 2.0) / 2, -0.5, sin((n + 1)/sides * PI * 2.0) / 2)  
 				])
 			normals.append_array([
 				Vector3.BACK,
@@ -224,10 +224,10 @@ func create_sides() -> Array:
 			mod.HOLE:
 				for n : float in sides:
 					positions.append_array([
-						Vector3(cos(n/sides * PI * 2.0) * (size.x / 2) / hole_size + hole_offset.x, size.y / 2, sin(n/sides * PI * 2.0) * (size.z / 2) / hole_size + hole_offset.z) ,
-						Vector3(cos((n + 1)/sides * PI * 2.0) * (size.x / 2) / hole_size + hole_offset.x, size.y / 2, sin((n + 1)/sides * PI * 2.0) * (size.z / 2) / hole_size + hole_offset.z) ,
-						Vector3(cos(n/sides * PI * 2.0) * (size.x / 2) / hole_size + hole_offset.x, -size.y / 2, sin(n/sides * PI * 2.0) * (size.z / 2) / hole_size + hole_offset.z) ,
-						Vector3(cos((n + 1)/sides * PI * 2.0) * (size.x / 2) / hole_size + hole_offset.x, -size.y / 2, sin((n + 1)/sides * PI * 2.0) * (size.z / 2) / hole_size + hole_offset.z)  
+						Vector3(cos(n/sides * PI * 2.0) / 2 * hole_size + hole_offset.x, 0.5, sin(n/sides * PI * 2.0) / 2 * hole_size + hole_offset.z) ,
+						Vector3(cos((n + 1)/sides * PI * 2.0) / 2 * hole_size + hole_offset.x, 0.5, sin((n + 1)/sides * PI * 2.0) / 2 * hole_size + hole_offset.z) ,
+						Vector3(cos(n/sides * PI * 2.0) / 2 * hole_size + hole_offset.x, -0.5, sin(n/sides * PI * 2.0) / 2 * hole_size + hole_offset.z) ,
+						Vector3(cos((n + 1)/sides * PI * 2.0) / 2 * hole_size + hole_offset.x, -0.5, sin((n + 1)/sides * PI * 2.0) / 2 * hole_size + hole_offset.z)  
 					])
 					normals.append_array([
 							Vector3.BACK,

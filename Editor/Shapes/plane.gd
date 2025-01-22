@@ -47,10 +47,10 @@ func get_surface_array(index : int) -> Array:
 			var vert_offset := (binormal * x + tangent * y) + offset 
 			var ind_offset := 4 * (x * subdivisions + y) + index
 			positions.append_array([
-				vert_offset * size + total_offset,
-				(vert_offset + tangent) * size + total_offset,
-				(vert_offset + tangent + binormal) * size + total_offset,
-				(vert_offset + binormal) * size + total_offset
+				vert_offset,
+				(vert_offset + tangent),
+				(vert_offset + tangent + binormal),
+				(vert_offset + binormal)
 			])
 			normals.append_array([
 				direction,
@@ -62,6 +62,11 @@ func get_surface_array(index : int) -> Array:
 				ind_offset, ind_offset + 1, ind_offset + 2,
 				ind_offset, ind_offset + 2, ind_offset + 3
 				])
+	
+	#positions = apply_rotation(positions)
+	positions = apply_size(positions)
+	positions = apply_offset(positions)
+	
 	
 	surface_array[Mesh.ARRAY_VERTEX] = positions
 	surface_array[Mesh.ARRAY_NORMAL] = normals

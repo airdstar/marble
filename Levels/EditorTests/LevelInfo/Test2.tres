@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="level_resource" load_steps=3 format=3]
+
+[ext_resource type="PackedScene" path="res://Levels/EditorTests/Levels/Test2.tscn" id="1_ao56j"]
+[ext_resource type="Script" path="res://Resources/LevelResource.gd" id="2_muc83"]
+
+[resource]
+script = ExtResource("2_muc83")
+name = "Test2"
+level_difficulty = 0
+level_type = 0
+associated_scene = ExtResource("1_ao56j")
+include_in_pool = false
+gravity = Vector3(0, 9.8, 0)
