@@ -40,7 +40,7 @@ func get_surface_array(index : int) -> Array:
 	normals.append_array(surface_holder[Mesh.ARRAY_NORMAL])
 	indices.append_array(surface_holder[Mesh.ARRAY_INDEX])
 	
-	#positions = apply_rotation(positions)
+	positions = apply_rotation(positions)
 	positions = apply_size(positions)
 	positions = apply_offset(positions)
 	

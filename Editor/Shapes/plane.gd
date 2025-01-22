@@ -63,7 +63,7 @@ func get_surface_array(index : int) -> Array:
 				ind_offset, ind_offset + 2, ind_offset + 3
 				])
 	
-	#positions = apply_rotation(positions)
+	positions = apply_rotation(positions)
 	positions = apply_size(positions)
 	positions = apply_offset(positions)
 	

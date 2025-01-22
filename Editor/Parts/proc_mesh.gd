@@ -81,7 +81,17 @@ func size_changed(new_size : Vector3) -> void:
 
 func rotation_changed(new_rotation : Vector3) -> void:
 	if shape_info.size() != 0:
-		shape_info[0].rotation = new_rotation
+		if new_rotation == Vector3.ZERO:
+			shape_info[0].x_rotation = 0
+			shape_info[0].y_rotation = 0
+			shape_info[0].z_rotation = 0
+		else:
+			if new_rotation.x != 0:
+				shape_info[0].x_rotation = new_rotation.x
+			elif new_rotation.y != 0:
+				shape_info[0].y_rotation = new_rotation.y
+			else:
+				shape_info[0].z_rotation = new_rotation.z
 		regenerate_mesh()
 		
 

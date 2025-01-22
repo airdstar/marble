@@ -39,6 +39,8 @@ func get_surface_array(index : int) -> Array:
 		normals.append_array(plane_surface[Mesh.ARRAY_NORMAL])
 		indices.append_array(plane_surface[Mesh.ARRAY_INDEX])
 	
+	positions = apply_rotation(positions)
+	
 	surface_array[Mesh.ARRAY_VERTEX] = positions
 	surface_array[Mesh.ARRAY_NORMAL] = normals
 	surface_array[Mesh.ARRAY_INDEX] = indices
