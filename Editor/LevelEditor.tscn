@@ -204,6 +204,7 @@ input_capture_on_drag = true
 shape = SubResource("BoxShape3D_vdcb3")
 
 [node name="Rotation" type="Node3D" parent="Adjust"]
+visible = false
 
 [node name="UI" type="Control" parent="."]
 layout_mode = 3
@@ -238,14 +239,6 @@ fit_content = true
 [node name="TabBar" type="TabBar" parent="UI/Properties/VBoxContainer"]
 layout_mode = 2
 
-[node name="OptionButton" type="OptionButton" parent="UI/Properties/VBoxContainer"]
-layout_mode = 2
-selected = 0
-item_count = 2
-popup/item_0/text = "Part Properties"
-popup/item_1/text = "Shape Properties"
-popup/item_1/id = 1
-
 [node name="MarginContainer3" type="MarginContainer" parent="UI/Properties/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/margin_top = 5
@@ -259,6 +252,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="PartProperties" type="VBoxContainer" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -283,7 +277,6 @@ text = " Rotation: 0, 0, 0"
 fit_content = true
 
 [node name="ShapeProperties" type="VBoxContainer" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer"]
-visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -301,6 +294,27 @@ fit_content = true
 layout_mode = 2
 text = " Size: 1.0, 1.0, 1.0"
 fit_content = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties"]
+layout_mode = 2
+
+[node name="SpinBox" type="SpinBox" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/HBoxContainer"]
+layout_mode = 2
+min_value = -360.0
+max_value = 360.0
+step = 30.0
+
+[node name="SpinBox2" type="SpinBox" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/HBoxContainer"]
+layout_mode = 2
+min_value = -360.0
+max_value = 360.0
+step = 30.0
+
+[node name="SpinBox3" type="SpinBox" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/HBoxContainer"]
+layout_mode = 2
+min_value = -360.0
+max_value = 360.0
+step = 30.0
 
 [node name="ShapeModifier" type="HBoxContainer" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties"]
 layout_mode = 2
@@ -549,7 +563,7 @@ size_flags_horizontal = 3
 toggle_mode = true
 text = "Size"
 
-[node name="Button" type="Button" parent="UI/Tools/VBoxContainer/HBoxContainer"]
+[node name="Rotation" type="Button" parent="UI/Tools/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 text = "Rotation"
 
@@ -682,9 +696,9 @@ text = "Create Level"
 [connection signal="input_event" from="Adjust/Size/Y/Area3D" to="Adjust" method="y_size_grabbed"]
 [connection signal="input_event" from="Adjust/Size/Z/Area3D" to="Adjust" method="z_size_grabbed"]
 [connection signal="group_changed" from="UI/Properties" to="." method="property_group_set"]
+[connection signal="rotation_change" from="UI/Properties" to="." method="rotation_detected"]
 [connection signal="shape_name_changed" from="UI/Properties" to="ShapePreview" method="name_changed"]
 [connection signal="tab_changed" from="UI/Properties/VBoxContainer/TabBar" to="UI/Properties" method="property_group_changed"]
-[connection signal="item_selected" from="UI/Properties/VBoxContainer/OptionButton" to="UI/Properties" method="property_group_changed"]
 [connection signal="text_submitted" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/PartProperties/PartName" to="." method="part_name_changed"]
 [connection signal="text_submitted" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeName" to="UI/Properties" method="shape_name_submitted"]
 [connection signal="item_selected" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeModifier/Modifier" to="ShapePreview" method="modifier_changed"]

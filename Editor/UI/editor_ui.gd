@@ -53,7 +53,7 @@ func place_control() -> void:
 	parts.set_position(Vector2(left_border, top_border))
 	parts_container.set_size(parts.size)
 
-	properties.set_size(Vector2(get_window().size.x / 4, get_window().size.y / 3))
+	properties.set_size(Vector2(get_window().size.x / 4, get_window().size.y / 2))
 	properties.set_position(Vector2(left_border, bottom_border - properties.size.y))
 	properties_container.set_size(properties.size)
 	

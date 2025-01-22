@@ -31,6 +31,7 @@ func apply_rotation(vertices : Array) -> Array:
 	return vertices
 
 func apply_offset(vertices : Array) -> Array:
+	var to_return := []
 	for n in vertices:
-		n += total_offset
-	return vertices
+		to_return.append(n + total_offset)
+	return to_return

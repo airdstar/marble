@@ -39,8 +39,6 @@ func _ready() -> void:
 	open_level_select()
 
 func _process(delta : float) -> void:
-	
-	
 	if Input.is_action_pressed("camera_right"):
 		allow_camera_movement = true
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -174,6 +172,8 @@ func rec_set_owner(part : Node3D) -> void:
 	for n in part.get_children():
 		rec_set_owner(n)
 
+
+
 func part_name_changed(new_text: String) -> void:
 	if new_text != "":
 		selected_part.set_meta("part_name", new_text)
@@ -192,10 +192,15 @@ func resize_detected(size_change : Vector3) -> void:
 	match adjusting:
 		editor.adjustable.PART:
 			if selected_part is not start:
-				selected_part.scale = Vector3(1,1,1)
+				selected_part.scale = size_change
 				UI.properties.size_changed(size_change)
 		editor.adjustable.SHAPE:
 			shape_preview.size_changed(size_change)
+
+func rotation_detected(rotation_change : Vector3) -> void:
+	match adjusting:
+		editor.adjustable.SHAPE:
+			shape_preview.rotation_changed(rotation_change)
 
 func property_group_set(adjust_to : String) -> void:
 	match adjust_to:

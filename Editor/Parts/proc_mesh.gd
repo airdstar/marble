@@ -79,6 +79,12 @@ func size_changed(new_size : Vector3) -> void:
 		regenerate_mesh()
 		size_change_successful.emit(shape_info[0].size)
 
+func rotation_changed(new_rotation : Vector3) -> void:
+	if shape_info.size() != 0:
+		shape_info[0].rotation = new_rotation
+		regenerate_mesh()
+		
+
 func name_changed(new_name : String) -> void:
 	if shape_info.size() != 0:
 		shape_info[0].shape_name = new_name

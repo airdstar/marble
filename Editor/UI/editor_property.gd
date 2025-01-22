@@ -28,10 +28,13 @@ extends Control
 
 
 signal shape_name_changed
+signal rotation_change
 signal group_changed
 
 func _ready() -> void:
-	pass
+	$VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/HBoxContainer/SpinBox.value_changed.connect(rotation_changed.bind(0))
+	$VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/HBoxContainer/SpinBox2.value_changed.connect(rotation_changed.bind(1))
+	$VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/HBoxContainer/SpinBox3.value_changed.connect(rotation_changed.bind(2))
 
 func property_group_changed(index: int) -> void:
 	part_properties.visible = false
@@ -47,7 +50,6 @@ func property_group_changed(index: int) -> void:
 				shape_properties.visible = true
 		group_changed.emit(property_options.get_tab_title(index))
 
-
 func pos_changed(new_pos : Vector3) -> void:
 	match property_options.get_tab_title(property_options.current_tab):
 		"Part":
@@ -61,6 +63,17 @@ func size_changed(new_size : Vector3) -> void:
 			pass
 		"Shape":
 			shape_size.text = " Size: %.1f" % new_size.x + ", %.1f" % new_size.y + ", %.1f" % new_size.z
+
+func rotation_changed(value : float, axis : int) -> void:
+	var to_return = Vector3()
+	match axis:
+		0:
+			to_return.x = value
+		1:
+			to_return.y = value
+		2:
+			to_return.z = value
+	rotation_change.emit(to_return)
 
 func part_selected(part : Node3D) -> void:
 	var select_tab : int = get_tab("Part")

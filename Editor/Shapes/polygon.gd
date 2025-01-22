@@ -39,7 +39,11 @@ func get_surface_array(index : int) -> Array:
 	positions.append_array(surface_holder[Mesh.ARRAY_VERTEX])
 	normals.append_array(surface_holder[Mesh.ARRAY_NORMAL])
 	indices.append_array(surface_holder[Mesh.ARRAY_INDEX])
-
+	
+	
+	positions = apply_rotation(positions)
+	positions = apply_offset(positions)
+	
 	surface_array[Mesh.ARRAY_VERTEX] = positions
 	surface_array[Mesh.ARRAY_NORMAL] = normals
 	surface_array[Mesh.ARRAY_INDEX] = indices
@@ -179,9 +183,6 @@ func create_top_bottom() -> Array:
 			
 			index_offset += sides * 3
 	
-	positions = apply_rotation(positions)
-
-	positions = apply_offset(positions)
 	to_return[Mesh.ARRAY_VERTEX] = positions
 	to_return[Mesh.ARRAY_NORMAL] = normals
 	to_return[Mesh.ARRAY_INDEX] = indices

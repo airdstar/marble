@@ -140,7 +140,6 @@ shape = SubResource("BoxShape3D_cb47l")
 [node name="Ends" type="Node3D" parent="."]
 
 [node name="EndZone" parent="Ends" instance=ExtResource("3_onj4s")]
-transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
 
 [node name="InputTrigger" type="Area3D" parent="."]
 
