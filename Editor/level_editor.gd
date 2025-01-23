@@ -103,7 +103,9 @@ func part_selected(part : Node3D) -> void:
 	adjuster.selected_pos_changed(part.position)
 
 	if part is not start and part is not ProcMesh:
-		adjuster.selected_size_changed(Vector3(1,1,1) * part.scale)
+		adjuster.selected_size_changed(part.scale)
+	
+	adjuster.selected_rotation_changed(part.rotation)
 	
 	selected_part = part
 	new_part_selected.emit(selected_part)
@@ -132,14 +134,23 @@ func shape_unselected() -> void:
 		UI.properties.part_selected(selected_part)
 
 func _on_place_pressed() -> void:
-	if sections.selected_part != null:
-		if sections.selected_part is ProcMesh:
-			if selected_shape != null:
-				selected_shape.locked = true
+	if selected_shape != null:
+		if sections.selected_part != null:
+			if sections.selected_part is ProcMesh:
 				sections.selected_part.add_shape(selected_shape)
 				shape_placed.emit(selected_shape)
 				shape_unselected()
-			
+			else:
+				create_and_place()
+		else:
+			create_and_place()
+
+func create_and_place() -> void:
+	new_procmesh_created()
+	var proc_mesh_holder = level_base.geometry.get_child(level_base.geometry.get_child_count() - 1)
+	proc_mesh_holder.add_shape(selected_shape)
+	shape_placed.emit(selected_shape)
+	shape_unselected()
 
 func switch_hold() -> void:
 	if held_shape != null and held_shape != selected_shape:
@@ -150,7 +161,6 @@ func switch_hold() -> void:
 		selected_shape = null
 		UI.properties.shape_unselected()
 		tool_visible(false)
-
 
 func new_procmesh_created() -> void:
 	var holder = preload("res://Editor/Parts/ProcMesh.tscn").instantiate()
@@ -218,6 +228,7 @@ func property_group_set(adjust_to : String) -> void:
 func tool_visible(make_visible : bool) -> void:
 	adjuster.pos.visible = false
 	adjuster.size.visible = false
+	adjuster.rot.visible = false
 	if make_visible:
 		match selected_tool:
 			editor.tool.POS:
@@ -225,7 +236,7 @@ func tool_visible(make_visible : bool) -> void:
 			editor.tool.SIZE:
 				adjuster.size.visible = true
 			editor.tool.ROTATION:
-				pass
+				adjuster.rot.visible = true
 
 func tool_selected(tool : editor.tool) -> void:
 	selected_tool = tool

@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://1yq80goel736"]
+[gd_scene load_steps=36 format=3 uid="uid://1yq80goel736"]
 
 [ext_resource type="Script" path="res://Editor/level_editor.gd" id="1_gkh0n"]
 [ext_resource type="Texture2D" uid="uid://d0fbpahnke75l" path="res://Assets/grid.png" id="4_33n1c"]
@@ -105,6 +105,16 @@ height = 0.2
 [sub_resource type="BoxShape3D" id="BoxShape3D_vdcb3"]
 size = Vector3(0.25, 0.25, 0.95)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p8aym"]
+no_depth_test = true
+albedo_color = Color(0.85098, 0, 0.101961, 1)
+backlight_enabled = true
+backlight = Color(1, 1, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_g4u1l"]
+material = SubResource("StandardMaterial3D_p8aym")
+size = Vector3(0.05, 0.05, 0.95)
+
 [node name="LevelEditor" type="Node3D" node_paths=PackedStringArray("shape_preview")]
 script = ExtResource("1_gkh0n")
 shape_preview = NodePath("ShapePreview")
@@ -134,8 +144,24 @@ skeleton = NodePath("")
 
 [node name="ShapePreview" parent="." instance=ExtResource("4_stuxe")]
 
-[node name="Adjust" type="Node3D" parent="."]
+[node name="Adjust" type="Node3D" parent="." node_paths=PackedStringArray("pos", "size", "rot", "pos_x", "pos_y", "pos_z", "pos_x_mesh", "pos_y_mesh", "pos_z_mesh", "size_x", "size_y", "size_z", "size_x_mesh", "size_y_mesh", "size_z_mesh", "rot_x_mesh")]
 script = ExtResource("5_6wt44")
+pos = NodePath("Position")
+size = NodePath("Size")
+rot = NodePath("Rotation")
+pos_x = NodePath("Position/X/Area3D/CollisionShape3D")
+pos_y = NodePath("Position/Y/Area3D/CollisionShape3D")
+pos_z = NodePath("Position/Z/Area3D/CollisionShape3D")
+pos_x_mesh = NodePath("Position/X")
+pos_y_mesh = NodePath("Position/Y")
+pos_z_mesh = NodePath("Position/Z")
+size_x = NodePath("Size/X/Area3D/CollisionShape3D")
+size_y = NodePath("Size/Y/Area3D/CollisionShape3D")
+size_z = NodePath("Size/Z/Area3D/CollisionShape3D")
+size_x_mesh = NodePath("Size/X")
+size_y_mesh = NodePath("Size/Y")
+size_z_mesh = NodePath("Size/Z")
+rot_x_mesh = NodePath("Rotation/X")
 
 [node name="Position" type="Node3D" parent="Adjust"]
 visible = false
@@ -204,7 +230,10 @@ input_capture_on_drag = true
 shape = SubResource("BoxShape3D_vdcb3")
 
 [node name="Rotation" type="Node3D" parent="Adjust"]
-visible = false
+
+[node name="X" type="MeshInstance3D" parent="Adjust/Rotation"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.95, 0, 0)
+mesh = SubResource("BoxMesh_g4u1l")
 
 [node name="UI" type="Control" parent="."]
 layout_mode = 3
@@ -532,13 +561,16 @@ text = "Take Shape"
 layout_mode = 2
 text = "Place Shape"
 
-[node name="Tools" type="Panel" parent="UI"]
+[node name="Tools" type="Panel" parent="UI" node_paths=PackedStringArray("pos_button", "size_button", "rot_button")]
 layout_mode = 0
 offset_left = 308.0
 offset_top = 8.0
 offset_right = 495.0
 offset_bottom = 47.0
 script = ExtResource("8_pcger")
+pos_button = NodePath("VBoxContainer/HBoxContainer/Position")
+size_button = NodePath("VBoxContainer/HBoxContainer/Size")
+rot_button = NodePath("VBoxContainer/HBoxContainer/Rotation")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UI/Tools"]
 layout_mode = 0
@@ -565,6 +597,7 @@ text = "Size"
 
 [node name="Rotation" type="Button" parent="UI/Tools/VBoxContainer/HBoxContainer"]
 layout_mode = 2
+toggle_mode = true
 text = "Rotation"
 
 [node name="Hold" type="Button" parent="UI/Tools/VBoxContainer/HBoxContainer"]
@@ -722,6 +755,7 @@ text = "Create Level"
 [connection signal="tool_selected" from="UI/Tools" to="." method="tool_selected"]
 [connection signal="toggled" from="UI/Tools/VBoxContainer/HBoxContainer/Position" to="UI/Tools" method="pos_toggled"]
 [connection signal="toggled" from="UI/Tools/VBoxContainer/HBoxContainer/Size" to="UI/Tools" method="size_toggled"]
+[connection signal="toggled" from="UI/Tools/VBoxContainer/HBoxContainer/Rotation" to="UI/Tools" method="rot_toggled"]
 [connection signal="pressed" from="UI/Tools/VBoxContainer/HBoxContainer/Hold" to="." method="switch_hold"]
 [connection signal="pressed" from="UI/Settings/VBoxContainer/HBoxContainer/Save" to="." method="pre_save"]
 [connection signal="pressed" from="UI/Settings/VBoxContainer/HBoxContainer/Test" to="." method="test_pressed"]

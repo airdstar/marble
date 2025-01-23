@@ -26,44 +26,44 @@ enum mod {
 func set_mods() -> void:
 	pass
 
-func apply_x_rotation(vertices : Array) -> Array:
+func apply_x_rotation(input : Array) -> Array:
 	var to_return := []
-	for n in vertices:
+	for n in input:
 		var y_prime = (n.y * cos(deg_to_rad(x_rotation)) - n.z * sin(deg_to_rad(x_rotation)))
 		var z_prime = (n.y * sin(deg_to_rad(x_rotation)) + n.z * cos(deg_to_rad(x_rotation)))
 		to_return.append(Vector3(n.x, y_prime, z_prime))
 	return to_return
 
-func apply_y_rotation(vertices : Array) -> Array:
+func apply_y_rotation(input : Array) -> Array:
 	var to_return := []
-	for n in vertices:
+	for n in input:
 		var x_prime = (n.x * cos(deg_to_rad(y_rotation)) + n.z * sin(deg_to_rad(y_rotation)))
 		var z_prime = (-n.x * sin(deg_to_rad(y_rotation)) + n.z * cos(deg_to_rad(y_rotation)))
 		to_return.append(Vector3(x_prime, n.y, z_prime))
 	return to_return
 
-func apply_z_rotation(vertices : Array) -> Array:
+func apply_z_rotation(input : Array) -> Array:
 	var to_return := []
-	for n in vertices:
+	for n in input:
 		var x_prime = (n.x * cos(deg_to_rad(z_rotation)) - n.y * sin(deg_to_rad(z_rotation)))
 		var y_prime = (n.x * sin(deg_to_rad(z_rotation)) + n.y * cos(deg_to_rad(z_rotation)))
 		to_return.append(Vector3(x_prime, y_prime, n.z))
 	return to_return
 
-func apply_rotation(vertices : Array) -> Array:
-	vertices = apply_x_rotation(vertices)
-	vertices = apply_y_rotation(vertices)
-	vertices = apply_z_rotation(vertices)
-	return vertices
+func apply_rotation(input : Array) -> Array:
+	input = apply_x_rotation(input)
+	input = apply_y_rotation(input)
+	input = apply_z_rotation(input)
+	return input
 
-func apply_size(vertices : Array) -> Array:
+func apply_size(input : Array) -> Array:
 	var to_return := []
-	for n in vertices:
+	for n in input:
 		to_return.append(Vector3(n.x * size.x, n.y * size.y, n.z * size.z))
 	return to_return
 
-func apply_offset(vertices : Array) -> Array:
+func apply_offset(input : Array) -> Array:
 	var to_return := []
-	for n in vertices:
+	for n in input:
 		to_return.append(n + total_offset)
 	return to_return

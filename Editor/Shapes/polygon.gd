@@ -40,8 +40,9 @@ func get_surface_array(index : int) -> Array:
 	normals.append_array(surface_holder[Mesh.ARRAY_NORMAL])
 	indices.append_array(surface_holder[Mesh.ARRAY_INDEX])
 	
-	positions = apply_rotation(positions)
 	positions = apply_size(positions)
+	positions = apply_rotation(positions)
+	normals = apply_rotation(normals)
 	positions = apply_offset(positions)
 	
 	surface_array[Mesh.ARRAY_VERTEX] = positions
@@ -199,16 +200,16 @@ func create_sides() -> Array:
 	if modifier != mod.POINT:
 		for n : float in sides:
 			positions.append_array([
-				Vector3(cos(n/sides * PI * 2.0) / 2, 0.5, sin(n/sides * PI * 2.0) / 2) ,
-				Vector3(cos((n + 1)/sides * PI * 2.0) / 2, 0.5, sin((n + 1)/sides * PI * 2.0) / 2) ,
-				Vector3(cos(n/sides * PI * 2.0) / 2, -0.5, sin(n/sides * PI * 2.0) / 2) ,
+				Vector3(cos(n/sides * PI * 2.0) / 2, 0.5, sin(n/sides * PI * 2.0) / 2),
+				Vector3(cos((n + 1)/sides * PI * 2.0) / 2, 0.5, sin((n + 1)/sides * PI * 2.0) / 2),
+				Vector3(cos(n/sides * PI * 2.0) / 2, -0.5, sin(n/sides * PI * 2.0) / 2),
 				Vector3(cos((n + 1)/sides * PI * 2.0) / 2, -0.5, sin((n + 1)/sides * PI * 2.0) / 2)  
 				])
 			normals.append_array([
-				Vector3.BACK,
-				Vector3.BACK,
-				Vector3.BACK,
-				Vector3.BACK
+				Vector3(cos((n + 0.5)/sides * PI * 2.0) / 2, 0, sin((n + 0.5)/sides * PI * 2.0) / 2),
+				Vector3(cos((n + 0.5)/sides * PI * 2.0) / 2, 0, sin((n + 0.5)/sides * PI * 2.0) / 2),
+				Vector3(cos((n + 0.5)/sides * PI * 2.0) / 2, 0, sin((n + 0.5)/sides * PI * 2.0) / 2),
+				Vector3(cos((n + 0.5)/sides * PI * 2.0) / 2, 0, sin((n + 0.5)/sides * PI * 2.0) / 2)
 				])
 			indices.append_array([
 				index_offset + 4 * n,
@@ -224,16 +225,16 @@ func create_sides() -> Array:
 			mod.HOLE:
 				for n : float in sides:
 					positions.append_array([
-						Vector3(cos(n/sides * PI * 2.0) / 2 * hole_size + hole_offset.x, 0.5, sin(n/sides * PI * 2.0) / 2 * hole_size + hole_offset.z) ,
-						Vector3(cos((n + 1)/sides * PI * 2.0) / 2 * hole_size + hole_offset.x, 0.5, sin((n + 1)/sides * PI * 2.0) / 2 * hole_size + hole_offset.z) ,
-						Vector3(cos(n/sides * PI * 2.0) / 2 * hole_size + hole_offset.x, -0.5, sin(n/sides * PI * 2.0) / 2 * hole_size + hole_offset.z) ,
+						Vector3(cos(n/sides * PI * 2.0) / 2 * hole_size + hole_offset.x, 0.5, sin(n/sides * PI * 2.0) / 2 * hole_size + hole_offset.z),
+						Vector3(cos((n + 1)/sides * PI * 2.0) / 2 * hole_size + hole_offset.x, 0.5, sin((n + 1)/sides * PI * 2.0) / 2 * hole_size + hole_offset.z),
+						Vector3(cos(n/sides * PI * 2.0) / 2 * hole_size + hole_offset.x, -0.5, sin(n/sides * PI * 2.0) / 2 * hole_size + hole_offset.z),
 						Vector3(cos((n + 1)/sides * PI * 2.0) / 2 * hole_size + hole_offset.x, -0.5, sin((n + 1)/sides * PI * 2.0) / 2 * hole_size + hole_offset.z)  
 					])
 					normals.append_array([
-							Vector3.BACK,
-							Vector3.BACK,
-							Vector3.BACK,
-							Vector3.BACK
+							Vector3(cos((n + 0.5)/sides * PI * 2.0) / 2 * hole_size + hole_offset.x, 0, sin((n + 0.5)/sides * PI * 2.0) / 2 * hole_size + hole_offset.z),
+							Vector3(cos((n + 0.5)/sides * PI * 2.0) / 2 * hole_size + hole_offset.x, 0, sin((n + 0.5)/sides * PI * 2.0) / 2 * hole_size + hole_offset.z),
+							Vector3(cos((n + 0.5)/sides * PI * 2.0) / 2 * hole_size + hole_offset.x, 0, sin((n + 0.5)/sides * PI * 2.0) / 2 * hole_size + hole_offset.z),
+							Vector3(cos((n + 0.5)/sides * PI * 2.0) / 2 * hole_size + hole_offset.x, 0, sin((n + 0.5)/sides * PI * 2.0) / 2 * hole_size + hole_offset.z)
 						])
 					indices.append_array([
 						index_offset + 1 + 4 * n,

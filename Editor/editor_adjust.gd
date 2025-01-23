@@ -1,21 +1,32 @@
 extends Node3D
+@export_category("Bases")
+@export var pos : Node3D
+@export var size : Node3D
+@export var rot : Node3D
 
-@onready var pos : Node3D = $Position
-@onready var size : Node3D = $Size
+@export_category("Positional")
+@export var pos_x : CollisionShape3D
+@export var pos_y : CollisionShape3D
+@export var pos_z : CollisionShape3D
+@export var pos_x_mesh : MeshInstance3D
+@export var pos_y_mesh : MeshInstance3D
+@export var pos_z_mesh : MeshInstance3D
 
-@onready var pos_x : CollisionShape3D = $Position/X/Area3D/CollisionShape3D
-@onready var pos_y : CollisionShape3D = $Position/Y/Area3D/CollisionShape3D
-@onready var pos_z : CollisionShape3D = $Position/Z/Area3D/CollisionShape3D
-@onready var pos_x_mesh : MeshInstance3D = $Position/X
-@onready var pos_y_mesh : MeshInstance3D = $Position/Y
-@onready var pos_z_mesh : MeshInstance3D = $Position/Z
+@export_category("Sizing")
+@export var size_x : CollisionShape3D
+@export var size_y : CollisionShape3D
+@export var size_z : CollisionShape3D
+@export var size_x_mesh : MeshInstance3D
+@export var size_y_mesh : MeshInstance3D
+@export var size_z_mesh : MeshInstance3D
 
-@onready var size_x : CollisionShape3D = $Size/X/Area3D/CollisionShape3D
-@onready var size_y : CollisionShape3D = $Size/Y/Area3D/CollisionShape3D
-@onready var size_z : CollisionShape3D = $Size/Z/Area3D/CollisionShape3D
-@onready var size_x_mesh : MeshInstance3D = $Size/X
-@onready var size_y_mesh : MeshInstance3D = $Size/Y
-@onready var size_z_mesh : MeshInstance3D = $Size/Z
+@export_category("Rotational")
+@export var rot_x : CollisionShape3D
+@export var rot_y : CollisionShape3D
+@export var rot_z : CollisionShape3D
+@export var rot_x_mesh : MeshInstance3D
+@export var rot_y_mesh : MeshInstance3D
+@export var rot_z_mesh : MeshInstance3D
 
 var snapping := 0.5
 var pos_cap := 10
@@ -87,6 +98,10 @@ func selected_size_changed(new_size : Vector3) -> void:
 	size_x_mesh.position.x = new_size.x / 2
 	size_y_mesh.position.y = new_size.y / 2
 	size_z_mesh.position.z = new_size.z / 2
+
+func selected_rotation_changed(new_rot : Vector3) -> void:
+	size.rotation = new_rot
+	rot_x_mesh.rotation.x = new_rot.x
 
 func x_pos_grabbed(_camera: Node, event: InputEvent, _event_position: Vector3, _normal: Vector3, _shape_idx: int) -> void:
 	if event is InputEventMouseButton:
