@@ -1,18 +1,32 @@
 extends Control
 
 @export var property_options : TabBar
+@export var part_properties : VBoxContainer
+@export var shape_properties : VBoxContainer
 
-@onready var part_properties := $VBoxContainer/ScrollContainer/VBoxContainer/PartProperties
-@onready var shape_properties := $VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties
+@export_category("Part")
+@export var part_name : LineEdit
+@export var part_pos : RichTextLabel
+@export var part_size : RichTextLabel
+@export var part_rot : RichTextLabel
 
+@export var dynamic_movement : CheckBox
+@export var dynamic_rotation : CheckBox
 
-@onready var part_pos := $VBoxContainer/ScrollContainer/VBoxContainer/PartProperties/PartPos
-@onready var part_size
+@export_category("Movement")
+@export var mov_has_trigger : CheckBox
+@export var mov_pos : RichTextLabel
 
+@export_category("Rotation")
+@export var rot_has_trigger : CheckBox
+@export var rot_amount : RichTextLabel
+
+@export_category("Shape")
 
 @onready var shape_name := $VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeName
 @onready var shape_pos := $VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapePos
 @onready var shape_size := $VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeSize
+@export var shape_rot : RichTextLabel
 
 @onready var shape_sides_holder := $VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeSides
 @onready var shape_sides := $VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeSides/Sides
@@ -32,9 +46,7 @@ signal rotation_change
 signal group_changed
 
 func _ready() -> void:
-	$VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/HBoxContainer/SpinBox.value_changed.connect(rotation_changed.bind(0))
-	$VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/HBoxContainer/SpinBox2.value_changed.connect(rotation_changed.bind(1))
-	$VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/HBoxContainer/SpinBox3.value_changed.connect(rotation_changed.bind(2))
+	pass
 
 func property_group_changed(index: int) -> void:
 	part_properties.visible = false
@@ -60,20 +72,16 @@ func pos_changed(new_pos : Vector3) -> void:
 func size_changed(new_size : Vector3) -> void:
 	match property_options.get_tab_title(property_options.current_tab):
 		"Part":
-			pass
+			part_size.text = " Size: %.1f" % new_size.x + ", %.1f" % new_size.y + ", %.1f" % new_size.z
 		"Shape":
 			shape_size.text = " Size: %.1f" % new_size.x + ", %.1f" % new_size.y + ", %.1f" % new_size.z
 
-func rotation_changed(value : float, axis : int) -> void:
-	var to_return = Vector3()
-	match axis:
-		0:
-			to_return.x = value
-		1:
-			to_return.y = value
-		2:
-			to_return.z = value
-	rotation_change.emit(to_return)
+func rot_changed(new_rot : Vector3) -> void:
+	match property_options.get_tab_title(property_options.current_tab):
+		"Part":
+			part_rot.text = " Rotation: %d" % new_rot.x + ", %d" % new_rot.y + ", %d" % new_rot.z
+		"Shape":
+			shape_rot.text = " Rotation: %d" % new_rot.x + ", %d" % new_rot.y + ", %d" % new_rot.z
 
 func part_selected(part : Node3D) -> void:
 	var select_tab : int = get_tab("Part")
@@ -82,6 +90,7 @@ func part_selected(part : Node3D) -> void:
 		property_options.add_tab("Part")
 	
 	property_options.current_tab = select_tab
+	part_name.text = part.get_meta("part_name")
 	
 	property_group_changed(select_tab)
 

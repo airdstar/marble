@@ -51,9 +51,9 @@ func apply_z_rotation(input : Array) -> Array:
 	return to_return
 
 func apply_rotation(input : Array) -> Array:
-	input = apply_x_rotation(input)
-	input = apply_y_rotation(input)
 	input = apply_z_rotation(input)
+	input = apply_y_rotation(input)
+	input = apply_x_rotation(input)
 	return input
 
 func apply_size(input : Array) -> Array:

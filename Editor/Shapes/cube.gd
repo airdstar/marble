@@ -14,7 +14,6 @@ func get_surface_array(index : int) -> Array:
 	for n : int in 6:
 		var ind_offset := 4 * n * subdivisions * subdivisions + index
 		var plane_info := plane.new()
-		plane_info.total_offset = total_offset
 		@warning_ignore("integer_division")
 		match n / 2:
 			0:
@@ -39,8 +38,10 @@ func get_surface_array(index : int) -> Array:
 		normals.append_array(plane_surface[Mesh.ARRAY_NORMAL])
 		indices.append_array(plane_surface[Mesh.ARRAY_INDEX])
 	
+	
 	positions = apply_rotation(positions)
 	normals = apply_rotation(normals)
+	positions = apply_offset(positions)
 	
 	surface_array[Mesh.ARRAY_VERTEX] = positions
 	surface_array[Mesh.ARRAY_NORMAL] = normals

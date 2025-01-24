@@ -17,7 +17,6 @@ height = 0.5
 radius = 1.0
 
 [node name="EndZone" type="Node3D" node_paths=PackedStringArray("collider")]
-transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
 script = ExtResource("1_at64b")
 collider = NodePath("Area3D/CollisionShape3D")
 metadata/part_name = "Goal"
