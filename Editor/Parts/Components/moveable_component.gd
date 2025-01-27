@@ -1,4 +1,4 @@
-extends component
+extends Node
 class_name moveable_component
 
 @export_category("Movement")

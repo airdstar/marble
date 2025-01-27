@@ -107,7 +107,7 @@ func part_selected(part : Node3D) -> void:
 	
 	adjuster.selected_pos_changed(part.position)
 
-	if part is not start and part is not ProcMesh:
+	if part is not ProcMesh:
 		adjuster.selected_size_changed(part.scale)
 	
 	adjuster.selected_rotation_changed(part.rotation)

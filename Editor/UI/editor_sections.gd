@@ -36,6 +36,7 @@ func remove_selected() -> void:
 				shape_buttons.remove_at(n)
 				if selected_part is ProcMesh:
 					selected_part.remove_shape(selected_shape)
+				selected_shape = null
 				break
 	elif selected_part != null:
 		for n in part_buttons.size():
@@ -44,6 +45,7 @@ func remove_selected() -> void:
 				part_buttons.remove_at(n)
 				level_info.parts.remove_at(level_info.parts.find(selected_part))
 				selected_part.queue_free()
+				selected_part = null
 				for m : Button in shape_holder.get_children():
 					m.queue_free()
 				shape_buttons.clear()
@@ -104,6 +106,7 @@ func add_shape(shape_info : shape_resource):
 	shape_button.toggle_mode = true
 	shape_holder.add_child(shape_button)
 	shape_button.toggled.connect(shape_toggled.bind(shape_info, shape_button))
+	shape_buttons.append(shape_button)
 
 func shape_toggled(toggled_on : bool, shape : shape_resource, button : Button) -> void:
 	if toggled_on:

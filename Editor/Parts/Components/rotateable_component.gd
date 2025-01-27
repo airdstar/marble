@@ -1,4 +1,5 @@
 extends Node
+class_name rotateable_component
 
 @export_category("Rotation")
 ## Rotation from start (in degrees), make negative if desired direction is counterclockwisey

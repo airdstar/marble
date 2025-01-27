@@ -92,6 +92,9 @@ func part_selected(part : Node3D) -> void:
 	property_options.current_tab = select_tab
 	part_name.text = part.get_meta("part_name")
 	
+	for n in part.get_children():
+		pass
+	
 	property_group_changed(select_tab)
 
 func part_unselected() -> void:

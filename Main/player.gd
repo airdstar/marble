@@ -7,6 +7,8 @@ class_name player
 
 func _ready():
 	$MeshInstance3D.mesh.material.albedo_color = PlayerInfo.player_data.player_color
+	$MeshInstance3D.mesh.material.next_pass.albedo_color = PlayerInfo.player_data.player_color 
+	$MeshInstance3D.mesh.material.next_pass.albedo_color.a = 0.7
 	emittedLight.light_color = PlayerInfo.player_data.player_color
 
 func _physics_process(delta: float) -> void:

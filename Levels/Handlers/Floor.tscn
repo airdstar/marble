@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://4bfdr3xelqm8"]
+[gd_scene load_steps=10 format=3 uid="uid://4bfdr3xelqm8"]
 
 [ext_resource type="Script" path="res://Levels/Handlers/floor.gd" id="1_6o7sh"]
 [ext_resource type="Script" path="res://Levels/Handlers/level_handler.gd" id="1_q6dl6"]
@@ -7,30 +7,7 @@
 [ext_resource type="Theme" uid="uid://dl6a6mq4q5lda" path="res://Assets/Themes/timer.tres" id="5_yj74y"]
 [ext_resource type="FontFile" uid="uid://tc8t70kcccsk" path="res://Assets/Themes/Fonts/easvhs.ttf" id="6_kmhra"]
 
-[sub_resource type="Sky" id="Sky_0bori"]
-
-[sub_resource type="Environment" id="Environment_5atx4"]
-background_mode = 2
-sky = SubResource("Sky_0bori")
-ambient_light_source = 2
-ambient_light_color = Color(0.025, 0.1, 0.05, 1)
-ambient_light_energy = 0.5
-tonemap_mode = 2
-tonemap_exposure = 0.5
-ssr_fade_in = 0.0652913
-ssao_radius = 11.96
-ssao_intensity = 14.8
-ssao_power = 0.000787934
-ssil_radius = 3.99
-ssil_intensity = 11.61
-ssil_sharpness = 0.0
-glow_strength = 0.1
-glow_bloom = 0.05
-glow_blend_mode = 0
-glow_hdr_threshold = 0.05
-volumetric_fog_enabled = true
-adjustment_enabled = true
-adjustment_brightness = 0.75
+[sub_resource type="Environment" id="Environment_on5bl"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_omjb2"]
 size = Vector3(200, 1, 200)
@@ -52,7 +29,7 @@ wait_time = 10.0
 one_shot = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_5atx4")
+environment = SubResource("Environment_on5bl")
 
 [node name="Origin" type="Node3D" parent="."]
 
@@ -64,11 +41,6 @@ script = ExtResource("4_e22wn")
 transform = Transform3D(1, 0, 0, 0, 0.939693, 0.34202, 0, -0.34202, 0.939693, 0, 0, 15)
 current = true
 fov = 70.0
-
-[node name="SpotLight3D" type="SpotLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 15, 0)
-light_energy = 4.0
-spot_range = 160.0
 
 [node name="KillArea" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -50, 0)
@@ -143,6 +115,19 @@ theme_override_font_sizes/normal_font_size = 25
 bbcode_enabled = true
 text = "[center]You reached level 11!"
 fit_content = true
+
+[node name="Lights" type="Node" parent="."]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
+visible = false
+light_energy = 0.2
+
+[node name="SpotLight3D" type="SpotLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 0.984808, 0.173648, 0, -0.173648, 0.984808, 0, 3, 15)
+light_energy = 5.0
+spot_range = 20.0
+spot_angle = 20.0
 
 [connection signal="level_generated" from="LevelHandler" to="." method="level_generated"]
 [connection signal="difficulty_changed" from="RunHandler" to="LevelHandler" method="set_level_pool"]
