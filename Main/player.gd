@@ -12,7 +12,7 @@ func _ready():
 func _physics_process(delta: float) -> void:
 	raycast.global_rotation = Vector3.ZERO
 	if raycast.is_colliding():
-		apply_force(Vector3(0,1000 * delta,0))
+		apply_force(Vector3(0,6000 * delta,0))
 
 func enable_monitoring() -> void:
 	collision.set_deferred("monitorable", true)

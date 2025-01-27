@@ -70,34 +70,32 @@ texture = ExtResource("6_yv5bw")
 layout_mode = 2
 offset_left = 492.0
 offset_top = 511.0
-offset_right = 661.0
+offset_right = 560.0
 offset_bottom = 579.0
-
-[node name="Exit" type="Button" parent="HBoxContainer2"]
-layout_mode = 2
-icon = ExtResource("5_45uyu")
-
-[node name="MarginContainer6" type="MarginContainer" parent="HBoxContainer2"]
-layout_mode = 2
-theme_override_constants/margin_right = -15
 
 [node name="Settings" type="Button" parent="HBoxContainer2"]
 layout_mode = 2
 icon = ExtResource("6_by4wa")
 
-[node name="MarginContainer7" type="MarginContainer" parent="HBoxContainer2"]
-visible = false
+[node name="MarginContainer6" type="MarginContainer" parent="HBoxContainer2"]
 layout_mode = 2
-theme_override_constants/margin_bottom = 10
+theme_override_constants/margin_right = -20
 
 [node name="Profile" type="Button" parent="HBoxContainer2"]
-visible = false
 layout_mode = 2
 icon = ExtResource("7_mmjep")
+
+[node name="Exit" type="Button" parent="."]
+layout_mode = 2
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 78.0
+offset_bottom = 78.0
+icon = ExtResource("5_45uyu")
 
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/Gallery" to="." method="gallery_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/Play" to="." method="play_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/Editor" to="." method="editor_pressed"]
-[connection signal="pressed" from="HBoxContainer2/Exit" to="." method="exit_pressed"]
 [connection signal="pressed" from="HBoxContainer2/Settings" to="." method="settings_pressed"]
 [connection signal="pressed" from="HBoxContainer2/Profile" to="." method="profile_pressed"]
+[connection signal="pressed" from="Exit" to="." method="exit_pressed"]

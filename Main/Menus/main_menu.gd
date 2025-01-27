@@ -14,9 +14,10 @@ func _ready() -> void:
 	place_control()
 
 func place_control() -> void:
-	menu_container.set_size(Vector2(get_window().get_size().x / 3, get_window().get_size().y / 5))
+	menu_container.set_size(Vector2(get_window().get_size().x / 3, get_window().get_size().y / 7))
 	menu_container.set_position(Vector2(get_window().get_size().x / 2 - (menu_container.size.x / 2), get_window().get_size().y / 2 + get_window().get_size().y / 10))
 	
+	important_container.set_size(Vector2.ZERO)
 	important_container.set_position(Vector2(get_window().get_size().x / 2 - (important_container.size.x / 2), get_window().get_size().y * 19 / 20 - important_container.size.y) )
 	
 	logo.set_scale(Vector2(float(get_window().get_size().x) / 4000, float(get_window().get_size().x) / 4000))
