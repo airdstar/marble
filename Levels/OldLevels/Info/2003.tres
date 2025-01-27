@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="level_resource" load_steps=3 format=3 uid="uid://oxrbta08yj10"]
+
+[ext_resource type="Script" path="res://Resources/LevelResource.gd" id="1_e6tql"]
+[ext_resource type="PackedScene" uid="uid://bn855imdjc15s" path="res://Levels/OldLevels/Scenes/L20.tscn" id="1_ekmfp"]
+
+[resource]
+script = ExtResource("1_e6tql")
+tagline = "Evil droppa"
+given_time = 5.0
+possible_rotations = Vector2(-90, -90)
+level_type = 1
+associated_scene = ExtResource("1_ekmfp")
+needs_testing = false
+max_tilt = 35.0
+gravity = Vector3(0, 9.8, 0)

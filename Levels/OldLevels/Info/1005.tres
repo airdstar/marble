@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="level_resource" load_steps=3 format=3 uid="uid://cfdjyvadlfxr8"]
+
+[ext_resource type="Script" path="res://Resources/LevelResource.gd" id="1_0xxv6"]
+[ext_resource type="PackedScene" uid="uid://cahlj7e8yliu7" path="res://Levels/OldLevels/Scenes/L6.tscn" id="1_ljp2g"]
+
+[resource]
+script = ExtResource("1_0xxv6")
+tagline = "Blocker blocker go away"
+given_time = 5.0
+possible_rotations = Vector2(265, 540)
+level_type = 0
+associated_scene = ExtResource("1_ljp2g")
+needs_testing = false
+max_tilt = 35.0
+gravity = Vector3(0, 9.8, 0)

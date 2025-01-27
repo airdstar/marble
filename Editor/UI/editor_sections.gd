@@ -50,6 +50,17 @@ func remove_selected() -> void:
 				part_unselected.emit()
 				break
 
+func clear_all() -> void:
+	selected_shape = null
+	selected_part = null
+	for n in part_buttons.size():
+		part_buttons[0].queue_free()
+		part_buttons.remove_at(0)
+	for n in shape_buttons.size():
+		shape_buttons[0].queue_free()
+		shape_buttons.remove_at(0)
+		
+
 func add_part(part : Node3D, toggle_button : bool) -> void:
 	var current_button : Button = Button.new()
 	current_button.text = part.get_meta("part_name")

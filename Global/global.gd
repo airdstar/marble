@@ -17,8 +17,8 @@ enum floor_type {
 var main_scene : main
 var current_scene : Node
 
-var level_scene_path : String = "res://Levels/EditorTests/Levels/"
-var level_resource_path : String = "res://Levels/EditorTests/LevelInfo/"
+var level_scene_path : String = "res://Levels/LevelScene/"
+var level_resource_path : String = "res://Levels/LevelInfo/"
 
 var pos_scenes : Dictionary = {
 	"main_menu" : "res://Main/Menus/MainMenu.tscn",

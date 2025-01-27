@@ -1,0 +1,96 @@
+[gd_scene load_steps=9 format=3 uid="uid://3vgtrp0i7ic1"]
+
+[ext_resource type="Script" path="res://Levels/Handlers/level.gd" id="1_b17xy"]
+[ext_resource type="PackedScene" uid="uid://crkk1kn3cayuw" path="res://Levels/Parts/Components/RotateableComponent.tscn" id="2_eyyfb"]
+[ext_resource type="PackedScene" uid="uid://df3msx1k8vfiy" path="res://Editor/Parts/Important/EndZone.tscn" id="3_ttov4"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_5w47p"]
+friction = 0.2
+rough = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cvea5"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_0540x"]
+size = Vector3(10, 2, 0.2)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_drtqp"]
+data = PackedVector3Array(-5, 1, 0.1, 5, 1, 0.1, -5, -1, 0.1, 5, 1, 0.1, 5, -1, 0.1, -5, -1, 0.1, 5, 1, -0.1, -5, 1, -0.1, 5, -1, -0.1, -5, 1, -0.1, -5, -1, -0.1, 5, -1, -0.1, 5, 1, 0.1, 5, 1, -0.1, 5, -1, 0.1, 5, 1, -0.1, 5, -1, -0.1, 5, -1, 0.1, -5, 1, -0.1, -5, 1, 0.1, -5, -1, -0.1, -5, 1, 0.1, -5, -1, 0.1, -5, -1, -0.1, 5, 1, 0.1, -5, 1, 0.1, 5, 1, -0.1, -5, 1, 0.1, -5, 1, -0.1, 5, 1, -0.1, -5, -1, 0.1, 5, -1, 0.1, -5, -1, -0.1, 5, -1, 0.1, 5, -1, -0.1, -5, -1, -0.1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_pxtk5"]
+size = Vector3(3, 1, 3)
+
+[node name="Platform" type="RigidBody3D"]
+physics_material_override = SubResource("PhysicsMaterial_5w47p")
+gravity_scale = 0.0
+freeze = true
+freeze_mode = 1
+script = ExtResource("1_b17xy")
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
+layers = 3
+use_collision = true
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 0.4, 0, 0, 0, 1, 0, 0, 0)
+radius = 10.0
+radial_segments = 30
+rings = 30
+material = SubResource("StandardMaterial3D_cvea5")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+operation = 2
+size = Vector3(20, 4, 20)
+
+[node name="Obstacles" type="Node3D" parent="."]
+
+[node name="RotatingObject" type="RigidBody3D" parent="Obstacles"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Obstacles/RotatingObject"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.969241, 0)
+mesh = SubResource("BoxMesh_0540x")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Obstacles/RotatingObject/MeshInstance3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Obstacles/RotatingObject/MeshInstance3D/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_drtqp")
+
+[node name="RotateableComponent" parent="Obstacles/RotatingObject" instance=ExtResource("2_eyyfb")]
+rotation_speed = 3.0
+
+[node name="Starts" type="Node3D" parent="."]
+
+[node name="Area3D" type="Area3D" parent="Starts"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Starts/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -5)
+shape = SubResource("BoxShape3D_pxtk5")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Starts/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -6)
+shape = SubResource("BoxShape3D_pxtk5")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="Starts/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -5)
+shape = SubResource("BoxShape3D_pxtk5")
+
+[node name="Ends" type="Node3D" parent="."]
+
+[node name="EndZone" parent="Ends" instance=ExtResource("3_ttov4")]
+transform = Transform3D(-3.09086e-08, -0.707107, -0.707107, 1, -4.37114e-08, 0, -3.09086e-08, -0.707107, 0.707107, 5.5, 0, 5.5)
+
+[node name="InputTrigger" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InputTrigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 2, -5)
+shape = SubResource("BoxShape3D_pxtk5")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="InputTrigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 2, -6)
+shape = SubResource("BoxShape3D_pxtk5")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="InputTrigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 2, -5)
+shape = SubResource("BoxShape3D_pxtk5")
+
+[connection signal="area_entered" from="InputTrigger" to="." method="input_trigger"]

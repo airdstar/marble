@@ -5,7 +5,7 @@ extends Control
 @onready var level_select := $LevelSelect
 @onready var new_level := $NewLevel
 
-var resource_path : String = "res://Levels/EditorTests/LevelInfo/"
+var resource_path : String = "res://Levels/LevelInfo/"
 
 var levels : Array[level_resource] = []
 
@@ -90,8 +90,6 @@ func level_select_show() -> void:
 func edit_pressed() -> void:
 	if selected_level != null:
 		level_selected.emit(selected_level)
-		for n in option_container.get_children():
-			n.button_pressed = false
 		visible = false
 
 func delete_pressed() -> void:

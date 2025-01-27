@@ -74,12 +74,16 @@ func open_level_select():
 	selected_part = null
 	selected_shape = null
 	held_shape = null
+	sections.clear_all()
 	adjusting = editor.adjustable.NONE
 	selected_tool = editor.tool.NONE
 	if level_base != null:
 		level_base.queue_free()
 		level_base = null
 	UI.hide_all()
+	for n in UI.level_select.option_container.get_children():
+		n.button_pressed = false
+	
 	UI.level_select.visible = true
 
 func reset_camera() -> void:
@@ -87,6 +91,7 @@ func reset_camera() -> void:
 
 func level_selected(level_info : level_resource) -> void:
 	chosen_level = level_info
+	UI.settings.set_settings(level_info)
 	level_base = chosen_level.associated_scene.instantiate()
 	add_child(level_base)
 	level_base.open_editor()
@@ -250,6 +255,34 @@ func tool_selected(tool : editor.tool) -> void:
 		editor.adjustable.SHAPE:
 			adjust_to = "Shape"
 	property_group_set(adjust_to)
+
+func level_info_updated() -> void:
+	if !UI.level_select.new_level.unavailable_names.has(UI.settings.name_field.text):
+		
+		var prev_name = chosen_level.name
+		var holder = chosen_level.associated_scene
+
+		chosen_level.name = UI.settings.name_field.text
+		
+		UI.level_select.new_level.unavailable_names.remove_at(UI.level_select.new_level.unavailable_names.find(prev_name))
+		UI.level_select.new_level.unavailable_names.append(chosen_level.name)
+		
+		for n in UI.level_select.option_container.get_children():
+			if n.button_pressed:
+				n.queue_free()
+		
+		UI.level_select.add_level(chosen_level)
+		
+		DirAccess.remove_absolute(Global.level_resource_path + prev_name + ".tres")
+		DirAccess.remove_absolute(Global.level_scene_path + prev_name + ".tscn")
+		ResourceSaver.save(holder, Global.level_scene_path + chosen_level.name + ".tscn")
+	if chosen_level.name == UI.settings.name_field.text:
+		chosen_level.level_difficulty = UI.settings.difficulty_field.selected
+		chosen_level.include_in_pool = UI.settings.include_box.button_pressed
+		ResourceSaver.save(chosen_level, Global.level_resource_path + chosen_level.name + ".tres")
+		UI.settings.close_settings()
+	
+
 
 func pre_save() -> void:
 	for n in level_base.parts:

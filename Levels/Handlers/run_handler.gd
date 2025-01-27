@@ -24,7 +24,22 @@ signal difficulty_changed
 func _ready() -> void:
 	master = get_parent()
 	if !master.set_pool:
-		pass
+		var dir = DirAccess.open(Global.level_resource_path)
+		dir.list_dir_begin()
+		var currentLevel : String = dir.get_next()
+		while currentLevel != "":
+			if '.remap' in currentLevel:
+				currentLevel = currentLevel.trim_suffix('.remap')
+			var holder = ResourceLoader.load(Global.level_resource_path + currentLevel)
+			if holder.include_in_pool:
+				match holder.level_difficulty:
+					Global.difficulty.EASY:
+						easy_levels.append(holder)
+					Global.difficulty.MEDIUM:
+						medium_levels.append(holder)
+			
+			currentLevel = dir.get_next()
+		dir.list_dir_end()
 	
 
 func reset_run() -> void:

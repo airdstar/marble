@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://1yq80goel736"]
+[gd_scene load_steps=46 format=3 uid="uid://1yq80goel736"]
 
 [ext_resource type="Script" path="res://Editor/level_editor.gd" id="1_gkh0n"]
 [ext_resource type="Texture2D" uid="uid://d0fbpahnke75l" path="res://Assets/grid.png" id="4_33n1c"]
@@ -11,8 +11,9 @@
 [ext_resource type="Script" path="res://Editor/UI/editor_parts.gd" id="6_xrgr4"]
 [ext_resource type="Script" path="res://Editor/UI/editor_sections.gd" id="7_2n8hv"]
 [ext_resource type="Script" path="res://Editor/UI/editor_tools.gd" id="8_pcger"]
-[ext_resource type="Script" path="res://Editor/UI/editor_settings.gd" id="11_dvs47"]
+[ext_resource type="Script" path="res://Editor/UI/editor_options.gd" id="11_dvs47"]
 [ext_resource type="Script" path="res://Editor/UI/editor_new_level.gd" id="12_hpcey"]
+[ext_resource type="Script" path="res://Editor/UI/editor_settings.gd" id="14_5wu5f"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lopki"]
 transparency = 1
@@ -591,6 +592,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Sections" type="Panel" parent="UI" node_paths=PackedStringArray("tab_bar", "geometry_holder", "shape_holder", "geometry_options", "important_holder")]
+visible = false
 layout_mode = 0
 offset_left = 900.0
 offset_top = 20.0
@@ -823,10 +825,7 @@ text = "Back"
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="HBoxContainer" type="HBoxContainer" parent="UI/LevelSelect/NewLevel/VBoxContainer"]
-layout_mode = 2
-
-[node name="LineEdit" type="LineEdit" parent="UI/LevelSelect/NewLevel/VBoxContainer/HBoxContainer"]
+[node name="LineEdit" type="LineEdit" parent="UI/LevelSelect/NewLevel/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "Level Name"
@@ -841,16 +840,60 @@ popup/item_0/text = "Platform"
 layout_mode = 2
 text = "Create Level"
 
-[node name="Settings" type="Panel" parent="UI"]
-visible = false
+[node name="Settings" type="Panel" parent="UI" node_paths=PackedStringArray("name_field", "type_field", "difficulty_field", "include_box")]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
+script = ExtResource("14_5wu5f")
+name_field = NodePath("VBoxContainer/LineEdit")
+type_field = NodePath("VBoxContainer/OptionButton")
+difficulty_field = NodePath("VBoxContainer/OptionButton2")
+include_box = NodePath("VBoxContainer/HBoxContainer/CheckBox")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UI/Settings"]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
+
+[node name="Button" type="Button" parent="UI/Settings/VBoxContainer"]
+layout_mode = 2
+text = "Back"
+
+[node name="LineEdit" type="LineEdit" parent="UI/Settings/VBoxContainer"]
+layout_mode = 2
+placeholder_text = "Level Name"
+
+[node name="OptionButton" type="OptionButton" parent="UI/Settings/VBoxContainer"]
+layout_mode = 2
+selected = 0
+item_count = 1
+popup/item_0/text = "Platform"
+
+[node name="OptionButton2" type="OptionButton" parent="UI/Settings/VBoxContainer"]
+layout_mode = 2
+selected = 0
+item_count = 3
+popup/item_0/text = "Easy"
+popup/item_1/text = "Medium"
+popup/item_1/id = 1
+popup/item_2/text = "Hard"
+popup/item_2/id = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/Settings/VBoxContainer"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="UI/Settings/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Include:"
+fit_content = true
+
+[node name="CheckBox" type="CheckBox" parent="UI/Settings/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="Button2" type="Button" parent="UI/Settings/VBoxContainer"]
+layout_mode = 2
+text = "Update"
 
 [connection signal="level_loaded" from="." to="UI/Sections" method="_on_level_loaded"]
 [connection signal="new_part_selected" from="." to="UI/Properties" method="part_selected"]
@@ -896,6 +939,7 @@ offset_bottom = 40.0
 [connection signal="pressed" from="UI/Tools/VBoxContainer/HBoxContainer/Hold" to="." method="switch_hold"]
 [connection signal="pressed" from="UI/Options/VBoxContainer/HBoxContainer/Save" to="." method="pre_save"]
 [connection signal="pressed" from="UI/Options/VBoxContainer/HBoxContainer/Test" to="." method="test_pressed"]
+[connection signal="pressed" from="UI/Options/VBoxContainer/HBoxContainer/Settings" to="UI/Settings" method="open_settings"]
 [connection signal="level_selected" from="UI/LevelSelect" to="." method="level_selected"]
 [connection signal="pressed" from="UI/LevelSelect/LevelSelect/HBoxContainer/New" to="UI/LevelSelect" method="new_level_pressed"]
 [connection signal="pressed" from="UI/LevelSelect/LevelSelect/HBoxContainer/Edit" to="UI/LevelSelect" method="edit_pressed"]
@@ -903,3 +947,5 @@ offset_bottom = 40.0
 [connection signal="level_created" from="UI/LevelSelect/NewLevel" to="UI/LevelSelect" method="level_created"]
 [connection signal="pressed" from="UI/LevelSelect/NewLevel/Back" to="UI/LevelSelect" method="level_select_show"]
 [connection signal="pressed" from="UI/LevelSelect/NewLevel/VBoxContainer/Create" to="UI/LevelSelect/NewLevel" method="create_pressed"]
+[connection signal="pressed" from="UI/Settings/VBoxContainer/Button" to="UI/Settings" method="close_settings"]
+[connection signal="pressed" from="UI/Settings/VBoxContainer/Button2" to="." method="level_info_updated"]

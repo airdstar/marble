@@ -45,6 +45,10 @@ func place_control() -> void:
 	level_select_container.set_size(level_select.size)
 	level_select_new_container.set_size(level_select.size)
 	
+	settings.set_size(Vector2(get_window().size.x / 5, get_window().size.y / 2))
+	settings.set_position(Vector2(get_window().size.x / 2 - settings.size.x / 2, get_window().size.y / 4))
+	settings_container.set_size(settings.size)
+	
 	tools.set_size(Vector2(get_window().size.x / 4, get_window().size.y / 20))
 	tools.set_position(Vector2(get_window().size.x / 2 - tools.size.x / 2, top_border))
 	tools_container.set_size(tools.size)

@@ -1,6 +1,6 @@
 extends Node
 
-@onready var name_field := $VBoxContainer/HBoxContainer/LineEdit
+@onready var name_field := $VBoxContainer/LineEdit
 @onready var type_field := $VBoxContainer/OptionButton
 var unavailable_names : Array[String] = [""]
 

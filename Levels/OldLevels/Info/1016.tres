@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="level_resource" load_steps=3 format=3 uid="uid://df8y43oqaee2o"]
+
+[ext_resource type="Script" path="res://Resources/LevelResource.gd" id="1_6iphw"]
+[ext_resource type="PackedScene" uid="uid://d0rfaljs561rh" path="res://Levels/OldLevels/Scenes/L21.tscn" id="1_olalk"]
+
+[resource]
+script = ExtResource("1_6iphw")
+tagline = "U cant catch me"
+given_time = 5.0
+possible_rotations = Vector2(0, 360)
+level_type = 0
+associated_scene = ExtResource("1_olalk")
+needs_testing = false
+max_tilt = 35.0
+gravity = Vector3(0, 9.8, 0)

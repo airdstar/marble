@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="level_resource" load_steps=3 format=3 uid="uid://db4ls118yrk7l"]
+
+[ext_resource type="PackedScene" uid="uid://cgnnbe8rwgc54" path="res://Levels/OldLevels/Scenes/L5.tscn" id="1_ilo55"]
+[ext_resource type="Script" path="res://Resources/LevelResource.gd" id="2_1djo8"]
+
+[resource]
+script = ExtResource("2_1djo8")
+tagline = "It go up on a tuesday"
+given_time = 5.0
+possible_rotations = Vector2(50, 310)
+level_type = 0
+associated_scene = ExtResource("1_ilo55")
+needs_testing = false
+max_tilt = 35.0
+gravity = Vector3(0, 9.8, 0)
