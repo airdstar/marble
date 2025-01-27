@@ -7,6 +7,10 @@ enum difficulty {
 	HARD
 }
 
+var easy_levels : Array[level_resource]
+var medium_levels : Array[level_resource]
+var hard_levels : Array[level_resource]
+
 var inRun := false
 
 var current_difficulty : difficulty
@@ -19,12 +23,15 @@ signal difficulty_changed
 
 func _ready() -> void:
 	master = get_parent()
+	if !master.set_pool:
+		pass
+	
 
 func reset_run() -> void:
 	levels_until_change = 5
 	current_level = 1
 	current_difficulty = difficulty.EASY
-	difficulty_changed.emit(Global.easy_levels)
+	difficulty_changed.emit(easy_levels)
 
 func next_level() -> void:
 	current_level += 1
@@ -39,8 +46,8 @@ func change_difficulty() -> void:
 		difficulty.EASY:
 			current_difficulty = difficulty.MEDIUM
 			levels_until_change = 2
-			difficulty_changed.emit(Global.medium_levels)
+			difficulty_changed.emit(medium_levels)
 		difficulty.MEDIUM:
 			current_difficulty = difficulty.EASY
 			levels_until_change = 5
-			difficulty_changed.emit(Global.easy_levels)
+			difficulty_changed.emit(easy_levels)

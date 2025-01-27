@@ -1,6 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://daqk2roaa6h1v"]
+[gd_scene load_steps=8 format=3 uid="uid://daqk2roaa6h1v"]
 
 [ext_resource type="Script" path="res://Main/player.gd" id="1_8df3t"]
+[ext_resource type="Texture2D" uid="uid://580l6qpyteqr" path="res://Assets/test face.png" id="2_upe4j"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_vmld2"]
 rough = true
@@ -33,6 +34,13 @@ shape = SubResource("SphereShape3D_84e8f")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("SphereMesh_4hlcw")
+
+[node name="Decal" type="Decal" parent="MeshInstance3D"]
+transform = Transform3D(-4.37114e-08, -1, 0, -4.37114e-08, 1.91069e-15, -1, 1, -4.37114e-08, -4.37114e-08, 0.281722, 0.0664664, -0.0607415)
+size = Vector3(0.5, 0.5, 0.5)
+texture_albedo = ExtResource("2_upe4j")
+upper_fade = 1e-05
+lower_fade = 1.05167e-05
 
 [node name="Area3D" type="Area3D" parent="."]
 

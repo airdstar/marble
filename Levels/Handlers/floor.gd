@@ -5,7 +5,10 @@ class_name floor
 var is_run := false
 var set_pool := false
 var in_order := false
+
+# If floor is on a timer
 var allow_timer := false
+# If timer should count up
 var timer_count_up := false
 
 #State related

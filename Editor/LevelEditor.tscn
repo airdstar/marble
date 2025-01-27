@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=3 uid="uid://1yq80goel736"]
+[gd_scene load_steps=45 format=3 uid="uid://1yq80goel736"]
 
 [ext_resource type="Script" path="res://Editor/level_editor.gd" id="1_gkh0n"]
 [ext_resource type="Texture2D" uid="uid://d0fbpahnke75l" path="res://Assets/grid.png" id="4_33n1c"]
@@ -23,6 +23,17 @@ disable_receive_shadows = true
 [sub_resource type="BoxMesh" id="BoxMesh_5yxar"]
 material = SubResource("StandardMaterial3D_lopki")
 size = Vector3(20, 0.01, 20)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3xjy8"]
+transparency = 1
+albedo_color = Color(0.886275, 0.647059, 0.364706, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2ruf5"]
+render_priority = -1
+next_pass = SubResource("StandardMaterial3D_3xjy8")
+transparency = 1
+no_depth_test = true
+albedo_color = Color(0.711608, 0.494965, 0.22394, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ytq3e"]
 no_depth_test = true
@@ -158,11 +169,27 @@ fov = 37.8493
 [node name="SpotLight3D2" type="SpotLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 30, 0)
 light_energy = 4.0
+light_cull_mask = 4294966783
+shadow_enabled = true
+spot_range = 160.0
+
+[node name="SpotLight3D4" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 30, 0)
+light_energy = 4.0
+light_cull_mask = 4294966784
 spot_range = 160.0
 
 [node name="SpotLight3D3" type="SpotLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, -30, 0)
 light_energy = 4.0
+light_cull_mask = 4294966783
+shadow_enabled = true
+spot_range = 160.0
+
+[node name="SpotLight3D5" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, -30, 0)
+light_energy = 4.0
+light_cull_mask = 4294966784
 spot_range = 160.0
 
 [node name="VisualGrid" type="MeshInstance3D" parent="."]
@@ -172,6 +199,7 @@ mesh = SubResource("BoxMesh_5yxar")
 skeleton = NodePath("")
 
 [node name="ShapePreview" parent="." instance=ExtResource("4_stuxe")]
+material_override = SubResource("StandardMaterial3D_2ruf5")
 
 [node name="Adjust" type="Node3D" parent="." node_paths=PackedStringArray("pos", "size", "rot", "pos_x", "pos_y", "pos_z", "pos_x_mesh", "pos_y_mesh", "pos_z_mesh", "size_x", "size_y", "size_z", "size_x_mesh", "size_y_mesh", "size_z_mesh", "rot_proxy", "rot_x", "rot_y", "rot_z", "rot_x_mesh", "rot_y_mesh", "rot_z_mesh")]
 script = ExtResource("5_6wt44")
@@ -310,13 +338,21 @@ shape = SubResource("BoxShape3D_ocfkr")
 
 [node name="RotationProxy" type="Node3D" parent="Adjust/Rotation"]
 
-[node name="UI" type="Control" parent="."]
+[node name="UI" type="Control" parent="." node_paths=PackedStringArray("tools", "tools_container", "properties", "properties_container", "options", "options_container", "settings", "settings_container")]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 theme = ExtResource("5_msf75")
 script = ExtResource("6_mhsjx")
+tools = NodePath("Tools")
+tools_container = NodePath("Tools/VBoxContainer")
+properties = NodePath("Properties")
+properties_container = NodePath("Properties/VBoxContainer")
+options = NodePath("Options")
+options_container = NodePath("Options/VBoxContainer")
+settings = NodePath("Settings")
+settings_container = NodePath("Settings/VBoxContainer")
 
 [node name="Properties" type="Panel" parent="UI" node_paths=PackedStringArray("property_options", "part_properties", "shape_properties", "part_name", "part_pos", "part_size", "part_rot", "dynamic_movement", "dynamic_rotation", "shape_rot")]
 layout_mode = 0
@@ -458,13 +494,6 @@ fit_content = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 1.4
-selected = 0
-item_count = 3
-popup/item_0/text = "None"
-popup/item_1/text = "Hole"
-popup/item_1/id = 1
-popup/item_2/text = "Pointed"
-popup/item_2/id = 2
 
 [node name="ShapeSides" type="HBoxContainer" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties"]
 layout_mode = 2
@@ -519,7 +548,6 @@ layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="Parts" type="Panel" parent="UI" node_paths=PackedStringArray("shape_holder", "important_holder")]
-visible = false
 layout_mode = 0
 offset_right = 300.0
 offset_bottom = 300.0
@@ -537,6 +565,7 @@ layout_mode = 2
 
 [node name="RichTextLabel" type="RichTextLabel" parent="UI/Parts/VBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 3
 bbcode_enabled = true
 text = "[center]Parts"
 fit_content = true
@@ -705,37 +734,37 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "Hold"
 
-[node name="Settings" type="Panel" parent="UI"]
+[node name="Options" type="Panel" parent="UI"]
 layout_mode = 0
 offset_top = 300.0
 offset_right = 40.0
 offset_bottom = 340.0
 script = ExtResource("11_dvs47")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/Settings"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Options"]
 layout_mode = 0
 offset_right = 185.0
 offset_bottom = 40.0
 
-[node name="MarginContainer" type="MarginContainer" parent="UI/Settings/VBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="UI/Options/VBoxContainer"]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="UI/Settings/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/Options/VBoxContainer"]
 layout_mode = 2
 
-[node name="Save" type="Button" parent="UI/Settings/VBoxContainer/HBoxContainer"]
+[node name="Save" type="Button" parent="UI/Options/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 toggle_mode = true
 text = "Save"
 
-[node name="Test" type="Button" parent="UI/Settings/VBoxContainer/HBoxContainer"]
+[node name="Test" type="Button" parent="UI/Options/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 toggle_mode = true
 text = "Test"
 
-[node name="Settings" type="Button" parent="UI/Settings/VBoxContainer/HBoxContainer"]
+[node name="Settings" type="Button" parent="UI/Options/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Settings"
@@ -812,6 +841,17 @@ popup/item_0/text = "Platform"
 layout_mode = 2
 text = "Create Level"
 
+[node name="Settings" type="Panel" parent="UI"]
+visible = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Settings"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
 [connection signal="level_loaded" from="." to="UI/Sections" method="_on_level_loaded"]
 [connection signal="new_part_selected" from="." to="UI/Properties" method="part_selected"]
 [connection signal="new_shape_selected" from="." to="UI/Properties" method="shape_selected"]
@@ -854,8 +894,8 @@ text = "Create Level"
 [connection signal="toggled" from="UI/Tools/VBoxContainer/HBoxContainer/Size" to="UI/Tools" method="size_toggled"]
 [connection signal="toggled" from="UI/Tools/VBoxContainer/HBoxContainer/Rotation" to="UI/Tools" method="rot_toggled"]
 [connection signal="pressed" from="UI/Tools/VBoxContainer/HBoxContainer/Hold" to="." method="switch_hold"]
-[connection signal="pressed" from="UI/Settings/VBoxContainer/HBoxContainer/Save" to="." method="pre_save"]
-[connection signal="pressed" from="UI/Settings/VBoxContainer/HBoxContainer/Test" to="." method="test_pressed"]
+[connection signal="pressed" from="UI/Options/VBoxContainer/HBoxContainer/Save" to="." method="pre_save"]
+[connection signal="pressed" from="UI/Options/VBoxContainer/HBoxContainer/Test" to="." method="test_pressed"]
 [connection signal="level_selected" from="UI/LevelSelect" to="." method="level_selected"]
 [connection signal="pressed" from="UI/LevelSelect/LevelSelect/HBoxContainer/New" to="UI/LevelSelect" method="new_level_pressed"]
 [connection signal="pressed" from="UI/LevelSelect/LevelSelect/HBoxContainer/Edit" to="UI/LevelSelect" method="edit_pressed"]
