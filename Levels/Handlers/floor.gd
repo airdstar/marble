@@ -55,6 +55,7 @@ func _ready() -> void:
 	place_control()
 
 func _process(delta: float) -> void:
+	
 	fps_text.text = "FPS %d" % Engine.get_frames_per_second()
 	speed_text.text = "Speed %.2f" % (abs(marble.angular_velocity.x) + abs(marble.angular_velocity.y) + abs(marble.angular_velocity.z))
 	
@@ -68,6 +69,10 @@ func _process(delta: float) -> void:
 			timer_text.text = "[center]" + "%.2f" % timer.time_left
 		else:
 			timer_text.text = "[center]" + "%.2f" % timer.wait_time
+	
+	if timer_count_up:
+		if !transitioning:
+			timer_text.text
 	
 	if Input.is_action_just_pressed("back"):
 		game_over()
