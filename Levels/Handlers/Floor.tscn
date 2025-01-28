@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://4bfdr3xelqm8"]
+[gd_scene load_steps=11 format=3 uid="uid://4bfdr3xelqm8"]
 
 [ext_resource type="Script" path="res://Levels/Handlers/floor.gd" id="1_6o7sh"]
 [ext_resource type="Script" path="res://Levels/Handlers/level_handler.gd" id="1_q6dl6"]
@@ -6,8 +6,10 @@
 [ext_resource type="Script" path="res://Levels/Handlers/camera.gd" id="4_e22wn"]
 [ext_resource type="Theme" uid="uid://dl6a6mq4q5lda" path="res://Assets/Themes/timer.tres" id="5_yj74y"]
 [ext_resource type="FontFile" uid="uid://tc8t70kcccsk" path="res://Assets/Themes/Fonts/easvhs.ttf" id="6_kmhra"]
+[ext_resource type="Script" path="res://Levels/Handlers/panels.gd" id="7_vjknv"]
 
 [sub_resource type="Environment" id="Environment_on5bl"]
+background_mode = 1
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_omjb2"]
 size = Vector3(200, 1, 200)
@@ -123,10 +125,35 @@ transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 
 light_energy = 0.05
 
 [node name="SpotLight3D" type="SpotLight3D" parent="Lights"]
-transform = Transform3D(1, 0, 0, 0, 0.984808, 0.173648, 0, -0.173648, 0.984808, 0, 3, 15)
-light_energy = 5.0
-spot_range = 20.0
-spot_angle = 20.0
+transform = Transform3D(1, 0, 0, 0, 0.939693, 0.34202, 0, -0.34202, 0.939693, 0, 6, 15)
+light_energy = 10.0
+light_cull_mask = 4294966815
+spot_range = 100.0
+spot_angle = 30.0
+
+[node name="SpotLight3D2" type="SpotLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, -0.939693, 0.34202, 0, -0.34202, -0.939693, 0, 6, -15)
+light_energy = 10.0
+light_cull_mask = 4294966815
+spot_range = 100.0
+spot_angle = 30.0
+
+[node name="SpotLight3D3" type="SpotLight3D" parent="Lights"]
+transform = Transform3D(-4.37114e-08, -0.34202, 0.939693, 0, 0.939693, 0.34202, -1, 1.49502e-08, -4.10753e-08, 15, 6, 0)
+light_energy = 10.0
+light_cull_mask = 4294966815
+spot_range = 100.0
+spot_angle = 30.0
+
+[node name="SpotLight3D4" type="SpotLight3D" parent="Lights"]
+transform = Transform3D(-4.37114e-08, 0.34202, -0.939693, 0, 0.939693, 0.34202, 1, 1.49502e-08, -4.10753e-08, -15, 6, 0)
+light_energy = 10.0
+light_cull_mask = 4294966815
+spot_range = 100.0
+spot_angle = 30.0
+
+[node name="Panels" type="Node" parent="."]
+script = ExtResource("7_vjknv")
 
 [connection signal="level_generated" from="LevelHandler" to="." method="level_generated"]
 [connection signal="difficulty_changed" from="RunHandler" to="LevelHandler" method="set_level_pool"]
