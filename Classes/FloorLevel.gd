@@ -15,5 +15,9 @@ enum floor_type {
 	CHALLENGE
 }
 
-var level_scene_path : String = "res://Levels/LevelScene/"
-var level_resource_path : String = "res://Levels/LevelInfo/"
+enum panel_style {
+    LEFT,
+	RIGHT,
+	OTHER,
+	TWO
+}

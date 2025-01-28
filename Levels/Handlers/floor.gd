@@ -93,6 +93,10 @@ func _physics_process(_delta: float) -> void:
 	var c = a.slerp(b,0.1)
 	origin.transform.basis = Basis(c)
 
+	if marble != null:
+		print(Vector3(1,0,1) * Vector3(origin_tilt.x, 0, origin_tilt.y) * delta * 200)
+		#marble.apply_force(Vector3(1,0,1) * Vector3(origin_tilt.x, 0, origin_tilt.y) * delta * 200)
+
 func handle_tilt(delta : float) -> void:
 	
 	var tilt_scalar := 1.0
