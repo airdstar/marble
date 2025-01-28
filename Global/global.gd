@@ -27,6 +27,11 @@ var pos_scenes : Dictionary = {
 	"editor" : "res://Editor/LevelEditor.tscn",
 	}
 
+var popup_scenes : Dictionary = {
+	"settings" : 1
+	"run_end" : 2
+}
+
 var resolutions_16_9 : Dictionary = {
 	"1920x1080" : Vector2(1920,1080),
 	"1600x900" : Vector2(1600,900),
@@ -104,6 +109,17 @@ func open_floor(type : floor_type, level_pool : Array[level_resource]):
 			holder.in_order = true
 	
 	current_scene.call_deferred("start_game")
+
+
+func open_popup() -> void:
+	if main_scene.popup_scene != null:
+		main_scene.popup_scene.queue_free()
+
+func open_profile(player_info : PlayerInfo) -> void:
+	if main_scene.popup_scene != null:
+		main_scene.popup_scene.queue_free()
+	var holder = preload("res://Main/Menus/Profile.tscn").instantiate()
+	
 
 func set_resolution() -> void:
 	get_window().set_size(aspect_ratios[PlayerInfo.player_settings.aspect_ratio][PlayerInfo.player_settings.resolution])

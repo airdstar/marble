@@ -1,9 +1,22 @@
 extends Node
 
+enum style {
+	LEFT,
+	RIGHT,
+	OTHER,
+	TWO
+}
+
+var pivots : Array[Node3D]
+var speed : int = 5
+var chosen_style : style
+
 func _ready() -> void:
+	choose_random()
 	for m in 15:
 		var pivot = Node3D.new()
 		add_child(pivot)
+		pivots.append(pivot)
 		for n in 50:
 			var holder = MeshInstance3D.new()
 			holder.mesh = ResourceLoader.load("res://Levels/Parts/Panel.obj")
@@ -12,3 +25,10 @@ func _ready() -> void:
 			holder.set_layer_mask_value(7, true)
 			holder.set_layer_mask_value(1, false)
 			pivot.add_child(holder)
+
+func choose_random() -> void:
+	pass
+
+func _process(delta: float) -> void:
+	for n in pivots:
+		n.rotate_y(speed * delta)

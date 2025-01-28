@@ -70,9 +70,6 @@ func _process(delta: float) -> void:
 		else:
 			timer_text.text = "[center]" + "%.2f" % timer.wait_time
 	
-	if timer_count_up:
-		if !transitioning:
-			timer_text.text
 	
 	if Input.is_action_just_pressed("back"):
 		game_over()
