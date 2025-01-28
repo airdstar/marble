@@ -1,10 +1,5 @@
 extends Node
 
-var enable_play : bool = true
-var enable_gallery : bool = false
-#var enable_challenges : bool = false
-#var enable_multiplayer : bool = false
-
 @export var menu_container : VBoxContainer
 @export var important_container : HBoxContainer
 @export var logo : Sprite2D
@@ -36,10 +31,10 @@ func editor_pressed() -> void:
 	Global.open_scene("editor")
 
 func profile_pressed() -> void:
-	add_child(PlayerInfo.player_data.open_profile())
+	Global.open_profile(PlayerInfo.player_data)
 
 func settings_pressed() -> void:
-	Global.open_scene("settings")
+	Global.open_popup("settings")
 
 func exit_pressed() -> void:
 	get_tree().quit()

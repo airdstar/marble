@@ -44,7 +44,7 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("back"):
-		Global.open_scene(Global.main_scene.prev_scene)
+		Global.close_popup()
 
 func place_control() -> void:
 	settings_box.call_deferred("set_size", Vector2(get_window().get_size().x / 1.5, get_window().get_size().y))

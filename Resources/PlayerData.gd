@@ -8,7 +8,6 @@ class_name PlayerData
 
 @export var player_color : Color = Color(1,1,1)
 
-
 func check_info() -> void:
 	if highest_level == null:
 		highest_level = 0
@@ -16,7 +15,3 @@ func check_info() -> void:
 	if player_color == null:
 		player_color = Color(1,1,1)
 
-func open_profile():
-	var toReturn = preload("res://Main/Menus/Profile.tscn").instantiate()
-	toReturn.set_data(self)
-	return toReturn
