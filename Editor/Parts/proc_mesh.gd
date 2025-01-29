@@ -82,11 +82,20 @@ func size_changed(new_size : Vector3) -> void:
 
 func rotation_changed(new_rotation : Vector3) -> void:
 	if shape_info.size() != 0:
+		var q1 : Quaternion = Quaternion(
+			cos(deg_to_rad(new_rotation.x/2)) * cos(deg_to_rad(new_rotation.y/2)) * cos(deg_to_rad(new_rotation.z/2)) + sin(deg_to_rad(new_rotation.x/2)) * sin(deg_to_rad(new_rotation.y/2)) * sin(deg_to_rad(new_rotation.z/2)),
+			cos(deg_to_rad(new_rotation.x/2)) * cos(deg_to_rad(new_rotation.y/2)) * sin(deg_to_rad(new_rotation.z/2)) - sin(deg_to_rad(new_rotation.x/2)) * sin(deg_to_rad(new_rotation.y/2)) * cos(deg_to_rad(new_rotation.z/2)),
+			cos(deg_to_rad(new_rotation.x/2)) * sin(deg_to_rad(new_rotation.y/2)) * cos(deg_to_rad(new_rotation.z/2)) + sin(deg_to_rad(new_rotation.x/2)) * cos(deg_to_rad(new_rotation.y/2)) * sin(deg_to_rad(new_rotation.z/2)),
+			sin(deg_to_rad(new_rotation.x/2)) * cos(deg_to_rad(new_rotation.y/2)) * cos(deg_to_rad(new_rotation.z/2)) - cos(deg_to_rad(new_rotation.x/2)) * sin(deg_to_rad(new_rotation.y/2)) * sin(deg_to_rad(new_rotation.z/2))
+		)
+		shape_info[0].rotation_q = q1
+		#print(new_rotation * q1)
+		print(Vector3(rad_to_deg(1),rad_to_deg(1),rad_to_deg(1)) * q1)
 		shape_info[0].x_rotation = new_rotation.x
 		shape_info[0].y_rotation = new_rotation.y
 		shape_info[0].z_rotation = new_rotation.z
 		regenerate_mesh()
-		rotation_change_successful.emit(new_rotation)
+		rotation_change_successful.emit(Vector3(rad_to_deg(1),rad_to_deg(1),rad_to_deg(1)) * q1)
 		
 
 func name_changed(new_name : String) -> void:
