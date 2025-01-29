@@ -1,5 +1,44 @@
 extends Node
 
+var resolutions_16_9 : Dictionary = {
+	"1920x1080" : Vector2(1920,1080),
+	"1600x900" : Vector2(1600,900),
+	"1366x768" : Vector2(1366,768),
+	"1280x720" : Vector2(1280,720),
+	"960x540" : Vector2(960,540),
+	"854x480" : Vector2(854,480),
+	}
+
+var resolutions_16_10 : Dictionary = {
+	"1920x1200" : Vector2(1920,1200)
+	}
+
+var resolutions_4_3 : Dictionary = {
+	"1200x900" : Vector2(1200,900)
+	}
+
+var aspect_ratios : Dictionary = {"16:9" : resolutions_16_9,
+									"4:3" : resolutions_4_3,
+									"16:10" : resolutions_16_10}
+
+var level_scene_path : String = "res://Levels/LevelScene/"
+var level_resource_path : String = "res://Levels/LevelInfo/"
+
+var pos_scenes : Dictionary = {
+	"main_menu" : "res://Main/Menus/MainMenu.tscn",
+	"settings" : "res://Main/Menus/SettingsMenu.tscn",
+	"gallery" : "res://Main/Menus/Gallery.tscn",
+	"editor" : "res://Editor/LevelEditor.tscn",
+	}
+
+var pos_popup_scenes : Dictionary = {
+	"settings" : "res://Main/Menus/SettingsMenu.tscn",
+	"run_end" : 2
+}
+
+var main_scene : main
+var current_scene : Node
+
 func _ready():
 	PlayerInfo.load_info()
 
@@ -14,7 +53,7 @@ func open_scene(scene : String) -> void:
 	if main_scene.child_scene != null:
 		main_scene.child_scene.queue_free()
 	
-	var holder = load(Paths.pos_scenes[scene])
+	var holder = load(pos_scenes[scene])
 	holder = holder.instantiate()
 	
 	if holder != null:
@@ -62,7 +101,7 @@ func open_popup(scene : String) -> void:
 	if main_scene.popup_scene != null:
 		main_scene.popup_scene.queue_free()
 	
-	var holder = load(Paths.pos_popup_scenes[scene])
+	var holder = load(pos_popup_scenes[scene])
 	holder = holder.instantiate()
 
 	if holder != null:
@@ -85,7 +124,7 @@ func open_profile(player_info : PlayerData) -> void:
 	
 
 func set_resolution() -> void:
-	get_window().set_size(Visuals.aspect_ratios[PlayerInfo.player_settings.aspect_ratio][PlayerInfo.player_settings.resolution])
+	get_window().set_size(aspect_ratios[PlayerInfo.player_settings.aspect_ratio][PlayerInfo.player_settings.resolution])
 	
 	var screen_center = DisplayServer.screen_get_position() + DisplayServer.screen_get_size() / 2
 	var window_size = get_window().get_size_with_decorations()

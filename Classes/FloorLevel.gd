@@ -16,7 +16,7 @@ enum floor_type {
 }
 
 enum panel_style {
-    LEFT,
+	LEFT,
 	RIGHT,
 	OTHER,
 	TWO

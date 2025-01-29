@@ -36,7 +36,6 @@ var settings = PlayerInfo.player_settings
 
 @onready var camera := $camera_y
 @onready var origin := $Origin
-@onready var skybox = $WorldEnvironment.environment
 @onready var timer : Timer = $Timer
 
 @onready var level_handler : LevelHandler = $LevelHandler
@@ -51,7 +50,6 @@ var settings = PlayerInfo.player_settings
 @onready var level_count := $UI/End/LevelCount
 
 func _ready() -> void:
-	camera.skybox = skybox
 	place_control()
 
 func _process(delta: float) -> void:
@@ -75,10 +73,9 @@ func _process(delta: float) -> void:
 		game_over()
 
 
-func _physics_process(_delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	
 	relative_skybox_rotation += relative_desired_rotation
-	skybox.sky_rotation += relative_desired_rotation
 	
 	input_tilt.x = clamp(input_tilt.x, deg_to_rad(-35), deg_to_rad(35))
 	input_tilt.y = clamp(input_tilt.y, deg_to_rad(-35), deg_to_rad(35))
@@ -94,8 +91,7 @@ func _physics_process(_delta: float) -> void:
 	origin.transform.basis = Basis(c)
 
 	if marble != null:
-		print(Vector3(1,0,1) * Vector3(origin_tilt.x, 0, origin_tilt.y) * delta * 200)
-		#marble.apply_force(Vector3(1,0,1) * Vector3(origin_tilt.x, 0, origin_tilt.y) * delta * 200)
+		marble.apply_force(Vector3(1,0,1) * Vector3(origin_tilt.x, 0, origin_tilt.y) * delta * 2000)
 
 func handle_tilt(delta : float) -> void:
 	
@@ -218,16 +214,13 @@ func default_camera_skybox() -> void:
 			camera.allow_input = true
 			var rot = randf_range(0, 360)
 			camera.rotation.y = deg_to_rad(rot)
-			camera.skybox.sky_rotation = Vector3(0, deg_to_rad(rot), 0) + relative_skybox_rotation
 		1:
 			camera.allow_input = false
 			match randi_range(0,1):
 				0:
 					camera.rotation.y = deg_to_rad(90)
-					camera.skybox.sky_rotation = Vector3(0, deg_to_rad(90), 0) + relative_skybox_rotation
 				1:
 					camera.rotation.y = deg_to_rad(-90)
-					camera.skybox.sky_rotation = Vector3(0, deg_to_rad(-90), 0) + relative_skybox_rotation
 
 func reset_marble() -> void:
 	marble.visible = true

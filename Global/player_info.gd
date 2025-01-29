@@ -11,14 +11,14 @@ func load_info() -> void:
 		print("Data path is missing")
 		clear_data()
 	else:
-		player_data = load(data_save_path)
+		player_data = ResourceLoader.load(data_save_path)
 		player_data.check_info()
 	
 	if !FileAccess.file_exists(settings_save_path):
 		print("Settings path is missing")
 		clear_settings()
 	else:
-		player_settings = load(settings_save_path)
+		player_settings = ResourceLoader.load(settings_save_path)
 		player_settings.check_info()
 		Global.set_resolution()
 

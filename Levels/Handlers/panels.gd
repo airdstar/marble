@@ -3,7 +3,8 @@ extends Node
 var rows := 15
 var columns := 60
 var pivots : Array[Node3D]
-var speed : int = 5
+var speed : float = 0.05
+var current_color : Color
 var chosen_style : FloorLevel.panel_style
 
 func _ready() -> void:
@@ -28,5 +29,6 @@ func change_color() -> void:
 	pass
 
 func _process(delta: float) -> void:
-	for n in pivots:
-		n.rotate_y(speed * delta)
+	pass
+	#for n in pivots:
+		#n.rotate_y(speed * delta)

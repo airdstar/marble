@@ -35,11 +35,9 @@ environment = SubResource("Environment_on5bl")
 
 [node name="Origin" type="Node3D" parent="."]
 
-[node name="camera_y" type="Node3D" parent="." node_paths=PackedStringArray("panels", "camera")]
+[node name="camera_y" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.5, 0)
 script = ExtResource("4_e22wn")
-panels = NodePath("../Panels")
-camera = NodePath("Camera3D")
 
 [node name="Camera3D" type="Camera3D" parent="camera_y"]
 transform = Transform3D(1, 0, 0, 0, 0.939693, 0.34202, 0, -0.34202, 0.939693, 0, 0, 15)
@@ -154,7 +152,7 @@ light_cull_mask = 4294966815
 spot_range = 100.0
 spot_angle = 30.0
 
-[node name="Panels" type="Node3D" parent="."]
+[node name="Panels" type="Node" parent="."]
 script = ExtResource("7_vjknv")
 
 [connection signal="level_generated" from="LevelHandler" to="." method="level_generated"]

@@ -4,7 +4,7 @@ class_name level_resource
 ## Name of the level
 @export var name : String = "Name"
 
-@export var level_difficulty : Global.difficulty = Global.difficulty.EASY
+@export var level_difficulty : FloorLevel.difficulty = FloorLevel.difficulty.EASY
 
 @export_enum("Platform", "2D") var level_type : int = 0
 

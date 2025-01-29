@@ -22,7 +22,7 @@ func _process(delta: float) -> void:
 	rotate_logo.rotation = (rotate_logo.rotation + 0.5 * delta)
 
 func play_pressed() -> void:
-	Global.open_floor(Global.floor_type.PLAY, [])
+	Global.open_floor(FloorLevel.floor_type.PLAY, [])
 
 func gallery_pressed() -> void:
 	Global.open_scene("gallery")
