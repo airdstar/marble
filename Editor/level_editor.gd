@@ -130,7 +130,7 @@ func shape_selected(shape : shape_resource) -> void:
 
 	adjuster.selected_pos_changed(shape.total_offset)
 	adjuster.selected_size_changed(shape.size)
-	adjuster.selected_rotation_changed(Vector3(shape.x_rotation, shape.y_rotation, shape.z_rotation))
+	adjuster.selected_rotation_changed(Vector3.ZERO)
 	new_shape_selected.emit(shape)
 
 func shape_unselected() -> void:

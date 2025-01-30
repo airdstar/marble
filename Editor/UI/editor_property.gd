@@ -142,7 +142,7 @@ func display_shape_properties(shape : shape_resource) -> void:
 	shape_name.text = shape.shape_name
 	shape_pos.text = " Position: %.1f" % shape.total_offset.x + ", %.1f" % shape.total_offset.y + ", %.1f" % shape.total_offset.z
 	shape_size.text = " Size: %.1f" % shape.size.x + ", %.1f" % shape.size.y + ", %.1f" % shape.size.z
-	shape_rot.text = " Rotation: %d" % shape.x_rotation + ", %d" % shape.y_rotation + ", %d" % shape.z_rotation
+	#shape_rot.text = " Rotation: %d" % shape.x_rotation + ", %d" % shape.y_rotation + ", %d" % shape.z_rotation
 	
 	if shape.usable_mods.size() > 1:
 		shape_modifier_holder.visible = true

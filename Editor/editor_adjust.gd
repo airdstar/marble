@@ -97,11 +97,11 @@ func _process(_delta : float) -> void:
 			if global_pos != null:
 				match axis_grabbed:
 					1:
-						global_pos = Vector3(snapped(global_pos.z * 50, snapping * 10) + starting_rotation, rot_proxy.rotation.y, rot_proxy.rotation.z)
+						global_pos = Vector3(snapped(global_pos.z * 50, snapping * 10), 0, 0)
 					2:
-						global_pos = Vector3(rot_proxy.rotation.x, snapped(-(global_pos.x + global_pos.z) * 50, snapping * 10) + starting_rotation, rot_proxy.rotation.z)
+						global_pos = Vector3(0, snapped(-(global_pos.x + global_pos.z) * 50, snapping * 10), 0)
 					3:
-						global_pos = Vector3(rot_proxy.rotation.x, rot_proxy.rotation.y, -snapped(global_pos.x * 50, snapping * 10) + starting_rotation)
+						global_pos = Vector3(0, 0, -snapped(global_pos.x * 50, snapping * 10))
 				rot_changed.emit(global_pos)
 		
 

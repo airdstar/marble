@@ -12,7 +12,10 @@ func load_info() -> void:
 		clear_data()
 	else:
 		player_data = ResourceLoader.load(data_save_path)
-		player_data.check_info()
+		if player_data != null:
+			player_data.check_info()
+		else:
+			clear_data()
 	
 	if !FileAccess.file_exists(settings_save_path):
 		print("Settings path is missing")
