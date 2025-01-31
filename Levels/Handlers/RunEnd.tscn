@@ -10,8 +10,6 @@ var run_info
 func _ready():
 	PlayerInfo.player_data.game_over_count += 1
 	
-	run_info = get_parent().run_info
-	
 	level_display.text = \"[center][rainbow]\"
 	if run_info.current_level > PlayerInfo.player_data.highest_level:
 		level_display.text += \"New Record!\\n\"
@@ -25,9 +23,8 @@ func _ready():
 
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed(\"back\"):
-		get_tree().paused = false
-		Global.open_scene(\"main_menu\")
-
+		Global.current_scene.close_floor()
+		
 func run_restart() -> void:
 	get_tree().paused = false
 	Global.runBase.timerText.visible = true

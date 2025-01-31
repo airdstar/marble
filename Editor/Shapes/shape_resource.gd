@@ -20,7 +20,6 @@ enum mod {
 @export var total_offset := Vector3.ZERO
 @export var size := Vector3(1,1,1)
 @export var rotation_q : Quaternion = Quaternion.IDENTITY
-@export var prev_rotation := Vector3.ZERO
 
 func set_mods() -> void:
 	pass

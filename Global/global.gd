@@ -33,7 +33,7 @@ var pos_scenes : Dictionary = {
 
 var pos_popup_scenes : Dictionary = {
 	"settings" : "res://Main/Menus/SettingsMenu.tscn",
-	"run_end" : 2
+	"run_end" : "res://Levels/Handlers/RunEnd.tscn"
 }
 
 var main_scene : main

@@ -53,9 +53,10 @@ func next_level() -> void:
 func change_difficulty() -> void:
 	match current_difficulty:
 		FloorLevel.difficulty.EASY:
-			current_difficulty = FloorLevel.difficulty.MEDIUM
-			levels_until_change = 2
-			difficulty_changed.emit(medium_levels)
+			pass
+			#current_difficulty = FloorLevel.difficulty.MEDIUM
+			#levels_until_change = 2
+			#difficulty_changed.emit(medium_levels)
 		FloorLevel.difficulty.MEDIUM:
 			current_difficulty = FloorLevel.difficulty.EASY
 			levels_until_change = 5

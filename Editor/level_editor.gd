@@ -214,9 +214,12 @@ func resize_detected(size_change : Vector3) -> void:
 func rotation_detected(rotation_change : Vector3) -> void:
 	match adjusting:
 		editor.adjustable.PART:
-			selected_part.rotation = Vector3(deg_to_rad(rotation_change.x), deg_to_rad(rotation_change.y), deg_to_rad(rotation_change.z))
-			UI.properties.rot_changed(rotation_change)
-			adjuster.selected_rotation_changed(rotation_change)
+			selected_part.rotate_x(deg_to_rad(rotation_change.x))
+			selected_part.rotate_y(deg_to_rad(rotation_change.y))
+			selected_part.rotate_z(deg_to_rad(rotation_change.z))
+			var part_rotation = Vector3(rad_to_deg(selected_part.rotation.x), rad_to_deg(selected_part.rotation.y), rad_to_deg(selected_part.rotation.z))
+			UI.properties.rot_changed(part_rotation)
+			adjuster.selected_rotation_changed(part_rotation)
 		editor.adjustable.SHAPE:
 			shape_preview.rotation_changed(rotation_change)
 

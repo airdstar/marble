@@ -81,24 +81,17 @@ func size_changed(new_size : Vector3) -> void:
 		size_change_successful.emit(shape_info[0].size)
 
 func rotation_changed(new_rotation : Vector3) -> void:
-	print(new_rotation)
-
 	if shape_info.size() != 0:
-		if new_rotation != shape_info[0].prev_rotation:
-			var holder = shape_info[0].prev_rotation
-			shape_info[0].prev_rotation = new_rotation
-			new_rotation -= holder
-			var q1 : Quaternion = Quaternion(
-				sin(deg_to_rad(new_rotation.x/2)) * cos(deg_to_rad(new_rotation.y/2)) * cos(deg_to_rad(new_rotation.z/2)) - cos(deg_to_rad(new_rotation.x/2)) * sin(deg_to_rad(new_rotation.y/2)) * sin(deg_to_rad(new_rotation.z/2)),
-				cos(deg_to_rad(new_rotation.x/2)) * sin(deg_to_rad(new_rotation.y/2)) * cos(deg_to_rad(new_rotation.z/2)) + sin(deg_to_rad(new_rotation.x/2)) * cos(deg_to_rad(new_rotation.y/2)) * sin(deg_to_rad(new_rotation.z/2)),
-				cos(deg_to_rad(new_rotation.x/2)) * cos(deg_to_rad(new_rotation.y/2)) * sin(deg_to_rad(new_rotation.z/2)) - sin(deg_to_rad(new_rotation.x/2)) * sin(deg_to_rad(new_rotation.y/2)) * cos(deg_to_rad(new_rotation.z/2)),
-				cos(deg_to_rad(new_rotation.x/2)) * cos(deg_to_rad(new_rotation.y/2)) * cos(deg_to_rad(new_rotation.z/2)) + sin(deg_to_rad(new_rotation.x/2)) * sin(deg_to_rad(new_rotation.y/2)) * sin(deg_to_rad(new_rotation.z/2))
-			)
-			shape_info[0].rotation_q = shape_info[0].rotation_q.inverse() * q1
-			regenerate_mesh()
-			var e = shape_info[0].rotation_q.get_euler()
-			print(Vector3(rad_to_deg(e.x), rad_to_deg(e.y), rad_to_deg(e.z)))
-			rotation_change_successful.emit(Vector3(rad_to_deg(e.x), rad_to_deg(e.y), rad_to_deg(e.z)))
+		var q1 : Quaternion = Quaternion(
+			sin(deg_to_rad(new_rotation.x/2)) * cos(deg_to_rad(new_rotation.y/2)) * cos(deg_to_rad(new_rotation.z/2)) - cos(deg_to_rad(new_rotation.x/2)) * sin(deg_to_rad(new_rotation.y/2)) * sin(deg_to_rad(new_rotation.z/2)),
+			cos(deg_to_rad(new_rotation.x/2)) * sin(deg_to_rad(new_rotation.y/2)) * cos(deg_to_rad(new_rotation.z/2)) + sin(deg_to_rad(new_rotation.x/2)) * cos(deg_to_rad(new_rotation.y/2)) * sin(deg_to_rad(new_rotation.z/2)),
+			cos(deg_to_rad(new_rotation.x/2)) * cos(deg_to_rad(new_rotation.y/2)) * sin(deg_to_rad(new_rotation.z/2)) - sin(deg_to_rad(new_rotation.x/2)) * sin(deg_to_rad(new_rotation.y/2)) * cos(deg_to_rad(new_rotation.z/2)),
+			cos(deg_to_rad(new_rotation.x/2)) * cos(deg_to_rad(new_rotation.y/2)) * cos(deg_to_rad(new_rotation.z/2)) + sin(deg_to_rad(new_rotation.x/2)) * sin(deg_to_rad(new_rotation.y/2)) * sin(deg_to_rad(new_rotation.z/2))
+		)
+		shape_info[0].rotation_q = shape_info[0].rotation_q * q1
+		regenerate_mesh()
+		var e = shape_info[0].rotation_q.get_euler()
+		rotation_change_successful.emit(Vector3(rad_to_deg(e.x), rad_to_deg(e.y), rad_to_deg(e.z)))
 		
 
 func name_changed(new_name : String) -> void:

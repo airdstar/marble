@@ -42,7 +42,7 @@ var selected_color : Array[Color] = [
 	Color(0.45, 0.3, 1)
 ]
 
-var starting_rotation : float = 0
+var prev_rotation : float = 0
 var snapping := 0.5
 var pos_cap := 10
 var size_cap := 20
@@ -94,15 +94,22 @@ func _process(_delta : float) -> void:
 	elif rot.visible:
 		if axis_grabbed != 0:
 			var global_pos = get_mouse_world_position()
+			var holder = 0
 			if global_pos != null:
 				match axis_grabbed:
 					1:
-						global_pos = Vector3(snapped(global_pos.z * 50, snapping * 10), 0, 0)
+						holder = snapped(global_pos.z * 50, snapping * 2)
+						global_pos = Vector3(holder - prev_rotation, 0, 0)
 					2:
-						global_pos = Vector3(0, snapped(-(global_pos.x + global_pos.z) * 50, snapping * 10), 0)
+						holder = snapped(-(global_pos.x + global_pos.z) * 50, snapping * 2)
+						global_pos = Vector3(0, holder - prev_rotation, 0)
 					3:
-						global_pos = Vector3(0, 0, -snapped(global_pos.x * 50, snapping * 10))
-				rot_changed.emit(global_pos)
+						holder = -snapped(global_pos.x * 50, snapping * 2)
+						global_pos = Vector3(0, 0, holder - prev_rotation)
+						
+				prev_rotation = holder
+				if global_pos != Vector3.ZERO:
+					rot_changed.emit(global_pos)
 		
 
 func _do_raycast_on_mouse_position(collision_mask: int = 0b00000000_00000000_00000000_00000001):
@@ -157,14 +164,9 @@ func grabbed(_camera: Node, event: InputEvent, _event_position: Vector3, _normal
 					desired_size.z = 20
 				
 				if rot.visible:
-					match axis:
-						1:
-							starting_rotation = rot_proxy.rotation.x
-						2:
-							starting_rotation = rot_proxy.rotation.y
-							desired_size.y = 0.25
-						3:
-							starting_rotation = rot_proxy.rotation.z
+					prev_rotation = 0
+					if axis == 2:
+						desired_size.y = 0.25
 				
 				collider.shape.size = desired_size
 				mesh.mesh.material.albedo_color = selected_color[axis - 1]
