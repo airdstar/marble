@@ -1,8 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://cdnwnrtmoq7x2"]
+[gd_scene load_steps=3 format=3 uid="uid://cdnwnrtmoq7x2"]
 
 [ext_resource type="Script" path="res://Main/Menus/customization.gd" id="1_hei57"]
+[ext_resource type="PackedScene" uid="uid://daqk2roaa6h1v" path="res://Main/Player.tscn" id="2_mnsk5"]
 
-[node name="Customization" type="Control" node_paths=PackedStringArray("color_container", "face_container", "marking_container")]
+[node name="Customization" type="Control" node_paths=PackedStringArray("player_dummy", "color_container", "face_container", "marking_container")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -11,9 +12,17 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_hei57")
 pos_colors = Array[Color]([Color(0.9, 0, 0, 1), Color(0, 0.9, 0, 1), Color(0, 0, 0.9, 1)])
+player_dummy = NodePath("SubViewport/Player")
 color_container = NodePath("VBoxContainer")
 face_container = NodePath("VBoxContainer2")
 marking_container = NodePath("VBoxContainer3")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 840.0
+offset_top = 45.0
+offset_right = 1140.0
+offset_bottom = 345.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 0
@@ -40,10 +49,6 @@ bbcode_enabled = true
 text = "[center]Faces"
 fit_content = true
 
-[node name="Button" type="Button" parent="VBoxContainer2"]
-layout_mode = 2
-text = "None"
-
 [node name="VBoxContainer3" type="VBoxContainer" parent="."]
 layout_mode = 0
 offset_left = 497.0
@@ -57,6 +62,10 @@ bbcode_enabled = true
 text = "[center]Markings"
 fit_content = true
 
-[node name="Button2" type="Button" parent="VBoxContainer3"]
-layout_mode = 2
-text = "None"
+[node name="SubViewport" type="SubViewport" parent="."]
+size = Vector2i(200, 200)
+
+[node name="Camera3D" type="Camera3D" parent="SubViewport"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1, 0, 0)
+
+[node name="Player" parent="SubViewport" instance=ExtResource("2_mnsk5")]
