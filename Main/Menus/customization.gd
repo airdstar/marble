@@ -1,18 +1,16 @@
 extends Node
 
+
+@export var pos_colors : Array[Color] 
+
+var face_path : String = "res://Assets/Customization/Faces/"
+var marking_path : String = "res://Assets/Customization/Markings/"
+
+@export_category("Containers")
 @export var color_container : VBoxContainer
 @export var face_container : VBoxContainer
 @export var marking_container : VBoxContainer
 
-
-var pos_colors : Array[Color] = [
-	Color(0.9, 0, 0), Color(0, 0.9, 0), Color(0, 0, 0.9),
-	Color(0.9, 0.9, 0), Color(0.9, 0, 0.9), Color(0, 0.9, 0.9),
-	Color(0.9, 0.9, 0.9), Color(0.1, 0.1, 0.1)
-]
-
-var face_path : String = "res://Assets/Customization/Faces/"
-var marking_path : String = "res://Assets/Customization/Markings/"
 
 
 func _ready() -> void:
@@ -37,7 +35,8 @@ func _ready() -> void:
 		var holder = ResourceLoader.load(face_path + current_face)
 		var current_button = Button.new()
 		current_button.icon = holder
-		
+		current_button.expand_icon = true
+		current_button.custom_minimum_size = Vector2(32,32)
 		face_container.add_child(current_button)
 		current_button.pressed.connect(set_face.bind(current_face))
 		current_face = dir.get_next()
@@ -57,12 +56,12 @@ func _ready() -> void:
 		var holder = ResourceLoader.load(face_path + current_marking)
 		var current_button = Button.new()
 		current_button.icon = holder
-		
+		current_button.expand_icon = true
+		current_button.custom_minimum_size = Vector2(32,32)
 		marking_container.add_child(current_button)
 		current_button.pressed.connect(set_face.bind(current_marking))
 		current_marking = dir.get_next()
 	dir.list_dir_end()
-	
 	
 
 func _process(_delta: float) -> void:

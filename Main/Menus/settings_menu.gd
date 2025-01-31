@@ -84,7 +84,7 @@ func pinch_changed(value: float) -> void:
 func set_res_options(index : int) -> void:
 	res_options.clear()
 	var found_res := false
-	for n in Visuals.aspect_ratios[aspect_options.get_item_text(index)]:
+	for n in Global.aspect_ratios[aspect_options.get_item_text(index)]:
 		res_options.add_item(n)
 		if n == PlayerInfo.player_settings.resolution:
 			res_options.selected = res_options.item_count - 1
