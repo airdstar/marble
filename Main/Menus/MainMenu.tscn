@@ -93,9 +93,18 @@ offset_right = 78.0
 offset_bottom = 78.0
 icon = ExtResource("5_45uyu")
 
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 23.0
+offset_top = 203.0
+offset_right = 255.0
+offset_bottom = 300.0
+text = "Customization"
+
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/Gallery" to="." method="gallery_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/Play" to="." method="play_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/Editor" to="." method="editor_pressed"]
 [connection signal="pressed" from="HBoxContainer2/Settings" to="." method="settings_pressed"]
 [connection signal="pressed" from="HBoxContainer2/Profile" to="." method="profile_pressed"]
 [connection signal="pressed" from="Exit" to="." method="exit_pressed"]
+[connection signal="pressed" from="Button" to="." method="customization_pressed"]

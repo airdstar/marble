@@ -128,6 +128,7 @@ light_energy = 0.05
 
 [node name="SpotLight3D" type="SpotLight3D" parent="Lights"]
 transform = Transform3D(1, 0, 0, 0, 0.939693, 0.34202, 0, -0.34202, 0.939693, 0, 6, 15)
+light_color = Color(0.60332, 0.803792, 0.653254, 1)
 light_energy = 10.0
 light_cull_mask = 4294966815
 spot_range = 100.0
@@ -135,6 +136,7 @@ spot_angle = 30.0
 
 [node name="SpotLight3D2" type="SpotLight3D" parent="Lights"]
 transform = Transform3D(1, 0, 0, 0, -0.939693, 0.34202, 0, -0.34202, -0.939693, 0, 6, -15)
+light_color = Color(0.603922, 0.803922, 0.654902, 1)
 light_energy = 10.0
 light_cull_mask = 4294966815
 spot_range = 100.0
@@ -142,6 +144,7 @@ spot_angle = 30.0
 
 [node name="SpotLight3D3" type="SpotLight3D" parent="Lights"]
 transform = Transform3D(-4.37114e-08, -0.34202, 0.939693, 0, 0.939693, 0.34202, -1, 1.49502e-08, -4.10753e-08, 15, 6, 0)
+light_color = Color(0.603922, 0.803922, 0.654902, 1)
 light_energy = 10.0
 light_cull_mask = 4294966815
 spot_range = 100.0
@@ -149,6 +152,7 @@ spot_angle = 30.0
 
 [node name="SpotLight3D4" type="SpotLight3D" parent="Lights"]
 transform = Transform3D(-4.37114e-08, 0.34202, -0.939693, 0, 0.939693, 0.34202, 1, 1.49502e-08, -4.10753e-08, -15, 6, 0)
+light_color = Color(0.603922, 0.803922, 0.654902, 1)
 light_energy = 10.0
 light_cull_mask = 4294966815
 spot_range = 100.0

@@ -36,5 +36,8 @@ func profile_pressed() -> void:
 func settings_pressed() -> void:
 	Global.open_popup("settings")
 
+func customization_pressed() -> void:
+	Global.open_scene("customization")
+
 func exit_pressed() -> void:
 	get_tree().quit()

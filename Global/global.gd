@@ -29,6 +29,7 @@ var pos_scenes : Dictionary = {
 	"settings" : "res://Main/Menus/SettingsMenu.tscn",
 	"gallery" : "res://Main/Menus/Gallery.tscn",
 	"editor" : "res://Editor/LevelEditor.tscn",
+	"customization" : "res://Main/Menus/Customization.tscn"
 	}
 
 var pos_popup_scenes : Dictionary = {

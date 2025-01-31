@@ -247,5 +247,6 @@ func level_generated(level_info : level_resource) -> void:
 	
 func prev_scene() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-	Global.open_scene(Global.main_scene.prev_scene)
 	Global.close_popup()
+	Global.open_scene(Global.main_scene.prev_scene)
+	
