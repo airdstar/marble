@@ -88,9 +88,9 @@ func rotation_changed(new_rotation : Vector3) -> void:
 			cos(deg_to_rad(new_rotation.x/2)) * cos(deg_to_rad(new_rotation.y/2)) * sin(deg_to_rad(new_rotation.z/2)) - sin(deg_to_rad(new_rotation.x/2)) * sin(deg_to_rad(new_rotation.y/2)) * cos(deg_to_rad(new_rotation.z/2)),
 			cos(deg_to_rad(new_rotation.x/2)) * cos(deg_to_rad(new_rotation.y/2)) * cos(deg_to_rad(new_rotation.z/2)) + sin(deg_to_rad(new_rotation.x/2)) * sin(deg_to_rad(new_rotation.y/2)) * sin(deg_to_rad(new_rotation.z/2))
 		)
-		shape_info[0].rotation_q = shape_info[0].rotation_q * q1
+		shape_info[0].rotation = shape_info[0].rotation * q1
 		regenerate_mesh()
-		var e = shape_info[0].rotation_q.get_euler()
+		var e = shape_info[0].rotation.get_euler()
 		rotation_change_successful.emit(Vector3(rad_to_deg(e.x), rad_to_deg(e.y), rad_to_deg(e.z)))
 		
 

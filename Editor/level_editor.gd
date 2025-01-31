@@ -130,7 +130,8 @@ func shape_selected(shape : shape_resource) -> void:
 
 	adjuster.selected_pos_changed(shape.total_offset)
 	adjuster.selected_size_changed(shape.size)
-	adjuster.selected_rotation_changed(Vector3.ZERO)
+	var e = shape.rotation.get_euler()
+	adjuster.selected_rotation_changed(Vector3(rad_to_deg(e.x), rad_to_deg(e.y), rad_to_deg(e.z)))
 	new_shape_selected.emit(shape)
 
 func shape_unselected() -> void:
@@ -223,6 +224,34 @@ func rotation_detected(rotation_change : Vector3) -> void:
 		editor.adjustable.SHAPE:
 			shape_preview.rotation_changed(rotation_change)
 
+func reset_movement() -> void:
+	match adjusting:
+		editor.adjustable.PART:
+			selected_part.position = Vector3.ZERO
+			adjuster.selected_pos_changed(Vector3.ZERO)
+			UI.properties.pos_changed(Vector3.ZERO)
+		editor.adjustable.SHAPE:
+			shape_preview.offset_changed(Vector3.ZERO)
+
+func reset_size() -> void:
+	match adjusting:
+		editor.adjustable.PART:
+			selected_part.scale = Vector3(1,1,1)
+			UI.properties.size_changed(Vector3(1,1,1))
+			adjuster.selected_size_changed(Vector3(1,1,1))
+		editor.adjustable.SHAPE:
+			shape_preview.size_changed(Vector3(1,1,1))
+
+func reset_rotation() -> void:
+	match adjusting:
+		editor.adjustable.PART:
+			selected_part.rotation = Vector3.ZERO
+		editor.adjustable.SHAPE:
+			shape_preview.shape_info[0].rotation = Quaternion.IDENTITY
+			shape_preview.regenerate_mesh()
+	UI.properties.rot_changed(Vector3.ZERO)
+	adjuster.selected_rotation_changed(Vector3.ZERO)
+
 func property_group_set(adjust_to : String) -> void:
 	match adjust_to:
 		"Part":
@@ -310,4 +339,4 @@ func save_scene() -> void:
 			chosen_level = ResourceLoader.load(Global.level_resource_path + chosen_level.name + ".tres")
 
 func test_pressed() -> void:
-	Global.open_floor(Global.floor_type.EDITOR, [ResourceLoader.load(Global.level_resource_path + chosen_level.name + ".tres")])
+	Global.open_floor(FloorLevel.floor_type.EDITOR, [ResourceLoader.load(Global.level_resource_path + chosen_level.name + ".tres")])

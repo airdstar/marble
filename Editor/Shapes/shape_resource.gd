@@ -19,7 +19,7 @@ enum mod {
 
 @export var total_offset := Vector3.ZERO
 @export var size := Vector3(1,1,1)
-@export var rotation_q : Quaternion = Quaternion.IDENTITY
+@export var rotation : Quaternion = Quaternion.IDENTITY
 
 func set_mods() -> void:
 	pass
@@ -27,7 +27,7 @@ func set_mods() -> void:
 func apply_rotation(input : Array) -> Array:
 	var to_return := []
 	for n in input:
-		to_return.append(n * rotation_q)
+		to_return.append(n * rotation)
 	return to_return
 
 func apply_size(input : Array) -> Array:

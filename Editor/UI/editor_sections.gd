@@ -14,7 +14,7 @@ var shape_buttons : Array[Button]
 @export var shape_holder : VBoxContainer
 @export var geometry_options : VBoxContainer
 
-@export var important_holder : VBoxContainer
+@export var part_holder : VBoxContainer
 
 signal shape_selected
 signal part_selected
@@ -72,7 +72,7 @@ func add_part(part : Node3D, toggle_button : bool) -> void:
 	if part is ProcMesh:
 		geometry_holder.add_child(current_button)
 	elif part is start or part is endzone:
-		important_holder.add_child(current_button)
+		part_holder.add_child(current_button)
 	
 	current_button.toggled.connect(part_toggled.bind(part, current_button))
 	
@@ -124,14 +124,14 @@ func tab_changed(tab: int) -> void:
 	shape_holder.visible = false
 	geometry_holder.visible = false
 	geometry_options.visible = false
-	important_holder.visible = false
+	part_holder.visible = false
 	match tab:
 		0:
 			geometry_holder.visible = true
 			shape_holder.visible = true
 			geometry_options.visible = true
 		1:
-			important_holder.visible = true
+			part_holder.visible = true
 
 
 func _on_take_pressed() -> void:

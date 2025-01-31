@@ -26,11 +26,10 @@ material = SubResource("StandardMaterial3D_lopki")
 size = Vector3(20, 0.01, 20)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3xjy8"]
-transparency = 1
 albedo_color = Color(0.886275, 0.647059, 0.364706, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2ruf5"]
-render_priority = -1
+render_priority = -2
 next_pass = SubResource("StandardMaterial3D_3xjy8")
 transparency = 1
 no_depth_test = true
@@ -273,6 +272,8 @@ shape = SubResource("BoxShape3D_x408b")
 visible = false
 
 [node name="X" type="MeshInstance3D" parent="Adjust/Size"]
+layers = 512
+cast_shadow = 0
 mesh = SubResource("SphereMesh_8u5sg")
 
 [node name="Area3D" type="Area3D" parent="Adjust/Size/X"]
@@ -282,6 +283,8 @@ input_capture_on_drag = true
 shape = SubResource("BoxShape3D_p3l4i")
 
 [node name="Y" type="MeshInstance3D" parent="Adjust/Size"]
+layers = 512
+cast_shadow = 0
 mesh = SubResource("SphereMesh_4kkim")
 
 [node name="Area3D" type="Area3D" parent="Adjust/Size/Y"]
@@ -291,6 +294,8 @@ input_capture_on_drag = true
 shape = SubResource("BoxShape3D_rhtl5")
 
 [node name="Z" type="MeshInstance3D" parent="Adjust/Size"]
+layers = 512
+cast_shadow = 0
 mesh = SubResource("SphereMesh_ultul")
 
 [node name="Area3D" type="Area3D" parent="Adjust/Size/Z"]
@@ -355,7 +360,7 @@ options_container = NodePath("Options/VBoxContainer")
 settings = NodePath("Settings")
 settings_container = NodePath("Settings/VBoxContainer")
 
-[node name="Properties" type="Panel" parent="UI" node_paths=PackedStringArray("property_options", "part_properties", "shape_properties", "part_name", "part_pos", "part_size", "part_rot", "dynamic_movement", "dynamic_rotation", "shape_rot")]
+[node name="Properties" type="Panel" parent="UI" node_paths=PackedStringArray("property_options", "part_properties", "shape_properties", "part_name", "part_pos", "part_size", "part_rot", "dynamic_movement", "dynamic_rotation", "shape_name", "shape_pos", "shape_size", "shape_rot")]
 layout_mode = 0
 offset_top = 400.0
 offset_right = 300.0
@@ -370,7 +375,10 @@ part_size = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/PartProperties
 part_rot = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/PartProperties/PartRot")
 dynamic_movement = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/PartProperties/DynamicMove/CheckBox")
 dynamic_rotation = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/PartProperties/DynamicRot/CheckBox")
-shape_rot = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeRot")
+shape_name = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeName")
+shape_pos = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Pos/ShapePos")
+shape_size = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Size/ShapeSize")
+shape_rot = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Rot/ShapeRot")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UI/Properties"]
 layout_mode = 0
@@ -402,6 +410,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="PartProperties" type="VBoxContainer" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -458,7 +467,6 @@ layout_mode = 2
 theme_override_constants/margin_right = 10
 
 [node name="ShapeProperties" type="VBoxContainer" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer"]
-visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -467,20 +475,44 @@ layout_mode = 2
 placeholder_text = "Enter shape name"
 max_length = 24
 
-[node name="ShapePos" type="RichTextLabel" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties"]
+[node name="Pos" type="HBoxContainer" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties"]
 layout_mode = 2
+
+[node name="ShapePos" type="RichTextLabel" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Pos"]
+layout_mode = 2
+size_flags_horizontal = 3
 text = " Position: 0,0,0"
 fit_content = true
 
-[node name="ShapeSize" type="RichTextLabel" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties"]
+[node name="Button" type="Button" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Pos"]
 layout_mode = 2
+text = "Reset"
+
+[node name="Size" type="HBoxContainer" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties"]
+layout_mode = 2
+
+[node name="ShapeSize" type="RichTextLabel" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Size"]
+layout_mode = 2
+size_flags_horizontal = 3
 text = " Size: 1.0, 1.0, 1.0"
 fit_content = true
 
-[node name="ShapeRot" type="RichTextLabel" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties"]
+[node name="Button" type="Button" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Size"]
 layout_mode = 2
+text = "Reset"
+
+[node name="Rot" type="HBoxContainer" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties"]
+layout_mode = 2
+
+[node name="ShapeRot" type="RichTextLabel" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Rot"]
+layout_mode = 2
+size_flags_horizontal = 3
 text = " Rotation: 0, 0, 0"
 fit_content = true
+
+[node name="Button" type="Button" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Rot"]
+layout_mode = 2
+text = "Reset"
 
 [node name="ShapeModifier" type="HBoxContainer" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties"]
 layout_mode = 2
@@ -591,7 +623,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Sections" type="Panel" parent="UI" node_paths=PackedStringArray("tab_bar", "geometry_holder", "shape_holder", "geometry_options", "important_holder")]
+[node name="Sections" type="Panel" parent="UI" node_paths=PackedStringArray("tab_bar", "geometry_holder", "shape_holder", "geometry_options", "part_holder")]
 visible = false
 layout_mode = 0
 offset_left = 900.0
@@ -604,7 +636,7 @@ tab_bar = NodePath("VBoxContainer/TabBar")
 geometry_holder = NodePath("VBoxContainer/HBoxContainer/ScrollContainer/VBoxContainer/Geometry")
 shape_holder = NodePath("VBoxContainer/HBoxContainer/Shapes/VBoxContainer")
 geometry_options = NodePath("VBoxContainer/GeometryOptions")
-important_holder = NodePath("VBoxContainer/HBoxContainer/ScrollContainer/VBoxContainer/Important")
+part_holder = NodePath("VBoxContainer/HBoxContainer/ScrollContainer/VBoxContainer/Part")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UI/Sections"]
 layout_mode = 0
@@ -626,7 +658,7 @@ layout_mode = 2
 current_tab = 0
 tab_count = 2
 tab_0/title = "Geometry"
-tab_1/title = "Important"
+tab_1/title = "Parts"
 
 [node name="Delete" type="Button" parent="UI/Sections/VBoxContainer"]
 layout_mode = 2
@@ -652,7 +684,7 @@ mouse_filter = 2
 layout_mode = 2
 mouse_filter = 2
 
-[node name="Important" type="VBoxContainer" parent="UI/Sections/VBoxContainer/HBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="Part" type="VBoxContainer" parent="UI/Sections/VBoxContainer/HBoxContainer/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
@@ -914,6 +946,9 @@ text = "Update"
 [connection signal="tab_changed" from="UI/Properties/VBoxContainer/TabBar" to="UI/Properties" method="property_group_changed"]
 [connection signal="text_submitted" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/PartProperties/PartName" to="." method="part_name_changed"]
 [connection signal="text_submitted" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeName" to="UI/Properties" method="shape_name_submitted"]
+[connection signal="pressed" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Pos/Button" to="." method="reset_movement"]
+[connection signal="pressed" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Size/Button" to="." method="reset_size"]
+[connection signal="pressed" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Rot/Button" to="." method="reset_rotation"]
 [connection signal="item_selected" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeModifier/Modifier" to="ShapePreview" method="modifier_changed"]
 [connection signal="value_changed" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeSides/Sides" to="ShapePreview" method="sides_changed"]
 [connection signal="item_selected" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeOrientation/ShapeOrientation" to="ShapePreview" method="orientation_changed"]

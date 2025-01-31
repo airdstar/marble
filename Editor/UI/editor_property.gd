@@ -23,9 +23,9 @@ extends Control
 
 @export_category("Shape")
 
-@onready var shape_name := $VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeName
-@onready var shape_pos := $VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapePos
-@onready var shape_size := $VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeSize
+@export var shape_name : LineEdit
+@export var shape_pos : RichTextLabel
+@export var shape_size : RichTextLabel
 @export var shape_rot : RichTextLabel
 
 @onready var shape_sides_holder := $VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeSides
@@ -142,7 +142,8 @@ func display_shape_properties(shape : shape_resource) -> void:
 	shape_name.text = shape.shape_name
 	shape_pos.text = " Position: %.1f" % shape.total_offset.x + ", %.1f" % shape.total_offset.y + ", %.1f" % shape.total_offset.z
 	shape_size.text = " Size: %.1f" % shape.size.x + ", %.1f" % shape.size.y + ", %.1f" % shape.size.z
-	#shape_rot.text = " Rotation: %d" % shape.x_rotation + ", %d" % shape.y_rotation + ", %d" % shape.z_rotation
+	var e = shape.rotation.get_euler()
+	shape_rot.text = " Rotation: %d" % rad_to_deg(e.x) + ", %d" % rad_to_deg(e.y) + ", %d" % rad_to_deg(e.z)
 	
 	if shape.usable_mods.size() > 1:
 		shape_modifier_holder.visible = true
