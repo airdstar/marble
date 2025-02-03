@@ -56,7 +56,7 @@ func _ready() -> void:
 			current_marking = dir.get_next()
 			continue
 		
-		var holder = ResourceLoader.load(face_path + current_marking)
+		var holder = ResourceLoader.load(marking_path + current_marking)
 		var current_button = Button.new()
 		current_button.icon = holder
 		current_button.expand_icon = true
@@ -70,20 +70,23 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if Input.is_action_pressed("back"):
 		Global.open_scene(Global.main_scene.prev_scene)
-	player_dummy.rotate_y(1 * delta)
+	player_dummy.rotate_y(0.5 * delta)
 	$TextureRect.texture = $SubViewport.get_texture()
 
 func set_color(color : Color) -> void:
 	PlayerInfo.player_data.player_customization.chosen_color = color
 	PlayerInfo.save_data()
 	player_dummy.set_color()
+	player_dummy.rotation = Vector3.ZERO
 
 func set_face(face : String) -> void:
 	PlayerInfo.player_data.player_customization.chosen_face = face
 	PlayerInfo.save_data()
 	player_dummy.set_face()
+	player_dummy.rotation = Vector3.ZERO
 
 func set_marking(marking : String) -> void:
 	PlayerInfo.player_data.player_customization.chosen_marking = marking
 	PlayerInfo.save_data()
 	player_dummy.set_marking()
+	player_dummy.rotation = Vector3.ZERO
