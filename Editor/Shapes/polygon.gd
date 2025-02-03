@@ -102,14 +102,14 @@ func create_top_bottom() -> Array:
 				positions.append_array([
 					Vector3(cos(n/sides * PI * 2.0) / 2 * hole_size + hole_offset.x, 0.5 + hole_offset.y, sin(n/sides * PI * 2.0) / 2 * hole_size + hole_offset.z) ,
 					Vector3(cos((n + 1)/sides * PI * 2.0) / 2 * hole_size + hole_offset.x, 0.5 + hole_offset.y, sin((n + 1)/sides * PI * 2.0) / 2 * hole_size + hole_offset.z) ,
-					Vector3(cos(n/sides * PI * 2.0) / 2, 0.5, sin(n/sides * PI * 2.0) / 2) ,
+					Vector3(cos(n/sides * PI * 2.0) / 2, 0.5, sin(n/sides * PI * 2.0) / 2),
 					Vector3(cos((n + 1)/sides * PI * 2.0) / 2, 0.5, sin((n + 1)/sides * PI * 2.0) / 2)  
 				])
 				normals.append_array([
-						Vector3.UP,
-						Vector3.UP,
-						Vector3.UP,
-						Vector3.UP
+					Vector3(cos(n/sides * PI * 2.0) / 2 * hole_size + hole_offset.x, 1 + hole_offset.y, sin(n/sides * PI * 2.0) / 2 * hole_size + hole_offset.z).normalized(),
+					Vector3(cos((n + 1)/sides * PI * 2.0) / 2 * hole_size + hole_offset.x, 1 + hole_offset.y, sin((n + 1)/sides * PI * 2.0) / 2 * hole_size + hole_offset.z).normalized(),
+					Vector3.UP,
+					Vector3.UP
 					])
 				indices.append_array([
 					index_offset + 1 + 4 * n,
@@ -130,8 +130,8 @@ func create_top_bottom() -> Array:
 					Vector3(cos((n + 1)/sides * PI * 2.0) / 2, -0.5, sin((n + 1)/sides * PI * 2.0) / 2)  
 				])
 				normals.append_array([
-						Vector3.DOWN,
-						Vector3.DOWN,
+						Vector3(cos(n/sides * PI * 2.0) / 2 * hole_size + hole_offset.x, -1 + hole_offset.y, sin(n/sides * PI * 2.0) / 2 * hole_size + hole_offset.z).normalized(),
+						Vector3(cos((n + 1)/sides * PI * 2.0) / 2 * hole_size + hole_offset.x, -1 + hole_offset.y, sin((n + 1)/sides * PI * 2.0) / 2 * hole_size + hole_offset.z).normalized(),
 						Vector3.DOWN,
 						Vector3.DOWN
 					])

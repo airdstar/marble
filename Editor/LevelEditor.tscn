@@ -621,18 +621,21 @@ layout_mode = 2
 min_value = -0.25
 max_value = 0.25
 step = 0.01
+value = -0.25
 
 [node name="SpinBox2" type="SpinBox" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Hole/Offset"]
 layout_mode = 2
-min_value = -0.25
-max_value = 0.25
+min_value = -0.5
+max_value = 0.5
 step = 0.01
+value = -0.25
 
 [node name="SpinBox3" type="SpinBox" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Hole/Offset"]
 layout_mode = 2
 min_value = -0.25
 max_value = 0.25
 step = 0.01
+value = -0.25
 
 [node name="Size" type="HBoxContainer" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Hole"]
 layout_mode = 2
@@ -640,7 +643,7 @@ layout_mode = 2
 [node name="RichTextLabel" type="RichTextLabel" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Hole/Size"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = " Hole Offset:"
+text = " Hole Size:"
 fit_content = true
 
 [node name="SpinBox" type="SpinBox" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Hole/Size"]
@@ -681,12 +684,14 @@ layout_mode = 2
 min_value = -0.25
 max_value = 0.25
 step = 0.01
+value = -0.25
 
 [node name="SpinBox3" type="SpinBox" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Point/Offset"]
 layout_mode = 2
 min_value = -0.25
 max_value = 0.25
 step = 0.01
+value = -0.25
 
 [node name="Parts" type="Panel" parent="UI" node_paths=PackedStringArray("shape_holder", "important_holder")]
 layout_mode = 0
