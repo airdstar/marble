@@ -92,7 +92,16 @@ func rotation_changed(new_rotation : Vector3) -> void:
 		regenerate_mesh()
 		var e = shape_info[0].rotation.get_euler()
 		rotation_change_successful.emit(Vector3(rad_to_deg(e.x), rad_to_deg(e.y), rad_to_deg(e.z)))
-		
+
+func hole_offset_changed(new_offset : Vector3) -> void:
+	if shape_info.size() != 0:
+		shape_info[0].hole_offset = new_offset
+		regenerate_mesh()
+
+func hole_size_changed(new_size : float) -> void:
+	if shape_info.size() != 0:
+		shape_info[0].hole_size = new_size
+		regenerate_mesh()
 
 func name_changed(new_name : String) -> void:
 	if shape_info.size() != 0:

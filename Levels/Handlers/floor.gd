@@ -75,8 +75,6 @@ func _process(delta: float) -> void:
 
 func _physics_process(delta: float) -> void:
 	
-	relative_skybox_rotation += relative_desired_rotation
-	
 	input_tilt.x = clamp(input_tilt.x, deg_to_rad(-35), deg_to_rad(35))
 	input_tilt.y = clamp(input_tilt.y, deg_to_rad(-35), deg_to_rad(35))
 	
@@ -87,7 +85,7 @@ func _physics_process(delta: float) -> void:
 	
 	var a = Quaternion(origin.transform.basis)
 	var b = Quaternion(proxy_tilt.transform.basis)
-	var c = a.slerp(b,0.1)
+	var c = a.slerp(b,0.2)
 	origin.transform.basis = Basis(c)
 
 	if marble != null:

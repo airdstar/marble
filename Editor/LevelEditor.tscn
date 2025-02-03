@@ -10,6 +10,7 @@
 [ext_resource type="Script" path="res://Editor/UI/editor_property.gd" id="6_mogux"]
 [ext_resource type="Script" path="res://Editor/UI/editor_parts.gd" id="6_xrgr4"]
 [ext_resource type="Script" path="res://Editor/UI/editor_sections.gd" id="7_2n8hv"]
+[ext_resource type="Script" path="res://Editor/UI/editor_shape_properties.gd" id="8_1kyoo"]
 [ext_resource type="Script" path="res://Editor/UI/editor_tools.gd" id="8_pcger"]
 [ext_resource type="Script" path="res://Editor/UI/editor_options.gd" id="11_dvs47"]
 [ext_resource type="Script" path="res://Editor/UI/editor_new_level.gd" id="12_hpcey"]
@@ -25,15 +26,8 @@ disable_receive_shadows = true
 material = SubResource("StandardMaterial3D_lopki")
 size = Vector3(20, 0.01, 20)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3xjy8"]
-albedo_color = Color(0.886275, 0.647059, 0.364706, 1)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2ruf5"]
-render_priority = -2
-next_pass = SubResource("StandardMaterial3D_3xjy8")
-transparency = 1
-no_depth_test = true
-albedo_color = Color(0.711608, 0.494965, 0.22394, 1)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7e7vf"]
+albedo_color = Color(0.621933, 0.399482, 0.227957, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ytq3e"]
 no_depth_test = true
@@ -199,7 +193,7 @@ mesh = SubResource("BoxMesh_5yxar")
 skeleton = NodePath("")
 
 [node name="ShapePreview" parent="." instance=ExtResource("4_stuxe")]
-material_override = SubResource("StandardMaterial3D_2ruf5")
+material_override = SubResource("StandardMaterial3D_7e7vf")
 
 [node name="Adjust" type="Node3D" parent="." node_paths=PackedStringArray("pos", "size", "rot", "pos_x", "pos_y", "pos_z", "pos_x_mesh", "pos_y_mesh", "pos_z_mesh", "size_x", "size_y", "size_z", "size_x_mesh", "size_y_mesh", "size_z_mesh", "rot_proxy", "rot_x", "rot_y", "rot_z", "rot_x_mesh", "rot_y_mesh", "rot_z_mesh")]
 script = ExtResource("5_6wt44")
@@ -360,7 +354,7 @@ options_container = NodePath("Options/VBoxContainer")
 settings = NodePath("Settings")
 settings_container = NodePath("Settings/VBoxContainer")
 
-[node name="Properties" type="Panel" parent="UI" node_paths=PackedStringArray("property_options", "part_properties", "shape_properties", "part_name", "part_pos", "part_size", "part_rot", "dynamic_movement", "dynamic_rotation", "shape_name", "shape_pos", "shape_size", "shape_rot")]
+[node name="Properties" type="Panel" parent="UI" node_paths=PackedStringArray("property_options", "part_properties", "shape_properties", "part_name", "part_pos", "part_size", "part_rot", "dynamic_movement", "dynamic_rotation")]
 layout_mode = 0
 offset_top = 400.0
 offset_right = 300.0
@@ -375,10 +369,6 @@ part_size = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/PartProperties
 part_rot = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/PartProperties/PartRot")
 dynamic_movement = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/PartProperties/DynamicMove/CheckBox")
 dynamic_rotation = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/PartProperties/DynamicRot/CheckBox")
-shape_name = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeName")
-shape_pos = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Pos/ShapePos")
-shape_size = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Size/ShapeSize")
-shape_rot = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Rot/ShapeRot")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UI/Properties"]
 layout_mode = 0
@@ -466,9 +456,27 @@ layout_mode = 2
 layout_mode = 2
 theme_override_constants/margin_right = 10
 
-[node name="ShapeProperties" type="VBoxContainer" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="ShapeProperties" type="VBoxContainer" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer" node_paths=PackedStringArray("shape_name", "shape_pos", "shape_size", "shape_rot", "shape_modifier_holder", "shape_modifier", "shape_sides_holder", "shape_sides", "shape_orientation_holder", "shape_orientation", "shape_flip_orientation_holder", "shape_flip_orientation", "shape_hole_holder", "shape_hole_offset_x", "shape_hole_offset_y", "shape_hole_offset_z", "shape_hole_size")]
 layout_mode = 2
 size_flags_horizontal = 3
+script = ExtResource("8_1kyoo")
+shape_name = NodePath("ShapeName")
+shape_pos = NodePath("Pos/ShapePos")
+shape_size = NodePath("Size/ShapeSize")
+shape_rot = NodePath("Rot/ShapeRot")
+shape_modifier_holder = NodePath("ShapeModifier")
+shape_modifier = NodePath("ShapeModifier/Modifier")
+shape_sides_holder = NodePath("ShapeSides")
+shape_sides = NodePath("ShapeSides/Sides")
+shape_orientation_holder = NodePath("ShapeOrientation")
+shape_orientation = NodePath("ShapeOrientation/ShapeOrientation")
+shape_flip_orientation_holder = NodePath("ShapeFlipOrientation")
+shape_flip_orientation = NodePath("ShapeFlipOrientation/ShapeFlipOrientation")
+shape_hole_holder = NodePath("Hole")
+shape_hole_offset_x = NodePath("Hole/Offset/SpinBox")
+shape_hole_offset_y = NodePath("Hole/Offset/SpinBox2")
+shape_hole_offset_z = NodePath("Hole/Offset/SpinBox3")
+shape_hole_size = NodePath("Hole/Size/SpinBox")
 
 [node name="ShapeName" type="LineEdit" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties"]
 layout_mode = 2
@@ -579,6 +587,106 @@ fit_content = true
 [node name="ShapeFlipOrientation" type="CheckButton" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeFlipOrientation"]
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="Hole" type="VBoxContainer" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties"]
+visible = false
+layout_mode = 2
+
+[node name="MarginContainer4" type="MarginContainer" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Hole"]
+layout_mode = 2
+theme_override_constants/margin_top = 5
+
+[node name="RichTextLabel" type="RichTextLabel" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Hole"]
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+text = "[center]Hole Properties"
+fit_content = true
+
+[node name="MarginContainer3" type="MarginContainer" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Hole"]
+layout_mode = 2
+theme_override_constants/margin_top = 5
+
+[node name="Offset" type="HBoxContainer" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Hole"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Hole/Offset"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = " Hole Offset:"
+fit_content = true
+
+[node name="SpinBox" type="SpinBox" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Hole/Offset"]
+layout_mode = 2
+min_value = -0.25
+max_value = 0.25
+step = 0.01
+
+[node name="SpinBox2" type="SpinBox" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Hole/Offset"]
+layout_mode = 2
+min_value = -0.25
+max_value = 0.25
+step = 0.01
+
+[node name="SpinBox3" type="SpinBox" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Hole/Offset"]
+layout_mode = 2
+min_value = -0.25
+max_value = 0.25
+step = 0.01
+
+[node name="Size" type="HBoxContainer" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Hole"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Hole/Size"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = " Hole Offset:"
+fit_content = true
+
+[node name="SpinBox" type="SpinBox" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Hole/Size"]
+layout_mode = 2
+max_value = 0.9
+step = 0.01
+
+[node name="Point" type="VBoxContainer" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties"]
+visible = false
+layout_mode = 2
+
+[node name="MarginContainer4" type="MarginContainer" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Point"]
+layout_mode = 2
+theme_override_constants/margin_top = 5
+
+[node name="RichTextLabel" type="RichTextLabel" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Point"]
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+text = "[center]Point Properties"
+fit_content = true
+
+[node name="MarginContainer3" type="MarginContainer" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Point"]
+layout_mode = 2
+theme_override_constants/margin_top = 5
+
+[node name="Offset" type="HBoxContainer" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Point"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Point/Offset"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = " Point Offset:"
+fit_content = true
+
+[node name="SpinBox" type="SpinBox" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Point/Offset"]
+layout_mode = 2
+min_value = -0.25
+max_value = 0.25
+step = 0.01
+
+[node name="SpinBox3" type="SpinBox" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Point/Offset"]
+layout_mode = 2
+min_value = -0.25
+max_value = 0.25
+step = 0.01
 
 [node name="Parts" type="Panel" parent="UI" node_paths=PackedStringArray("shape_holder", "important_holder")]
 layout_mode = 0
@@ -945,14 +1053,23 @@ text = "Update"
 [connection signal="shape_name_changed" from="UI/Properties" to="ShapePreview" method="name_changed"]
 [connection signal="tab_changed" from="UI/Properties/VBoxContainer/TabBar" to="UI/Properties" method="property_group_changed"]
 [connection signal="text_submitted" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/PartProperties/PartName" to="." method="part_name_changed"]
+[connection signal="_hole_offset_changed" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties" to="ShapePreview" method="hole_offset_changed"]
+[connection signal="_hole_size_changed" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties" to="ShapePreview" method="hole_size_changed"]
 [connection signal="text_submitted" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeName" to="UI/Properties" method="shape_name_submitted"]
 [connection signal="pressed" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Pos/Button" to="." method="reset_movement"]
 [connection signal="pressed" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Size/Button" to="." method="reset_size"]
 [connection signal="pressed" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Rot/Button" to="." method="reset_rotation"]
 [connection signal="item_selected" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeModifier/Modifier" to="ShapePreview" method="modifier_changed"]
+[connection signal="item_selected" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeModifier/Modifier" to="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties" method="mod_changed"]
 [connection signal="value_changed" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeSides/Sides" to="ShapePreview" method="sides_changed"]
 [connection signal="item_selected" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeOrientation/ShapeOrientation" to="ShapePreview" method="orientation_changed"]
 [connection signal="toggled" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeFlipOrientation/ShapeFlipOrientation" to="ShapePreview" method="flip_orientation_changed"]
+[connection signal="value_changed" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Hole/Offset/SpinBox" to="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties" method="hole_offset_changed"]
+[connection signal="value_changed" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Hole/Offset/SpinBox2" to="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties" method="hole_offset_changed"]
+[connection signal="value_changed" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Hole/Offset/SpinBox3" to="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties" method="hole_offset_changed"]
+[connection signal="value_changed" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Hole/Size/SpinBox" to="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties" method="hole_size_changed"]
+[connection signal="value_changed" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Point/Offset/SpinBox" to="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties" method="hole_offset_changed"]
+[connection signal="value_changed" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Point/Offset/SpinBox3" to="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties" method="hole_offset_changed"]
 [connection signal="new_part_selected" from="UI/Parts" to="." method="new_part_created"]
 [connection signal="new_shape_selected" from="UI/Parts" to="." method="shape_selected"]
 [connection signal="part_selected" from="UI/Sections" to="." method="part_selected"]

@@ -1,13 +1,64 @@
-[gd_resource type="Resource" script_class="level_resource" load_steps=3 format=3]
+[gd_resource type="Resource" script_class="level_resource" load_steps=12 format=4]
 
-[ext_resource type="PackedScene" path="res://Levels/LevelScene/Test.tscn" id="1_tfnxc"]
+[ext_resource type="Script" path="res://Levels/Handlers/level.gd" id="1_tml0k"]
 [ext_resource type="Script" path="res://Resources/LevelResource.gd" id="2_2t0ki"]
+[ext_resource type="PackedScene" path="res://Editor/Parts/ProcMesh.tscn" id="2_yngvy"]
+[ext_resource type="Script" path="res://Editor/Parts/proc_mesh.gd" id="3_04v1k"]
+[ext_resource type="Script" path="res://Editor/Shapes/shape_resource.gd" id="4_fwsme"]
+[ext_resource type="Script" path="res://Editor/Shapes/plane.gd" id="5_l8bqb"]
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_delni"]
+_surfaces = [{
+"aabb": AABB(-2.5, 0, -3.5, 5, 1e-05, 7),
+"format": 34359742471,
+"index_count": 6,
+"index_data": PackedByteArray("AAABAAIAAAACAAMA"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 4,
+"vertex_data": PackedByteArray("AAAgwAAAAAD//1/AAAAgQAAAAAAAAGDAAAAgQAAAAAAAAGBAAAAgwAAAAAAAAGBA/3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/78=")
+}]
+
+[sub_resource type="Resource" id="Resource_k1gas"]
+script = ExtResource("5_l8bqb")
+subdivisions = 1
+orientation = 1
+flip_orientation = false
+center_offset = Vector3(0, 0, 0)
+locked = false
+shape_name = "Shape"
+usable_mods = {
+"None": 0
+}
+modifier = 0
+total_offset = Vector3(0, 0, 0)
+size = Vector3(5, 1, 7)
+rotation = Quaternion(0, 0, 0, 1)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_bc7ek"]
+data = PackedVector3Array(-2.5, 0, -3.5, 2.5, 0, -3.5, 2.5, 0, 3.5, -2.5, 0, -3.5, 2.5, 0, 3.5, -2.5, 0, 3.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ndgqk"]
+size = Vector3(3, 1, 3)
+
+[sub_resource type="PackedScene" id="PackedScene_p0fqu"]
+_bundled = {
+"conn_count": 2,
+"conns": PackedInt32Array(5, 0, 27, 26, 2, 0, 0, 6, 0, 27, 28, 2, 0, 0),
+"editable_instances": [],
+"names": PackedStringArray("LevelBase", "freeze", "script", "parts", "geometry", "start_node", "input_node", "input_collider", "RigidBody3D", "Geometry", "Node3D", "ProcMesh", "mesh", "body", "collider", "shape_info", "array_mesh", "metadata/part_name", "MeshInstance3D", "StaticBody3D", "CollisionShape3D", "shape", "disabled", "Starts", "Area3D", "InputTrigger", "start_timer", "area_entered", "input_trigger"),
+"node_count": 8,
+"node_paths": [],
+"nodes": PackedInt32Array(-1, -1, 8, 0, -1, 7, 1, 0, 2, 1, 1073741827, 2, 1073741828, 3, 1073741829, 4, 1073741830, 5, 1073741831, 6, 0, 0, 0, 10, 9, -1, 0, 0, 1, 0, 18, 11, 7, 7, 12, 8, 2, 9, 1073741837, 10, 1073741838, 11, 15, 12, 16, 8, 17, 13, 0, 2, 0, 19, 19, -1, 0, 0, 3, 0, 20, 20, -1, 2, 21, 14, 22, 0, 0, 0, 0, 24, 23, -1, 0, 0, 0, 0, 24, 25, -1, 0, 0, 6, 0, 20, 20, -1, 2, 21, 15, 22, 0, 0),
+"variants": [true, ExtResource("1_tml0k"), [NodePath("Geometry/ProcMesh")], NodePath("Geometry"), NodePath("Starts"), NodePath("InputTrigger"), NodePath("InputTrigger/CollisionShape3D"), ExtResource("2_yngvy"), SubResource("ArrayMesh_delni"), ExtResource("3_04v1k"), NodePath("StaticBody3D"), NodePath("StaticBody3D/CollisionShape3D"), Array[ExtResource("4_fwsme")]([SubResource("Resource_k1gas")]), "Proc Mesh", SubResource("ConcavePolygonShape3D_bc7ek"), SubResource("BoxShape3D_ndgqk")],
+"version": 3
+}
 
 [resource]
 script = ExtResource("2_2t0ki")
 name = "Test"
 level_difficulty = 0
 level_type = 0
-associated_scene = ExtResource("1_tfnxc")
+associated_scene = SubResource("PackedScene_p0fqu")
 include_in_pool = false
 gravity = Vector3(0, 9.8, 0)

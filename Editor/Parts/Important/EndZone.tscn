@@ -1,23 +1,13 @@
-[gd_scene load_steps=8 format=3 uid="uid://df3msx1k8vfiy"]
+[gd_scene load_steps=6 format=3 uid="uid://df3msx1k8vfiy"]
 
 [ext_resource type="Script" path="res://Editor/Parts/Important/end_zone.gd" id="1_at64b"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hr6n5"]
-albedo_color = Color(2.88785e-06, 0.872455, 0.931396, 1)
-metallic_specular = 1.0
-roughness = 0.0
-disable_receive_shadows = true
-
-[sub_resource type="TorusMesh" id="TorusMesh_s3sg4"]
-material = SubResource("StandardMaterial3D_hr6n5")
-inner_radius = 0.9
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_kv84c"]
 height = 1.0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_08acx"]
 transparency = 1
-albedo_color = Color(1, 1, 1, 0.15)
+albedo_color = Color(0.377688, 0.559348, 0.378798, 0.4)
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_mcbnd"]
 material = SubResource("StandardMaterial3D_08acx")
@@ -31,42 +21,10 @@ height = 0.025
 radial_segments = 10
 
 [node name="EndZone" type="Node3D" node_paths=PackedStringArray("collider")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
 script = ExtResource("1_at64b")
 collider = NodePath("Area3D/CollisionShape3D")
 metadata/part_name = "Goal"
-
-[node name="End" type="MeshInstance3D" parent="."]
-visible = false
-layers = 4
-mesh = SubResource("TorusMesh_s3sg4")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="."]
-transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, -1.5, 0, 1.5)
-visible = false
-light_color = Color(0, 0.980392, 0.784314, 1)
-spot_range = 10.0
-spot_angle = 40.0
-
-[node name="SpotLight3D2" type="SpotLight3D" parent="."]
-transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 1.5, 0, 1.5)
-visible = false
-light_color = Color(0, 0.980392, 0.784314, 1)
-spot_range = 10.0
-spot_angle = 40.0
-
-[node name="SpotLight3D3" type="SpotLight3D" parent="."]
-transform = Transform3D(-0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107, 1.5, 0, -1.5)
-visible = false
-light_color = Color(0, 0.980392, 0.784314, 1)
-spot_range = 10.0
-spot_angle = 40.0
-
-[node name="SpotLight3D4" type="SpotLight3D" parent="."]
-transform = Transform3D(-0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, -0.707107, -1.5, 0, -1.5)
-visible = false
-light_color = Color(0, 0.980392, 0.784314, 1)
-spot_range = 10.0
-spot_angle = 40.0
 
 [node name="Area3D" type="Area3D" parent="."]
 
@@ -84,5 +42,15 @@ mesh = SubResource("CylinderMesh_0ehph")
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="MeshInstance3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 mesh = SubResource("CylinderMesh_0ehph")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+light_color = Color(0.376471, 0.560784, 0.380392, 1)
+light_energy = 0.5
+
+[node name="OmniLight3D2" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.3, 0)
+light_color = Color(0.376471, 0.560784, 0.380392, 1)
+light_energy = 0.5
 
 [connection signal="area_entered" from="Area3D" to="." method="next_level"]

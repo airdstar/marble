@@ -43,7 +43,7 @@ var selected_color : Array[Color] = [
 ]
 
 var prev_rotation : float = 0
-var snapping := 0.5
+var snapping := 0.25
 var pos_cap := 10
 var size_cap := 20
 

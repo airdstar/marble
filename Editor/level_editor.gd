@@ -59,8 +59,8 @@ func _process(delta : float) -> void:
 		
 		if Input.is_action_just_released("camera_zoom_in"):
 			camera.position.z -= 100 * delta
-			if camera.position.z < 3:
-				camera.position.z = 3
+			if camera.position.z < 0.1:
+				camera.position.z = 0.1
 		
 		if Input.is_action_just_released("camera_zoom_out"):
 			camera.position.z += 100 * delta
