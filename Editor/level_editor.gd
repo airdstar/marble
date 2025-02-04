@@ -72,11 +72,16 @@ func _process(delta : float) -> void:
 				camera.position.z = 25
 		
 		if Input.is_action_pressed("move_left"):
-			print(camera_pivot.transform.basis)
-			#camera_pivot.position += Vector3.LEFT * camera_pivot.transform.basis * delta
+			camera_pivot.position += Vector3(-cos(camera_pivot.rotation.y),0, sin(camera_pivot.rotation.y)) * delta * 5
+		
+		if Input.is_action_pressed("move_right"):
+			camera_pivot.position += Vector3(cos(camera_pivot.rotation.y),0, -sin(camera_pivot.rotation.y)) * delta * 5
 		
 		if Input.is_action_pressed("move_forward"):
-			camera_pivot.position += Vector3.FORWARD * camera_pivot.transform.basis * delta
+			camera_pivot.position += Vector3(-sin(camera_pivot.rotation.y),0,-cos(camera_pivot.rotation.y)) * delta * 5
+		
+		if Input.is_action_pressed("move_backward"):
+			camera_pivot.position += Vector3(sin(camera_pivot.rotation.y),0,cos(camera_pivot.rotation.y)) * delta * 5
 		
 		
 

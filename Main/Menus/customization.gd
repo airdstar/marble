@@ -20,17 +20,20 @@ func _ready() -> void:
 	for n in pos_colors:
 		for m in 3:
 			var current_button = Button.new()
+			color_container.add_child(current_button)
+			current_button.text = "Color"
 			match m:
 				0:
-					current_button.modulate = n.lightened(0.5)
+					current_button.modulate = n.lightened(0.4)
+					current_button.pressed.connect(set_color.bind(n.lightened(0.4)))
 				1:
 					current_button.modulate = n
+					current_button.pressed.connect(set_color.bind(n))
 				2:
-					current_button.modulate = n.darkened(0.5)
-
-			current_button.text = "Color"
-			color_container.add_child(current_button)
-			current_button.pressed.connect(set_color.bind(n))
+					current_button.modulate = n.darkened(0.4)
+					current_button.pressed.connect(set_color.bind(n.darkened(0.4)))
+			
+			
 	
 	var dir = DirAccess.open(face_path)
 	dir.list_dir_begin()

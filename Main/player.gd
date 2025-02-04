@@ -21,7 +21,7 @@ func _physics_process(delta: float) -> void:
 func set_color() -> void:
 	$MeshInstance3D.mesh.material.albedo_color = PlayerInfo.player_data.player_customization.chosen_color
 	$MeshInstance3D.mesh.material.next_pass.albedo_color = PlayerInfo.player_data.player_customization.chosen_color
-	$MeshInstance3D.mesh.material.next_pass.albedo_color.a = 0.3
+	#$MeshInstance3D.mesh.material.next_pass.albedo_color.a = 0.7
 	emittedLight.light_color = PlayerInfo.player_data.player_customization.chosen_color
 
 func set_face() -> void:
