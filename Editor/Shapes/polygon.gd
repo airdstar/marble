@@ -1,7 +1,7 @@
 extends shape_resource
 class_name polygon
 
-@export_range(3, 32) var sides := 3
+@export_range(3, 32) var sides := 5
 
 @export var point_direction := 1
 

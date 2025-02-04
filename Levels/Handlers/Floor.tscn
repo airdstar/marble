@@ -36,13 +36,13 @@ environment = SubResource("Environment_on5bl")
 [node name="Origin" type="Node3D" parent="."]
 
 [node name="camera_y" type="Node3D" parent="." node_paths=PackedStringArray("panels", "camera")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.5, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.25, 0)
 script = ExtResource("4_e22wn")
 panels = NodePath("../Panels")
 camera = NodePath("Camera3D")
 
 [node name="Camera3D" type="Camera3D" parent="camera_y"]
-transform = Transform3D(1, 0, 0, 0, 0.939693, 0.34202, 0, -0.34202, 0.939693, 0, 0, 15)
+transform = Transform3D(1, 0, 0, 0, 0.887011, 0.461749, 0, -0.461749, 0.887011, 0, 0, 16.5)
 current = true
 fov = 70.0
 

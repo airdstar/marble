@@ -1,9 +1,17 @@
-[gd_scene load_steps=2 format=3 uid="uid://2nsb0c22moeb"]
+[gd_scene load_steps=4 format=3 uid="uid://2nsb0c22moeb"]
 
 [ext_resource type="Script" path="res://Editor/Parts/proc_mesh.gd" id="1_gq2ps"]
 
-[node name="ProcMesh" type="MeshInstance3D" node_paths=PackedStringArray("body", "collider")]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4t1h0"]
+transparency = 1
+albedo_color = Color(0, 0, 0, 0.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_b8fir"]
+material = SubResource("StandardMaterial3D_4t1h0")
+
+[node name="ProcMesh" type="MeshInstance3D" node_paths=PackedStringArray("editor_visibility", "body", "collider")]
 script = ExtResource("1_gq2ps")
+editor_visibility = NodePath("MeshInstance3D")
 body = NodePath("StaticBody3D")
 collider = NodePath("StaticBody3D/CollisionShape3D")
 metadata/part_name = "Proc Mesh"
@@ -12,3 +20,6 @@ metadata/part_name = "Proc Mesh"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
 disabled = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_b8fir")

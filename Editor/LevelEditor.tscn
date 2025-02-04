@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=3 uid="uid://1yq80goel736"]
+[gd_scene load_steps=47 format=3 uid="uid://1yq80goel736"]
 
 [ext_resource type="Script" path="res://Editor/level_editor.gd" id="1_gkh0n"]
 [ext_resource type="Texture2D" uid="uid://d0fbpahnke75l" path="res://Assets/grid.png" id="4_33n1c"]
@@ -12,6 +12,7 @@
 [ext_resource type="Script" path="res://Editor/UI/editor_sections.gd" id="7_2n8hv"]
 [ext_resource type="Script" path="res://Editor/UI/editor_shape_properties.gd" id="8_1kyoo"]
 [ext_resource type="Script" path="res://Editor/UI/editor_tools.gd" id="8_pcger"]
+[ext_resource type="Script" path="res://Editor/editor_rotation_properties.gd" id="9_q2et2"]
 [ext_resource type="Script" path="res://Editor/UI/editor_options.gd" id="11_dvs47"]
 [ext_resource type="Script" path="res://Editor/UI/editor_new_level.gd" id="12_hpcey"]
 [ext_resource type="Script" path="res://Editor/UI/editor_settings.gd" id="14_5wu5f"]
@@ -149,9 +150,11 @@ size = Vector3(0.95, 0.05, 0.05)
 [sub_resource type="BoxShape3D" id="BoxShape3D_ocfkr"]
 size = Vector3(1, 0.25, 0.25)
 
-[node name="LevelEditor" type="Node3D" node_paths=PackedStringArray("shape_preview")]
+[node name="LevelEditor" type="Node3D" node_paths=PackedStringArray("shape_preview", "camera_pivot", "camera")]
 script = ExtResource("1_gkh0n")
 shape_preview = NodePath("ShapePreview")
+camera_pivot = NodePath("CameraPivot")
+camera = NodePath("CameraPivot/Camera3D")
 
 [node name="CameraPivot" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.984808, 0.173648, 0, -0.173648, 0.984808, 0, 0, 0)
@@ -354,7 +357,7 @@ options_container = NodePath("Options/VBoxContainer")
 settings = NodePath("Settings")
 settings_container = NodePath("Settings/VBoxContainer")
 
-[node name="Properties" type="Panel" parent="UI" node_paths=PackedStringArray("property_options", "part_properties", "shape_properties", "part_name", "part_pos", "part_size", "part_rot", "dynamic_movement", "dynamic_rotation")]
+[node name="Properties" type="Panel" parent="UI" node_paths=PackedStringArray("property_options", "part_properties", "shape_properties", "rotation_properties", "part_name", "part_pos", "part_size", "part_rot", "dynamic_movement", "dynamic_rotation")]
 layout_mode = 0
 offset_top = 400.0
 offset_right = 300.0
@@ -363,6 +366,7 @@ script = ExtResource("6_mogux")
 property_options = NodePath("VBoxContainer/TabBar")
 part_properties = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/PartProperties")
 shape_properties = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties")
+rotation_properties = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/Rotation")
 part_name = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/PartProperties/PartName")
 part_pos = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/PartProperties/PartPos")
 part_size = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/PartProperties/PartSize")
@@ -457,6 +461,7 @@ layout_mode = 2
 theme_override_constants/margin_right = 10
 
 [node name="ShapeProperties" type="VBoxContainer" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer" node_paths=PackedStringArray("shape_name", "shape_pos", "shape_size", "shape_rot", "shape_modifier_holder", "shape_modifier", "shape_sides_holder", "shape_sides", "shape_orientation_holder", "shape_orientation", "shape_flip_orientation_holder", "shape_flip_orientation", "shape_hole_holder", "shape_hole_offset_x", "shape_hole_offset_y", "shape_hole_offset_z", "shape_hole_size")]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 script = ExtResource("8_1kyoo")
@@ -550,7 +555,7 @@ fit_content = true
 layout_mode = 2
 size_flags_horizontal = 3
 min_value = 3.0
-max_value = 20.0
+max_value = 32.0
 value = 3.0
 
 [node name="ShapeOrientation" type="HBoxContainer" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties"]
@@ -692,6 +697,25 @@ min_value = -0.25
 max_value = 0.25
 step = 0.01
 value = -0.25
+
+[node name="Rotation" type="VBoxContainer" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+script = ExtResource("9_q2et2")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/Rotation"]
+layout_mode = 2
+
+[node name="RotationAmount" type="RichTextLabel" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/Rotation/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = " Rotation Deg: 0"
+fit_content = true
+
+[node name="HSlider" type="HSlider" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/Rotation/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 360.0
 
 [node name="Parts" type="Panel" parent="UI" node_paths=PackedStringArray("shape_holder", "important_holder")]
 layout_mode = 0
@@ -1058,6 +1082,7 @@ text = "Update"
 [connection signal="shape_name_changed" from="UI/Properties" to="ShapePreview" method="name_changed"]
 [connection signal="tab_changed" from="UI/Properties/VBoxContainer/TabBar" to="UI/Properties" method="property_group_changed"]
 [connection signal="text_submitted" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/PartProperties/PartName" to="." method="part_name_changed"]
+[connection signal="toggled" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/PartProperties/DynamicRot/CheckBox" to="." method="part_rotation_toggled"]
 [connection signal="_hole_offset_changed" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties" to="ShapePreview" method="hole_offset_changed"]
 [connection signal="_hole_size_changed" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties" to="ShapePreview" method="hole_size_changed"]
 [connection signal="text_submitted" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeName" to="UI/Properties" method="shape_name_submitted"]

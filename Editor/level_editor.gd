@@ -18,11 +18,14 @@ var selected_tool : editor.tool = editor.tool.NONE
 
 var selected_part : Node3D = null
 var selected_shape : shape_resource = null
+var selected_component : component = null
 @export var shape_preview : ProcMesh
+
+@export var camera_pivot : Node3D
+@export var camera : Camera3D
 
 @onready var level_select := $UI/LevelSelect
 @onready var adjuster := $Adjust
-@onready var camera : Camera3D = $CameraPivot/Camera3D
 
 @onready var UI : Control = $UI
 
@@ -35,6 +38,7 @@ signal new_shape_selected
 
 func _ready() -> void:
 	shape_preview.is_preview = true
+	shape_preview.editor_visibility.visible = false
 	tool_visible(false)
 	open_level_select()
 
@@ -54,8 +58,8 @@ func _process(delta : float) -> void:
 	
 	if allow_camera_movement:
 		var input = Input.get_last_mouse_velocity()
-		$CameraPivot.rotation.y += -input.x * 0.002 * delta
-		$CameraPivot.rotation.x += -input.y * 0.002 * delta
+		camera_pivot.rotation.y += -input.x * 0.002 * delta
+		camera_pivot.rotation.x += -input.y * 0.002 * delta
 		
 		if Input.is_action_just_released("camera_zoom_in"):
 			camera.position.z -= 100 * delta
@@ -66,6 +70,13 @@ func _process(delta : float) -> void:
 			camera.position.z += 100 * delta
 			if camera.position.z > 25:
 				camera.position.z = 25
+		
+		if Input.is_action_pressed("move_left"):
+			print(camera_pivot.transform.basis)
+			#camera_pivot.position += Vector3.LEFT * camera_pivot.transform.basis * delta
+		
+		if Input.is_action_pressed("move_forward"):
+			camera_pivot.position += Vector3.FORWARD * camera_pivot.transform.basis * delta
 		
 		
 
@@ -206,21 +217,23 @@ func movement_detected(pos_change : Vector3) -> void:
 func resize_detected(size_change : Vector3) -> void:
 	match adjusting:
 		editor.adjustable.PART:
-			selected_part.scale = size_change
-			UI.properties.size_changed(size_change)
-			adjuster.selected_size_changed(size_change)
+			if selected_part is not ProcMesh:
+				selected_part.scale = size_change
+				UI.properties.size_changed(size_change)
+				adjuster.selected_size_changed(size_change)
 		editor.adjustable.SHAPE:
 			shape_preview.size_changed(size_change)
 
 func rotation_detected(rotation_change : Vector3) -> void:
 	match adjusting:
 		editor.adjustable.PART:
-			selected_part.rotate_x(deg_to_rad(rotation_change.x))
-			selected_part.rotate_y(deg_to_rad(rotation_change.y))
-			selected_part.rotate_z(deg_to_rad(rotation_change.z))
-			var part_rotation = Vector3(rad_to_deg(selected_part.rotation.x), rad_to_deg(selected_part.rotation.y), rad_to_deg(selected_part.rotation.z))
-			UI.properties.rot_changed(part_rotation)
-			adjuster.selected_rotation_changed(part_rotation)
+			if selected_part is not ProcMesh:
+				selected_part.rotate_x(deg_to_rad(rotation_change.x))
+				selected_part.rotate_y(deg_to_rad(rotation_change.y))
+				selected_part.rotate_z(deg_to_rad(rotation_change.z))
+				var part_rotation = Vector3(rad_to_deg(selected_part.rotation.x), rad_to_deg(selected_part.rotation.y), rad_to_deg(selected_part.rotation.z))
+				UI.properties.rot_changed(part_rotation)
+				adjuster.selected_rotation_changed(part_rotation)
 		editor.adjustable.SHAPE:
 			shape_preview.rotation_changed(rotation_change)
 
@@ -252,17 +265,42 @@ func reset_rotation() -> void:
 	UI.properties.rot_changed(Vector3.ZERO)
 	adjuster.selected_rotation_changed(Vector3.ZERO)
 
+
+func part_rotation_toggled(toggled_on: bool) -> void:
+	if selected_part != null:
+		if toggled_on:
+			var rot = preload("res://Editor/Parts/Components/RotateableComponent.tscn").instantiate()
+			selected_part.add_child(rot)
+			rot.to_rotate = selected_part
+			rot.set_owner(level_base)
+			if UI.properties.get_tab("Rotation") == -1:
+				UI.properties.property_options.add_tab("Rotation")
+			UI.properties.rotation_properties.set_values(rot)
+		else:
+			for n in selected_part.get_children():
+				if n is rotateable_component:
+					n.queue_free()
+					if UI.properties.get_tab("Rotation") != -1:
+						UI.properties.property_options.remove_tab(UI.properties.get_tab("Rotation"))
+
+func part_movement_toggled(toggled_on : bool) -> void:
+	pass
+
 func property_group_set(adjust_to : String) -> void:
 	match adjust_to:
 		"Part":
-			if selected_part is not ProcMesh:
-				adjusting = editor.adjustable.PART
-				tool_visible(true)
-			else:
-				tool_visible(false)
+			adjusting = editor.adjustable.PART
+			tool_visible(true)
 		"Shape":
 			adjusting = editor.adjustable.SHAPE
 			tool_visible(true)
+		"Rotation":
+			adjusting = editor.adjustable.NONE
+			if selected_part != null:
+				for n in selected_part.get_children():
+					if n is rotateable_component:
+						selected_component = n
+			tool_visible(false)
 
 
 func tool_visible(make_visible : bool) -> void:

@@ -3,6 +3,7 @@ extends Control
 @export var property_options : TabBar
 @export var part_properties : VBoxContainer
 @export var shape_properties : VBoxContainer
+@export var rotation_properties : VBoxContainer
 
 @export_category("Part")
 @export var part_name : LineEdit
@@ -12,14 +13,6 @@ extends Control
 
 @export var dynamic_movement : CheckBox
 @export var dynamic_rotation : CheckBox
-
-@export_category("Movement")
-@export var mov_has_trigger : CheckBox
-@export var mov_pos : RichTextLabel
-
-@export_category("Rotation")
-@export var rot_has_trigger : CheckBox
-@export var rot_amount : RichTextLabel
 
 
 signal shape_name_changed
@@ -32,6 +25,7 @@ func _ready() -> void:
 func property_group_changed(index: int) -> void:
 	part_properties.visible = false
 	shape_properties.visible = false
+	rotation_properties.visible = false
 	if index == -1:
 		visible = false
 	else:
@@ -41,6 +35,8 @@ func property_group_changed(index: int) -> void:
 				part_properties.visible = true
 			"Shape":
 				shape_properties.visible = true
+			"Rotation":
+				rotation_properties.visible = true
 		group_changed.emit(property_options.get_tab_title(index))
 
 func pos_changed(new_pos : Vector3) -> void:
@@ -81,6 +77,9 @@ func part_selected(part : Node3D) -> void:
 func part_unselected() -> void:
 	if get_tab("Part") != -1:
 		property_options.remove_tab(get_tab("Part"))
+	
+	if get_tab("Rotation") != -1:
+		property_options.remove_tab(get_tab("Rotation"))
 	
 	if property_options.tab_count > 0:
 		property_options.current_tab = 0
@@ -125,3 +124,13 @@ func display_part_properties(part : Node3D) -> void:
 	part_size.text = " Size: %.2f" % part.scale.x + ", %.2f" % part.scale.y + ", %.2f" % part.scale.z
 	part_rot.text = " Rotation: %d" % part.rotation.x + ", %d" % part.rotation.y + ", %d" % part.rotation.z
 	
+	dynamic_rotation.button_pressed = false
+	
+	for n in part.get_children():
+		if n is rotateable_component:
+			dynamic_rotation.button_pressed = true
+			if get_tab("Rotation") == -1:
+				property_options.add_tab("Rotation")
+			
+			rotation_properties.set_values(n)
+				

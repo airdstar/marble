@@ -1,0 +1,29 @@
+[gd_resource type="Resource" script_class="level_resource" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://Levels/Handlers/level.gd" id="1_3u18f"]
+[ext_resource type="Script" path="res://Resources/LevelResource.gd" id="2_06xpr"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ndgqk"]
+size = Vector3(3, 1, 3)
+
+[sub_resource type="PackedScene" id="PackedScene_31d7f"]
+_bundled = {
+"conn_count": 2,
+"conns": PackedInt32Array(2, 0, 18, 17, 2, 0, 0, 3, 0, 18, 19, 2, 0, 0),
+"editable_instances": [],
+"names": PackedStringArray("LevelBase", "freeze", "script", "parts", "geometry", "start_node", "input_node", "input_collider", "RigidBody3D", "Geometry", "Node3D", "Starts", "Area3D", "InputTrigger", "CollisionShape3D", "shape", "disabled", "start_timer", "area_entered", "input_trigger"),
+"node_count": 5,
+"node_paths": [],
+"nodes": PackedInt32Array(-1, -1, 8, 0, -1, 7, 1, 0, 2, 1, 1073741827, 2, 1073741828, 3, 1073741829, 4, 1073741830, 5, 1073741831, 6, 0, 0, 0, 10, 9, -1, 0, 0, 0, 0, 12, 11, -1, 0, 0, 0, 0, 12, 13, -1, 0, 0, 3, 0, 14, 14, -1, 2, 15, 7, 16, 0, 0),
+"variants": [true, ExtResource("1_3u18f"), [], NodePath("Geometry"), NodePath("Starts"), NodePath("InputTrigger"), NodePath("InputTrigger/CollisionShape3D"), SubResource("BoxShape3D_ndgqk")],
+"version": 3
+}
+
+[resource]
+script = ExtResource("2_06xpr")
+name = "Test2"
+level_difficulty = 0
+level_type = 0
+associated_scene = SubResource("PackedScene_31d7f")
+include_in_pool = false
+gravity = Vector3(0, 9.8, 0)

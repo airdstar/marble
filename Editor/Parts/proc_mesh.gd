@@ -1,6 +1,8 @@
 extends MeshInstance3D
 class_name ProcMesh
 
+@export var editor_visibility : Node3D
+
 @export var body : StaticBody3D
 @export var collider : CollisionShape3D
 @export var shape_info : Array[shape_resource]
@@ -20,6 +22,7 @@ func clear_mesh() -> void:
 	regenerate_mesh()
 
 func add_shape(new_shape : shape_resource) -> void:
+	new_shape.total_offset -= position
 	shape_info.append(new_shape)
 	regenerate_mesh()
 

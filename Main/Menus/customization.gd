@@ -18,11 +18,19 @@ var marking_path : String = "res://Assets/Customization/Markings/"
 func _ready() -> void:
 	player_dummy.freeze = true
 	for n in pos_colors:
-		var current_button = Button.new()
-		current_button.modulate = n
-		current_button.text = "Color"
-		color_container.add_child(current_button)
-		current_button.pressed.connect(set_color.bind(n))
+		for m in 3:
+			var current_button = Button.new()
+			match m:
+				0:
+					current_button.modulate = n.lightened(0.5)
+				1:
+					current_button.modulate = n
+				2:
+					current_button.modulate = n.darkened(0.5)
+
+			current_button.text = "Color"
+			color_container.add_child(current_button)
+			current_button.pressed.connect(set_color.bind(n))
 	
 	var dir = DirAccess.open(face_path)
 	dir.list_dir_begin()

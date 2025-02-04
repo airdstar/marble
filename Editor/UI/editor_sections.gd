@@ -140,6 +140,7 @@ func _on_take_pressed() -> void:
 			if selected_shape != null:
 			
 				selected_part.remove_shape(selected_shape)
+				selected_shape.total_offset += selected_part.position
 				shape_selected.emit(selected_shape)
 				
 				for n : Button in shape_holder.get_children():

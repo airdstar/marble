@@ -44,8 +44,8 @@ var selected_color : Array[Color] = [
 
 var prev_rotation : float = 0
 var snapping := 0.1
-var pos_cap := 10
-var size_cap := 20
+var pos_cap := 12.5
+var size_cap := 25
 
 var axis_grabbed : int = 0
 const RAY_LENGTH := 40
@@ -98,13 +98,13 @@ func _process(_delta : float) -> void:
 			if global_pos != null:
 				match axis_grabbed:
 					1:
-						holder = snapped(global_pos.z * 50, 1)
+						holder = snapped((global_pos.z - position.z) * 50, 1)
 						global_pos = Vector3(holder - prev_rotation, 0, 0)
 					2:
-						holder = snapped(-(global_pos.x + global_pos.z) * 50, 1)
+						holder = snapped(-(global_pos.x + global_pos.z - position.x - position.z) * 50, 1)
 						global_pos = Vector3(0, holder - prev_rotation, 0)
 					3:
-						holder = -snapped(global_pos.x * 50, 1)
+						holder = -snapped((global_pos.x - position.x) * 50, 1)
 						global_pos = Vector3(0, 0, holder - prev_rotation)
 						
 				prev_rotation = holder

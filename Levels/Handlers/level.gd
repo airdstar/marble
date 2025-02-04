@@ -26,10 +26,13 @@ func open_editor():
 func start_level():
 	input_collider.disabled = false
 	for n : Node3D in parts:
+		for m in n.get_children():
+			if m is rotateable_component:
+				m.level_loaded()
 		if "collider" in n:
 			n.collider.disabled = false
 		if "editor_visibility" in n:
-			n.visible = false
+			n.editor_visibility.visible = false
 	choose_spawn()
 
 func choose_spawn():

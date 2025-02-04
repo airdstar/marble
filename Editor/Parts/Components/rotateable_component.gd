@@ -1,5 +1,7 @@
-extends Node
+extends component
 class_name rotateable_component
+
+@export var to_rotate : Node3D
 
 @export_category("Rotation")
 ## Rotation from start (in degrees), make negative if desired direction is counterclockwisey
@@ -15,13 +17,7 @@ class_name rotateable_component
 ## Should the desired direction be random?
 @export var random_direction : bool = false
 
-var to_rotate : Node3D
-
-func _ready():
-	to_rotate = get_parent()
-	if to_rotate is RigidBody3D:
-		to_rotate.freeze = true
-	
+func level_loaded():
 	rotation_amount = deg_to_rad(rotation_amount)
 	if random_direction:
 		if randi_range(0,1) == 1:
