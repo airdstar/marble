@@ -75,17 +75,8 @@ func _process(delta: float) -> void:
 
 func _physics_process(delta: float) -> void:
 	
-	input_tilt.x = clamp(input_tilt.x, deg_to_rad(-35), deg_to_rad(35))
-	input_tilt.y = clamp(input_tilt.y, deg_to_rad(-35), deg_to_rad(35))
-	
-	origin_tilt.x = deg_to_rad(input_tilt.x * 20)
-	origin_tilt.y = deg_to_rad(input_tilt.y * 20)
-	
-	proxy_tilt.rotation = camera.transform.basis * Vector3(origin_tilt.x, 0, origin_tilt.y)
-	
 	var a = Quaternion(origin.transform.basis)
-	var b = Quaternion(proxy_tilt.transform.basis)
-	var c = a.slerp(b,0.2)
+	var c = a.slerp(Quaternion(proxy_tilt.transform.basis),0.2)
 	origin.transform.basis = Basis(c)
 
 	if marble != null:
@@ -93,16 +84,18 @@ func _physics_process(delta: float) -> void:
 
 func handle_tilt(delta : float) -> void:
 	
-	var tilt_scalar := 1.0
-	
-	if Input.is_action_pressed("pinch"):
-		tilt_scalar = PlayerInfo.player_settings.tilt_pinch
-	
 	var input = Input.get_last_mouse_velocity()
 	if input.y > settings.tilt_deadzone or input.y < -settings.tilt_deadzone:
-		input_tilt.x += input.y * settings.tilt_sens * tilt_scalar * delta
+		input_tilt.x += input.y * settings.tilt_sens  * delta
+		input_tilt.x = clamp(input_tilt.x, deg_to_rad(-35), deg_to_rad(35))
+		origin_tilt.x = deg_to_rad(input_tilt.x * 20)
 	if input.x > settings.tilt_deadzone or input.x < -settings.tilt_deadzone:
-		input_tilt.y += -input.x * settings.tilt_sens * tilt_scalar * delta
+		input_tilt.y += -input.x * settings.tilt_sens  * delta
+		input_tilt.y = clamp(input_tilt.y, deg_to_rad(-35), deg_to_rad(35))
+		origin_tilt.y = deg_to_rad(input_tilt.y * 20)
+	
+	proxy_tilt.rotation = camera.transform.basis * Vector3(origin_tilt.x, 0, origin_tilt.y)
+	
 
 func place_control() -> void:
 	
