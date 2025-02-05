@@ -51,3 +51,13 @@ func _shape_unselected() -> void:
 	selected_shape = null
 	if selected_part != null:
 		part_selected.emit(selected_part)
+
+func switch_hold() -> void:
+	if held_shape != null and held_shape != selected_shape:
+		_shape_selected(held_shape)
+	else:
+		shape_preview.remove_shape(selected_shape)
+		held_shape = selected_shape
+		selected_shape = null
+		master.UI.properties.shape_unselected()
+		master.tool_visible(false)

@@ -26,6 +26,7 @@ var selected_component : component = null
 
 @export_category("Handlers")
 @export var shape_handler : Node
+@export var selection_handler : Node
 
 @onready var level_select := $UI/LevelSelect
 @onready var adjuster := $Adjust
@@ -87,9 +88,6 @@ func _process(delta : float) -> void:
 			camera.position.z += 100 * delta
 			if camera.position.z > 25:
 				camera.position.z = 25
-		
-		
-		
 
 func open_level_select():
 	chosen_level = null
@@ -107,9 +105,6 @@ func open_level_select():
 		n.button_pressed = false
 	
 	UI.level_select.visible = true
-
-func reset_camera() -> void:
-	$CameraPivot.rotation = Vector3(deg_to_rad(-10), 0, 0)
 
 func level_selected(level_info : level_resource) -> void:
 	chosen_level = level_info
@@ -142,20 +137,6 @@ func part_unselected() -> void:
 	adjusting = editor.adjustable.NONE
 	tool_visible(false)
 
-func shape_selected(shape : shape_resource) -> void:
-	if selected_shape != null:
-		held_shape = selected_shape
-	
-	selected_shape = shape
-	shape_preview.clear_mesh()
-	shape_preview.add_shape(shape)
-
-	adjuster.selected_pos_changed(shape.total_offset)
-	adjuster.selected_size_changed(shape.size)
-	var e = shape.rotation.get_euler()
-	adjuster.selected_rotation_changed(Vector3(rad_to_deg(e.x), rad_to_deg(e.y), rad_to_deg(e.z)))
-	new_shape_selected.emit(shape)
-
 func shape_unselected() -> void:
 	shape_preview.clear_mesh()
 	selected_shape = null
@@ -181,16 +162,6 @@ func create_and_place() -> void:
 	shape_placed.emit(selected_shape)
 	shape_unselected()
 
-func switch_hold() -> void:
-	if held_shape != null and held_shape != selected_shape:
-		shape_selected(held_shape)
-	else:
-		shape_preview.remove_shape(selected_shape)
-		held_shape = selected_shape
-		selected_shape = null
-		UI.properties.shape_unselected()
-		tool_visible(false)
-
 func new_procmesh_created() -> void:
 	var holder = preload("res://Editor/Parts/ProcMesh.tscn").instantiate()
 	new_part_created(holder)
@@ -210,71 +181,6 @@ func rec_set_owner(part : Node3D) -> void:
 	part.set_owner(level_base)
 	for n in part.get_children():
 		rec_set_owner(n)
-
-func part_name_changed(new_text: String) -> void:
-	if new_text != "":
-		selected_part.set_meta("part_name", new_text)
-		sections.get_selected_part().text = new_text
-
-func movement_detected(pos_change : Vector3) -> void:
-	match adjusting:
-		editor.adjustable.PART:
-			selected_part.position = pos_change
-			adjuster.selected_pos_changed(pos_change)
-			UI.properties.pos_changed(pos_change)
-		editor.adjustable.SHAPE:
-			shape_handler.offset_changed(pos_change)
-
-func resize_detected(size_change : Vector3) -> void:
-	match adjusting:
-		editor.adjustable.PART:
-			if selected_part is not ProcMesh:
-				selected_part.scale = size_change
-				UI.properties.size_changed(size_change)
-				adjuster.selected_size_changed(size_change)
-		editor.adjustable.SHAPE:
-			shape_handler.size_changed(size_change)
-
-func rotation_detected(rotation_change : Vector3) -> void:
-	match adjusting:
-		editor.adjustable.PART:
-			if selected_part is not ProcMesh:
-				selected_part.rotate_x(deg_to_rad(rotation_change.x))
-				selected_part.rotate_y(deg_to_rad(rotation_change.y))
-				selected_part.rotate_z(deg_to_rad(rotation_change.z))
-				var part_rotation = Vector3(rad_to_deg(selected_part.rotation.x), rad_to_deg(selected_part.rotation.y), rad_to_deg(selected_part.rotation.z))
-				UI.properties.rot_changed(part_rotation)
-				adjuster.selected_rotation_changed(part_rotation)
-		editor.adjustable.SHAPE:
-			shape_handler.rotation_changed(rotation_change)
-
-func reset_movement() -> void:
-	match adjusting:
-		editor.adjustable.PART:
-			selected_part.position = Vector3.ZERO
-			adjuster.selected_pos_changed(Vector3.ZERO)
-			UI.properties.pos_changed(Vector3.ZERO)
-		editor.adjustable.SHAPE:
-			shape_handler.offset_changed(Vector3.ZERO)
-
-func reset_size() -> void:
-	match adjusting:
-		editor.adjustable.PART:
-			selected_part.scale = Vector3(1,1,1)
-			UI.properties.size_changed(Vector3(1,1,1))
-			adjuster.selected_size_changed(Vector3(1,1,1))
-		editor.adjustable.SHAPE:
-			shape_handler.size_changed(Vector3(1,1,1))
-
-func reset_rotation() -> void:
-	match adjusting:
-		editor.adjustable.PART:
-			selected_part.rotation = Vector3.ZERO
-		editor.adjustable.SHAPE:
-			shape_preview.shape_info[0].rotation = Quaternion.IDENTITY
-			shape_preview.regenerate_mesh()
-	UI.properties.rot_changed(Vector3.ZERO)
-	adjuster.selected_rotation_changed(Vector3.ZERO)
 
 
 func part_rotation_toggled(toggled_on: bool) -> void:
@@ -362,8 +268,6 @@ func level_info_updated() -> void:
 		chosen_level.include_in_pool = UI.settings.include_box.button_pressed
 		ResourceSaver.save(chosen_level, Global.level_resource_path + chosen_level.name + ".tres")
 		UI.settings.close_settings()
-	
-
 
 func pre_save() -> void:
 	for n in level_base.parts:

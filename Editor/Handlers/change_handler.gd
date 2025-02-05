@@ -8,10 +8,27 @@ signal pos_changed
 signal size_changed
 signal rot_changed
 
+func part_rotation_toggled(toggled_on: bool) -> void:
+	if selection.selected_part != null:
+		if toggled_on:
+			var rot = preload("res://Editor/Parts/Components/RotateableComponent.tscn").instantiate()
+			selection.selected_part.add_child(rot)
+			rot.to_rotate = selection.selected_part
+			rot.set_owner(master.level_base)
+			if master.UI.properties.get_tab("Rotation") == -1:
+				master.UI.properties.property_options.add_tab("Rotation")
+			master.UI.properties.rotation_properties.set_values(rot)
+		else:
+			for n in selection.selected_part.get_children():
+				if n is rotateable_component:
+					n.queue_free()
+					if master.UI.properties.get_tab("Rotation") != -1:
+						master.UI.properties.property_options.remove_tab(master.UI.properties.get_tab("Rotation"))
+
+
 func part_name_changed(new_text: String) -> void:
-	if new_text != "":
-		selection.selected_part.set_meta("part_name", new_text)
-		master.sections.get_selected_part().text = new_text
+	selection.selected_part.set_meta("part_name", new_text)
+	master.sections.get_selected_part().text = new_text
 
 func movement_detected(pos_change : Vector3) -> void:
 	match master.adjusting:
