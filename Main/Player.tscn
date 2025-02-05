@@ -39,8 +39,8 @@ layers = 17
 mesh = SubResource("SphereMesh_4hlcw")
 
 [node name="Face" type="Decal" parent="MeshInstance3D"]
-transform = Transform3D(-4.37114e-08, -1, 0, -4.37114e-08, 1.91069e-15, -1, 1, -4.37114e-08, -4.37114e-08, 0.382886, -1.58369e-16, 3.62305e-09)
-size = Vector3(0.6, 0.4, 0.6)
+transform = Transform3D(-4.37114e-08, -1, 0, -4.37114e-08, 1.91069e-15, -1, 1, -4.37114e-08, -4.37114e-08, 0.4, 0, 0)
+size = Vector3(0.5, 0.4, 0.5)
 texture_albedo = ExtResource("2_upe4j")
 upper_fade = 1e-05
 lower_fade = 1e-05
