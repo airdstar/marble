@@ -1,0 +1,53 @@
+extends Node
+
+@export var master : Node
+@export var shape_preview : ProcMesh
+
+var selected_part : Node3D = null
+var selected_shape : shape_resource = null
+var held_shape : shape_resource = null
+var selected_component : component = null
+
+signal part_selected
+signal shape_selected
+
+func _part_selected(part : Node3D) -> void:
+	var holder : Node3D
+	if part is ProcMesh:
+		if part.is_preview:
+			holder = selected_part
+	
+	master.adjuster.selected_pos_changed(part.position)
+
+	if part is not ProcMesh:
+		master.adjuster.selected_size_changed(part.scale)
+	
+	master.adjuster.selected_rotation_changed(part.rotation)
+	
+	selected_part = part
+	part_selected.emit(selected_part)
+
+func _part_unselected() -> void:
+	selected_part = null
+	master.adjusting = editor.adjustable.NONE
+	master.tool_visible(false)
+
+func _shape_selected(shape : shape_resource) -> void:
+	if selected_shape != null:
+		held_shape = selected_shape
+	
+	selected_shape = shape
+	shape_preview.clear_mesh()
+	shape_preview.add_shape(shape)
+
+	master.adjuster.selected_pos_changed(shape.total_offset)
+	master.adjuster.selected_size_changed(shape.size)
+	var e = shape.rotation.get_euler()
+	master.adjuster.selected_rotation_changed(Vector3(rad_to_deg(e.x), rad_to_deg(e.y), rad_to_deg(e.z)))
+	shape_selected.emit(shape)
+
+func _shape_unselected() -> void:
+	shape_preview.clear_mesh()
+	selected_shape = null
+	if selected_part != null:
+		part_selected.emit(selected_part)

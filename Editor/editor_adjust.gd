@@ -42,10 +42,17 @@ var selected_color : Array[Color] = [
 	Color(0.45, 0.3, 1)
 ]
 
+const MAX_POS : float = 12.5
+const MAX_SIZE : float = 25
+
 var prev_rotation : float = 0
 var snapping := 0.1
-var pos_cap := 12.5
-var size_cap := 25
+var pos_cap_x := MAX_POS
+var pos_cap_y := MAX_POS
+var pos_cap_z := MAX_POS
+var size_cap_x := MAX_SIZE
+var size_cap_y := MAX_SIZE
+var size_cap_z := MAX_SIZE
 
 var axis_grabbed : int = 0
 const RAY_LENGTH := 40
@@ -72,11 +79,11 @@ func _process(_delta : float) -> void:
 			if global_pos != null:
 				match axis_grabbed:
 					1:
-						global_pos = Vector3(clamp(snapped(global_pos.x - 0.5, snapping), -pos_cap, pos_cap), position.y, position.z)
+						global_pos = Vector3(clamp(snapped(global_pos.x - 0.5, snapping), -pos_cap_x, pos_cap_x), position.y, position.z)
 					2:
-						global_pos = Vector3(position.x, clamp(snapped(global_pos.y - 0.5, snapping), -pos_cap, pos_cap), position.z)
+						global_pos = Vector3(position.x, clamp(snapped(global_pos.y - 0.5, snapping), -pos_cap_y, pos_cap_y), position.z)
 					3:
-						global_pos = Vector3(position.x, position.y, clamp(snapped(global_pos.z - 0.5, snapping), -pos_cap, pos_cap))
+						global_pos = Vector3(position.x, position.y, clamp(snapped(global_pos.z - 0.5, snapping), -pos_cap_z, pos_cap_z))
 				
 				pos_changed.emit(global_pos)
 	elif size.visible:
@@ -85,11 +92,11 @@ func _process(_delta : float) -> void:
 			if global_pos != null:
 				match axis_grabbed:
 					1:
-						global_pos = Vector3(clamp(snapped((global_pos.x - position.x) * 2, snapping), snapping, size_cap), size_y_mesh.position.y * 2, size_z_mesh.position.z * 2)
+						global_pos = Vector3(clamp(snapped((global_pos.x - position.x) * 2, snapping), snapping, size_cap_x), size_y_mesh.position.y * 2, size_z_mesh.position.z * 2)
 					2:
-						global_pos = Vector3(size_x_mesh.position.x * 2, clamp(snapped((global_pos.y - position.y) * 2, snapping), snapping, size_cap), size_z_mesh.position.z * 2)
+						global_pos = Vector3(size_x_mesh.position.x * 2, clamp(snapped((global_pos.y - position.y) * 2, snapping), snapping, size_cap_y), size_z_mesh.position.z * 2)
 					3:
-						global_pos = Vector3(size_x_mesh.position.x * 2, size_y_mesh.position.y * 2, clamp(snapped((global_pos.z - position.z) * 2, snapping), snapping, size_cap))
+						global_pos = Vector3(size_x_mesh.position.x * 2, size_y_mesh.position.y * 2, clamp(snapped((global_pos.z - position.z) * 2, snapping), snapping, size_cap_z))
 				size_changed.emit(global_pos)
 	elif rot.visible:
 		if axis_grabbed != 0:
@@ -135,11 +142,17 @@ func get_mouse_world_position(collision_mask: int = 0b00000000_00000000_00000000
 
 func selected_pos_changed(new_pos : Vector3) -> void:
 	position = new_pos
+	size_cap_x = clamp(MAX_SIZE - 2 * abs(new_pos.x), 1, MAX_SIZE)
+	size_cap_y = clamp(MAX_SIZE - 2 * abs(new_pos.y), 1, MAX_SIZE)
+	size_cap_z = clamp(MAX_SIZE - 2 * abs(new_pos.z), 1, MAX_SIZE)
 
 func selected_size_changed(new_size : Vector3) -> void:
 	size_x_mesh.position.x = new_size.x / 2
 	size_y_mesh.position.y = new_size.y / 2
 	size_z_mesh.position.z = new_size.z / 2
+	pos_cap_x = clamp(MAX_POS - new_size.x / 2, 0, MAX_POS - 0.5)
+	pos_cap_y = clamp(MAX_POS - new_size.y / 2, 0, MAX_POS - 0.5)
+	pos_cap_z = clamp(MAX_POS - new_size.z / 2, 0, MAX_POS - 0.5)
 
 func selected_rotation_changed(new_rot : Vector3) -> void:
 	if rot_proxy.rotation != new_rot:

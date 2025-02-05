@@ -24,6 +24,9 @@ var selected_component : component = null
 @export var camera_pivot : Node3D
 @export var camera : Camera3D
 
+@export_category("Handlers")
+@export var shape_handler : Node
+
 @onready var level_select := $UI/LevelSelect
 @onready var adjuster := $Adjust
 
@@ -56,6 +59,20 @@ func _process(delta : float) -> void:
 		else:
 			Global.open_scene("main_menu")
 	
+	if Input.is_action_pressed("move_left"):
+		camera_pivot.position += Vector3(-cos(camera_pivot.rotation.y),0, sin(camera_pivot.rotation.y)) * delta * 5
+	
+	if Input.is_action_pressed("move_right"):
+		camera_pivot.position += Vector3(cos(camera_pivot.rotation.y),0, -sin(camera_pivot.rotation.y)) * delta * 5
+	
+	if Input.is_action_pressed("move_forward"):
+		camera_pivot.position += Vector3(-sin(camera_pivot.rotation.y),0,-cos(camera_pivot.rotation.y)) * delta * 5
+	
+	if Input.is_action_pressed("move_backward"):
+		camera_pivot.position += Vector3(sin(camera_pivot.rotation.y),0,cos(camera_pivot.rotation.y)) * delta * 5
+	
+	camera_pivot.position = camera_pivot.position.clamp(Vector3(-12.5,0,-12.5), Vector3(12.5,0,12.5))
+	
 	if allow_camera_movement:
 		var input = Input.get_last_mouse_velocity()
 		camera_pivot.rotation.y += -input.x * 0.002 * delta
@@ -71,17 +88,6 @@ func _process(delta : float) -> void:
 			if camera.position.z > 25:
 				camera.position.z = 25
 		
-		if Input.is_action_pressed("move_left"):
-			camera_pivot.position += Vector3(-cos(camera_pivot.rotation.y),0, sin(camera_pivot.rotation.y)) * delta * 5
-		
-		if Input.is_action_pressed("move_right"):
-			camera_pivot.position += Vector3(cos(camera_pivot.rotation.y),0, -sin(camera_pivot.rotation.y)) * delta * 5
-		
-		if Input.is_action_pressed("move_forward"):
-			camera_pivot.position += Vector3(-sin(camera_pivot.rotation.y),0,-cos(camera_pivot.rotation.y)) * delta * 5
-		
-		if Input.is_action_pressed("move_backward"):
-			camera_pivot.position += Vector3(sin(camera_pivot.rotation.y),0,cos(camera_pivot.rotation.y)) * delta * 5
 		
 		
 
@@ -217,7 +223,7 @@ func movement_detected(pos_change : Vector3) -> void:
 			adjuster.selected_pos_changed(pos_change)
 			UI.properties.pos_changed(pos_change)
 		editor.adjustable.SHAPE:
-			shape_preview.offset_changed(pos_change)
+			shape_handler.offset_changed(pos_change)
 
 func resize_detected(size_change : Vector3) -> void:
 	match adjusting:
@@ -227,7 +233,7 @@ func resize_detected(size_change : Vector3) -> void:
 				UI.properties.size_changed(size_change)
 				adjuster.selected_size_changed(size_change)
 		editor.adjustable.SHAPE:
-			shape_preview.size_changed(size_change)
+			shape_handler.size_changed(size_change)
 
 func rotation_detected(rotation_change : Vector3) -> void:
 	match adjusting:
@@ -240,7 +246,7 @@ func rotation_detected(rotation_change : Vector3) -> void:
 				UI.properties.rot_changed(part_rotation)
 				adjuster.selected_rotation_changed(part_rotation)
 		editor.adjustable.SHAPE:
-			shape_preview.rotation_changed(rotation_change)
+			shape_handler.rotation_changed(rotation_change)
 
 func reset_movement() -> void:
 	match adjusting:
@@ -249,7 +255,7 @@ func reset_movement() -> void:
 			adjuster.selected_pos_changed(Vector3.ZERO)
 			UI.properties.pos_changed(Vector3.ZERO)
 		editor.adjustable.SHAPE:
-			shape_preview.offset_changed(Vector3.ZERO)
+			shape_handler.offset_changed(Vector3.ZERO)
 
 func reset_size() -> void:
 	match adjusting:
@@ -258,7 +264,7 @@ func reset_size() -> void:
 			UI.properties.size_changed(Vector3(1,1,1))
 			adjuster.selected_size_changed(Vector3(1,1,1))
 		editor.adjustable.SHAPE:
-			shape_preview.size_changed(Vector3(1,1,1))
+			shape_handler.size_changed(Vector3(1,1,1))
 
 func reset_rotation() -> void:
 	match adjusting:

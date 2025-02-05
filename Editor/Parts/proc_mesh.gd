@@ -12,10 +12,6 @@ var tri_count : int = 0
 
 var is_preview := false
 
-signal offset_change_successful
-signal size_change_successful
-signal rotation_change_successful
-
 func clear_mesh() -> void:
 	shape_info.clear()
 	tri_count = 0
@@ -70,58 +66,3 @@ func create_collision() -> void:
 
 func cull() -> void:
 	pass
-
-func offset_changed(pos_change : Vector3) -> void:
-	if shape_info.size() != 0:
-		shape_info[0].total_offset = pos_change
-		regenerate_mesh()
-		offset_change_successful.emit(shape_info[0].total_offset)
-
-func size_changed(new_size : Vector3) -> void:
-	if shape_info.size() != 0:
-		shape_info[0].size = new_size
-		regenerate_mesh()
-		size_change_successful.emit(shape_info[0].size)
-
-func rotation_changed(new_rotation : Vector3) -> void:
-	if shape_info.size() != 0:
-		var q1 : Quaternion = Quaternion(
-			sin(deg_to_rad(new_rotation.x/2)) * cos(deg_to_rad(new_rotation.y/2)) * cos(deg_to_rad(new_rotation.z/2)) - cos(deg_to_rad(new_rotation.x/2)) * sin(deg_to_rad(new_rotation.y/2)) * sin(deg_to_rad(new_rotation.z/2)),
-			cos(deg_to_rad(new_rotation.x/2)) * sin(deg_to_rad(new_rotation.y/2)) * cos(deg_to_rad(new_rotation.z/2)) + sin(deg_to_rad(new_rotation.x/2)) * cos(deg_to_rad(new_rotation.y/2)) * sin(deg_to_rad(new_rotation.z/2)),
-			cos(deg_to_rad(new_rotation.x/2)) * cos(deg_to_rad(new_rotation.y/2)) * sin(deg_to_rad(new_rotation.z/2)) - sin(deg_to_rad(new_rotation.x/2)) * sin(deg_to_rad(new_rotation.y/2)) * cos(deg_to_rad(new_rotation.z/2)),
-			cos(deg_to_rad(new_rotation.x/2)) * cos(deg_to_rad(new_rotation.y/2)) * cos(deg_to_rad(new_rotation.z/2)) + sin(deg_to_rad(new_rotation.x/2)) * sin(deg_to_rad(new_rotation.y/2)) * sin(deg_to_rad(new_rotation.z/2))
-		)
-		shape_info[0].rotation = shape_info[0].rotation * q1
-		regenerate_mesh()
-		var e = shape_info[0].rotation.get_euler()
-		rotation_change_successful.emit(Vector3(rad_to_deg(e.x), rad_to_deg(e.y), rad_to_deg(e.z)))
-
-func hole_offset_changed(new_offset : Vector3) -> void:
-	if shape_info.size() != 0:
-		shape_info[0].hole_offset = new_offset
-		regenerate_mesh()
-
-func hole_size_changed(new_size : float) -> void:
-	if shape_info.size() != 0:
-		shape_info[0].hole_size = new_size
-		regenerate_mesh()
-
-func name_changed(new_name : String) -> void:
-	if shape_info.size() != 0:
-		shape_info[0].shape_name = new_name
-
-func sides_changed(value: float) -> void:
-	shape_info[0].sides = value
-	regenerate_mesh()
-
-func orientation_changed(index : int) -> void:
-	shape_info[0].orientation = index
-	regenerate_mesh()
-
-func flip_orientation_changed(toggled_on: bool) -> void:
-	shape_info[0].flip_orientation = toggled_on
-	regenerate_mesh()
-
-func modifier_changed(index: int) -> void:
-	shape_info[0].modifier = index
-	regenerate_mesh()

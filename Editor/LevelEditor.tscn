@@ -1,7 +1,9 @@
-[gd_scene load_steps=47 format=3 uid="uid://1yq80goel736"]
+[gd_scene load_steps=51 format=3 uid="uid://1yq80goel736"]
 
 [ext_resource type="Script" path="res://Editor/level_editor.gd" id="1_gkh0n"]
-[ext_resource type="Texture2D" uid="uid://d0fbpahnke75l" path="res://Assets/grid.png" id="4_33n1c"]
+[ext_resource type="Script" path="res://Editor/Handlers/selection_handler.gd" id="2_hx4of"]
+[ext_resource type="Script" path="res://Editor/Handlers/change_handler.gd" id="3_p55so"]
+[ext_resource type="Script" path="res://Editor/Handlers/shape_handler.gd" id="4_a0qo3"]
 [ext_resource type="PackedScene" uid="uid://2nsb0c22moeb" path="res://Editor/Parts/ProcMesh.tscn" id="4_stuxe"]
 [ext_resource type="Script" path="res://Editor/editor_adjust.gd" id="5_6wt44"]
 [ext_resource type="Script" path="res://Editor/UI/editor_level_select.gd" id="5_kbbl2"]
@@ -16,16 +18,6 @@
 [ext_resource type="Script" path="res://Editor/UI/editor_options.gd" id="11_dvs47"]
 [ext_resource type="Script" path="res://Editor/UI/editor_new_level.gd" id="12_hpcey"]
 [ext_resource type="Script" path="res://Editor/UI/editor_settings.gd" id="14_5wu5f"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lopki"]
-transparency = 1
-albedo_texture = ExtResource("4_33n1c")
-uv1_triplanar = true
-disable_receive_shadows = true
-
-[sub_resource type="BoxMesh" id="BoxMesh_5yxar"]
-material = SubResource("StandardMaterial3D_lopki")
-size = Vector3(20, 0.01, 20)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7e7vf"]
 albedo_color = Color(0.621933, 0.399482, 0.227957, 1)
@@ -150,11 +142,36 @@ size = Vector3(0.95, 0.05, 0.05)
 [sub_resource type="BoxShape3D" id="BoxShape3D_ocfkr"]
 size = Vector3(1, 0.25, 0.25)
 
-[node name="LevelEditor" type="Node3D" node_paths=PackedStringArray("shape_preview", "camera_pivot", "camera")]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ayr1a"]
+backlight_enabled = true
+backlight = Color(1, 1, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_s3gld"]
+material = SubResource("StandardMaterial3D_ayr1a")
+size = Vector3(0.005, 0.005, 26)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3gn5n"]
+backlight_enabled = true
+backlight = Color(1, 1, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_qr2x0"]
+material = SubResource("StandardMaterial3D_3gn5n")
+size = Vector3(26, 0.005, 0.005)
+
+[node name="LevelEditor" type="Node3D" node_paths=PackedStringArray("shape_preview", "camera_pivot", "camera", "shape_handler")]
 script = ExtResource("1_gkh0n")
 shape_preview = NodePath("ShapePreview")
 camera_pivot = NodePath("CameraPivot")
 camera = NodePath("CameraPivot/Camera3D")
+shape_handler = NodePath("ShapePreview/ShapeHandler")
+
+[node name="SelectionHandler" type="Node" parent="." node_paths=PackedStringArray("master", "shape_preview")]
+script = ExtResource("2_hx4of")
+master = NodePath("..")
+shape_preview = NodePath("../ShapePreview")
+
+[node name="ChangeHandler" type="Node" parent="."]
+script = ExtResource("3_p55so")
 
 [node name="CameraPivot" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.984808, 0.173648, 0, -0.173648, 0.984808, 0, 0, 0)
@@ -189,14 +206,12 @@ light_energy = 4.0
 light_cull_mask = 4294966784
 spot_range = 160.0
 
-[node name="VisualGrid" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
-cast_shadow = 0
-mesh = SubResource("BoxMesh_5yxar")
-skeleton = NodePath("")
-
 [node name="ShapePreview" parent="." instance=ExtResource("4_stuxe")]
 material_override = SubResource("StandardMaterial3D_7e7vf")
+
+[node name="ShapeHandler" type="Node" parent="ShapePreview" node_paths=PackedStringArray("master")]
+script = ExtResource("4_a0qo3")
+master = NodePath("..")
 
 [node name="Adjust" type="Node3D" parent="." node_paths=PackedStringArray("pos", "size", "rot", "pos_x", "pos_y", "pos_z", "pos_x_mesh", "pos_y_mesh", "pos_z_mesh", "size_x", "size_y", "size_z", "size_x_mesh", "size_y_mesh", "size_z_mesh", "rot_proxy", "rot_x", "rot_y", "rot_z", "rot_x_mesh", "rot_y_mesh", "rot_z_mesh")]
 script = ExtResource("5_6wt44")
@@ -1064,36 +1079,285 @@ layout_mode = 2
 layout_mode = 2
 text = "Update"
 
+[node name="Grid" type="Node" parent="."]
+
+[node name="X" type="Node" parent="Grid"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Grid/X"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 0, 0)
+mesh = SubResource("BoxMesh_s3gld")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Grid/X"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 0, 0)
+mesh = SubResource("BoxMesh_s3gld")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Grid/X"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, 0, 0)
+mesh = SubResource("BoxMesh_s3gld")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="Grid/X"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, 0)
+mesh = SubResource("BoxMesh_s3gld")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="Grid/X"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, 0)
+mesh = SubResource("BoxMesh_s3gld")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D6" type="MeshInstance3D" parent="Grid/X"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 0)
+mesh = SubResource("BoxMesh_s3gld")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D7" type="MeshInstance3D" parent="Grid/X"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, 0)
+mesh = SubResource("BoxMesh_s3gld")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D8" type="MeshInstance3D" parent="Grid/X"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 0)
+mesh = SubResource("BoxMesh_s3gld")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D9" type="MeshInstance3D" parent="Grid/X"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 0)
+mesh = SubResource("BoxMesh_s3gld")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D10" type="MeshInstance3D" parent="Grid/X"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 0)
+mesh = SubResource("BoxMesh_s3gld")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D11" type="MeshInstance3D" parent="Grid/X"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, 0)
+mesh = SubResource("BoxMesh_s3gld")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D12" type="MeshInstance3D" parent="Grid/X"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 0)
+mesh = SubResource("BoxMesh_s3gld")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D13" type="MeshInstance3D" parent="Grid/X"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 0)
+mesh = SubResource("BoxMesh_s3gld")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D14" type="MeshInstance3D" parent="Grid/X"]
+mesh = SubResource("BoxMesh_s3gld")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D15" type="MeshInstance3D" parent="Grid/X"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+mesh = SubResource("BoxMesh_s3gld")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D16" type="MeshInstance3D" parent="Grid/X"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0)
+mesh = SubResource("BoxMesh_s3gld")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D17" type="MeshInstance3D" parent="Grid/X"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 0)
+mesh = SubResource("BoxMesh_s3gld")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D18" type="MeshInstance3D" parent="Grid/X"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 0)
+mesh = SubResource("BoxMesh_s3gld")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D19" type="MeshInstance3D" parent="Grid/X"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 0)
+mesh = SubResource("BoxMesh_s3gld")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D20" type="MeshInstance3D" parent="Grid/X"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 0)
+mesh = SubResource("BoxMesh_s3gld")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D21" type="MeshInstance3D" parent="Grid/X"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, 0)
+mesh = SubResource("BoxMesh_s3gld")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D22" type="MeshInstance3D" parent="Grid/X"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 0)
+mesh = SubResource("BoxMesh_s3gld")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D23" type="MeshInstance3D" parent="Grid/X"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, 0)
+mesh = SubResource("BoxMesh_s3gld")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D24" type="MeshInstance3D" parent="Grid/X"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 0)
+mesh = SubResource("BoxMesh_s3gld")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D25" type="MeshInstance3D" parent="Grid/X"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, 0)
+mesh = SubResource("BoxMesh_s3gld")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D26" type="MeshInstance3D" parent="Grid/X"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 0)
+mesh = SubResource("BoxMesh_s3gld")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D27" type="MeshInstance3D" parent="Grid/X"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0, 0)
+mesh = SubResource("BoxMesh_s3gld")
+skeleton = NodePath("../..")
+
+[node name="Z" type="Node" parent="Grid"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Grid/Z"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -13)
+mesh = SubResource("BoxMesh_qr2x0")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Grid/Z"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -12)
+mesh = SubResource("BoxMesh_qr2x0")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Grid/Z"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -11)
+mesh = SubResource("BoxMesh_qr2x0")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="Grid/Z"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -10)
+mesh = SubResource("BoxMesh_qr2x0")
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="Grid/Z"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -9)
+mesh = SubResource("BoxMesh_qr2x0")
+
+[node name="MeshInstance3D6" type="MeshInstance3D" parent="Grid/Z"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -8)
+mesh = SubResource("BoxMesh_qr2x0")
+
+[node name="MeshInstance3D7" type="MeshInstance3D" parent="Grid/Z"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -7)
+mesh = SubResource("BoxMesh_qr2x0")
+
+[node name="MeshInstance3D8" type="MeshInstance3D" parent="Grid/Z"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -6)
+mesh = SubResource("BoxMesh_qr2x0")
+
+[node name="MeshInstance3D9" type="MeshInstance3D" parent="Grid/Z"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5)
+mesh = SubResource("BoxMesh_qr2x0")
+
+[node name="MeshInstance3D10" type="MeshInstance3D" parent="Grid/Z"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4)
+mesh = SubResource("BoxMesh_qr2x0")
+
+[node name="MeshInstance3D11" type="MeshInstance3D" parent="Grid/Z"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3)
+mesh = SubResource("BoxMesh_qr2x0")
+
+[node name="MeshInstance3D12" type="MeshInstance3D" parent="Grid/Z"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
+mesh = SubResource("BoxMesh_qr2x0")
+
+[node name="MeshInstance3D13" type="MeshInstance3D" parent="Grid/Z"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+mesh = SubResource("BoxMesh_qr2x0")
+
+[node name="MeshInstance3D14" type="MeshInstance3D" parent="Grid/Z"]
+mesh = SubResource("BoxMesh_qr2x0")
+
+[node name="MeshInstance3D15" type="MeshInstance3D" parent="Grid/Z"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
+mesh = SubResource("BoxMesh_qr2x0")
+
+[node name="MeshInstance3D16" type="MeshInstance3D" parent="Grid/Z"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
+mesh = SubResource("BoxMesh_qr2x0")
+
+[node name="MeshInstance3D17" type="MeshInstance3D" parent="Grid/Z"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3)
+mesh = SubResource("BoxMesh_qr2x0")
+
+[node name="MeshInstance3D18" type="MeshInstance3D" parent="Grid/Z"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4)
+mesh = SubResource("BoxMesh_qr2x0")
+
+[node name="MeshInstance3D19" type="MeshInstance3D" parent="Grid/Z"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
+mesh = SubResource("BoxMesh_qr2x0")
+
+[node name="MeshInstance3D20" type="MeshInstance3D" parent="Grid/Z"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 6)
+mesh = SubResource("BoxMesh_qr2x0")
+
+[node name="MeshInstance3D21" type="MeshInstance3D" parent="Grid/Z"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 7)
+mesh = SubResource("BoxMesh_qr2x0")
+
+[node name="MeshInstance3D22" type="MeshInstance3D" parent="Grid/Z"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8)
+mesh = SubResource("BoxMesh_qr2x0")
+
+[node name="MeshInstance3D23" type="MeshInstance3D" parent="Grid/Z"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 9)
+mesh = SubResource("BoxMesh_qr2x0")
+
+[node name="MeshInstance3D24" type="MeshInstance3D" parent="Grid/Z"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10)
+mesh = SubResource("BoxMesh_qr2x0")
+
+[node name="MeshInstance3D25" type="MeshInstance3D" parent="Grid/Z"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 11)
+mesh = SubResource("BoxMesh_qr2x0")
+
+[node name="MeshInstance3D26" type="MeshInstance3D" parent="Grid/Z"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 12)
+mesh = SubResource("BoxMesh_qr2x0")
+
+[node name="MeshInstance3D27" type="MeshInstance3D" parent="Grid/Z"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 13)
+mesh = SubResource("BoxMesh_qr2x0")
+
 [connection signal="level_loaded" from="." to="UI/Sections" method="_on_level_loaded"]
 [connection signal="new_part_selected" from="." to="UI/Properties" method="part_selected"]
 [connection signal="new_shape_selected" from="." to="UI/Properties" method="shape_selected"]
 [connection signal="shape_placed" from="." to="UI/Sections" method="add_shape"]
-[connection signal="offset_change_successful" from="ShapePreview" to="Adjust" method="selected_pos_changed"]
-[connection signal="offset_change_successful" from="ShapePreview" to="UI/Properties" method="pos_changed"]
-[connection signal="rotation_change_successful" from="ShapePreview" to="Adjust" method="selected_rotation_changed"]
-[connection signal="rotation_change_successful" from="ShapePreview" to="UI/Properties" method="rot_changed"]
-[connection signal="size_change_successful" from="ShapePreview" to="Adjust" method="selected_size_changed"]
-[connection signal="size_change_successful" from="ShapePreview" to="UI/Properties" method="size_changed"]
+[connection signal="part_selected" from="SelectionHandler" to="UI/Properties" method="part_selected"]
+[connection signal="shape_selected" from="SelectionHandler" to="UI/Properties" method="shape_selected"]
+[connection signal="offset_change_successful" from="ShapePreview/ShapeHandler" to="Adjust" method="selected_pos_changed"]
+[connection signal="offset_change_successful" from="ShapePreview/ShapeHandler" to="UI/Properties" method="pos_changed"]
+[connection signal="rotation_change_successful" from="ShapePreview/ShapeHandler" to="Adjust" method="selected_rotation_changed"]
+[connection signal="rotation_change_successful" from="ShapePreview/ShapeHandler" to="UI/Properties" method="rot_changed"]
+[connection signal="size_change_successful" from="ShapePreview/ShapeHandler" to="Adjust" method="selected_size_changed"]
+[connection signal="size_change_successful" from="ShapePreview/ShapeHandler" to="UI/Properties" method="size_changed"]
 [connection signal="pos_changed" from="Adjust" to="." method="movement_detected"]
 [connection signal="rot_changed" from="Adjust" to="." method="rotation_detected"]
 [connection signal="size_changed" from="Adjust" to="." method="resize_detected"]
 [connection signal="group_changed" from="UI/Properties" to="." method="property_group_set"]
 [connection signal="rotation_change" from="UI/Properties" to="." method="rotation_detected"]
-[connection signal="shape_name_changed" from="UI/Properties" to="ShapePreview" method="name_changed"]
+[connection signal="shape_name_changed" from="UI/Properties" to="ShapePreview/ShapeHandler" method="name_changed"]
 [connection signal="tab_changed" from="UI/Properties/VBoxContainer/TabBar" to="UI/Properties" method="property_group_changed"]
 [connection signal="text_submitted" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/PartProperties/PartName" to="." method="part_name_changed"]
 [connection signal="toggled" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/PartProperties/DynamicRot/CheckBox" to="." method="part_rotation_toggled"]
-[connection signal="_hole_offset_changed" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties" to="ShapePreview" method="hole_offset_changed"]
-[connection signal="_hole_size_changed" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties" to="ShapePreview" method="hole_size_changed"]
+[connection signal="_hole_offset_changed" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties" to="ShapePreview/ShapeHandler" method="hole_offset_changed"]
+[connection signal="_hole_size_changed" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties" to="ShapePreview/ShapeHandler" method="hole_size_changed"]
 [connection signal="text_submitted" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeName" to="UI/Properties" method="shape_name_submitted"]
 [connection signal="pressed" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Pos/Button" to="." method="reset_movement"]
 [connection signal="pressed" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Size/Button" to="." method="reset_size"]
 [connection signal="pressed" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Rot/Button" to="." method="reset_rotation"]
-[connection signal="item_selected" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeModifier/Modifier" to="ShapePreview" method="modifier_changed"]
 [connection signal="item_selected" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeModifier/Modifier" to="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties" method="mod_changed"]
-[connection signal="value_changed" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeSides/Sides" to="ShapePreview" method="sides_changed"]
-[connection signal="item_selected" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeOrientation/ShapeOrientation" to="ShapePreview" method="orientation_changed"]
-[connection signal="toggled" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeFlipOrientation/ShapeFlipOrientation" to="ShapePreview" method="flip_orientation_changed"]
+[connection signal="item_selected" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeModifier/Modifier" to="ShapePreview/ShapeHandler" method="modifier_changed"]
+[connection signal="value_changed" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeSides/Sides" to="ShapePreview/ShapeHandler" method="sides_changed"]
+[connection signal="item_selected" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeOrientation/ShapeOrientation" to="ShapePreview/ShapeHandler" method="orientation_changed"]
+[connection signal="toggled" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeFlipOrientation/ShapeFlipOrientation" to="ShapePreview/ShapeHandler" method="flip_orientation_changed"]
 [connection signal="value_changed" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Hole/Offset/SpinBox" to="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties" method="hole_offset_changed"]
 [connection signal="value_changed" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Hole/Offset/SpinBox2" to="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties" method="hole_offset_changed"]
 [connection signal="value_changed" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Hole/Offset/SpinBox3" to="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties" method="hole_offset_changed"]
