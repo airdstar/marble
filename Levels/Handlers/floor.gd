@@ -18,7 +18,6 @@ var allow_input : bool = false
 #Tilt related
 var proxy_tilt : Quaternion = Quaternion.IDENTITY
 var input_tilt : Vector2
-var tilt_changed : bool = false
 
 #Skybox related
 var relative_skybox_rotation : Vector3 = Vector3.ZERO
@@ -57,7 +56,29 @@ func _process(delta: float) -> void:
 	fps_text.text = "FPS %d" % Engine.get_frames_per_second()
 	speed_text.text = "Speed %.2f" % (abs(marble.angular_velocity.x) + abs(marble.angular_velocity.y) + abs(marble.angular_velocity.z))
 	
-	handle_tilt(delta)
+	if allow_input:
+		var input = Input.get_last_mouse_velocity()
+		var tilt_transform = camera.transform.basis * Vector3(input.x, 0, input.y)
+		input = Vector2(tilt_transform.x, tilt_transform.z)
+		var prev_input = input_tilt
+		if input.y > settings.tilt_deadzone or input.y < -settings.tilt_deadzone:
+			input_tilt.x += input.y * settings.tilt_sens * delta
+			input_tilt.x = clamp(input_tilt.x, deg_to_rad(-15), deg_to_rad(15))
+		if input.x > settings.tilt_deadzone or input.x < -settings.tilt_deadzone:
+			input_tilt.y += -input.x * settings.tilt_sens * delta
+			input_tilt.y = clamp(input_tilt.y, deg_to_rad(-15), deg_to_rad(15))
+		
+		
+		if prev_input != input_tilt:
+			proxy_tilt = Quaternion(
+			sin(input_tilt.x/2) * cos(0) * cos(input_tilt.y/2) - cos(input_tilt.x/2) * sin(0) * sin(input_tilt.y/2),
+			cos(input_tilt.x/2) * sin(0) * cos(input_tilt.y/2) + sin(input_tilt.x/2) * cos(0) * sin(input_tilt.y/2),
+			cos(input_tilt.x/2) * cos(0) * sin(input_tilt.y/2) - sin(input_tilt.x/2) * sin(0) * cos(input_tilt.y/2),
+			cos(input_tilt.x/2) * cos(0) * cos(input_tilt.y/2) + sin(input_tilt.x/2) * sin(0) * sin(input_tilt.y/2)
+			)
+	else:
+		input_tilt = Vector2.ZERO
+		proxy_tilt = Quaternion.IDENTITY
 	
 	if allow_timer:
 		if !transitioning:
@@ -73,36 +94,11 @@ func _process(delta: float) -> void:
 func _physics_process(delta: float) -> void:
 	var origin_rot = Quaternion(origin.transform.basis)
 	if origin_rot != proxy_tilt:
-		var slerp = origin_rot.slerp(proxy_tilt, 1)
+		var slerp = origin_rot.slerp(proxy_tilt, 0.1)
 		origin.transform.basis = Basis(slerp)
 
 	if marble != null:
 		marble.apply_force(Vector3(1,0,1) * Vector3(input_tilt.x, 0, input_tilt.y) * delta * 2000)
-
-func handle_tilt(delta : float) -> void:
-	if allow_input:
-		var input = Input.get_last_mouse_velocity()
-		
-		var prev_input = input_tilt
-		if input.y > settings.tilt_deadzone or input.y < -settings.tilt_deadzone:
-			input_tilt.x += input.y * settings.tilt_sens  * delta
-			input_tilt.x = clamp(input_tilt.x, deg_to_rad(-15), deg_to_rad(15))
-		if input.x > settings.tilt_deadzone or input.x < -settings.tilt_deadzone:
-			input_tilt.y += -input.x * settings.tilt_sens  * delta
-			input_tilt.y = clamp(input_tilt.y, deg_to_rad(-15), deg_to_rad(15))
-		
-		if prev_input != input_tilt:
-			proxy_tilt = Quaternion(
-			sin(input_tilt.x/2) * cos(0) * cos(input_tilt.y/2) - cos(input_tilt.x/2) * sin(0) * sin(input_tilt.y/2),
-			cos(input_tilt.x/2) * sin(0) * cos(input_tilt.y/2) + sin(input_tilt.x/2) * cos(0) * sin(input_tilt.y/2),
-			cos(input_tilt.x/2) * cos(0) * sin(input_tilt.y/2)- sin(input_tilt.x/2) * sin(0) * cos(input_tilt.y/2),
-			cos(input_tilt.x/2) * cos(0) * cos(input_tilt.y/2) + sin(input_tilt.x/2) * sin(0) * sin(input_tilt.y/2)
-			)
-			proxy_tilt *= camera.transform.basis
-	else:
-		input_tilt = Vector2.ZERO
-		proxy_tilt = Quaternion.IDENTITY
-	
 
 func place_control() -> void:
 	

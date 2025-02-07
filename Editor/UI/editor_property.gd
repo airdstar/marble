@@ -128,9 +128,11 @@ func display_part_properties(part : Node3D) -> void:
 	
 	for n in part.get_children():
 		if n is rotateable_component:
-			dynamic_rotation.button_pressed = true
-			if get_tab("Rotation") == -1:
-				property_options.add_tab("Rotation")
-			
-			rotation_properties.set_values(n)
-				
+			create_rotation_tab(n)
+
+func create_rotation_tab(comp : rotateable_component) -> void:
+	dynamic_rotation.button_pressed = true
+	if get_tab("Rotation") == -1:
+		property_options.add_tab("Rotation")
+	
+	rotation_properties.set_values(comp)

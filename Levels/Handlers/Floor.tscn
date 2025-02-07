@@ -20,8 +20,9 @@ default_font = ExtResource("6_kmhra")
 [node name="Floor" type="Node3D"]
 script = ExtResource("1_6o7sh")
 
-[node name="LevelHandler" type="Node" parent="."]
+[node name="LevelHandler" type="Node" parent="." node_paths=PackedStringArray("master")]
 script = ExtResource("1_q6dl6")
+master = NodePath("..")
 
 [node name="RunHandler" type="Node" parent="."]
 script = ExtResource("3_2warv")

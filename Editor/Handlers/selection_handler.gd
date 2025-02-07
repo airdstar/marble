@@ -1,6 +1,7 @@
 extends Node
 
 @export var master : Node
+@export var UI : Control
 @export var shape_preview : ProcMesh
 
 var selected_part : Node3D = null
@@ -59,5 +60,5 @@ func switch_hold() -> void:
 		shape_preview.remove_shape(selected_shape)
 		held_shape = selected_shape
 		selected_shape = null
-		master.UI.properties.shape_unselected()
+		UI.properties.shape_unselected()
 		master.tool_visible(false)

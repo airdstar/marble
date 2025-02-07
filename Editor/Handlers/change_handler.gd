@@ -3,6 +3,7 @@ extends Node
 @export var master : Node
 @export var selection : Node
 @export var shape_handler : Node
+@export var UI : Control
 
 signal pos_changed
 signal size_changed
@@ -15,20 +16,20 @@ func part_rotation_toggled(toggled_on: bool) -> void:
 			selection.selected_part.add_child(rot)
 			rot.to_rotate = selection.selected_part
 			rot.set_owner(master.level_base)
-			if master.UI.properties.get_tab("Rotation") == -1:
-				master.UI.properties.property_options.add_tab("Rotation")
-			master.UI.properties.rotation_properties.set_values(rot)
+			if UI.properties.get_tab("Rotation") == -1:
+				UI.properties.property_options.add_tab("Rotation")
+			UI.properties.rotation_properties.set_values(rot)
 		else:
 			for n in selection.selected_part.get_children():
 				if n is rotateable_component:
 					n.queue_free()
-					if master.UI.properties.get_tab("Rotation") != -1:
-						master.UI.properties.property_options.remove_tab(master.UI.properties.get_tab("Rotation"))
+					if UI.properties.get_tab("Rotation") != -1:
+						UI.properties.property_options.remove_tab(UI.properties.get_tab("Rotation"))
 
 
 func part_name_changed(new_text: String) -> void:
 	selection.selected_part.set_meta("part_name", new_text)
-	master.sections.get_selected_part().text = new_text
+	UI.sections.get_selected_part().text = new_text
 
 func movement_detected(pos_change : Vector3) -> void:
 	match master.adjusting:
@@ -67,3 +68,11 @@ func reset_rotation() -> void:
 			selection.shape_preview.shape_info[0].rotation = Quaternion.IDENTITY
 			selection.shape_preview.regenerate_mesh()
 	rot_changed.emit(Vector3.ZERO)
+
+func dynamic_rot_amount_changed(value : float) -> void:
+	selection.selected_component.rotation_amount = value
+	UI.properties.rotation_properties.rotation_amount.text = " Rotation Deg: %d" % value
+
+func dynamic_rot_speed_changed(value : float) -> void:
+	selection.selected_component.rotation_speed = value
+	UI.properties.rotation_properties.rotation_speed.text = " Secs per rotation: %.1f" % value

@@ -24,13 +24,11 @@ var selected_tool : editor.tool = editor.tool.NONE
 @export_category("Handlers")
 @export var shape_handler : Node
 @export var selection_handler : Node
+@export var UI : Control
 
-@onready var level_select := $UI/LevelSelect
 @onready var adjuster := $Adjust
 
-@onready var UI : Control = $UI
 
-@onready var sections = $UI/Sections
 
 signal level_loaded
 signal shape_placed
@@ -92,7 +90,7 @@ func open_level_select():
 	selection_handler.selected_shape = null
 	selection_handler.selected_component = null
 	selection_handler.held_shape = null
-	sections.clear_all()
+	UI.sections.clear_all()
 	adjusting = editor.adjustable.NONE
 	selected_tool = editor.tool.NONE
 	if level_base != null:
@@ -115,9 +113,9 @@ func level_selected(level_info : level_resource) -> void:
 
 func _on_place_pressed() -> void:
 	if selection_handler.selected_shape != null:
-		if sections.selected_part != null:
-			if sections.selected_part is ProcMesh:
-				sections.selected_part.add_shape(selection_handler.selected_shape)
+		if UI.sections.selected_part != null:
+			if UI.sections.selected_part is ProcMesh:
+				UI.sections.selected_part.add_shape(selection_handler.selected_shape)
 				shape_placed.emit(selection_handler.selected_shape)
 				selection_handler._shape_unselected()
 			else:
@@ -145,13 +143,12 @@ func new_part_created(part : Node3D) -> void:
 	else:
 		level_base.add_child(part)
 	rec_set_owner(part)
-	sections.add_part(part, true)
+	UI.sections.add_part(part, true)
 
 func rec_set_owner(part : Node3D) -> void:
 	part.set_owner(level_base)
 	for n in part.get_children():
 		rec_set_owner(n)
-
 
 func part_rotation_toggled(toggled_on: bool) -> void:
 	if selection_handler.selected_part != null:
@@ -160,9 +157,7 @@ func part_rotation_toggled(toggled_on: bool) -> void:
 			selection_handler.selected_part.add_child(rot)
 			rot.to_rotate = selection_handler.selected_part
 			rot.set_owner(level_base)
-			if UI.properties.get_tab("Rotation") == -1:
-				UI.properties.property_options.add_tab("Rotation")
-			UI.properties.rotation_properties.set_values(rot)
+			UI.properties.create_rotation_tab(rot)
 		else:
 			for n in selection_handler.selected_part.get_children():
 				if n is rotateable_component:
@@ -244,7 +239,7 @@ func pre_save() -> void:
 		if n is ProcMesh:
 			n.create_collision()
 	
-	call_deferred("save_scene")
+	save_scene()
 
 func save_scene() -> void:
 	var node_to_save = level_base
@@ -262,4 +257,5 @@ func save_scene() -> void:
 			chosen_level = ResourceLoader.load(Global.level_resource_path + chosen_level.name + ".tres")
 
 func test_pressed() -> void:
+	pre_save()
 	Global.open_floor(FloorLevel.floor_type.EDITOR, [ResourceLoader.load(Global.level_resource_path + chosen_level.name + ".tres")])

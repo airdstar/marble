@@ -1,0 +1,14 @@
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://c827oj60n7r06"]
+
+[ext_resource type="FontFile" uid="uid://ctlar6rrhjenb" path="res://Assets/Themes/Fonts/barlow/Barlow-Medium.ttf" id="1_8gcbm"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6mnul"]
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+
+[resource]
+default_font = ExtResource("1_8gcbm")
+default_font_size = 20
+Button/styles/normal = SubResource("StyleBoxFlat_6mnul")

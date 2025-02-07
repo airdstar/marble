@@ -19,7 +19,7 @@ func place_control() -> void:
 	logo.set_position(Vector2(get_window().get_size().x / 2, get_window().get_size().y / 4))
 
 func _process(delta: float) -> void:
-	rotate_logo.rotation = (rotate_logo.rotation + 0.5 * delta)
+	rotate_logo.rotation = (rotate_logo.rotation + 0.3 * delta)
 
 func play_pressed() -> void:
 	Global.open_floor(FloorLevel.floor_type.PLAY, [])

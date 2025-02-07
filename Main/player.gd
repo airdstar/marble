@@ -1,12 +1,16 @@
 extends RigidBody3D
 class_name player
 
-@onready var emittedLight = $OmniLight3D
-@onready var collision := $Area3D
+@export var visible_mesh : MeshInstance3D
+
+@export var face : Decal
+@export var marking : Decal
+
+@export var light : OmniLight3D
+@export var collision : Area3D
+
 @onready var raycast := $RayCast3D
 
-@onready var face := $MeshInstance3D/Face
-@onready var marking := $MeshInstance3D/Marking
 
 func _ready():
 	set_color()
@@ -19,10 +23,9 @@ func _physics_process(delta: float) -> void:
 		apply_force(Vector3(0, 1, 0) * 6000 * delta)
 
 func set_color() -> void:
-	$MeshInstance3D.mesh.material.albedo_color = PlayerInfo.player_data.player_customization.chosen_color
-	$MeshInstance3D.mesh.material.next_pass.albedo_color = PlayerInfo.player_data.player_customization.chosen_color
-	#$MeshInstance3D.mesh.material.next_pass.albedo_color.a = 0.7
-	emittedLight.light_color = PlayerInfo.player_data.player_customization.chosen_color
+	visible_mesh.mesh.material.albedo_color = PlayerInfo.player_data.player_customization.chosen_color.lightened(0.3)
+	visible_mesh.mesh.material.next_pass.albedo_color = PlayerInfo.player_data.player_customization.chosen_color
+	light.light_color = PlayerInfo.player_data.player_customization.chosen_color
 
 func set_face() -> void:
 	if FileAccess.file_exists("res://Assets/Customization/Faces/" + PlayerInfo.player_data.player_customization.chosen_face):

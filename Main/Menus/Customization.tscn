@@ -1,21 +1,29 @@
-[gd_scene load_steps=3 format=3 uid="uid://cdnwnrtmoq7x2"]
+[gd_scene load_steps=5 format=3 uid="uid://cdnwnrtmoq7x2"]
 
+[ext_resource type="Theme" uid="uid://c827oj60n7r06" path="res://Assets/Themes/Customization.tres" id="1_gi8lg"]
 [ext_resource type="Script" path="res://Main/Menus/customization.gd" id="1_hei57"]
 [ext_resource type="PackedScene" uid="uid://daqk2roaa6h1v" path="res://Main/Player.tscn" id="2_mnsk5"]
 
-[node name="Customization" type="Control" node_paths=PackedStringArray("player_dummy", "color_container", "face_container", "marking_container")]
+[sub_resource type="ViewportTexture" id="ViewportTexture_20uu7"]
+viewport_path = NodePath("SubViewport")
+
+[node name="Customization" type="Control" node_paths=PackedStringArray("player_dummy", "dummy_display", "dummy_view", "option_container", "color_container", "face_container", "marking_container")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_gi8lg")
 script = ExtResource("1_hei57")
 pos_colors = Array[Color]([Color(0.9, 0, 0, 1), Color(0, 0.9, 0, 1), Color(0, 0, 0.9, 1), Color(0.8, 0.4, 0, 1), Color(1, 0.3, 0.5, 1), Color(0.75, 0.4, 1, 1)])
 player_dummy = NodePath("SubViewport/Player")
-color_container = NodePath("VBoxContainer")
-face_container = NodePath("VBoxContainer2")
-marking_container = NodePath("VBoxContainer3")
+dummy_display = NodePath("TextureRect")
+dummy_view = NodePath("SubViewport")
+option_container = NodePath("VBoxContainer")
+color_container = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/GridContainer")
+face_container = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/GridContainer2")
+marking_container = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/GridContainer3")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 0
@@ -23,44 +31,50 @@ offset_left = 840.0
 offset_top = 45.0
 offset_right = 1140.0
 offset_bottom = 345.0
+texture = SubResource("ViewportTexture_20uu7")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 0
-offset_top = 3.0
-offset_right = 64.0
-offset_bottom = 473.0
+offset_right = 40.0
+offset_bottom = 40.0
 
-[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
-bbcode_enabled = true
-text = "[center]Colors"
-fit_content = true
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="."]
-layout_mode = 0
-offset_left = 257.0
-offset_top = 3.0
-offset_right = 321.0
-offset_bottom = 473.0
-
-[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer2"]
+[node name="Button" type="Button" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
-bbcode_enabled = true
-text = "[center]Faces"
-fit_content = true
+size_flags_horizontal = 3
+text = "Colors"
 
-[node name="VBoxContainer3" type="VBoxContainer" parent="."]
-layout_mode = 0
-offset_left = 497.0
-offset_top = 3.0
-offset_right = 561.0
-offset_bottom = 473.0
-
-[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer3"]
+[node name="Button2" type="Button" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
-bbcode_enabled = true
-text = "[center]Markings"
-fit_content = true
+size_flags_horizontal = 3
+text = "Faces"
+
+[node name="Button3" type="Button" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Markings"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="GridContainer" type="GridContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+columns = 3
+
+[node name="GridContainer2" type="GridContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+columns = 3
+
+[node name="GridContainer3" type="GridContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+columns = 3
 
 [node name="SubViewport" type="SubViewport" parent="."]
 size = Vector2i(200, 200)
@@ -69,3 +83,8 @@ size = Vector2i(200, 200)
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1, 0, 0)
 
 [node name="Player" parent="SubViewport" instance=ExtResource("2_mnsk5")]
+freeze = true
+
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/Button" to="." method="tab_changed" binds= [0]]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/Button2" to="." method="tab_changed" binds= [1]]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/Button3" to="." method="tab_changed" binds= [2]]

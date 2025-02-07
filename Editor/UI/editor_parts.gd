@@ -2,7 +2,7 @@ extends Control
 
 var shapes : Dictionary = {
 	"Plane" : plane,
-	"Cube (No modifiers)" : cube,
+	"Cube" : cube,
 	"Polygon" : polygon,
 	"Sphere" : sphere
 }
@@ -12,7 +12,7 @@ var important_parts : Dictionary = {
 	"Goal" : "res://Editor/Parts/Important/EndZone.tscn"
 }
 
-@export var shape_holder : VBoxContainer
+@export var shape_holder : GridContainer
 @export var important_holder : VBoxContainer
 
 signal new_part_selected
@@ -22,12 +22,14 @@ func _ready() -> void:
 	tab_changed(0)
 	for n : String in shapes:
 		var current_button : Button = Button.new()
-		current_button.text = n
+		current_button.custom_minimum_size = Vector2(size.x / 4, size.x / 4 )
+		#current_button.text = n
 		shape_holder.add_child(current_button)
 		current_button.pressed.connect(shape_selected.bind(shapes[n]))
 	
 	for n : String in important_parts:
 		var current_button : Button = Button.new()
+		current_button.custom_minimum_size = Vector2(32,32)
 		current_button.text = n
 		important_holder.add_child(current_button)
 		current_button.pressed.connect(part_selected.bind(important_parts[n]))
