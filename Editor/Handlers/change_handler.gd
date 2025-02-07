@@ -59,22 +59,6 @@ func rotation_detected(rotation_change : Vector3) -> void:
 		editor.adjustable.SHAPE:
 			shape_handler.rotation_changed(rotation_change)
 
-func reset_movement() -> void:
-	match master.adjusting:
-		editor.adjustable.PART:
-			selection.selected_part.position = Vector3.ZERO
-			pos_changed.emit(Vector3.ZERO)
-		editor.adjustable.SHAPE:
-			shape_handler.offset_changed(Vector3.ZERO)
-
-func reset_size() -> void:
-	match master.adjusting:
-		editor.adjustable.PART:
-			selection.selected_part.scale = Vector3(1,1,1)
-			size_changed.emit(Vector3(1,1,1))
-		editor.adjustable.SHAPE:
-			shape_handler.size_changed(Vector3(1,1,1))
-
 func reset_rotation() -> void:
 	match master.adjusting:
 		editor.adjustable.PART:

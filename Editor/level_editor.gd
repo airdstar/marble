@@ -12,13 +12,10 @@ var chosen_level : level_resource
 var level_base : level
 var selected_section : section = section.GEOMETRY
 
-var held_shape : shape_resource = null
+
 var adjusting : editor.adjustable = editor.adjustable.NONE
 var selected_tool : editor.tool = editor.tool.NONE
 
-var selected_part : Node3D = null
-var selected_shape : shape_resource = null
-var selected_component : component = null
 @export var shape_preview : ProcMesh
 
 @export var camera_pivot : Node3D
@@ -91,9 +88,10 @@ func _process(delta : float) -> void:
 
 func open_level_select():
 	chosen_level = null
-	selected_part = null
-	selected_shape = null
-	held_shape = null
+	selection_handler.selected_part = null
+	selection_handler.selected_shape = null
+	selection_handler.selected_component = null
+	selection_handler.held_shape = null
 	sections.clear_all()
 	adjusting = editor.adjustable.NONE
 	selected_tool = editor.tool.NONE
@@ -112,44 +110,16 @@ func level_selected(level_info : level_resource) -> void:
 	level_base = chosen_level.associated_scene.instantiate()
 	add_child(level_base)
 	level_base.open_editor()
-
 	level_loaded.emit(level_base)
 	UI.show_all()
 
-func part_selected(part : Node3D) -> void:
-	var holder : Node3D
-	if part is ProcMesh:
-		if part.is_preview:
-			holder = selected_part
-	
-	adjuster.selected_pos_changed(part.position)
-
-	if part is not ProcMesh:
-		adjuster.selected_size_changed(part.scale)
-	
-	adjuster.selected_rotation_changed(part.rotation)
-	
-	selected_part = part
-	new_part_selected.emit(selected_part)
-
-func part_unselected() -> void:
-	selected_part = null
-	adjusting = editor.adjustable.NONE
-	tool_visible(false)
-
-func shape_unselected() -> void:
-	shape_preview.clear_mesh()
-	selected_shape = null
-	if selected_part != null:
-		UI.properties.part_selected(selected_part)
-
 func _on_place_pressed() -> void:
-	if selected_shape != null:
+	if selection_handler.selected_shape != null:
 		if sections.selected_part != null:
 			if sections.selected_part is ProcMesh:
-				sections.selected_part.add_shape(selected_shape)
-				shape_placed.emit(selected_shape)
-				shape_unselected()
+				sections.selected_part.add_shape(selection_handler.selected_shape)
+				shape_placed.emit(selection_handler.selected_shape)
+				selection_handler._shape_unselected()
 			else:
 				create_and_place()
 		else:
@@ -158,9 +128,9 @@ func _on_place_pressed() -> void:
 func create_and_place() -> void:
 	new_procmesh_created()
 	var proc_mesh_holder = level_base.geometry.get_child(level_base.geometry.get_child_count() - 1)
-	proc_mesh_holder.add_shape(selected_shape)
-	shape_placed.emit(selected_shape)
-	shape_unselected()
+	proc_mesh_holder.add_shape(selection_handler.selected_shape)
+	shape_placed.emit(selection_handler.selected_shape)
+	selection_handler._shape_unselected()
 
 func new_procmesh_created() -> void:
 	var holder = preload("res://Editor/Parts/ProcMesh.tscn").instantiate()
@@ -184,17 +154,17 @@ func rec_set_owner(part : Node3D) -> void:
 
 
 func part_rotation_toggled(toggled_on: bool) -> void:
-	if selected_part != null:
+	if selection_handler.selected_part != null:
 		if toggled_on:
 			var rot = preload("res://Editor/Parts/Components/RotateableComponent.tscn").instantiate()
-			selected_part.add_child(rot)
-			rot.to_rotate = selected_part
+			selection_handler.selected_part.add_child(rot)
+			rot.to_rotate = selection_handler.selected_part
 			rot.set_owner(level_base)
 			if UI.properties.get_tab("Rotation") == -1:
 				UI.properties.property_options.add_tab("Rotation")
 			UI.properties.rotation_properties.set_values(rot)
 		else:
-			for n in selected_part.get_children():
+			for n in selection_handler.selected_part.get_children():
 				if n is rotateable_component:
 					n.queue_free()
 					if UI.properties.get_tab("Rotation") != -1:
@@ -213,10 +183,10 @@ func property_group_set(adjust_to : String) -> void:
 			tool_visible(true)
 		"Rotation":
 			adjusting = editor.adjustable.NONE
-			if selected_part != null:
-				for n in selected_part.get_children():
+			if selection_handler.selected_part != null:
+				for n in selection_handler.selected_part.get_children():
 					if n is rotateable_component:
-						selected_component = n
+						selection_handler.selected_component = n
 			tool_visible(false)
 
 
