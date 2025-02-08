@@ -23,7 +23,7 @@ func _ready() -> void:
 	for n : String in shapes:
 		var current_button : Button = Button.new()
 		current_button.custom_minimum_size = Vector2(size.x / 4, size.x / 4 )
-		#current_button.text = n
+		current_button.text = n
 		shape_holder.add_child(current_button)
 		current_button.pressed.connect(shape_selected.bind(shapes[n]))
 	

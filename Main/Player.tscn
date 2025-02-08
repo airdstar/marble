@@ -52,7 +52,7 @@ cull_mask = 1047568
 [node name="Face" type="Decal" parent="VisibleMesh"]
 transform = Transform3D(-4.37114e-08, -1, 0, -4.37114e-08, 1.91069e-15, -1, 1, -4.37114e-08, -4.37114e-08, 0.4, 0, 0)
 layers = 16
-size = Vector3(0.5, 0.4, 0.5)
+size = Vector3(0.8, 0.4, 0.8)
 texture_albedo = ExtResource("2_upe4j")
 upper_fade = 1e-05
 lower_fade = 1e-05
@@ -68,4 +68,4 @@ target_position = Vector3(0, -0.55, 0)
 debug_shape_thickness = 5
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
-light_energy = 2.5
+light_energy = 0.5

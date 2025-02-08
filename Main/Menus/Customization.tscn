@@ -21,9 +21,9 @@ player_dummy = NodePath("SubViewport/Player")
 dummy_display = NodePath("TextureRect")
 dummy_view = NodePath("SubViewport")
 option_container = NodePath("VBoxContainer")
-color_container = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/GridContainer")
-face_container = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/GridContainer2")
-marking_container = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/GridContainer3")
+color_container = NodePath("VBoxContainer/ScrollContainer/CenterContainer/VBoxContainer/GridContainer")
+face_container = NodePath("VBoxContainer/ScrollContainer/CenterContainer/VBoxContainer/GridContainer2")
+marking_container = NodePath("VBoxContainer/ScrollContainer/CenterContainer/VBoxContainer/GridContainer3")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 0
@@ -60,30 +60,39 @@ text = "Markings"
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/ScrollContainer"]
+[node name="CenterContainer" type="CenterContainer" parent="VBoxContainer/ScrollContainer"]
 layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/CenterContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="GridContainer" type="GridContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="GridContainer" type="GridContainer" parent="VBoxContainer/ScrollContainer/CenterContainer/VBoxContainer"]
 layout_mode = 2
-columns = 3
+columns = 5
 
-[node name="GridContainer2" type="GridContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="GridContainer3" type="GridContainer" parent="VBoxContainer/ScrollContainer/CenterContainer/VBoxContainer"]
 layout_mode = 2
-columns = 3
+columns = 5
 
-[node name="GridContainer3" type="GridContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="GridContainer2" type="GridContainer" parent="VBoxContainer/ScrollContainer/CenterContainer/VBoxContainer"]
 layout_mode = 2
-columns = 3
+columns = 5
 
 [node name="SubViewport" type="SubViewport" parent="."]
 size = Vector2i(200, 200)
 
 [node name="Camera3D" type="Camera3D" parent="SubViewport"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1, 0, 0)
+current = true
 
 [node name="Player" parent="SubViewport" instance=ExtResource("2_mnsk5")]
 freeze = true
+
+[node name="SpotLight3D2" type="SpotLight3D" parent="SubViewport"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 2.5, 0, 0)
 
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/Button" to="." method="tab_changed" binds= [0]]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/Button2" to="." method="tab_changed" binds= [1]]
