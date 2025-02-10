@@ -9,18 +9,11 @@ class_name player
 @export var light : OmniLight3D
 @export var collision : Area3D
 
-@onready var raycast := $RayCast3D
-
 
 func _ready():
 	set_color()
 	set_face()
 	set_marking()
-
-func _physics_process(delta: float) -> void:
-	raycast.global_rotation = Vector3.ZERO
-	if raycast.is_colliding():
-		apply_force(Vector3(0, 1, 0) * 6000 * delta)
 
 func set_color() -> void:
 	visible_mesh.mesh.material.albedo_color = PlayerInfo.player_data.player_customization.chosen_color.lightened(0.3)

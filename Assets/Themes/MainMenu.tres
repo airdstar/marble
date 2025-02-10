@@ -52,10 +52,10 @@ corner_radius_bottom_left = 20
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jsn5o"]
 bg_color = Color(0.778346, 0.94998, 0.88038, 1)
-border_width_left = 6
-border_width_top = 6
-border_width_right = 6
-border_width_bottom = 6
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
 border_color = Color(0.596078, 0.886275, 0.776471, 1)
 corner_radius_top_left = 20
 corner_radius_top_right = 20

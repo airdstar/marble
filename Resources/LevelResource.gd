@@ -14,4 +14,4 @@ class_name level_resource
 
 @export_category("Experimental")
 
-@export var gravity : Vector3 = Vector3(0, 9.8, 0)
+@export var camera_pos : float

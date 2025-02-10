@@ -19,25 +19,24 @@ func _ready() -> void:
 	tab_changed(0)
 	place_control()
 	for n in pos_colors:
+		var current_color : Color
 		for m in 5:
 			var current_button : Button = create_button()
 			color_container.add_child(current_button)
 			match m:
 				0:
-					current_button.modulate = n.lightened(0.6)
-					current_button.pressed.connect(set_color.bind(n.lightened(0.6)))
+					current_color = n.lightened(0.6)
 				1:
-					current_button.modulate = n.lightened(0.3)
-					current_button.pressed.connect(set_color.bind(n.lightened(0.3)))
+					current_color = n.lightened(0.3)
 				2:
-					current_button.modulate = n
-					current_button.pressed.connect(set_color.bind(n))
+					current_color = n
 				3:
-					current_button.modulate = n.darkened(0.3)
-					current_button.pressed.connect(set_color.bind(n.darkened(0.3)))
+					current_color = n.darkened(0.3)
 				4:
-					current_button.modulate = n.darkened(0.6)
-					current_button.pressed.connect(set_color.bind(n.darkened(0.6)))
+					current_color = n.darkened(0.6)
+			current_button.modulate = current_color
+			current_button.pressed.connect(set_color.bind(current_color))
+			
 	
 	var dir = DirAccess.open(face_path)
 	dir.list_dir_begin()
@@ -84,15 +83,15 @@ func _process(delta: float) -> void:
 
 func place_control() -> void:
 	
-	option_container.set_size(Vector2(get_window().size.x / 2, get_window().size.y / 1.2))
-	option_container.set_position(Vector2(get_window().size.y / 20, get_window().size.y / 20))
+	option_container.set_size(Vector2(get_window().size.x / 2, get_window().size.y))
+	option_container.set_position(Vector2(get_window().size.y / 20, 0))
 	
 	dummy_view.set_size(Vector2(get_window().size.x / 4, get_window().size.x / 4))
 	dummy_display.set_position(Vector2(get_window().size.x * 4 / 5 - dummy_view.size.x / 2, get_window().size.y * 3 / 6 - dummy_view.size.y / 2))
 
 func create_button() -> Button:
 	var to_return = Button.new()
-	to_return.custom_minimum_size = Vector2(get_window().size.x / 12, get_window().size.x / 12)
+	to_return.custom_minimum_size = Vector2(get_window().size.x / 11, get_window().size.x / 11)
 	to_return.expand_icon = true
 	return to_return
 
@@ -125,4 +124,4 @@ func set_marking(marking : String) -> void:
 	PlayerInfo.player_data.player_customization.chosen_marking = marking
 	PlayerInfo.save_data()
 	player_dummy.set_marking()
-	player_dummy.rotation = Vector3.ZERO
+	player_dummy.rotation = Vector3(0,deg_to_rad(180),0)
