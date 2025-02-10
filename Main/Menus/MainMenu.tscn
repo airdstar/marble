@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dqdv1dvpasyd"]
+[gd_scene load_steps=17 format=3 uid="uid://dqdv1dvpasyd"]
 
 [ext_resource type="Theme" uid="uid://bblhstx3bttr7" path="res://Assets/Themes/MainMenu.tres" id="1_lrwul"]
 [ext_resource type="Script" path="res://Main/Menus/main_menu.gd" id="1_tofsu"]
@@ -11,13 +11,34 @@
 [sub_resource type="ViewportTexture" id="ViewportTexture_ltt8l"]
 viewport_path = NodePath("SubViewport")
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7eqhe"]
+albedo_color = Color(0.501961, 1, 0.631373, 1)
+
 [sub_resource type="BoxMesh" id="BoxMesh_pqkpq"]
+material = SubResource("StandardMaterial3D_7eqhe")
 size = Vector3(30, 1, 20)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_mj71b"]
-size = Vector3(20, 1, 20)
+size = Vector3(40, 1, 40)
 
-[sub_resource type="SeparationRayShape3D" id="SeparationRayShape3D_1emab"]
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_yogpe"]
+plane = Plane(0, 0, 1, 0)
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_xq8n0"]
+plane = Plane(0, 0, -1, 0)
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_8lsy3"]
+plane = Plane(-1, 0, 0, 0)
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_q6lmd"]
+plane = Plane(1, 0, 0, 0)
+
+[sub_resource type="Environment" id="Environment_jhntf"]
+background_mode = 1
+fog_light_energy = 0.2
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.025
+volumetric_fog_albedo = Color(0.4, 1, 0.415686, 1)
 
 [node name="MainMenu" type="Control" node_paths=PackedStringArray("menu_container", "important_container", "logo", "rotate_logo", "background")]
 process_mode = 1
@@ -127,21 +148,45 @@ size = Vector2i(1280, 720)
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 10, 0)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewport"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 mesh = SubResource("BoxMesh_pqkpq")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="SubViewport/MeshInstance3D"]
+collision_layer = 2
+collision_mask = 3
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="SubViewport/MeshInstance3D/StaticBody3D"]
 shape = SubResource("BoxShape3D_mj71b")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewport"]
-
 [node name="Area3D" type="Area3D" parent="SubViewport"]
+collision_layer = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="SubViewport/Area3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -10.8221)
-shape = SubResource("SeparationRayShape3D_1emab")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20)
+shape = SubResource("WorldBoundaryShape3D_yogpe")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="SubViewport/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 20)
+shape = SubResource("WorldBoundaryShape3D_xq8n0")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="SubViewport/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 0)
+shape = SubResource("WorldBoundaryShape3D_8lsy3")
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="SubViewport/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 0, 0)
+shape = SubResource("WorldBoundaryShape3D_q6lmd")
+
+[node name="FogVolume" type="FogVolume" parent="SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 1.45813, 0)
+size = Vector3(30, 2, 30)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="SubViewport"]
+environment = SubResource("Environment_jhntf")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewport"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 6.94082, 0)
+light_energy = 0.3
 
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/Gallery" to="." method="open_scene" binds= ["gallery"]]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/Play" to="." method="open_floor"]
@@ -150,3 +195,4 @@ shape = SubResource("SeparationRayShape3D_1emab")
 [connection signal="pressed" from="HBoxContainer2/Profile" to="." method="open_profile"]
 [connection signal="pressed" from="Exit" to="." method="exit"]
 [connection signal="pressed" from="Button" to="." method="open_scene" binds= ["customization"]]
+[connection signal="body_entered" from="SubViewport/Area3D" to="." method="cull_dummy"]

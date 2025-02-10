@@ -26,6 +26,7 @@ resource_local_to_scene = true
 material = SubResource("StandardMaterial3D_38p8a")
 
 [node name="Player" type="RigidBody3D" node_paths=PackedStringArray("visible_mesh", "face", "marking", "light", "collision")]
+collision_mask = 6
 mass = 10.0
 physics_material_override = SubResource("PhysicsMaterial_vmld2")
 gravity_scale = 7.5

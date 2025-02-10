@@ -4,8 +4,9 @@ var colors : Array[Color] = [
 	Color(0.9,0,0.1),
 	Color(0,0.9,0.4),
 	Color(0.1,0,0.9),
-	Color(0.9,0.4,0),
-	Color(0.5,0,0.9)
+	Color(0.9,0.7,0),
+	Color(0.6,0,0.9),
+	Color(0.9,0.3,0)
 ]
 
 var faces : Array[Texture2D]
