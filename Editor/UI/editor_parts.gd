@@ -9,7 +9,8 @@ var shapes : Dictionary = {
 
 var important_parts : Dictionary = {
 	"Start" : "res://Editor/Parts/Important/SpawnZone.tscn",
-	"Goal" : "res://Editor/Parts/Important/EndZone.tscn"
+	"Goal" : "res://Editor/Parts/Important/EndZone.tscn",
+	"False Goal" : "res://Editor/Parts/Important/FalseEndZone.tscn"
 }
 
 @export var shape_holder : GridContainer

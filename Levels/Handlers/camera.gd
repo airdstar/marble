@@ -13,13 +13,15 @@ func _process(delta: float) -> void:
 			rotate_y(deg_to_rad(camera_input * settings.camera_sens) * delta)
 			panels.rotate_y(deg_to_rad(camera_input * settings.camera_sens) * delta)
 
-
-func rand_rotation(lowerbound : float, upperbound : float):
-	var rotationAmount = deg_to_rad(randf_range(lowerbound, upperbound))
+func rand_rotation():
+	var rotationAmount = deg_to_rad(randf_range(90, 360))
 	rotationAmount -= deg_to_rad(fmod(rad_to_deg(rotation.y), 360))
 	
 	var tween = create_tween()
 	tween.tween_property(self, "rotation", self.rotation + Vector3(0,rotationAmount + 2,0), 1.5).set_trans(Tween.TRANS_SPRING).set_ease(Tween.EASE_OUT)
+	
+	var panel_tween = create_tween()
+	panel_tween.tween_property(panels, "rotation", panels.rotation + Vector3(0,rotationAmount + 2,0), 1.5).set_trans(Tween.TRANS_SPRING).set_ease(Tween.EASE_OUT)
 
 func next_level():
 	
@@ -28,6 +30,6 @@ func next_level():
 	
 	await get_tree().create_timer(0.71).timeout
 	
-	position = Vector3(0,55,0)
+	position = Vector3(0,100,0)
 	tween = create_tween()
-	tween.tween_property(self, "position", Vector3(0,6,0), 0.2).set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_OUT)
+	tween.tween_property(self, "position", Vector3(0,0,0), 0.3).set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_OUT)

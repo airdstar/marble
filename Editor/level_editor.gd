@@ -91,8 +91,7 @@ func open_level_select():
 	selection_handler.selected_component = null
 	selection_handler.held_shape = null
 	UI.sections.clear_all()
-	adjusting = editor.adjustable.NONE
-	selected_tool = editor.tool.NONE
+	tool_selected(editor.tool.NONE)
 	if level_base != null:
 		level_base.queue_free()
 		level_base = null
@@ -170,6 +169,9 @@ func part_movement_toggled(toggled_on : bool) -> void:
 
 func property_group_set(adjust_to : String) -> void:
 	match adjust_to:
+		"None":
+			adjusting = editor.adjustable.NONE
+			tool_visible(false)
 		"Part":
 			adjusting = editor.adjustable.PART
 			tool_visible(true)
@@ -235,10 +237,23 @@ func level_info_updated() -> void:
 		UI.settings.close_settings()
 
 func pre_save() -> void:
+	var furthest_point : float = 0
 	for n in level_base.parts:
+		if abs(n.position.x) + n.scale.x / 2 > furthest_point:
+			furthest_point = abs(n.position.x) + n.scale.x / 2
+		
+		if abs(n.position.z) + n.scale.z / 2 > furthest_point:
+			furthest_point = abs(n.position.z) + n.scale.z / 2
+		
 		if n is ProcMesh:
 			n.create_collision()
-	
+			for m in n.shape_info:
+				if n.position.x + abs(m.total_offset.x) + m.size.x / 2 > furthest_point:
+					furthest_point = n.position.x + abs(m.total_offset.x) + m.size.x / 2
+				
+				if n.position.z + abs(m.total_offset.z) + m.size.z / 2 > furthest_point:
+					furthest_point = n.position.z + abs(m.total_offset.z) + m.size.z / 2
+	chosen_level.camera_pos = clamp(furthest_point + 4, 0, 16.5)
 	save_scene()
 
 func save_scene() -> void:

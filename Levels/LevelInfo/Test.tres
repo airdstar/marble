@@ -1,0 +1,68 @@
+[gd_resource type="Resource" script_class="level_resource" load_steps=14 format=4]
+
+[ext_resource type="Script" path="res://Levels/Handlers/level.gd" id="1_4o12v"]
+[ext_resource type="PackedScene" path="res://Editor/Parts/ProcMesh.tscn" id="2_5fnlk"]
+[ext_resource type="Script" path="res://Resources/LevelResource.gd" id="2_xld11"]
+[ext_resource type="Script" path="res://Editor/Parts/proc_mesh.gd" id="3_inh6b"]
+[ext_resource type="Script" path="res://Resources/shape_resource.gd" id="4_clw6g"]
+[ext_resource type="Script" path="res://Editor/Shapes/cube.gd" id="5_ms5o8"]
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_e2q8c"]
+_surfaces = [{
+"aabb": AABB(-0.5, -0.05, -4.45, 1, 0.1, 8.9),
+"format": 34359742471,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAAACAAMABAAFAAYABAAGAAcACAAJAAoACAAKAAsADAANAA4ADAAOAA8AEAARABIAEAASABMAFAAVABYAFAAWABcA"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("AAAAv83MTD1lZo7AAAAAP83MTD1mZo7AAAAAP83MTD1mZo5AAAAAv83MTD1mZo5AAAAAv83MTL1lZo5AAAAAP83MTL1mZo5AAAAAP83MTL1mZo7AAAAAv83MTL1mZo7AAAAAP8zMTL1mZo7AAAAAP83MTL1mZo5AAAAAP83MTD1mZo5AAAAAP83MTD1mZo7AAAAAv8zMTD1mZo7AAAAAv83MTD1mZo5AAAAAv83MTL1mZo5AAAAAv83MTL1mZo7A////vs3MTL1mZo5AAAAAv83MTD1mZo5AAAAAP83MTD1mZo5AAAAAP83MTL1mZo5A////Ps3MTL1mZo7AAAAAP83MTD1mZo7AAAAAv83MTD1mZo7AAAAAv83MTL1mZo7A/3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//fwAAAAD/v////3//f/+/////f/9//7////9//3//v////3//f/+/AAD/f/9//78AAP9//3//vwAA/3//f/+/AAD/f/9//7//f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP//////fwCA//////9/AID//////38AgP//////fwCA")
+}]
+
+[sub_resource type="Resource" id="Resource_yn5qn"]
+script = ExtResource("5_ms5o8")
+subdivisions = 1
+locked = false
+shape_name = "Shape"
+usable_mods = {
+"None": 0
+}
+modifier = 0
+total_offset = Vector3(0, 0, 0)
+size = Vector3(1, 0.1, 8.9)
+rotation = Quaternion(0, 0, 0, 1)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_1qmli"]
+data = PackedVector3Array(-0.5, 0.05, -4.45, 0.5, 0.05, -4.45, 0.5, 0.05, 4.45, -0.5, 0.05, -4.45, 0.5, 0.05, 4.45, -0.5, 0.05, 4.45, -0.5, -0.05, 4.45, 0.5, -0.05, 4.45, 0.5, -0.05, -4.45, -0.5, -0.05, 4.45, 0.5, -0.05, -4.45, -0.5, -0.05, -4.45, 0.5, -0.05, -4.45, 0.5, -0.05, 4.45, 0.5, 0.05, 4.45, 0.5, -0.05, -4.45, 0.5, 0.05, 4.45, 0.5, 0.05, -4.45, -0.5, 0.05, -4.45, -0.5, 0.05, 4.45, -0.5, -0.05, 4.45, -0.5, 0.05, -4.45, -0.5, -0.05, 4.45, -0.5, -0.05, -4.45, -0.5, -0.05, 4.45, -0.5, 0.05, 4.45, 0.5, 0.05, 4.45, -0.5, -0.05, 4.45, 0.5, 0.05, 4.45, 0.5, -0.05, 4.45, 0.5, -0.05, -4.45, 0.5, 0.05, -4.45, -0.5, 0.05, -4.45, 0.5, -0.05, -4.45, -0.5, 0.05, -4.45, -0.5, -0.05, -4.45)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4t1h0"]
+transparency = 1
+albedo_color = Color(0, 0, 0, 0.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_b8fir"]
+material = SubResource("StandardMaterial3D_4t1h0")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ndgqk"]
+size = Vector3(3, 1, 3)
+
+[sub_resource type="PackedScene" id="PackedScene_k5fte"]
+_bundled = {
+"conn_count": 2,
+"conns": PackedInt32Array(6, 0, 29, 28, 2, 0, 0, 7, 0, 29, 30, 2, 0, 0),
+"editable_instances": [],
+"names": PackedStringArray("LevelBase", "freeze", "script", "parts", "geometry", "start_node", "input_node", "input_collider", "RigidBody3D", "Geometry", "Node3D", "ProcMesh", "mesh", "editor_visibility", "body", "collider", "shape_info", "array_mesh", "metadata/part_name", "MeshInstance3D", "StaticBody3D", "collision_layer", "CollisionShape3D", "shape", "disabled", "Starts", "Area3D", "InputTrigger", "start_timer", "area_entered", "input_trigger"),
+"node_count": 9,
+"node_paths": [],
+"nodes": PackedInt32Array(-1, -1, 8, 0, -1, 7, 1, 0, 2, 1, 1073741827, 2, 1073741828, 3, 1073741829, 4, 1073741830, 5, 1073741831, 6, 0, 0, 0, 10, 9, -1, 0, 0, 1, 0, 19, 11, 7, 8, 12, 8, 2, 9, 1073741837, 10, 1073741838, 11, 1073741839, 12, 16, 13, 17, 8, 18, 14, 0, 2, 0, 20, 20, -1, 1, 21, 15, 0, 3, 0, 22, 22, -1, 2, 23, 16, 24, 0, 0, 2, 0, 19, 19, -1, 1, 12, 17, 0, 0, 0, 26, 25, -1, 0, 0, 0, 0, 26, 27, -1, 0, 0, 7, 0, 22, 22, -1, 2, 23, 18, 24, 0, 0),
+"variants": [true, ExtResource("1_4o12v"), [NodePath("Geometry/ProcMesh")], NodePath("Geometry"), NodePath("Starts"), NodePath("InputTrigger"), NodePath("InputTrigger/CollisionShape3D"), ExtResource("2_5fnlk"), SubResource("ArrayMesh_e2q8c"), ExtResource("3_inh6b"), NodePath("MeshInstance3D"), NodePath("StaticBody3D"), NodePath("StaticBody3D/CollisionShape3D"), Array[ExtResource("4_clw6g")]([SubResource("Resource_yn5qn")]), "Proc Mesh", 3, SubResource("ConcavePolygonShape3D_1qmli"), SubResource("BoxMesh_b8fir"), SubResource("BoxShape3D_ndgqk")],
+"version": 3
+}
+
+[resource]
+script = ExtResource("2_xld11")
+name = "Test"
+level_difficulty = 0
+level_type = 0
+associated_scene = SubResource("PackedScene_k5fte")
+include_in_pool = false
+camera_pos = 8.45

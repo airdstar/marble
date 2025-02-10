@@ -5,12 +5,12 @@
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_kv84c"]
 height = 1.0
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_08acx"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jcltm"]
 transparency = 1
 albedo_color = Color(0.377688, 0.559348, 0.378798, 0.4)
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_mcbnd"]
-material = SubResource("StandardMaterial3D_08acx")
+material = SubResource("StandardMaterial3D_jcltm")
 height = 1.0
 radial_segments = 10
 
@@ -27,6 +27,7 @@ collider = NodePath("Area3D/CollisionShape3D")
 metadata/part_name = "Goal"
 
 [node name="Area3D" type="Area3D" parent="."]
+collision_layer = 3
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 shape = SubResource("CylinderShape3D_kv84c")

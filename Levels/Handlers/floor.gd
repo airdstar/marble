@@ -126,7 +126,6 @@ func start_game() -> void:
 	
 	level_handler.generate_level(false)
 	
-	change_skybox_rotation()
 	run_handler.inRun = true
 	
 	if marble == null:
@@ -142,7 +141,6 @@ func next_level() -> void:
 	allow_input = false
 	
 	camera.next_level()
-	change_skybox_rotation()
 
 	marble.visible = false
 	prev_instance = instanced
@@ -200,15 +198,14 @@ func start_timer():
 	timer.start()
 	transitioning = false
 
-func change_skybox_rotation() -> void:
-	relative_desired_rotation = Vector3(randf_range(-0.0003,0.0003),randf_range(-0.0003,0.0003),randf_range(-0.0003,0.0003))
-
 func default_camera_skybox() -> void:
 	match level_type:
 		0:
 			camera.allow_input = true
 			var rot = randf_range(0, 360)
 			camera.rotation.y = deg_to_rad(rot)
+			var tween = create_tween()
+			tween.tween_property($camera_y/Camera3D, "position", Vector3(0,5 + 1.5 * (level_handler.current_level.camera_pos / 16.5), level_handler.current_level.camera_pos), 0.1)
 		1:
 			camera.allow_input = false
 			match randi_range(0,1):
@@ -227,7 +224,7 @@ func reset_marble() -> void:
 func reset_orientation() -> void:
 	allow_input = false
 	if level_type == 0:
-		camera.rand_rotation(0, 360)
+		camera.rand_rotation()
 
 func killzone_touched(_area: Area3D) -> void:
 	reset_marble()

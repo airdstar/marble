@@ -68,8 +68,5 @@ func set_background() -> void:
 				holder.position.x = -16
 				holder.position.z = randf_range(-16,16)
 
-		
-
-
 func cull_dummy(body: Node3D) -> void:
 	body.queue_free()

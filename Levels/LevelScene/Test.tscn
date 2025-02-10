@@ -1,0 +1,87 @@
+[gd_scene load_steps=12 format=4]
+
+[ext_resource type="Script" path="res://Levels/Handlers/level.gd" id="1_dnht2"]
+[ext_resource type="PackedScene" path="res://Editor/Parts/ProcMesh.tscn" id="2_kmsh7"]
+[ext_resource type="Script" path="res://Editor/Parts/proc_mesh.gd" id="3_flul8"]
+[ext_resource type="Script" path="res://Resources/shape_resource.gd" id="4_fsnkv"]
+[ext_resource type="Script" path="res://Editor/Shapes/cube.gd" id="5_54x7y"]
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_e2q8c"]
+_surfaces = [{
+"aabb": AABB(-0.5, -0.05, -4.45, 1, 0.1, 8.9),
+"format": 34359742471,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAAACAAMABAAFAAYABAAGAAcACAAJAAoACAAKAAsADAANAA4ADAAOAA8AEAARABIAEAASABMAFAAVABYAFAAWABcA"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("AAAAv83MTD1lZo7AAAAAP83MTD1mZo7AAAAAP83MTD1mZo5AAAAAv83MTD1mZo5AAAAAv83MTL1lZo5AAAAAP83MTL1mZo5AAAAAP83MTL1mZo7AAAAAv83MTL1mZo7AAAAAP8zMTL1mZo7AAAAAP83MTL1mZo5AAAAAP83MTD1mZo5AAAAAP83MTD1mZo7AAAAAv8zMTD1mZo7AAAAAv83MTD1mZo5AAAAAv83MTL1mZo5AAAAAv83MTL1mZo7A////vs3MTL1mZo5AAAAAv83MTD1mZo5AAAAAP83MTD1mZo5AAAAAP83MTL1mZo5A////Ps3MTL1mZo7AAAAAP83MTD1mZo7AAAAAv83MTD1mZo7AAAAAv83MTL1mZo7A/3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//fwAAAAD/v////3//f/+/////f/9//7////9//3//v////3//f/+/AAD/f/9//78AAP9//3//vwAA/3//f/+/AAD/f/9//7//f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP//////fwCA//////9/AID//////38AgP//////fwCA")
+}]
+
+[sub_resource type="Resource" id="Resource_yn5qn"]
+script = ExtResource("5_54x7y")
+subdivisions = 1
+locked = false
+shape_name = "Shape"
+usable_mods = {
+"None": 0
+}
+modifier = 0
+total_offset = Vector3(0, 0, 0)
+size = Vector3(1, 0.1, 8.9)
+rotation = Quaternion(0, 0, 0, 1)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_1qmli"]
+data = PackedVector3Array(-0.5, 0.05, -4.45, 0.5, 0.05, -4.45, 0.5, 0.05, 4.45, -0.5, 0.05, -4.45, 0.5, 0.05, 4.45, -0.5, 0.05, 4.45, -0.5, -0.05, 4.45, 0.5, -0.05, 4.45, 0.5, -0.05, -4.45, -0.5, -0.05, 4.45, 0.5, -0.05, -4.45, -0.5, -0.05, -4.45, 0.5, -0.05, -4.45, 0.5, -0.05, 4.45, 0.5, 0.05, 4.45, 0.5, -0.05, -4.45, 0.5, 0.05, 4.45, 0.5, 0.05, -4.45, -0.5, 0.05, -4.45, -0.5, 0.05, 4.45, -0.5, -0.05, 4.45, -0.5, 0.05, -4.45, -0.5, -0.05, 4.45, -0.5, -0.05, -4.45, -0.5, -0.05, 4.45, -0.5, 0.05, 4.45, 0.5, 0.05, 4.45, -0.5, -0.05, 4.45, 0.5, 0.05, 4.45, 0.5, -0.05, 4.45, 0.5, -0.05, -4.45, 0.5, 0.05, -4.45, -0.5, 0.05, -4.45, 0.5, -0.05, -4.45, -0.5, 0.05, -4.45, -0.5, -0.05, -4.45)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4t1h0"]
+transparency = 1
+albedo_color = Color(0, 0, 0, 0.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_b8fir"]
+material = SubResource("StandardMaterial3D_4t1h0")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ndgqk"]
+size = Vector3(3, 1, 3)
+
+[node name="LevelBase" type="RigidBody3D" node_paths=PackedStringArray("parts", "geometry", "start_node", "input_node", "input_collider")]
+freeze = true
+script = ExtResource("1_dnht2")
+parts = [NodePath("Geometry/ProcMesh")]
+geometry = NodePath("Geometry")
+start_node = NodePath("Starts")
+input_node = NodePath("InputTrigger")
+input_collider = NodePath("InputTrigger/CollisionShape3D")
+
+[node name="Geometry" type="Node3D" parent="."]
+
+[node name="ProcMesh" type="MeshInstance3D" parent="Geometry" node_paths=PackedStringArray("editor_visibility", "body", "collider") instance=ExtResource("2_kmsh7")]
+mesh = SubResource("ArrayMesh_e2q8c")
+script = ExtResource("3_flul8")
+editor_visibility = NodePath("MeshInstance3D")
+body = NodePath("StaticBody3D")
+collider = NodePath("StaticBody3D/CollisionShape3D")
+shape_info = Array[ExtResource("4_fsnkv")]([SubResource("Resource_yn5qn")])
+array_mesh = SubResource("ArrayMesh_e2q8c")
+metadata/part_name = "Proc Mesh"
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Geometry/ProcMesh"]
+collision_layer = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/ProcMesh/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_1qmli")
+disabled = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Geometry/ProcMesh"]
+mesh = SubResource("BoxMesh_b8fir")
+
+[node name="Starts" type="Area3D" parent="."]
+
+[node name="InputTrigger" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InputTrigger"]
+shape = SubResource("BoxShape3D_ndgqk")
+disabled = true
+
+[connection signal="area_entered" from="Starts" to="." method="start_timer"]
+[connection signal="area_entered" from="InputTrigger" to="." method="input_trigger"]
