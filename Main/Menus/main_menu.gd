@@ -5,8 +5,13 @@ extends Node
 @export var logo : Sprite2D
 @export var rotate_logo : Sprite2D
 
+@export var background : SubViewport
+
+var dummies : Array[player]
+
 func _ready() -> void:
 	place_control()
+	set_background()
 
 func place_control() -> void:
 	menu_container.set_size(Vector2(get_window().get_size().x / 3, get_window().get_size().y / 7))
@@ -17,27 +22,31 @@ func place_control() -> void:
 	
 	logo.set_scale(Vector2(float(get_window().get_size().x) / 4000, float(get_window().get_size().x) / 4000))
 	logo.set_position(Vector2(get_window().get_size().x / 2, get_window().get_size().y / 4))
+	
+	background.set_size(get_window().get_size())
 
 func _process(delta: float) -> void:
 	rotate_logo.rotation = (rotate_logo.rotation + 0.3 * delta)
 
-func play_pressed() -> void:
+func open_floor() -> void:
 	Global.open_floor(FloorLevel.floor_type.PLAY, [])
 
-func gallery_pressed() -> void:
-	Global.open_scene("gallery")
+func open_scene(scene_name : String) -> void:
+	Global.open_scene(scene_name)
 
-func editor_pressed() -> void:
-	Global.open_scene("editor")
+func open_popup(popup_name : String) -> void:
+	Global.open_popup(popup_name)
 
-func profile_pressed() -> void:
+func open_profile() -> void:
 	Global.open_profile(PlayerInfo.player_data)
 
-func settings_pressed() -> void:
-	Global.open_popup("settings")
-
-func customization_pressed() -> void:
-	Global.open_scene("customization")
-
-func exit_pressed() -> void:
+func exit() -> void:
 	get_tree().quit()
+
+func set_background() -> void:
+	while(true):
+		await get_tree().create_timer(randf_range(0.2, 0.8)).timeout
+		var holder = preload("res://Main/Player.tscn").instantiate()
+		holder.set_customization(Cosmetic.generate_random())
+		background.add_child(holder)
+		holder.angular_velocity.x = 500

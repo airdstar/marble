@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dqdv1dvpasyd"]
+[gd_scene load_steps=10 format=3 uid="uid://dqdv1dvpasyd"]
 
 [ext_resource type="Theme" uid="uid://bblhstx3bttr7" path="res://Assets/Themes/MainMenu.tres" id="1_lrwul"]
 [ext_resource type="Script" path="res://Main/Menus/main_menu.gd" id="1_tofsu"]
@@ -13,11 +13,6 @@ viewport_path = NodePath("SubViewport")
 
 [sub_resource type="BoxMesh" id="BoxMesh_pqkpq"]
 size = Vector3(30, 1, 20)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_mj71b"]
-size = Vector3(20, 1, 20)
-
-[sub_resource type="SeparationRayShape3D" id="SeparationRayShape3D_1emab"]
 
 [node name="MainMenu" type="Control" node_paths=PackedStringArray("menu_container", "important_container", "logo", "rotate_logo", "background")]
 process_mode = 1
@@ -130,18 +125,7 @@ transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 10,
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
 mesh = SubResource("BoxMesh_pqkpq")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="SubViewport/MeshInstance3D"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="SubViewport/MeshInstance3D/StaticBody3D"]
-shape = SubResource("BoxShape3D_mj71b")
-
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewport"]
-
-[node name="Area3D" type="Area3D" parent="SubViewport"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="SubViewport/Area3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -10.8221)
-shape = SubResource("SeparationRayShape3D_1emab")
 
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/Gallery" to="." method="open_scene" binds= ["gallery"]]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/Play" to="." method="open_floor"]

@@ -1,11 +1,11 @@
 [gd_scene load_steps=14 format=4]
 
-[ext_resource type="Script" path="res://Levels/Handlers/level.gd" id="1_iivt4"]
-[ext_resource type="PackedScene" path="res://Editor/Parts/ProcMesh.tscn" id="2_eba5d"]
-[ext_resource type="Script" path="res://Editor/Parts/proc_mesh.gd" id="3_6div7"]
-[ext_resource type="Script" path="res://Resources/shape_resource.gd" id="4_2l2qc"]
-[ext_resource type="Script" path="res://Editor/Shapes/cube.gd" id="5_lwjmy"]
-[ext_resource type="Script" path="res://Editor/Shapes/polygon.gd" id="6_0wo2i"]
+[ext_resource type="Script" path="res://Levels/Handlers/level.gd" id="1_o3qff"]
+[ext_resource type="PackedScene" path="res://Editor/Parts/ProcMesh.tscn" id="2_ofq2i"]
+[ext_resource type="Script" path="res://Editor/Parts/proc_mesh.gd" id="3_jy1bg"]
+[ext_resource type="Script" path="res://Resources/shape_resource.gd" id="4_gkc4j"]
+[ext_resource type="Script" path="res://Editor/Shapes/cube.gd" id="5_8ofhs"]
+[ext_resource type="Script" path="res://Editor/Shapes/polygon.gd" id="6_pod4e"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_rlvw3"]
 _surfaces = [{
@@ -20,7 +20,7 @@ _surfaces = [{
 }]
 
 [sub_resource type="Resource" id="Resource_knpns"]
-script = ExtResource("5_lwjmy")
+script = ExtResource("5_8ofhs")
 subdivisions = 1
 locked = false
 shape_name = "Shape"
@@ -33,7 +33,7 @@ size = Vector3(1, 0.1, 1)
 rotation = Quaternion(0, 0, 0, 1)
 
 [sub_resource type="Resource" id="Resource_ccfqg"]
-script = ExtResource("6_0wo2i")
+script = ExtResource("6_pod4e")
 sides = 4
 point_direction = 1
 hole_size = 0.9
@@ -50,7 +50,7 @@ total_offset = Vector3(0, 0, 0)
 size = Vector3(1.5, 1, 1.5)
 rotation = Quaternion(0, -0.390731, 0, 0.920504)
 
-[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_v5q0n"]
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_mdjkv"]
 data = PackedVector3Array(-0.5, -0.45, -0.5, 0.5, -0.45, -0.5, 0.5, -0.45, 0.5, -0.5, -0.45, -0.5, 0.5, -0.45, 0.5, -0.5, -0.45, 0.5, -0.5, -0.55, 0.5, 0.5, -0.55, 0.5, 0.5, -0.55, -0.5, -0.5, -0.55, 0.5, 0.5, -0.55, -0.5, -0.5, -0.55, -0.5, 0.5, -0.55, -0.5, 0.5, -0.55, 0.5, 0.5, -0.45, 0.5, 0.5, -0.55, -0.5, 0.5, -0.45, 0.5, 0.5, -0.45, -0.5, -0.5, -0.45, -0.5, -0.5, -0.45, 0.5, -0.5, -0.55, 0.5, -0.5, -0.45, -0.5, -0.5, -0.55, 0.5, -0.5, -0.55, -0.5, -0.5, -0.55, 0.5, -0.5, -0.45, 0.5, 0.5, -0.45, 0.5, -0.5, -0.55, 0.5, 0.5, -0.45, 0.5, 0.5, -0.55, 0.5, 0.5, -0.55, -0.5, 0.5, -0.45, -0.5, -0.5, -0.45, -0.5, 0.5, -0.55, -0.5, -0.5, -0.45, -0.5, -0.5, -0.55, -0.5, 0.521, 0.5, -0.5395, 0.521, -0.5, -0.5395, 0.5395, 0.5, 0.521, 0.5395, 0.5, 0.521, 0.521, -0.5, -0.5395, 0.5395, -0.5, 0.521, 0.5395, 0.5, 0.521, 0.5395, -0.5, 0.521, -0.521, 0.5, 0.5395, -0.521, 0.5, 0.5395, 0.5395, -0.5, 0.521, -0.521, -0.5, 0.5395, -0.521, 0.5, 0.5395, -0.521, -0.5, 0.5395, -0.5395, 0.5, -0.521, -0.5395, 0.5, -0.521, -0.521, -0.5, 0.5395, -0.5395, -0.5, -0.521, -0.5395, 0.5, -0.521, -0.5395, -0.5, -0.521, 0.521, 0.5, -0.5395, 0.521, 0.5, -0.5395, -0.5395, -0.5, -0.521, 0.521, -0.5, -0.5395, 0.4856, 0.5, 0.4689, 0.4689, -0.5, -0.4856, 0.4689, 0.5, -0.4856, 0.4856, -0.5, 0.4689, 0.4689, -0.5, -0.4856, 0.4856, 0.5, 0.4689, -0.4689, 0.5, 0.4856, 0.4856, -0.5, 0.4689, 0.4856, 0.5, 0.4689, -0.4689, -0.5, 0.4856, 0.4856, -0.5, 0.4689, -0.4689, 0.5, 0.4856, -0.4856, 0.5, -0.4689, -0.4689, -0.5, 0.4856, -0.4689, 0.5, 0.4856, -0.4856, -0.5, -0.4689, -0.4689, -0.5, 0.4856, -0.4856, 0.5, -0.4689, 0.4689, 0.5, -0.4856, -0.4856, -0.5, -0.4689, -0.4856, 0.5, -0.4689, 0.4689, -0.5, -0.4856, -0.4856, -0.5, -0.4689, 0.4689, 0.5, -0.4856, 0.4856, 0.5, 0.4689, 0.4689, 0.5, -0.4856, 0.521, 0.5, -0.5395, 0.4856, 0.5, 0.4689, 0.521, 0.5, -0.5395, 0.5395, 0.5, 0.521, -0.4689, 0.5, 0.4856, 0.4856, 0.5, 0.4689, 0.5395, 0.5, 0.521, -0.4689, 0.5, 0.4856, 0.5395, 0.5, 0.521, -0.521, 0.5, 0.5395, -0.4856, 0.5, -0.4689, -0.4689, 0.5, 0.4856, -0.521, 0.5, 0.5395, -0.4856, 0.5, -0.4689, -0.521, 0.5, 0.5395, -0.5395, 0.5, -0.521, 0.4689, 0.5, -0.4856, -0.4856, 0.5, -0.4689, -0.5395, 0.5, -0.521, 0.4689, 0.5, -0.4856, -0.5395, 0.5, -0.521, 0.521, 0.5, -0.5395, 0.4689, -0.5, -0.4856, 0.4856, -0.5, 0.4689, 0.521, -0.5, -0.5395, 0.5395, -0.5, 0.521, 0.521, -0.5, -0.5395, 0.4856, -0.5, 0.4689, 0.4856, -0.5, 0.4689, -0.4689, -0.5, 0.4856, 0.5395, -0.5, 0.521, -0.521, -0.5, 0.5395, 0.5395, -0.5, 0.521, -0.4689, -0.5, 0.4856, -0.4689, -0.5, 0.4856, -0.4856, -0.5, -0.4689, -0.521, -0.5, 0.5395, -0.5395, -0.5, -0.521, -0.521, -0.5, 0.5395, -0.4856, -0.5, -0.4689, -0.4856, -0.5, -0.4689, 0.4689, -0.5, -0.4856, -0.5395, -0.5, -0.521, 0.521, -0.5, -0.5395, -0.5395, -0.5, -0.521, 0.4689, -0.5, -0.4856)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4t1h0"]
@@ -65,7 +65,7 @@ size = Vector3(3, 1, 3)
 
 [node name="LevelBase" type="RigidBody3D" node_paths=PackedStringArray("parts", "geometry", "start_node", "input_node", "input_collider")]
 freeze = true
-script = ExtResource("1_iivt4")
+script = ExtResource("1_o3qff")
 parts = [NodePath("Geometry/ProcMesh")]
 geometry = NodePath("Geometry")
 start_node = NodePath("Starts")
@@ -74,20 +74,20 @@ input_collider = NodePath("InputTrigger/CollisionShape3D")
 
 [node name="Geometry" type="Node3D" parent="."]
 
-[node name="ProcMesh" type="MeshInstance3D" parent="Geometry" node_paths=PackedStringArray("editor_visibility", "body", "collider") instance=ExtResource("2_eba5d")]
+[node name="ProcMesh" type="MeshInstance3D" parent="Geometry" node_paths=PackedStringArray("editor_visibility", "body", "collider") instance=ExtResource("2_ofq2i")]
 mesh = SubResource("ArrayMesh_rlvw3")
-script = ExtResource("3_6div7")
+script = ExtResource("3_jy1bg")
 editor_visibility = NodePath("MeshInstance3D")
 body = NodePath("StaticBody3D")
 collider = NodePath("StaticBody3D/CollisionShape3D")
-shape_info = Array[ExtResource("4_2l2qc")]([SubResource("Resource_knpns"), SubResource("Resource_ccfqg")])
+shape_info = Array[ExtResource("4_gkc4j")]([SubResource("Resource_knpns"), SubResource("Resource_ccfqg")])
 array_mesh = SubResource("ArrayMesh_rlvw3")
 metadata/part_name = "Proc Mesh"
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Geometry/ProcMesh"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/ProcMesh/StaticBody3D"]
-shape = SubResource("ConcavePolygonShape3D_v5q0n")
+shape = SubResource("ConcavePolygonShape3D_mdjkv")
 disabled = true
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Geometry/ProcMesh"]

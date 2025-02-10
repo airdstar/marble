@@ -131,6 +131,7 @@ func start_game() -> void:
 	
 	if marble == null:
 		var holder = preload("res://Main/Player.tscn").instantiate()
+		holder.set_customization(PlayerInfo.player_data.player_customization)
 		add_child(holder)
 		marble = holder
 	

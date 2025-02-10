@@ -25,6 +25,7 @@ Global="*res://Global/global.gd"
 PlayerInfo="*res://Global/player_info.gd"
 Audio="*res://Global/audio_handler.gd"
 Particle="*res://Global/particle_handler.gd"
+Cosmetic="*res://Global/cosmetic.gd"
 
 [debug]
 

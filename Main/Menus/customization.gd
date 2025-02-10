@@ -1,11 +1,6 @@
 extends Node
 
-@export var pos_colors : Array[Color] 
-
-var face_path : String = "res://Assets/Customization/Faces/"
-var marking_path : String = "res://Assets/Customization/Markings/"
-
-@export var player_dummy : RigidBody3D
+var player_dummy : RigidBody3D
 @export var dummy_display : TextureRect
 @export var dummy_view : SubViewport
 
@@ -16,65 +11,31 @@ var marking_path : String = "res://Assets/Customization/Markings/"
 @export var marking_container : GridContainer
 
 func _ready() -> void:
+	player_dummy = preload("res://Main/Player.tscn").instantiate()
+	player_dummy.set_customization(PlayerInfo.player_data.player_customization)
+	player_dummy.freeze = true
+	dummy_view.add_child(player_dummy)
+	
 	tab_changed(0)
 	place_control()
-	for n in pos_colors:
-		var current_color : Color
-		for m in 5:
+	for n in Cosmetic.colors:
+		for m in Cosmetic.get_shades(n):
 			var current_button : Button = create_button()
 			color_container.add_child(current_button)
-			match m:
-				0:
-					current_color = n.lightened(0.6)
-				1:
-					current_color = n.lightened(0.3)
-				2:
-					current_color = n
-				3:
-					current_color = n.darkened(0.3)
-				4:
-					current_color = n.darkened(0.6)
-			current_button.modulate = current_color
-			current_button.pressed.connect(set_color.bind(current_color))
-			
+			current_button.modulate = m
+			current_button.pressed.connect(set_color.bind(m))
 	
-	var dir = DirAccess.open(face_path)
-	dir.list_dir_begin()
-	var current_face : String = dir.get_next()
-	while current_face != "":
-		if '.remap' in current_face:
-			current_face = current_face.trim_suffix('.remap')
-		
-		if '.import' in current_face:
-			current_face = dir.get_next()
-			continue
-		
-		var holder = ResourceLoader.load(face_path + current_face)
-		var current_button = create_button()
-		current_button.icon = holder
+	for n in Cosmetic.faces:
+		var current_button : Button = create_button()
+		current_button.icon = n
 		face_container.add_child(current_button)
-		current_button.pressed.connect(set_face.bind(current_face))
-		current_face = dir.get_next()
-	dir.list_dir_end()
+		current_button.pressed.connect(set_face.bind(n))
 	
-	dir = DirAccess.open(marking_path)
-	dir.list_dir_begin()
-	var current_marking : String = dir.get_next()
-	while current_marking != "":
-		if '.remap' in current_marking:
-			current_marking = current_marking.trim_suffix('.remap')
-		
-		if '.import' in current_marking:
-			current_marking = dir.get_next()
-			continue
-		
-		var holder = ResourceLoader.load(marking_path + current_marking)
+	for n in Cosmetic.flairs:
 		var current_button = create_button()
-		current_button.icon = holder
+		current_button.icon = n
 		marking_container.add_child(current_button)
-		current_button.pressed.connect(set_marking.bind(current_marking))
-		current_marking = dir.get_next()
-	dir.list_dir_end()
+		current_button.pressed.connect(set_flair.bind(n))
 
 func _process(delta: float) -> void:
 	if Input.is_action_pressed("back"):
@@ -114,14 +75,14 @@ func set_color(color : Color) -> void:
 	player_dummy.set_color()
 	player_dummy.rotation = Vector3.ZERO
 
-func set_face(face : String) -> void:
+func set_face(face : Texture2D) -> void:
 	PlayerInfo.player_data.player_customization.chosen_face = face
 	PlayerInfo.save_data()
 	player_dummy.set_face()
 	player_dummy.rotation = Vector3.ZERO
 
-func set_marking(marking : String) -> void:
-	PlayerInfo.player_data.player_customization.chosen_marking = marking
+func set_flair(flair : Texture2D) -> void:
+	PlayerInfo.player_data.player_customization.chosen_flair = flair
 	PlayerInfo.save_data()
-	player_dummy.set_marking()
+	player_dummy.set_flair()
 	player_dummy.rotation = Vector3(0,deg_to_rad(180),0)

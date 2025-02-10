@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dplfsjq0ejahr"
-path="res://.godot/imported/1.png-f240d3cdb5fea1834e0032dda15d24ad.ctex"
+path="res://.godot/imported/1.png-ae90aa7fbe9c20f88f8508cca9cda0ee.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Customization/Markings/1.png"
-dest_files=["res://.godot/imported/1.png-f240d3cdb5fea1834e0032dda15d24ad.ctex"]
+source_file="res://Assets/Customization/Flairs/1.png"
+dest_files=["res://.godot/imported/1.png-ae90aa7fbe9c20f88f8508cca9cda0ee.ctex"]
 
 [params]
 
