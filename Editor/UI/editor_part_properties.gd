@@ -1,6 +1,6 @@
 extends Node
 
-@export var master : Node
+@export var selection : Node
 
 @export_category("Part")
 @export var part_name : LineEdit
@@ -14,7 +14,10 @@ extends Node
 @export var dynamic_movement : CheckBox
 @export var dynamic_rotation : CheckBox
 
-@export var pivot_container : HBoxContainer
+@export var pivot_container : VBoxContainer
+
+signal create_rotation_tab
+signal get_all_non_pivot_parts
 
 func display_part_properties(part : Node3D) -> void:
 	part_name.text = part.get_meta("part_name")
@@ -36,15 +39,36 @@ func display_part_properties(part : Node3D) -> void:
 		for n in part.get_children():
 			if n is rotateable_component:
 				dynamic_rotation.button_pressed = true
-				master.create_rotation_tab(n)
+				create_rotation_tab.emit(n)
 			if n is moveable_component:
 				pass
-		
-		if part is pivot:
-			pivot_container.visible = true
-		else:
-			pivot_container.visible = false
 		
 	else:
 		for n in dynamic_containers:
 			n.visible = false
+	
+	if part is pivot:
+		pivot_container.visible = true
+		for m in pivot_container.get_children():
+			if m is not RichTextLabel:
+				m.queue_free()
+		get_all_non_pivot_parts.emit()
+	else:
+		pivot_container.visible = false
+
+func display_non_pivots(parts : Array[Node3D]) -> void:
+	for n in parts:
+		var option_container = HBoxContainer.new()
+		pivot_container.add_child(option_container)
+		var label = RichTextLabel.new()
+		label.text = n.get_meta("part_name")
+		label.fit_content = true
+		label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		var check = CheckBox.new()
+		
+		if selection.selected_part.has_child(n):
+			check.button_pressed = true
+		
+		
+		option_container.add_child(label)
+		option_container.add_child(check)

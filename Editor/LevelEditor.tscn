@@ -426,17 +426,16 @@ size_flags_vertical = 3
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Part" type="VBoxContainer" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer" node_paths=PackedStringArray("master", "part_name", "part_pos", "part_size", "part_rot", "texture_container", "dynamic_containers", "dynamic_movement", "dynamic_rotation", "pivot_container")]
+[node name="Part" type="VBoxContainer" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer" node_paths=PackedStringArray("selection", "part_name", "part_pos", "part_size", "part_rot", "texture_container", "dynamic_movement", "dynamic_rotation", "pivot_container")]
 layout_mode = 2
 size_flags_horizontal = 3
 script = ExtResource("10_f3w8y")
-master = NodePath("../../../..")
+selection = NodePath("../../../../../../SelectionHandler")
 part_name = NodePath("PartName")
 part_pos = NodePath("Pos/PartPos")
 part_size = NodePath("Size/PartSize")
 part_rot = NodePath("Rot/PartRot")
 texture_container = NodePath("Texture")
-dynamic_containers = [NodePath("DynamicMove"), NodePath("DynamicRot")]
 dynamic_movement = NodePath("DynamicMove/CheckBox")
 dynamic_rotation = NodePath("DynamicRot/CheckBox")
 pivot_container = NodePath("Pivot")
@@ -526,13 +525,14 @@ layout_mode = 2
 layout_mode = 2
 theme_override_constants/margin_right = 10
 
-[node name="Pivot" type="HBoxContainer" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/Part"]
+[node name="Pivot" type="VBoxContainer" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/Part"]
 layout_mode = 2
 
 [node name="RichTextLabel" type="RichTextLabel" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/Part/Pivot"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = " To Pivot:"
+bbcode_enabled = true
+text = " [center]Pivot"
 fit_content = true
 
 [node name="ShapeProperties" type="VBoxContainer" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer" node_paths=PackedStringArray("shape_name", "shape_pos", "shape_size", "shape_rot", "shape_modifier_holder", "shape_modifier", "shape_sides_holder", "shape_sides", "shape_orientation_holder", "shape_orientation", "shape_flip_orientation_holder", "shape_flip_orientation", "shape_hole_holder", "shape_hole_offset_x", "shape_hole_offset_y", "shape_hole_offset_z", "shape_hole_size")]
@@ -1424,6 +1424,7 @@ mesh = SubResource("BoxMesh_qr2x0")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 13)
 mesh = SubResource("BoxMesh_qr2x0")
 
+[connection signal="all_non_pivots" from="." to="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/Part" method="display_non_pivots"]
 [connection signal="level_loaded" from="." to="UI/Sections" method="_on_level_loaded"]
 [connection signal="new_part_selected" from="." to="UI/Properties" method="part_selected"]
 [connection signal="new_shape_selected" from="." to="UI/Properties" method="shape_selected"]
@@ -1447,6 +1448,7 @@ mesh = SubResource("BoxMesh_qr2x0")
 [connection signal="size_changed" from="Adjust" to="ChangeHandler" method="resize_detected"]
 [connection signal="group_changed" from="UI/Properties" to="." method="property_group_set"]
 [connection signal="tab_changed" from="UI/Properties/VBoxContainer/TabBar" to="UI/Properties" method="property_group_changed"]
+[connection signal="get_all_non_pivot_parts" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/Part" to="." method="get_all_non_pivot_parts"]
 [connection signal="text_changed" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/Part/PartName" to="ChangeHandler" method="part_name_changed"]
 [connection signal="pressed" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/Part/Pos/Button" to="ChangeHandler" method="movement_detected" binds= [Vector3(0, 0, 0)]]
 [connection signal="pressed" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/Part/Size/Button" to="ChangeHandler" method="resize_detected" binds= [Vector3(1, 1, 1)]]

@@ -3,7 +3,6 @@ class_name level
 
 @export var parts : Array[Node3D]
 
-@export var geometry : Node3D
 @export var start_node : Area3D
 
 @export var input_node : Area3D

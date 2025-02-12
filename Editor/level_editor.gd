@@ -34,6 +34,7 @@ signal level_loaded
 signal shape_placed
 signal new_part_selected
 signal new_shape_selected
+signal all_non_pivots
 
 func _ready() -> void:
 	shape_preview.is_preview = true
@@ -135,9 +136,7 @@ func new_procmesh_created() -> void:
 
 func new_part_created(part : Node3D) -> void:
 	level_base.parts.append(part)
-	if part is ProcMesh:
-		level_base.geometry.add_child(part)
-	elif part is start:
+	if part is start:
 		level_base.start_node.add_child(part)
 	else:
 		level_base.add_child(part)
@@ -166,6 +165,15 @@ func part_rotation_toggled(toggled_on: bool) -> void:
 
 func part_movement_toggled(toggled_on : bool) -> void:
 	pass
+
+func get_all_non_pivot_parts() -> void:
+	var to_return : Array[Node3D]
+	
+	for n in level_base.parts:
+		if n is not pivot:
+			to_return.append(n)
+	
+	all_non_pivots.emit(to_return)
 
 func property_group_set(adjust_to : String) -> void:
 	match adjust_to:
