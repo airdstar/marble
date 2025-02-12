@@ -14,9 +14,6 @@ extends Control
 @export var dynamic_movement : CheckBox
 @export var dynamic_rotation : CheckBox
 
-
-signal shape_name_changed
-signal rotation_change
 signal group_changed
 
 func _ready() -> void:
@@ -42,21 +39,21 @@ func property_group_changed(index: int) -> void:
 func pos_changed(new_pos : Vector3) -> void:
 	match property_options.get_tab_title(property_options.current_tab):
 		"Part":
-			part_pos.text = " Position: %.2f" % new_pos.x + ", %.2f" % new_pos.y + ", %.2f" % new_pos.z
+			part_properties.part_pos.text = " Position: %.2f" % new_pos.x + ", %.2f" % new_pos.y + ", %.2f" % new_pos.z
 		"Shape":
 			shape_properties.shape_pos.text = " Position: %.2f" % new_pos.x + ", %.2f" % new_pos.y + ", %.2f" % new_pos.z
 
 func size_changed(new_size : Vector3) -> void:
 	match property_options.get_tab_title(property_options.current_tab):
 		"Part":
-			part_size.text = " Size: %.2f" % new_size.x + ", %.2f" % new_size.y + ", %.2f" % new_size.z
+			part_properties.part_size.text = " Size: %.2f" % new_size.x + ", %.2f" % new_size.y + ", %.2f" % new_size.z
 		"Shape":
 			shape_properties.shape_size.text = " Size: %.2f" % new_size.x + ", %.2f" % new_size.y + ", %.2f" % new_size.z
 
 func rot_changed(new_rot : Vector3) -> void:
 	match property_options.get_tab_title(property_options.current_tab):
 		"Part":
-			part_rot.text = " Rotation: %d" % new_rot.x + ", %d" % new_rot.y + ", %d" % new_rot.z
+			part_properties.part_rot.text = " Rotation: %d" % new_rot.x + ", %d" % new_rot.y + ", %d" % new_rot.z
 		"Shape":
 			shape_properties.shape_rot.text = " Rotation: %d" % new_rot.x + ", %d" % new_rot.y + ", %d" % new_rot.z
 
@@ -72,7 +69,7 @@ func part_selected(part : Node3D) -> void:
 		pass
 	
 	property_group_changed(select_tab)
-	display_part_properties(part)
+	part_properties.display_part_properties(part)
 
 func part_unselected() -> void:
 	if get_tab("Part") != -1:
@@ -107,31 +104,13 @@ func shape_unselected() -> void:
 	else:
 		property_options.current_tab = -1
 
-func shape_name_submitted(new_text: String) -> void:
-	if new_text != "":
-		shape_name_changed.emit(new_text)
-
 func get_tab(tab_name : String) -> int:
 	for n in property_options.tab_count:
 		if property_options.get_tab_title(n) == tab_name:
 			return n
 	return -1
 
-func display_part_properties(part : Node3D) -> void:
-	part_name.text = part.get_meta("part_name")
-	
-	part_pos.text = " Position: %.2f" % part.position.x + ", %.2f" % part.position.y + ", %.2f" % part.position.z
-	part_size.text = " Size: %.2f" % part.scale.x + ", %.2f" % part.scale.y + ", %.2f" % part.scale.z
-	part_rot.text = " Rotation: %d" % part.rotation.x + ", %d" % part.rotation.y + ", %d" % part.rotation.z
-	
-	dynamic_rotation.button_pressed = false
-	
-	for n in part.get_children():
-		if n is rotateable_component:
-			create_rotation_tab(n)
-
 func create_rotation_tab(comp : rotateable_component) -> void:
-	dynamic_rotation.button_pressed = true
 	if get_tab("Rotation") == -1:
 		property_options.add_tab("Rotation")
 	

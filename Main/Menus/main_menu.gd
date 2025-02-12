@@ -7,6 +7,9 @@ extends Node
 
 @export var background : SubViewport
 
+@export var small_buttons : Array[Button]
+
+
 func _ready() -> void:
 	place_control()
 	set_background()
@@ -15,8 +18,11 @@ func place_control() -> void:
 	menu_container.set_size(Vector2(get_window().get_size().x / 3, get_window().get_size().y / 7))
 	menu_container.set_position(Vector2(get_window().get_size().x / 2 - (menu_container.size.x / 2), get_window().get_size().y / 2 + get_window().get_size().y / 10))
 	
+	for n : Button in small_buttons:
+		n.set_custom_minimum_size(Vector2(get_window().get_size().y / 15, get_window().get_size().y / 15))
 	important_container.set_size(Vector2.ZERO)
-	important_container.set_position(Vector2(get_window().get_size().x / 2 - (important_container.size.x / 2), get_window().get_size().y * 19 / 20 - important_container.size.y) )
+	important_container.set_position(Vector2(get_window().get_size().x / 2 - (important_container.size.x / 2), get_window().get_size().y * 9 / 10 - important_container.size.y) )
+	
 	
 	logo.set_scale(Vector2(float(get_window().get_size().x) / 4000, float(get_window().get_size().x) / 4000))
 	logo.set_position(Vector2(get_window().get_size().x / 2, get_window().get_size().y / 4))
@@ -25,6 +31,10 @@ func place_control() -> void:
 
 func _process(delta: float) -> void:
 	rotate_logo.rotation = (rotate_logo.rotation + 0.3 * delta)
+	
+	if Input.is_action_just_pressed("back"):
+		if Global.main_scene.popup_scene == null:
+			get_tree().quit()
 
 func open_floor() -> void:
 	Global.open_floor(FloorLevel.floor_type.PLAY, [])
@@ -38,8 +48,6 @@ func open_popup(popup_name : String) -> void:
 func open_profile() -> void:
 	Global.open_profile(PlayerInfo.player_data)
 
-func exit() -> void:
-	get_tree().quit()
 
 func set_background() -> void:
 	var holder

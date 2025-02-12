@@ -5,31 +5,22 @@ script/source = "extends Node
 
 @onready var level_display = $CenterContainer/VBoxContainer/points
 
-var run_info
-
 func _ready():
 	PlayerInfo.player_data.game_over_count += 1
-	
+	var level_reached : int = Global.current_scene.run_handler.current_level
 	level_display.text = \"[center][rainbow]\"
-	if run_info.current_level > PlayerInfo.player_data.highest_level:
+	if level_reached > PlayerInfo.player_data.highest_level:
 		level_display.text += \"New Record!\\n\"
-		PlayerInfo.player_data.highest_level = run_info.current_level
-	Global.runBase.timerText.visible = false
-	level_display.text += \"You reached level %d!\" % run_info.current_level
+		PlayerInfo.player_data.highest_level = level_reached
+	level_display.text += \"You reached level %d!\" % level_reached
 	PlayerInfo.save_data()
-	
-	get_tree().paused = true
-	run_info.inRun = false
 
-func _process(_delta: float) -> void:
-	if Input.is_action_just_pressed(\"back\"):
-		Global.current_scene.close_floor()
-		
+func place_control() -> void:
+	pass
+
 func run_restart() -> void:
-	get_tree().paused = false
-	Global.runBase.timerText.visible = true
-	Global.runBase.start_game()
-	queue_free()
+	Global.current_scene.start_game()
+	Global.close_popup()
 "
 
 [node name="RunEnd" type="Control"]

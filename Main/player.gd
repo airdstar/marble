@@ -6,7 +6,7 @@ var customization : PlayerCustomization
 @export var visible_mesh : MeshInstance3D
 
 @export var face : Decal
-@export var marking : Decal
+@export var flair : Decal
 
 @export var light : OmniLight3D
 @export var collision : Area3D
@@ -29,7 +29,7 @@ func set_face() -> void:
 	face.texture_albedo = customization.chosen_face
 
 func set_flair() -> void:
-	marking.texture_albedo = customization.chosen_flair
+	flair.texture_albedo = customization.chosen_flair
 
 func enable_monitoring() -> void:
 	collision.set_deferred("monitorable", true)

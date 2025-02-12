@@ -138,6 +138,7 @@ func save_settings() -> void:
 		settings.resolution = res_options.get_item_text(res_options.selected)
 		Global.set_resolution()
 		place_control()
+		Global.current_scene.place_control()
 	
 	PlayerInfo.save_settings()
 	

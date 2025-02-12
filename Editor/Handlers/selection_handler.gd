@@ -19,10 +19,7 @@ func _part_selected(part : Node3D) -> void:
 			holder = selected_part
 	
 	master.adjuster.selected_pos_changed(part.position)
-
-	if part is not ProcMesh:
-		master.adjuster.selected_size_changed(part.scale)
-	
+	master.adjuster.selected_size_changed(part.scale)
 	master.adjuster.selected_rotation_changed(part.rotation)
 	
 	selected_part = part

@@ -1,18 +1,16 @@
-[gd_scene load_steps=17 format=3 uid="uid://dqdv1dvpasyd"]
+[gd_scene load_steps=14 format=3 uid="uid://dqdv1dvpasyd"]
 
 [ext_resource type="Theme" uid="uid://bblhstx3bttr7" path="res://Assets/Themes/MainMenu.tres" id="1_lrwul"]
 [ext_resource type="Script" path="res://Main/Menus/main_menu.gd" id="1_tofsu"]
-[ext_resource type="Texture2D" uid="uid://bklfyfts4w2f4" path="res://Assets/Exit.png" id="5_45uyu"]
 [ext_resource type="Texture2D" uid="uid://d2lssy42jcrl5" path="res://Assets/Logo middle.png" id="5_lcnhj"]
-[ext_resource type="Texture2D" uid="uid://bjenkqfpq1own" path="res://Assets/Settings.png" id="6_by4wa"]
 [ext_resource type="Texture2D" uid="uid://bwv7mtqpdc47l" path="res://Assets/Logo spin.png" id="6_yv5bw"]
-[ext_resource type="Texture2D" uid="uid://3api5up43veb" path="res://Assets/Profile.png" id="7_mmjep"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_ltt8l"]
 viewport_path = NodePath("SubViewport")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7eqhe"]
-albedo_color = Color(0.501961, 1, 0.631373, 1)
+transparency = 1
+albedo_color = Color(0.502, 1, 0.631, 0.5)
 
 [sub_resource type="BoxMesh" id="BoxMesh_pqkpq"]
 material = SubResource("StandardMaterial3D_7eqhe")
@@ -37,10 +35,10 @@ plane = Plane(1, 0, 0, 0)
 background_mode = 1
 fog_light_energy = 0.2
 volumetric_fog_enabled = true
-volumetric_fog_density = 0.025
+volumetric_fog_density = 0.0001
 volumetric_fog_albedo = Color(0.4, 1, 0.415686, 1)
 
-[node name="MainMenu" type="Control" node_paths=PackedStringArray("menu_container", "important_container", "logo", "rotate_logo", "background")]
+[node name="MainMenu" type="Control" node_paths=PackedStringArray("menu_container", "important_container", "logo", "rotate_logo", "background", "small_buttons")]
 process_mode = 1
 layout_mode = 3
 anchors_preset = 0
@@ -51,6 +49,7 @@ important_container = NodePath("HBoxContainer2")
 logo = NodePath("Sprite2D")
 rotate_logo = NodePath("Sprite2D/Sprite2D2")
 background = NodePath("SubViewport")
+small_buttons = [NodePath("HBoxContainer2/Customization"), NodePath("HBoxContainer2/Profile"), NodePath("HBoxContainer2/Settings")]
 
 [node name="Background" type="TextureRect" parent="."]
 layout_mode = 0
@@ -69,17 +68,6 @@ offset_bottom = 579.0
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Gallery" type="Button" parent="VBoxContainer/HBoxContainer"]
-visible = false
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Gallery"
-
-[node name="MarginContainer7" type="MarginContainer" parent="VBoxContainer/HBoxContainer"]
-visible = false
-layout_mode = 2
-theme_override_constants/margin_left = 35
-
 [node name="Play" type="Button" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
@@ -93,6 +81,17 @@ theme_override_constants/margin_left = 35
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Editor"
+
+[node name="MarginContainer7" type="MarginContainer" parent="VBoxContainer/HBoxContainer"]
+visible = false
+layout_mode = 2
+theme_override_constants/margin_left = 35
+
+[node name="Gallery" type="Button" parent="VBoxContainer/HBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Gallery"
 
 [node name="MarginContainer2" type="MarginContainer" parent="VBoxContainer"]
 layout_mode = 2
@@ -112,9 +111,8 @@ offset_top = 511.0
 offset_right = 560.0
 offset_bottom = 579.0
 
-[node name="Settings" type="Button" parent="HBoxContainer2"]
+[node name="Customization" type="Button" parent="HBoxContainer2"]
 layout_mode = 2
-icon = ExtResource("6_by4wa")
 
 [node name="MarginContainer6" type="MarginContainer" parent="HBoxContainer2"]
 layout_mode = 2
@@ -122,24 +120,13 @@ theme_override_constants/margin_right = -20
 
 [node name="Profile" type="Button" parent="HBoxContainer2"]
 layout_mode = 2
-icon = ExtResource("7_mmjep")
 
-[node name="Exit" type="Button" parent="."]
+[node name="MarginContainer7" type="MarginContainer" parent="HBoxContainer2"]
 layout_mode = 2
-offset_left = 10.0
-offset_top = 10.0
-offset_right = 78.0
-offset_bottom = 78.0
-icon = ExtResource("5_45uyu")
-expand_icon = true
+theme_override_constants/margin_right = -20
 
-[node name="Button" type="Button" parent="."]
-layout_mode = 0
-offset_left = 23.0
-offset_top = 203.0
-offset_right = 255.0
-offset_bottom = 300.0
-text = "Customization"
+[node name="Settings" type="Button" parent="HBoxContainer2"]
+layout_mode = 2
 
 [node name="SubViewport" type="SubViewport" parent="."]
 size = Vector2i(1280, 720)
@@ -188,11 +175,10 @@ environment = SubResource("Environment_jhntf")
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 6.94082, 0)
 light_energy = 0.3
 
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/Gallery" to="." method="open_scene" binds= ["gallery"]]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/Play" to="." method="open_floor"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/Editor" to="." method="open_scene" binds= ["editor"]]
-[connection signal="pressed" from="HBoxContainer2/Settings" to="." method="open_popup" binds= ["settings"]]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/Gallery" to="." method="open_scene" binds= ["gallery"]]
+[connection signal="pressed" from="HBoxContainer2/Customization" to="." method="open_scene" binds= ["customization"]]
 [connection signal="pressed" from="HBoxContainer2/Profile" to="." method="open_profile"]
-[connection signal="pressed" from="Exit" to="." method="exit"]
-[connection signal="pressed" from="Button" to="." method="open_scene" binds= ["customization"]]
+[connection signal="pressed" from="HBoxContainer2/Settings" to="." method="open_popup" binds= ["settings"]]
 [connection signal="body_entered" from="SubViewport/Area3D" to="." method="cull_dummy"]

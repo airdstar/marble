@@ -25,7 +25,7 @@ no_depth_test = true
 resource_local_to_scene = true
 material = SubResource("StandardMaterial3D_38p8a")
 
-[node name="Player" type="RigidBody3D" node_paths=PackedStringArray("visible_mesh", "face", "marking", "light", "collision")]
+[node name="Player" type="RigidBody3D" node_paths=PackedStringArray("visible_mesh", "face", "flair", "light", "collision")]
 collision_mask = 6
 mass = 10.0
 physics_material_override = SubResource("PhysicsMaterial_vmld2")
@@ -34,7 +34,7 @@ angular_damp = 3.5
 script = ExtResource("1_8df3t")
 visible_mesh = NodePath("VisibleMesh")
 face = NodePath("VisibleMesh/Face")
-marking = NodePath("VisibleMesh/Marking")
+flair = NodePath("VisibleMesh/Flair")
 light = NodePath("OmniLight3D")
 collision = NodePath("Area3D")
 
@@ -45,7 +45,7 @@ shape = SubResource("SphereShape3D_84e8f")
 layers = 17
 mesh = SubResource("SphereMesh_ijwjb")
 
-[node name="Marking" type="Decal" parent="VisibleMesh"]
+[node name="Flair" type="Decal" parent="VisibleMesh"]
 transform = Transform3D(-4.37114e-08, -1, 0, -4.37114e-08, 1.91069e-15, -1, 1, -4.37114e-08, -4.37114e-08, -0.4, 0, 0)
 layers = 16
 size = Vector3(0.4, 0.3, 0.4)

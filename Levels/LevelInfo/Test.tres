@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="level_resource" load_steps=3 format=3]
+
+[ext_resource type="PackedScene" path="res://Levels/LevelScene/Test.tscn" id="1_ssx3k"]
+[ext_resource type="Script" path="res://Resources/LevelResource.gd" id="2_s76vu"]
+
+[resource]
+script = ExtResource("2_s76vu")
+name = "Test"
+level_difficulty = 0
+level_type = 0
+associated_scene = ExtResource("1_ssx3k")
+include_in_pool = false
+camera_pos = 0.0

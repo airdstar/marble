@@ -45,9 +45,6 @@ var settings = PlayerInfo.player_settings
 @onready var fps_text = $UI/VBoxContainer/fps
 @onready var speed_text = $UI/VBoxContainer/speed
 
-@onready var end_ui := $UI/End
-@onready var level_count := $UI/End/LevelCount
-
 func _ready() -> void:
 	place_control()
 
@@ -91,6 +88,7 @@ func _process(delta: float) -> void:
 		game_over()
 
 
+
 func _physics_process(delta: float) -> void:
 	var origin_rot = Quaternion(origin.transform.basis)
 	if origin_rot != proxy_tilt:
@@ -112,7 +110,6 @@ func start_game() -> void:
 	transitioning = true
 	allow_input = false
 	
-	end_ui.visible = false
 	
 	if is_run:
 		run_handler.reset_run()
@@ -156,7 +153,7 @@ func next_level() -> void:
 	reset_marble()
 
 func game_over() -> void:
-	if is_run:
+	if is_run and Global.main_scene.popup_scene == null:
 		if allow_timer:
 			if !timer.is_stopped():
 				timer.stop()
@@ -165,19 +162,13 @@ func game_over() -> void:
 		allow_input = false
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 		
-		end_ui.visible = true
 		timer_text.visible = false
 		marble.visible = false
 		marble.collision.set_deferred("monitorable", false)
 		
 		PlayerInfo.player_data.game_over_count += 1
 		
-		level_count.text = "[center]"
-		if run_handler.current_level > PlayerInfo.player_data.highest_level:
-			level_count.text += "New Record!\n"
-			PlayerInfo.player_data.highest_level = run_handler.current_level
-		level_count.text += "You reached level %d!" % run_handler.current_level
-		PlayerInfo.save_data()
+		Global.open_popup("run_end")
 	else:
 		prev_scene()
 
@@ -189,7 +180,7 @@ func set_time() -> void:
 			var remaining_time = timer.time_left
 			timer.stop()
 			var tween = create_tween()
-			tween.tween_method(timer.set_wait_time, remaining_time, remaining_time + 4.5, 1).set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_IN_OUT)
+			tween.tween_method(timer.set_wait_time, remaining_time, remaining_time + 3, 1).set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_IN_OUT)
 		else:
 			timer.stop()
 			timer.set_wait_time(20)

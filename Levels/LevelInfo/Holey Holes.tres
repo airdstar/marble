@@ -795,5 +795,5 @@ name = "Holey Holes"
 level_difficulty = 1
 level_type = 0
 associated_scene = SubResource("PackedScene_n7psx")
-include_in_pool = false
+include_in_pool = true
 camera_pos = 14.0

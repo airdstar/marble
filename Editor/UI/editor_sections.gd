@@ -71,7 +71,7 @@ func add_part(part : Node3D, toggle_button : bool) -> void:
 	
 	if part is ProcMesh:
 		geometry_holder.add_child(current_button)
-	elif part is start or part is endzone:
+	else:
 		part_holder.add_child(current_button)
 	
 	current_button.toggled.connect(part_toggled.bind(part, current_button))
