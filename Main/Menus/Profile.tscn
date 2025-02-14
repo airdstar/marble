@@ -1,28 +1,37 @@
-[gd_scene load_steps=2 format=3 uid="uid://dh7dc6u5iari0"]
+[gd_scene load_steps=4 format=3 uid="uid://dh7dc6u5iari0"]
 
 [ext_resource type="Script" path="res://Main/Menus/profile.gd" id="1_ds35u"]
+[ext_resource type="Theme" uid="uid://bblhstx3bttr7" path="res://Assets/Themes/Main.tres" id="1_r5l1o"]
 
-[node name="Profile" type="Control"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1xjct"]
+bg_color = Color(0.524, 0.638, 0.511, 0.5)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+
+[node name="Profile" type="Control" node_paths=PackedStringArray("player_info")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_r5l1o")
 script = ExtResource("1_ds35u")
+player_info = NodePath("Panel/Info")
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 0
-offset_left = 294.0
-offset_top = 143.0
-offset_right = 961.0
-offset_bottom = 581.0
+offset_left = 373.0
+offset_top = 171.0
+offset_right = 699.0
+offset_bottom = 469.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_1xjct")
 
-[node name="Info" type="RichTextLabel" parent="."]
+[node name="Info" type="RichTextLabel" parent="Panel"]
 layout_mode = 0
-offset_left = 307.0
-offset_top = 160.0
-offset_right = 664.0
-offset_bottom = 332.0
+offset_right = 357.0
+offset_bottom = 172.0
 text = "Hi"
 fit_content = true

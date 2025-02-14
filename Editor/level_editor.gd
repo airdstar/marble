@@ -151,11 +151,16 @@ func rec_set_owner(part : Node3D) -> void:
 func part_rotation_toggled(toggled_on: bool) -> void:
 	if selection_handler.selected_part != null:
 		if toggled_on:
-			var rot = preload("res://Editor/Parts/Components/RotateableComponent.tscn").instantiate()
-			selection_handler.selected_part.add_child(rot)
-			rot.to_rotate = selection_handler.selected_part
-			rot.set_owner(level_base)
-			UI.properties.create_rotation_tab(rot)
+			var has_rot : bool = false
+			for n in selection_handler.selected_part.get_children():
+				if n is rotateable_component:
+					has_rot = true
+			if !has_rot:
+				var rot = preload("res://Editor/Parts/Components/RotateableComponent.tscn").instantiate()
+				selection_handler.selected_part.add_child(rot)
+				rot.to_rotate = selection_handler.selected_part
+				rot.set_owner(level_base)
+				UI.properties.create_rotation_tab(rot)
 		else:
 			for n in selection_handler.selected_part.get_children():
 				if n is rotateable_component:
