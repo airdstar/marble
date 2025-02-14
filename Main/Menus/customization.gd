@@ -6,9 +6,10 @@ var player_dummy : RigidBody3D
 
 @export_category("Containers")
 @export var option_container : VBoxContainer
+@export var tab_container : HBoxContainer
 @export var color_container : GridContainer
 @export var face_container : GridContainer
-@export var marking_container : GridContainer
+@export var flair_container : GridContainer
 
 func _ready() -> void:
 	player_dummy = preload("res://Main/Player.tscn").instantiate()
@@ -24,18 +25,27 @@ func _ready() -> void:
 			color_container.add_child(current_button)
 			current_button.modulate = m
 			current_button.pressed.connect(set_color.bind(m))
+			var margin : MarginContainer = MarginContainer.new()
+			margin.add_theme_constant_override("margin_left", get_window().size.x / 400)
+			color_container.add_child(margin)
 	
 	for n in Cosmetic.faces:
 		var current_button : Button = create_button()
 		current_button.icon = n
 		face_container.add_child(current_button)
 		current_button.pressed.connect(set_face.bind(n))
+		var margin : MarginContainer = MarginContainer.new()
+		margin.add_theme_constant_override("margin_left", get_window().size.x / 400)
+		face_container.add_child(margin)
 	
 	for n in Cosmetic.flairs:
 		var current_button = create_button()
 		current_button.icon = n
-		marking_container.add_child(current_button)
+		flair_container.add_child(current_button)
 		current_button.pressed.connect(set_flair.bind(n))
+		var margin : MarginContainer = MarginContainer.new()
+		margin.add_theme_constant_override("margin_left", get_window().size.x / 400)
+		flair_container.add_child(margin)
 
 func _process(delta: float) -> void:
 	if Input.is_action_pressed("back"):
@@ -46,6 +56,8 @@ func place_control() -> void:
 	
 	option_container.set_size(Vector2(get_window().size.x / 2, get_window().size.y))
 	option_container.set_position(Vector2(get_window().size.y / 20, 0))
+	
+	tab_container.custom_minimum_size = Vector2(get_window().size.x * 9 / 20, get_window().size.y / 10)
 	
 	dummy_view.set_size(Vector2(get_window().size.x / 4, get_window().size.x / 4))
 	dummy_display.set_position(Vector2(get_window().size.x * 4 / 5 - dummy_view.size.x / 2, get_window().size.y * 3 / 6 - dummy_view.size.y / 2))
@@ -59,14 +71,14 @@ func create_button() -> Button:
 func tab_changed(index : int) -> void:
 	color_container.visible = false
 	face_container.visible = false
-	marking_container.visible = false
+	flair_container.visible = false
 	match index:
 		0:
 			color_container.visible = true
 		1:
 			face_container.visible = true
 		2:
-			marking_container.visible = true
+			flair_container.visible = true
 
 
 func set_color(color : Color) -> void:

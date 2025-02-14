@@ -1,6 +1,7 @@
 extends Node
 
-@export var menu_container : VBoxContainer
+@export var main_container : HBoxContainer
+@export var extras_container : VBoxContainer
 @export var important_container : HBoxContainer
 @export var logo : Sprite2D
 @export var rotate_logo : Sprite2D
@@ -9,14 +10,19 @@ extends Node
 
 @export var small_buttons : Array[Button]
 
+var extras_opened : bool = false
 
 func _ready() -> void:
 	place_control()
 	set_background()
 
 func place_control() -> void:
-	menu_container.set_size(Vector2(get_window().get_size().x / 3, get_window().get_size().y / 7))
-	menu_container.set_position(Vector2(get_window().get_size().x / 2 - (menu_container.size.x / 2), get_window().get_size().y / 2 + get_window().get_size().y / 10))
+	main_container.set_size(Vector2(get_window().get_size().x / 3, get_window().get_size().y / 10))
+	main_container.set_position(Vector2(get_window().get_size().x / 2 - (main_container.size.x / 2), get_window().get_size().y / 2 + get_window().get_size().y / 10))
+	
+	extras_container.set_size(Vector2(get_window().get_size().x / 3, get_window().get_size().y * 5 / 20))
+	extras_container.set_position(Vector2(get_window().get_size().x / 2 - (extras_container.size.x / 2), get_window().get_size().y / 2))
+	
 	
 	for n : Button in small_buttons:
 		n.set_custom_minimum_size(Vector2(get_window().get_size().y / 15, get_window().get_size().y / 15))
@@ -34,7 +40,12 @@ func _process(delta: float) -> void:
 	
 	if Input.is_action_just_pressed("back"):
 		if Global.main_scene.popup_scene == null:
-			get_tree().quit()
+			if !extras_opened:
+				get_tree().quit()
+			else:
+				extras_opened = false
+				main_container.visible = true
+				extras_container.visible = false
 
 func open_floor() -> void:
 	Global.open_floor(FloorLevel.floor_type.PLAY, [])
@@ -47,6 +58,11 @@ func open_popup(popup_name : String) -> void:
 
 func open_profile() -> void:
 	Global.open_profile(PlayerInfo.player_data)
+
+func extras_pressed() -> void:
+	extras_opened = true
+	main_container.visible = false
+	extras_container.visible = true
 
 
 func set_background() -> void:

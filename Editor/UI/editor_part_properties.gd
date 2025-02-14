@@ -66,9 +66,16 @@ func display_non_pivots(parts : Array[Node3D]) -> void:
 		label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		var check = CheckBox.new()
 		
-		if selection.selected_part.has_child(n):
-			check.button_pressed = true
-		
+		if n.get_parent() == selection.selected_part:
+			check.set_pressed_no_signal(true)
 		
 		option_container.add_child(label)
 		option_container.add_child(check)
+		
+		check.toggled.connect(pivot_changed.bind(selection.selected_part, n))
+
+func pivot_changed(toggled_on : bool, point : pivot, part : Node3D) -> void:
+	if toggled_on:
+		part.reparent(point)
+	else:
+		part.reparent(selection.master.level_base)

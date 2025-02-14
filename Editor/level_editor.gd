@@ -124,15 +124,15 @@ func _on_place_pressed() -> void:
 			create_and_place()
 
 func create_and_place() -> void:
-	new_procmesh_created()
-	var proc_mesh_holder = level_base.geometry.get_child(level_base.geometry.get_child_count() - 1)
+	var proc_mesh_holder = new_procmesh_created()
 	proc_mesh_holder.add_shape(selection_handler.selected_shape)
 	shape_placed.emit(selection_handler.selected_shape)
 	selection_handler._shape_unselected()
 
-func new_procmesh_created() -> void:
+func new_procmesh_created() -> ProcMesh:
 	var holder = preload("res://Editor/Parts/ProcMesh.tscn").instantiate()
 	new_part_created(holder)
+	return holder
 
 func new_part_created(part : Node3D) -> void:
 	level_base.parts.append(part)

@@ -1,109 +1,90 @@
 extends Node
 
-enum sort_type {
-	ID,
-	TAGLINE,
-	RANDOM
-}
+@export var easy_button : Button
+@export var medium_button : Button
+@export var hard_button : Button
 
-var only_test : bool = false
-var allow_test : bool = false
+@export var option_container : VBoxContainer
+@export var tab_container : HBoxContainer
 
-var selected_tab : int = 1
-var options : Array[Button] = []
-var option_info : Array[level_resource] = []
-
-var sort_by = sort_type.ID
-
-@onready var easy : Button = $VBoxContainer/HSplitContainer/HBoxContainer/Easy
-@onready var medium : Button = $VBoxContainer/HSplitContainer/HBoxContainer/Medium
-@onready var hard : Button = $VBoxContainer/HSplitContainer/HBoxContainer/Hard
+@export var easy_container : VBoxContainer
+@export var medium_container : VBoxContainer
+@export var hard_container : VBoxContainer
 
 func _ready() -> void:
-	if only_test:
-		allow_test = true
-	check_valid_difficulties()
-	show_options()
+	place_control()
+	
+	var dir = DirAccess.open(Global.level_resource_path)
+	dir.list_dir_begin()
+	var currentLevel : String = dir.get_next()
+	while currentLevel != "":
+		if '.remap' in currentLevel:
+			currentLevel = currentLevel.trim_suffix('.remap')
+		var holder = ResourceLoader.load(Global.level_resource_path + currentLevel)
+		if holder.include_in_pool:
+			var button = create_button(holder)
+			match holder.level_difficulty:
+				FloorLevel.difficulty.EASY:
+					easy_container.add_child(button)
+				FloorLevel.difficulty.MEDIUM:
+					medium_container.add_child(button)
+				FloorLevel.difficulty.HARD:
+					hard_container.add_child(button)
+		
+		currentLevel = dir.get_next()
+	dir.list_dir_end()
+	
+	if easy_container.get_child_count() == 0:
+		easy_button.disabled = true
+	
+	if medium_container.get_child_count() == 0:
+		medium_button.disabled = true
+	
+	if hard_container.get_child_count() == 0:
+		hard_button.disabled = true
+	
+	tab_changed(0)
 
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("back"):
 		Global.open_scene("main_menu")
-		
 
-func show_options() -> void:
-	clear_options()
-	match selected_tab:
-		1:
-			option_info = Global.easy_levels
-		2:
-			option_info = Global.medium_levels
-		3:
-			option_info = Global.hard_levels
+func place_control() -> void:
 	
-	var total_removed = 0
-	for n in range(option_info.size()):
-		if only_test:
-			if option_info[n - total_removed].include_in_pool:
-				option_info.remove_at(n - total_removed)
-				total_removed += 1
+	option_container.set_size(Vector2(get_window().size.x * 5 / 14, get_window().size.y / 1.2))
+	option_container.set_position(Vector2(get_window().size.y / 20, get_window().size.y / 20))
+	
+	tab_container.custom_minimum_size = Vector2(get_window().size.x / 3, get_window().size.y / 13)
 
-	create_options()
-	sort_options()
+func create_button(level_info : level_resource) -> Button:
+	var to_return : Button = Button.new()
+	to_return.text = level_info.name
+	to_return.pressed.connect(level_selected.bind(level_info))
+	return to_return
 
-func create_options() -> void:
-	for n : level_resource in option_info:
-		var button_holder = Button.new()
-		options.append(button_holder)
-		button_holder.pressed.connect(option_pressed.bind(n))
-		$VBoxContainer/ScrollContainer/VBoxContainer.add_child(button_holder)
-		
-		set_option(button_holder, n)
-		
-
-func option_pressed(level_info : level_resource):
+func level_selected(level_info : level_resource) -> void:
 	Global.open_floor(Global.floor_type.GALLERY, [level_info])
 
-func sort_options() -> void:
-	pass
-
-func set_option(button : Button, option : level_resource) -> void:
-	var id : String = option.resource_path.trim_prefix("res://Levels/Info/")
-	if '.tres.remap' in id:
-		id = id.trim_suffix('.tres.remap')
-	else:
-		id = id.trim_suffix('.tres')
+func tab_changed(index : int) -> void:
+	easy_container.visible = false
+	medium_container.visible = false
+	hard_container.visible = false
 	
-	button.text = option.name + " ID: " + id
-
-func clear_options() -> void:
-	for n in options:
-		n.queue_free()
-	options.clear()
-
-func check_valid_difficulties() -> void:
-	if Global.easy_levels.size() > 0:
-		easy.visible = true
-	else:
-		easy.visible = false
-	
-	if Global.medium_levels.size() > 0:
-		medium.visible = true
-	else:
-		medium.visible = false
-	
-	if Global.hard_levels.size() > 0:
-		hard.visible = true
-	else:
-		hard.visible = false
-
-func easy_pressed() -> void:
-	selected_tab = 1
-	show_options()
-
-func medium_pressed() -> void:
-	selected_tab = 2
-	show_options()
-
-func hard_pressed() -> void:
-	selected_tab = 3
-	show_options()
+	match index:
+		0:
+			if !easy_button.disabled:
+				easy_container.visible = true
+			else:
+				tab_changed(1)
+		1:
+			if !medium_button.disabled:
+				medium_container.visible = true
+			else:
+				tab_changed(2)
+		2:
+			if !hard_button.disabled:
+				hard_container.visible = true
+			else:
+				tab_changed(3)
+		3:
+			pass

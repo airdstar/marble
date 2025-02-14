@@ -1,40 +1,56 @@
-[gd_scene load_steps=2 format=3 uid="uid://c71r3yctnr0pa"]
+[gd_scene load_steps=3 format=3 uid="uid://c71r3yctnr0pa"]
 
+[ext_resource type="Theme" uid="uid://bblhstx3bttr7" path="res://Assets/Themes/Main.tres" id="1_7tdgw"]
 [ext_resource type="Script" path="res://Main/Menus/gallery.gd" id="1_njmjq"]
 
-[node name="Gallery" type="Node"]
+[node name="Gallery" type="Control" node_paths=PackedStringArray("easy_button", "medium_button", "hard_button", "option_container", "tab_container", "easy_container", "medium_container", "hard_container")]
+layout_mode = 3
+anchors_preset = 0
+theme = ExtResource("1_7tdgw")
 script = ExtResource("1_njmjq")
+easy_button = NodePath("VBoxContainer/CenterContainer/HBoxContainer/Easy")
+medium_button = NodePath("VBoxContainer/CenterContainer/HBoxContainer/Medium")
+hard_button = NodePath("VBoxContainer/CenterContainer/HBoxContainer/Hard")
+option_container = NodePath("VBoxContainer")
+tab_container = NodePath("VBoxContainer/CenterContainer/HBoxContainer")
+easy_container = NodePath("VBoxContainer/ScrollContainer/VBoxContainer4/VBoxContainer")
+medium_container = NodePath("VBoxContainer/ScrollContainer/VBoxContainer4/VBoxContainer2")
+hard_container = NodePath("VBoxContainer/ScrollContainer/VBoxContainer4/VBoxContainer3")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
-offset_right = 331.0
+layout_mode = 0
+offset_right = 424.0
 offset_bottom = 720.0
 
-[node name="HSplitContainer" type="HSplitContainer" parent="VBoxContainer"]
+[node name="CenterContainer" type="CenterContainer" parent="VBoxContainer"]
 layout_mode = 2
-dragger_visibility = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/HSplitContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/CenterContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Easy" type="Button" parent="VBoxContainer/HSplitContainer/HBoxContainer"]
+[node name="Easy" type="Button" parent="VBoxContainer/CenterContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Easy"
 
-[node name="Medium" type="Button" parent="VBoxContainer/HSplitContainer/HBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/CenterContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+
+[node name="Medium" type="Button" parent="VBoxContainer/CenterContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Medium"
 
-[node name="Hard" type="Button" parent="VBoxContainer/HSplitContainer/HBoxContainer"]
+[node name="MarginContainer2" type="MarginContainer" parent="VBoxContainer/CenterContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+
+[node name="Hard" type="Button" parent="VBoxContainer/CenterContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Hard"
-
-[node name="Sort" type="Button" parent="VBoxContainer/HSplitContainer"]
-layout_mode = 2
-text = "              "
 
 [node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
 layout_mode = 2
@@ -42,11 +58,29 @@ size_flags_vertical = 3
 follow_focus = true
 horizontal_scroll_mode = 0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/ScrollContainer"]
+[node name="VBoxContainer4" type="VBoxContainer" parent="VBoxContainer/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[connection signal="pressed" from="VBoxContainer/HSplitContainer/HBoxContainer/Easy" to="." method="easy_pressed"]
-[connection signal="pressed" from="VBoxContainer/HSplitContainer/HBoxContainer/Medium" to="." method="medium_pressed"]
-[connection signal="pressed" from="VBoxContainer/HSplitContainer/HBoxContainer/Hard" to="." method="hard_pressed"]
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer4"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer4"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer4"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[connection signal="pressed" from="VBoxContainer/CenterContainer/HBoxContainer/Easy" to="." method="tab_changed" binds= [0]]
+[connection signal="pressed" from="VBoxContainer/CenterContainer/HBoxContainer/Medium" to="." method="tab_changed" binds= [1]]
+[connection signal="pressed" from="VBoxContainer/CenterContainer/HBoxContainer/Hard" to="." method="tab_changed" binds= [2]]
