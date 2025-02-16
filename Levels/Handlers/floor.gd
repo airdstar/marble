@@ -96,7 +96,7 @@ func _physics_process(delta: float) -> void:
 		origin.transform.basis = Basis(slerp)
 
 	if marble != null:
-		marble.apply_force(Vector3(input_tilt.x / 2, 1, input_tilt.y / 2) * delta * 4000)
+		marble.apply_force(Vector3(input_tilt.x / 3, 2, input_tilt.y / 3) * delta * 3000)
 
 func place_control() -> void:
 	

@@ -21,7 +21,7 @@ func set_customization(player_customization : PlayerCustomization) -> void:
 
 func set_color() -> void:
 	
-	visible_mesh.mesh.material.albedo_color = customization.chosen_color.darkened(0.3)
+	visible_mesh.mesh.material.albedo_color = customization.chosen_color.lightened(1)
 	visible_mesh.mesh.material.next_pass.albedo_color = customization.chosen_color
 	light.light_color = customization.chosen_color
 

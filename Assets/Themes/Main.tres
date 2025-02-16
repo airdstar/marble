@@ -71,5 +71,7 @@ Button/styles/focus = SubResource("StyleBoxEmpty_7f2a4")
 Button/styles/hover = SubResource("StyleBoxFlat_qhb77")
 Button/styles/normal = SubResource("StyleBoxFlat_ct8rf")
 Button/styles/pressed = SubResource("StyleBoxFlat_syrim")
+GridContainer/constants/h_separation = 12
+GridContainer/constants/v_separation = 12
 MarginContainer/constants/margin_bottom = 20
 MarginContainer/constants/margin_left = 40

@@ -6,12 +6,8 @@
 [sub_resource type="ViewportTexture" id="ViewportTexture_20uu7"]
 viewport_path = NodePath("SubViewport")
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q36a0"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o5axi"]
 bg_color = Color(1, 1, 1, 1)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
 corner_radius_top_left = 20
 corner_radius_top_right = 20
 corner_radius_bottom_right = 20
@@ -21,23 +17,15 @@ expand_margin_top = 1.0
 expand_margin_right = 1.0
 expand_margin_bottom = 1.0
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k407y"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_68ad3"]
 bg_color = Color(1, 1, 1, 1)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
 corner_radius_top_left = 20
 corner_radius_top_right = 20
 corner_radius_bottom_right = 20
 corner_radius_bottom_left = 20
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_iba0o"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x8167"]
 bg_color = Color(1, 1, 1, 1)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
 corner_radius_top_left = 20
 corner_radius_top_right = 20
 corner_radius_bottom_right = 20
@@ -47,10 +35,10 @@ expand_margin_top = 2.0
 expand_margin_right = 2.0
 expand_margin_bottom = 2.0
 
-[sub_resource type="Theme" id="Theme_wfxl2"]
-Button/styles/hover = SubResource("StyleBoxFlat_q36a0")
-Button/styles/normal = SubResource("StyleBoxFlat_k407y")
-Button/styles/pressed = SubResource("StyleBoxFlat_iba0o")
+[sub_resource type="Theme" id="Theme_anrci"]
+Button/styles/hover = SubResource("StyleBoxFlat_o5axi")
+Button/styles/normal = SubResource("StyleBoxFlat_68ad3")
+Button/styles/pressed = SubResource("StyleBoxFlat_x8167")
 
 [node name="Customization" type="Control" node_paths=PackedStringArray("dummy_display", "dummy_view", "option_container", "tab_container", "color_container", "face_container", "flair_container")]
 layout_mode = 3
@@ -130,16 +118,76 @@ size_flags_vertical = 3
 
 [node name="GridContainer" type="GridContainer" parent="VBoxContainer/ScrollContainer/CenterContainer/VBoxContainer"]
 layout_mode = 2
-theme = SubResource("Theme_wfxl2")
-columns = 10
+theme = SubResource("Theme_anrci")
+columns = 5
+
+[node name="MarginContainer3" type="MarginContainer" parent="VBoxContainer/ScrollContainer/CenterContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+theme_override_constants/margin_bottom = 12
+
+[node name="MarginContainer4" type="MarginContainer" parent="VBoxContainer/ScrollContainer/CenterContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+theme_override_constants/margin_bottom = 12
+
+[node name="MarginContainer5" type="MarginContainer" parent="VBoxContainer/ScrollContainer/CenterContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+theme_override_constants/margin_bottom = 12
+
+[node name="MarginContainer6" type="MarginContainer" parent="VBoxContainer/ScrollContainer/CenterContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+theme_override_constants/margin_bottom = 12
+
+[node name="MarginContainer7" type="MarginContainer" parent="VBoxContainer/ScrollContainer/CenterContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+theme_override_constants/margin_bottom = 12
 
 [node name="GridContainer3" type="GridContainer" parent="VBoxContainer/ScrollContainer/CenterContainer/VBoxContainer"]
 layout_mode = 2
-columns = 10
+columns = 5
+
+[node name="MarginContainer3" type="MarginContainer" parent="VBoxContainer/ScrollContainer/CenterContainer/VBoxContainer/GridContainer3"]
+layout_mode = 2
+theme_override_constants/margin_bottom = 12
+
+[node name="MarginContainer4" type="MarginContainer" parent="VBoxContainer/ScrollContainer/CenterContainer/VBoxContainer/GridContainer3"]
+layout_mode = 2
+theme_override_constants/margin_bottom = 12
+
+[node name="MarginContainer5" type="MarginContainer" parent="VBoxContainer/ScrollContainer/CenterContainer/VBoxContainer/GridContainer3"]
+layout_mode = 2
+theme_override_constants/margin_bottom = 12
+
+[node name="MarginContainer6" type="MarginContainer" parent="VBoxContainer/ScrollContainer/CenterContainer/VBoxContainer/GridContainer3"]
+layout_mode = 2
+theme_override_constants/margin_bottom = 12
+
+[node name="MarginContainer7" type="MarginContainer" parent="VBoxContainer/ScrollContainer/CenterContainer/VBoxContainer/GridContainer3"]
+layout_mode = 2
+theme_override_constants/margin_bottom = 12
 
 [node name="GridContainer2" type="GridContainer" parent="VBoxContainer/ScrollContainer/CenterContainer/VBoxContainer"]
 layout_mode = 2
-columns = 10
+columns = 5
+
+[node name="MarginContainer3" type="MarginContainer" parent="VBoxContainer/ScrollContainer/CenterContainer/VBoxContainer/GridContainer2"]
+layout_mode = 2
+theme_override_constants/margin_bottom = 12
+
+[node name="MarginContainer4" type="MarginContainer" parent="VBoxContainer/ScrollContainer/CenterContainer/VBoxContainer/GridContainer2"]
+layout_mode = 2
+theme_override_constants/margin_bottom = 12
+
+[node name="MarginContainer5" type="MarginContainer" parent="VBoxContainer/ScrollContainer/CenterContainer/VBoxContainer/GridContainer2"]
+layout_mode = 2
+theme_override_constants/margin_bottom = 12
+
+[node name="MarginContainer6" type="MarginContainer" parent="VBoxContainer/ScrollContainer/CenterContainer/VBoxContainer/GridContainer2"]
+layout_mode = 2
+theme_override_constants/margin_bottom = 12
+
+[node name="MarginContainer7" type="MarginContainer" parent="VBoxContainer/ScrollContainer/CenterContainer/VBoxContainer/GridContainer2"]
+layout_mode = 2
+theme_override_constants/margin_bottom = 12
 
 [node name="SubViewport" type="SubViewport" parent="."]
 size = Vector2i(200, 200)

@@ -16,9 +16,7 @@ func part_rotation_toggled(toggled_on: bool) -> void:
 			selection.selected_part.add_child(rot)
 			rot.to_rotate = selection.selected_part
 			rot.set_owner(master.level_base)
-			if UI.properties.get_tab("Rotation") == -1:
-				UI.properties.property_options.add_tab("Rotation")
-			UI.properties.rotation_properties.set_values(rot)
+			UI.properties.create_rotation_tab(rot)
 		else:
 			for n in selection.selected_part.get_children():
 				if n is rotateable_component:

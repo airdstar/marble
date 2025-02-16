@@ -38,7 +38,7 @@ func display_part_properties(part : Node3D) -> void:
 		
 		for n in part.get_children():
 			if n is rotateable_component:
-				dynamic_rotation.button_pressed = true
+				dynamic_rotation.set_pressed_no_signal(true)
 				create_rotation_tab.emit(n)
 			if n is moveable_component:
 				pass

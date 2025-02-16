@@ -25,27 +25,20 @@ func _ready() -> void:
 			color_container.add_child(current_button)
 			current_button.modulate = m
 			current_button.pressed.connect(set_color.bind(m))
-			var margin : MarginContainer = MarginContainer.new()
-			margin.add_theme_constant_override("margin_left", get_window().size.x / 400)
-			color_container.add_child(margin)
 	
 	for n in Cosmetic.faces:
 		var current_button : Button = create_button()
 		current_button.icon = n
 		face_container.add_child(current_button)
 		current_button.pressed.connect(set_face.bind(n))
-		var margin : MarginContainer = MarginContainer.new()
-		margin.add_theme_constant_override("margin_left", get_window().size.x / 400)
-		face_container.add_child(margin)
+
 	
 	for n in Cosmetic.flairs:
 		var current_button = create_button()
 		current_button.icon = n
 		flair_container.add_child(current_button)
 		current_button.pressed.connect(set_flair.bind(n))
-		var margin : MarginContainer = MarginContainer.new()
-		margin.add_theme_constant_override("margin_left", get_window().size.x / 400)
-		flair_container.add_child(margin)
+
 
 func _process(delta: float) -> void:
 	if Input.is_action_pressed("back"):

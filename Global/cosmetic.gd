@@ -52,11 +52,11 @@ func _ready() -> void:
 
 func get_shades(color : Color) -> Array[Color]:
 	var to_return : Array[Color]
-	to_return.append(color.lightened(0.6))
-	to_return.append(color.lightened(0.3))
+	to_return.append(color.lightened(0.5))
+	to_return.append(color.lightened(0.25))
 	to_return.append(color)
-	to_return.append(color.darkened(0.3))
-	to_return.append(color.darkened(0.6))
+	to_return.append(color.darkened(0.25))
+	to_return.append(color.darkened(0.5))
 	return to_return
 
 func generate_random() -> PlayerCustomization:
