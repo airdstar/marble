@@ -114,3 +114,7 @@ func create_rotation_tab(comp : rotateable_component) -> void:
 	if get_tab("Rotation") == -1:
 		property_options.add_tab("Rotation")
 	rotation_properties.set_values(comp)
+
+func remove_extra_tabs() -> void:
+	if get_tab("Rotation") != -1:
+		property_options.remove_tab(get_tab("Rotation"))

@@ -16,6 +16,7 @@ extends Node
 
 @export var pivot_container : VBoxContainer
 
+signal remove_extra_tabs
 signal create_rotation_tab
 signal get_all_non_pivot_parts
 
@@ -31,10 +32,12 @@ func display_part_properties(part : Node3D) -> void:
 	else:
 		texture_container.visible = false
 	
+	remove_extra_tabs.emit()
+	
 	if part is not start:
 		for n in dynamic_containers:
 			n.visible = true
-		dynamic_rotation.button_pressed = false
+		dynamic_rotation.set_pressed_no_signal(false)
 		
 		for n in part.get_children():
 			if n is rotateable_component:

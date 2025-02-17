@@ -1464,6 +1464,7 @@ mesh = SubResource("BoxMesh_qr2x0")
 [connection signal="tab_changed" from="UI/Properties/VBoxContainer/TabBar" to="UI/Properties" method="property_group_changed"]
 [connection signal="create_rotation_tab" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/Part" to="UI/Properties" method="create_rotation_tab"]
 [connection signal="get_all_non_pivot_parts" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/Part" to="." method="get_all_non_pivot_parts"]
+[connection signal="remove_extra_tabs" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/Part" to="UI/Properties" method="remove_extra_tabs"]
 [connection signal="text_changed" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/Part/PartName" to="ChangeHandler" method="part_name_changed"]
 [connection signal="pressed" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/Part/Pos/Button" to="ChangeHandler" method="movement_detected" binds= [Vector3(0, 0, 0)]]
 [connection signal="pressed" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/Part/Size/Button" to="ChangeHandler" method="resize_detected" binds= [Vector3(1, 1, 1)]]

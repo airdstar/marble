@@ -31,7 +31,6 @@ func _ready() -> void:
 		current_button.icon = n
 		face_container.add_child(current_button)
 		current_button.pressed.connect(set_face.bind(n))
-
 	
 	for n in Cosmetic.flairs:
 		var current_button = create_button()
