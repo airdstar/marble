@@ -103,6 +103,10 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "Flairs"
 
+[node name="MarginContainer8" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_bottom = 5
+
 [node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
@@ -123,23 +127,23 @@ columns = 5
 
 [node name="MarginContainer3" type="MarginContainer" parent="VBoxContainer/ScrollContainer/CenterContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
-theme_override_constants/margin_bottom = 12
+theme_override_constants/margin_bottom = 5
 
 [node name="MarginContainer4" type="MarginContainer" parent="VBoxContainer/ScrollContainer/CenterContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
-theme_override_constants/margin_bottom = 12
+theme_override_constants/margin_bottom = 5
 
 [node name="MarginContainer5" type="MarginContainer" parent="VBoxContainer/ScrollContainer/CenterContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
-theme_override_constants/margin_bottom = 12
+theme_override_constants/margin_bottom = 5
 
 [node name="MarginContainer6" type="MarginContainer" parent="VBoxContainer/ScrollContainer/CenterContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
-theme_override_constants/margin_bottom = 12
+theme_override_constants/margin_bottom = 5
 
 [node name="MarginContainer7" type="MarginContainer" parent="VBoxContainer/ScrollContainer/CenterContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
-theme_override_constants/margin_bottom = 12
+theme_override_constants/margin_bottom = 5
 
 [node name="GridContainer3" type="GridContainer" parent="VBoxContainer/ScrollContainer/CenterContainer/VBoxContainer"]
 layout_mode = 2

@@ -1,129 +1,83 @@
-[gd_scene load_steps=3 format=3 uid="uid://bq4emjmf4ogdr"]
+[gd_scene load_steps=4 format=3 uid="uid://bq4emjmf4ogdr"]
 
+[ext_resource type="Theme" uid="uid://baqdiduk3wnvc" path="res://Assets/Themes/Alt1.tres" id="1_ark2b"]
 [ext_resource type="Theme" uid="uid://dnuvw7urh35y3" path="res://Assets/Themes/Settings.tres" id="1_xh6x7"]
 [ext_resource type="Script" path="res://Main/Menus/settings_menu.gd" id="2_2ej18"]
 
-[node name="Settings" type="Control"]
+[node name="Settings" type="Control" node_paths=PackedStringArray("background", "holding_container", "control_container", "visual_container", "binds_container", "tab_buttons", "io_buttons", "values", "changers", "tilt_sens", "camera_sens", "deadzone", "aspect_ratio", "resolution")]
 layout_mode = 3
 anchors_preset = 0
-theme = ExtResource("1_xh6x7")
+theme = ExtResource("1_ark2b")
 script = ExtResource("2_2ej18")
+background = NodePath("Panel")
+holding_container = NodePath("Panel/VBoxContainer")
+control_container = NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control")
+visual_container = NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Visual")
+binds_container = NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Binds")
+tab_buttons = [NodePath("Panel/VBoxContainer/CenterContainer/Tabs/Button"), NodePath("Panel/VBoxContainer/CenterContainer/Tabs/Button2"), NodePath("Panel/VBoxContainer/CenterContainer/Tabs/Button3")]
+io_buttons = [NodePath("Panel/VBoxContainer/CenterContainer2/IO/Save"), NodePath("Panel/VBoxContainer/CenterContainer2/IO/Reset")]
+values = [NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control/TiltSensValue"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control/CameraSensValue"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control/DeadzoneValue"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Visual/AspectValue"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Visual/ResValue")]
+changers = [NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control/TiltSlider"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control/CameraSlider"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control/DeadzoneSlider"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Visual/AspectOptions"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Visual/ResOptions")]
+tilt_sens = [NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control/TiltSlider"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control/TiltSensValue")]
+camera_sens = [NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control/CameraSlider"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control/CameraSensValue")]
+deadzone = [NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control/DeadzoneSlider"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control/DeadzoneValue")]
+aspect_ratio = [NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Visual/AspectOptions"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Visual/AspectValue")]
+resolution = [NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Visual/ResOptions"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Visual/ResValue")]
 
-[node name="Settings" type="VBoxContainer" parent="."]
+[node name="Panel" type="Panel" parent="."]
 layout_mode = 0
-offset_left = 136.0
-offset_top = 55.0
-offset_right = 989.0
-offset_bottom = 466.0
+offset_left = 125.0
+offset_top = 171.0
+offset_right = 699.0
+offset_bottom = 469.0
 
-[node name="TabBar" type="TabBar" parent="Settings"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+layout_mode = 0
+offset_right = 572.0
+offset_bottom = 265.0
+
+[node name="CenterContainer" type="CenterContainer" parent="Panel/VBoxContainer"]
 layout_mode = 2
-theme = ExtResource("1_xh6x7")
-current_tab = 0
-tab_count = 3
-tab_0/title = "Control"
-tab_1/title = "Visual"
-tab_2/title = "Binds"
 
-[node name="HSplitContainer" type="HSplitContainer" parent="Settings"]
+[node name="Tabs" type="GridContainer" parent="Panel/VBoxContainer/CenterContainer"]
 layout_mode = 2
-split_offset = 680
+columns = 3
 
-[node name="HSplitContainer" type="HSplitContainer" parent="Settings/HSplitContainer"]
+[node name="Button" type="Button" parent="Panel/VBoxContainer/CenterContainer/Tabs"]
 layout_mode = 2
-split_offset = -480
+text = "Control"
 
-[node name="Labels" type="VBoxContainer" parent="Settings/HSplitContainer/HSplitContainer"]
+[node name="Button2" type="Button" parent="Panel/VBoxContainer/CenterContainer/Tabs"]
+layout_mode = 2
+text = "Visual"
+
+[node name="Button3" type="Button" parent="Panel/VBoxContainer/CenterContainer/Tabs"]
+layout_mode = 2
+text = "Binds"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/VBoxContainer/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_vertical = 3
 
-[node name="ControlSettings" type="VBoxContainer" parent="Settings/HSplitContainer/HSplitContainer/Labels"]
-visible = false
+[node name="Control" type="GridContainer" parent="Panel/VBoxContainer/ScrollContainer/VBoxContainer"]
 layout_mode = 2
+columns = 3
 
-[node name="TiltSensLabel" type="RichTextLabel" parent="Settings/HSplitContainer/HSplitContainer/Labels/ControlSettings"]
+[node name="TiltSensLabel" type="RichTextLabel" parent="Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control"]
 layout_mode = 2
-theme = ExtResource("1_xh6x7")
+size_flags_horizontal = 3
 bbcode_enabled = true
-text = "Tilt Sens"
+text = " Tilt Sensitivity"
 fit_content = true
 
-[node name="MarginContainer6" type="MarginContainer" parent="Settings/HSplitContainer/HSplitContainer/Labels/ControlSettings"]
+[node name="TiltSlider" type="HSlider" parent="Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control"]
+custom_minimum_size = Vector2(350, 20)
 layout_mode = 2
-
-[node name="CameraSensLabel" type="RichTextLabel" parent="Settings/HSplitContainer/HSplitContainer/Labels/ControlSettings"]
-layout_mode = 2
-theme = ExtResource("1_xh6x7")
-bbcode_enabled = true
-text = "Camera Sens"
-fit_content = true
-
-[node name="MarginContainer7" type="MarginContainer" parent="Settings/HSplitContainer/HSplitContainer/Labels/ControlSettings"]
-layout_mode = 2
-
-[node name="DeadzoneLabel" type="RichTextLabel" parent="Settings/HSplitContainer/HSplitContainer/Labels/ControlSettings"]
-layout_mode = 2
-theme = ExtResource("1_xh6x7")
-bbcode_enabled = true
-text = "Deadzone"
-fit_content = true
-
-[node name="MarginContainer8" type="MarginContainer" parent="Settings/HSplitContainer/HSplitContainer/Labels/ControlSettings"]
-layout_mode = 2
-
-[node name="PinchLabel" type="RichTextLabel" parent="Settings/HSplitContainer/HSplitContainer/Labels/ControlSettings"]
-layout_mode = 2
-theme = ExtResource("1_xh6x7")
-bbcode_enabled = true
-text = "Pinch"
-fit_content = true
-
-[node name="MarginContainer9" type="MarginContainer" parent="Settings/HSplitContainer/HSplitContainer/Labels/ControlSettings"]
-layout_mode = 2
-
-[node name="VisualSettings" type="VBoxContainer" parent="Settings/HSplitContainer/HSplitContainer/Labels"]
-layout_mode = 2
-
-[node name="MarginContainer3" type="MarginContainer" parent="Settings/HSplitContainer/HSplitContainer/Labels/VisualSettings"]
-layout_mode = 2
-theme = ExtResource("1_xh6x7")
-
-[node name="AspectLabel" type="RichTextLabel" parent="Settings/HSplitContainer/HSplitContainer/Labels/VisualSettings"]
-layout_mode = 2
-theme = ExtResource("1_xh6x7")
-bbcode_enabled = true
-text = "Aspect Ratio"
-fit_content = true
-
-[node name="MarginContainer" type="MarginContainer" parent="Settings/HSplitContainer/HSplitContainer/Labels/VisualSettings"]
-layout_mode = 2
-theme = ExtResource("1_xh6x7")
-
-[node name="ResLabel" type="RichTextLabel" parent="Settings/HSplitContainer/HSplitContainer/Labels/VisualSettings"]
-layout_mode = 2
-theme = ExtResource("1_xh6x7")
-bbcode_enabled = true
-text = "Resolution"
-fit_content = true
-
-[node name="MarginContainer2" type="MarginContainer" parent="Settings/HSplitContainer/HSplitContainer/Labels/VisualSettings"]
-layout_mode = 2
-theme = ExtResource("1_xh6x7")
-
-[node name="ValueChangers" type="VBoxContainer" parent="Settings/HSplitContainer/HSplitContainer"]
-layout_mode = 2
-
-[node name="ControlSettings" type="VBoxContainer" parent="Settings/HSplitContainer/HSplitContainer/ValueChangers"]
-visible = false
-layout_mode = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="Settings/HSplitContainer/HSplitContainer/ValueChangers/ControlSettings"]
-layout_mode = 2
-theme = ExtResource("1_xh6x7")
-
-[node name="TiltSlider" type="HSlider" parent="Settings/HSplitContainer/HSplitContainer/ValueChangers/ControlSettings"]
-layout_mode = 2
-theme = ExtResource("1_xh6x7")
 min_value = 0.01
 max_value = 0.2
 step = 0.01
@@ -132,11 +86,19 @@ allow_greater = true
 allow_lesser = true
 scrollable = false
 
-[node name="MarginContainer5" type="MarginContainer" parent="Settings/HSplitContainer/HSplitContainer/ValueChangers/ControlSettings"]
+[node name="TiltSensValue" type="RichTextLabel" parent="Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control"]
 layout_mode = 2
-theme = ExtResource("1_xh6x7")
+bbcode_enabled = true
+text = "[right]100 "
+fit_content = true
 
-[node name="CameraSlider" type="HSlider" parent="Settings/HSplitContainer/HSplitContainer/ValueChangers/ControlSettings"]
+[node name="CameraSensLabel" type="RichTextLabel" parent="Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control"]
+layout_mode = 2
+bbcode_enabled = true
+text = " Camera Sensitivity"
+fit_content = true
+
+[node name="CameraSlider" type="HSlider" parent="Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control"]
 layout_mode = 2
 min_value = 60.0
 max_value = 90.0
@@ -146,11 +108,20 @@ allow_greater = true
 allow_lesser = true
 scrollable = false
 
-[node name="MarginContainer4" type="MarginContainer" parent="Settings/HSplitContainer/HSplitContainer/ValueChangers/ControlSettings"]
+[node name="CameraSensValue" type="RichTextLabel" parent="Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control"]
 layout_mode = 2
-theme = ExtResource("1_xh6x7")
+bbcode_enabled = true
+text = "[right]20 "
+fit_content = true
+scroll_active = false
 
-[node name="DeadzoneSlider" type="HSlider" parent="Settings/HSplitContainer/HSplitContainer/ValueChangers/ControlSettings"]
+[node name="DeadzoneLabel" type="RichTextLabel" parent="Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control"]
+layout_mode = 2
+bbcode_enabled = true
+text = " Deadzone"
+fit_content = true
+
+[node name="DeadzoneSlider" type="HSlider" parent="Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control"]
 layout_mode = 2
 min_value = 1.0
 max_value = 40.0
@@ -160,135 +131,78 @@ allow_greater = true
 allow_lesser = true
 scrollable = false
 
-[node name="MarginContainer3" type="MarginContainer" parent="Settings/HSplitContainer/HSplitContainer/ValueChangers/ControlSettings"]
+[node name="DeadzoneValue" type="RichTextLabel" parent="Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control"]
 layout_mode = 2
-theme = ExtResource("1_xh6x7")
+bbcode_enabled = true
+text = "[right]3 "
+fit_content = true
+scroll_active = false
 
-[node name="PinchSlider" type="HSlider" parent="Settings/HSplitContainer/HSplitContainer/ValueChangers/ControlSettings"]
+[node name="Visual" type="GridContainer" parent="Panel/VBoxContainer/ScrollContainer/VBoxContainer"]
 layout_mode = 2
-min_value = 0.1
-max_value = 0.9
-step = 0.01
-value = 0.1
-allow_greater = true
-allow_lesser = true
-scrollable = false
+columns = 3
 
-[node name="MarginContainer2" type="MarginContainer" parent="Settings/HSplitContainer/HSplitContainer/ValueChangers/ControlSettings"]
+[node name="AspectLabel" type="RichTextLabel" parent="Panel/VBoxContainer/ScrollContainer/VBoxContainer/Visual"]
 layout_mode = 2
-theme = ExtResource("1_xh6x7")
+size_flags_horizontal = 3
+bbcode_enabled = true
+text = "Aspect Ratio"
+fit_content = true
 
-[node name="VisualSettings" type="VBoxContainer" parent="Settings/HSplitContainer/HSplitContainer/ValueChangers"]
-layout_mode = 2
-
-[node name="AspectOptions" type="OptionButton" parent="Settings/HSplitContainer/HSplitContainer/ValueChangers/VisualSettings"]
+[node name="AspectOptions" type="OptionButton" parent="Panel/VBoxContainer/ScrollContainer/VBoxContainer/Visual"]
 layout_mode = 2
 theme = ExtResource("1_xh6x7")
 fit_to_longest_item = false
 
-[node name="ResOptions" type="OptionButton" parent="Settings/HSplitContainer/HSplitContainer/ValueChangers/VisualSettings"]
+[node name="AspectValue" type="RichTextLabel" parent="Panel/VBoxContainer/ScrollContainer/VBoxContainer/Visual"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[right]16:9 "
+fit_content = true
+
+[node name="ResLabel" type="RichTextLabel" parent="Panel/VBoxContainer/ScrollContainer/VBoxContainer/Visual"]
+layout_mode = 2
+size_flags_horizontal = 3
+bbcode_enabled = true
+text = "Resolution"
+fit_content = true
+
+[node name="ResOptions" type="OptionButton" parent="Panel/VBoxContainer/ScrollContainer/VBoxContainer/Visual"]
 layout_mode = 2
 theme = ExtResource("1_xh6x7")
 fit_to_longest_item = false
 
-[node name="Values" type="VBoxContainer" parent="Settings/HSplitContainer"]
+[node name="ResValue" type="RichTextLabel" parent="Panel/VBoxContainer/ScrollContainer/VBoxContainer/Visual"]
 layout_mode = 2
-
-[node name="ControlSettings" type="VBoxContainer" parent="Settings/HSplitContainer/Values"]
-visible = false
-layout_mode = 2
-
-[node name="TiltSensValue" type="RichTextLabel" parent="Settings/HSplitContainer/Values/ControlSettings"]
-layout_mode = 2
-theme = ExtResource("1_xh6x7")
-bbcode_enabled = true
-text = "[right]hi"
-fit_content = true
-scroll_active = false
-shortcut_keys_enabled = false
-
-[node name="MarginContainer7" type="MarginContainer" parent="Settings/HSplitContainer/Values/ControlSettings"]
-layout_mode = 2
-
-[node name="CameraSensValue" type="RichTextLabel" parent="Settings/HSplitContainer/Values/ControlSettings"]
-layout_mode = 2
-theme = ExtResource("1_xh6x7")
-bbcode_enabled = true
-text = "[right]hi"
-fit_content = true
-scroll_active = false
-
-[node name="MarginContainer8" type="MarginContainer" parent="Settings/HSplitContainer/Values/ControlSettings"]
-layout_mode = 2
-
-[node name="DeadzoneValue" type="RichTextLabel" parent="Settings/HSplitContainer/Values/ControlSettings"]
-layout_mode = 2
-theme = ExtResource("1_xh6x7")
-bbcode_enabled = true
-text = "[right]hi"
-fit_content = true
-scroll_active = false
-
-[node name="MarginContainer9" type="MarginContainer" parent="Settings/HSplitContainer/Values/ControlSettings"]
-layout_mode = 2
-
-[node name="PinchValue" type="RichTextLabel" parent="Settings/HSplitContainer/Values/ControlSettings"]
-layout_mode = 2
-theme = ExtResource("1_xh6x7")
-bbcode_enabled = true
-text = "[right]hi"
-fit_content = true
-scroll_active = false
-
-[node name="MarginContainer6" type="MarginContainer" parent="Settings/HSplitContainer/Values/ControlSettings"]
-layout_mode = 2
-
-[node name="VisualSettings" type="VBoxContainer" parent="Settings/HSplitContainer/Values"]
-layout_mode = 2
-
-[node name="MarginContainer11" type="MarginContainer" parent="Settings/HSplitContainer/Values/VisualSettings"]
-layout_mode = 2
-
-[node name="AspectValue" type="RichTextLabel" parent="Settings/HSplitContainer/Values/VisualSettings"]
-layout_mode = 2
-theme = ExtResource("1_xh6x7")
-bbcode_enabled = true
-text = "[right]16:9"
-fit_content = true
-
-[node name="MarginContainer9" type="MarginContainer" parent="Settings/HSplitContainer/Values/VisualSettings"]
-layout_mode = 2
-
-[node name="ResValue" type="RichTextLabel" parent="Settings/HSplitContainer/Values/VisualSettings"]
-layout_mode = 2
-theme = ExtResource("1_xh6x7")
 bbcode_enabled = true
 text = "[right]1280x720"
 fit_content = true
 
-[node name="MarginContainer10" type="MarginContainer" parent="Settings/HSplitContainer/Values/VisualSettings"]
+[node name="Binds" type="GridContainer" parent="Panel/VBoxContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+columns = 3
+
+[node name="CenterContainer2" type="CenterContainer" parent="Panel/VBoxContainer"]
 layout_mode = 2
 
-[node name="IO" type="VBoxContainer" parent="."]
-layout_mode = 0
-offset_left = 455.0
-offset_right = 586.0
-offset_bottom = 575.0
+[node name="IO" type="HBoxContainer" parent="Panel/VBoxContainer/CenterContainer2"]
+layout_mode = 2
 alignment = 2
 
-[node name="Save" type="Button" parent="IO"]
+[node name="Save" type="Button" parent="Panel/VBoxContainer/CenterContainer2/IO"]
 layout_mode = 2
 text = "Save Settings"
 
-[node name="Reset" type="Button" parent="IO"]
+[node name="Reset" type="Button" parent="Panel/VBoxContainer/CenterContainer2/IO"]
 layout_mode = 2
 text = "Reset to default"
 
-[connection signal="tab_changed" from="Settings/TabBar" to="." method="tab_changed"]
-[connection signal="value_changed" from="Settings/HSplitContainer/HSplitContainer/ValueChangers/ControlSettings/TiltSlider" to="." method="tilt_sens_changed"]
-[connection signal="value_changed" from="Settings/HSplitContainer/HSplitContainer/ValueChangers/ControlSettings/CameraSlider" to="." method="camera_sens_changed"]
-[connection signal="value_changed" from="Settings/HSplitContainer/HSplitContainer/ValueChangers/ControlSettings/DeadzoneSlider" to="." method="deadzone_changed"]
-[connection signal="value_changed" from="Settings/HSplitContainer/HSplitContainer/ValueChangers/ControlSettings/PinchSlider" to="." method="pinch_changed"]
-[connection signal="item_selected" from="Settings/HSplitContainer/HSplitContainer/ValueChangers/VisualSettings/AspectOptions" to="." method="set_res_options"]
-[connection signal="pressed" from="IO/Save" to="." method="save_settings"]
-[connection signal="pressed" from="IO/Reset" to="." method="reset_settings"]
+[connection signal="pressed" from="Panel/VBoxContainer/CenterContainer/Tabs/Button" to="." method="tab_changed" binds= [0]]
+[connection signal="pressed" from="Panel/VBoxContainer/CenterContainer/Tabs/Button2" to="." method="tab_changed" binds= [1]]
+[connection signal="pressed" from="Panel/VBoxContainer/CenterContainer/Tabs/Button3" to="." method="tab_changed" binds= [2]]
+[connection signal="value_changed" from="Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control/TiltSlider" to="." method="control_changed" binds= [0]]
+[connection signal="value_changed" from="Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control/CameraSlider" to="." method="control_changed" binds= [1]]
+[connection signal="value_changed" from="Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control/DeadzoneSlider" to="." method="control_changed" binds= [2]]
+[connection signal="item_selected" from="Panel/VBoxContainer/ScrollContainer/VBoxContainer/Visual/AspectOptions" to="." method="set_res_options"]
+[connection signal="pressed" from="Panel/VBoxContainer/CenterContainer2/IO/Save" to="." method="save_settings"]
+[connection signal="pressed" from="Panel/VBoxContainer/CenterContainer2/IO/Reset" to="." method="reset_settings"]

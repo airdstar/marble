@@ -1,0 +1,59 @@
+[gd_resource type="Theme" load_steps=7 format=3 uid="uid://baqdiduk3wnvc"]
+
+[ext_resource type="FontFile" uid="uid://ctlar6rrhjenb" path="res://Assets/Themes/Fonts/barlow/Barlow-Medium.ttf" id="1_pvtiy"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6au55"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_guwsb"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3gfw7"]
+bg_color = Color(0.596, 0.886, 0.776, 0.2)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.266, 0.525, 0.435, 0.4)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8bt47"]
+bg_color = Color(0.596, 0.886, 0.776, 0.2)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.266, 0.525, 0.435, 0.4)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hly70"]
+bg_color = Color(0.596, 0.886, 0.776, 0.3)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.596, 0.886, 0.776, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+shadow_color = Color(0, 0, 0, 0.7)
+shadow_size = 1
+
+[resource]
+default_font = ExtResource("1_pvtiy")
+default_font_size = 20
+Button/styles/focus = SubResource("StyleBoxEmpty_6au55")
+Button/styles/hover = SubResource("StyleBoxFlat_guwsb")
+Button/styles/normal = SubResource("StyleBoxFlat_3gfw7")
+Button/styles/pressed = null
+Label/colors/font_shadow_color = Color(0, 0, 0, 1)
+Label/constants/shadow_outline_size = 4
+OptionButton/styles/normal = SubResource("StyleBoxFlat_8bt47")
+Panel/styles/panel = SubResource("StyleBoxFlat_hly70")
+RichTextLabel/colors/font_shadow_color = Color(0, 0, 0, 1)
+RichTextLabel/constants/shadow_outline_size = 4

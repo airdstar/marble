@@ -4,8 +4,8 @@ extends Node
 @export var medium_button : Button
 @export var hard_button : Button
 
+@export var tab_container : GridContainer
 @export var option_container : VBoxContainer
-@export var tab_container : HBoxContainer
 
 @export var easy_container : VBoxContainer
 @export var medium_container : VBoxContainer
@@ -51,11 +51,11 @@ func _process(_delta: float) -> void:
 
 func place_control() -> void:
 	
-	option_container.set_size(Vector2(get_window().size.x * 5 / 14, get_window().size.y / 1.2))
-	option_container.set_position(Vector2(get_window().size.y / 20, get_window().size.y / 20))
+	option_container.set_size(Vector2(get_window().size.x * 6 / 14, get_window().size.y / 1.2))
+	option_container.set_position(Vector2(get_window().size.y / 30, get_window().size.y / 30))
 	
-	tab_container.custom_minimum_size = Vector2(get_window().size.x / 3, get_window().size.y / 13)
-
+	tab_container.set_custom_minimum_size(Vector2(0, get_window().size.y / 15))
+	
 func create_button(level_info : level_resource) -> Button:
 	var to_return : Button = Button.new()
 	to_return.text = level_info.name

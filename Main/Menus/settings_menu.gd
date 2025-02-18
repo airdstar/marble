@@ -1,149 +1,113 @@
 extends Node
 
-@onready var settings_box : VBoxContainer = $Settings
-@onready var io_box : VBoxContainer = $IO
+@export var background : Panel
 
-@onready var right_size : HSplitContainer = $Settings/HSplitContainer
-@onready var middle_size : HSplitContainer = $Settings/HSplitContainer/HSplitContainer
+@export_category("Containers")
+@export var holding_container : VBoxContainer
+@export var control_container : GridContainer
+@export var visual_container : GridContainer
+@export var binds_container : GridContainer
 
-@onready var control_labels : VBoxContainer = $Settings/HSplitContainer/HSplitContainer/Labels/ControlSettings
-@onready var control_changers : VBoxContainer = $Settings/HSplitContainer/HSplitContainer/ValueChangers/ControlSettings
-@onready var control_values : VBoxContainer = $Settings/HSplitContainer/Values/ControlSettings
+@export_category("Buttons")
+@export var tab_buttons : Array[Button]
+@export var io_buttons : Array[Button]
 
-@onready var visual_labels : VBoxContainer = $Settings/HSplitContainer/HSplitContainer/Labels/VisualSettings
-@onready var visual_changers : VBoxContainer = $Settings/HSplitContainer/HSplitContainer/ValueChangers/VisualSettings
-@onready var visual_values : VBoxContainer = $Settings/HSplitContainer/Values/VisualSettings
+@export_category("Non-specific control")
+@export var values : Array[RichTextLabel]
+@export var changers : Array[Control]
 
-@onready var bind_labels : VBoxContainer
-@onready var bind_changers
-@onready var bind_values
+@export_category("Specific control")
+@export var tilt_sens : Array[Control]
+@export var camera_sens : Array[Control]
+@export var deadzone : Array[Control]
 
-@onready var tilt_slider : HSlider = $Settings/HSplitContainer/HSplitContainer/ValueChangers/ControlSettings/TiltSlider
-@onready var camera_slider : HSlider = $Settings/HSplitContainer/HSplitContainer/ValueChangers/ControlSettings/CameraSlider
-@onready var deadzone_slider : HSlider = $Settings/HSplitContainer/HSplitContainer/ValueChangers/ControlSettings/DeadzoneSlider
-@onready var pinch_slider : HSlider = $Settings/HSplitContainer/HSplitContainer/ValueChangers/ControlSettings/PinchSlider
-
-@onready var tilt_value : RichTextLabel = $Settings/HSplitContainer/Values/ControlSettings/TiltSensValue
-@onready var camera_value : RichTextLabel = $Settings/HSplitContainer/Values/ControlSettings/CameraSensValue
-@onready var deadzone_value : RichTextLabel = $Settings/HSplitContainer/Values/ControlSettings/DeadzoneValue
-@onready var pinch_value : RichTextLabel = $Settings/HSplitContainer/Values/ControlSettings/PinchValue
-
-
-@onready var aspect_options : OptionButton = $Settings/HSplitContainer/HSplitContainer/ValueChangers/VisualSettings/AspectOptions
-@onready var res_options : OptionButton = $Settings/HSplitContainer/HSplitContainer/ValueChangers/VisualSettings/ResOptions
-
-@onready var aspect_value : RichTextLabel = $Settings/HSplitContainer/Values/VisualSettings/AspectValue
-@onready var res_value : RichTextLabel = $Settings/HSplitContainer/Values/VisualSettings/ResValue
+@export var aspect_ratio : Array[Control]
+@export var resolution : Array[Control]
 
 func _ready() -> void:
 	for n in Global.aspect_ratios:
-		aspect_options.add_item(n)
-	set_values()
+		aspect_ratio[0].add_item(n)
+	
 	place_control()
-	show_control_settings()
+	set_values()
+	tab_changed(0)
 
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("back"):
 		Global.close_popup()
 
 func place_control() -> void:
-	settings_box.call_deferred("set_size", Vector2(get_window().get_size().x / 1.5, get_window().get_size().y))
-	settings_box.call_deferred("set_position", Vector2(get_window().get_size().x / 2 - get_window().get_size().x / 3, get_window().get_size().y / 20))
+	background.set_size(Vector2(get_window().get_size().x / 1.25, get_window().get_size().y / 1.25))
+	background.set_position(Vector2(get_window().get_size().x / 2 - background.size.x / 2, get_window().get_size().y / 2 - background.size.y / 2))
 	
-	io_box.call_deferred("set_size", Vector2(get_window().get_size().x / 4, get_window().get_size().y))
-	io_box.call_deferred("set_position", Vector2(get_window().get_size().x / 2 - get_window().get_size().x / 8, -get_window().get_size().y / 20))
+	holding_container.set_size(background.size / 1.1)
+	holding_container.set_position(Vector2(background.size.x / 2 - holding_container.size.x / 2, background.size.y / 30))
 	
-	middle_size.split_offset = -get_window().get_size().x / 2.5
-	right_size.split_offset = get_window().get_size().x / 1.75
+	for n in tab_buttons:
+		n.set_custom_minimum_size(Vector2(background.size.x / 10, background.size.y / 15))
+	
+	for n in io_buttons:
+		n.set_custom_minimum_size(Vector2(background.size.x / 5, background.size.y / 10))
+	
+	for n in values:
+		n.set_custom_minimum_size(Vector2(background.size.x / 10, 0))
+	
+	for n in changers:
+		n.set_custom_minimum_size(Vector2(background.size.x * 3 / 5, 20))
+
+func tab_changed(index : int) -> void:
+	control_container.visible = false
+	visual_container.visible = false
+	binds_container.visible = false
+	
+	match index:
+		0:
+			control_container.visible = true
+		1:
+			visual_container.visible = true
+		2:
+			binds_container.visible = true
 
 func set_values() -> void:
-	tilt_slider.value = (PlayerInfo.player_settings.tilt_sens * 100)
-	camera_slider.value = PlayerInfo.player_settings.camera_sens
-	deadzone_slider.value = PlayerInfo.player_settings.tilt_deadzone
-	pinch_slider.value = PlayerInfo.player_settings.tilt_pinch
+	tilt_sens[0].value = (PlayerInfo.player_settings.tilt_sens * 100)
+	camera_sens[0].value = PlayerInfo.player_settings.camera_sens
+	deadzone[0].value = PlayerInfo.player_settings.tilt_deadzone
 	
-	for n in aspect_options.item_count:
-		if aspect_options.get_item_text(n) == PlayerInfo.player_settings.aspect_ratio:
-			aspect_options.selected = n
+	visual_changed()
+	
+	for n in aspect_ratio[0].item_count:
+		if aspect_ratio[0].get_item_text(n) == PlayerInfo.player_settings.aspect_ratio:
+			aspect_ratio[0].selected = n
 			set_res_options(n)
-	
-	aspect_value.text = "[right]" + PlayerInfo.player_settings.aspect_ratio
-	res_value.text = "[right]" + PlayerInfo.player_settings.resolution
+			break
 
-# Control Settings
-func tilt_sens_changed(value : float) -> void:
-	tilt_value.text = "[right]%.1f" % (value * 10)
-func camera_sens_changed(value: float) -> void:
-	camera_value.text = "[right]%.2f" % (value/camera_slider.min_value)
-func deadzone_changed(value: float) -> void:
-	deadzone_value.text = "[right]%.2f" % (value / deadzone_slider.max_value)
-func pinch_changed(value: float) -> void:
-	pinch_value.text = "[right]%d" % (pinch_slider.value * 100) + "%"
-
-# Visual Settings
 func set_res_options(index : int) -> void:
-	res_options.clear()
-	var found_res := false
-	for n in Global.aspect_ratios[aspect_options.get_item_text(index)]:
-		res_options.add_item(n)
+	resolution[0].clear()
+	var found_res : bool = false
+	for n in Global.aspect_ratios[aspect_ratio[0].get_item_text(index)]:
+		resolution[0].add_item(n)
 		if n == PlayerInfo.player_settings.resolution:
-			res_options.selected = res_options.item_count - 1
+			resolution[0].selected = resolution[0].item_count - 1
 			found_res = true
 	if !found_res:
-		res_options.selected = 0
+		resolution[0].selected = 0
 
-func tab_changed(tab: int) -> void:
-	match tab:
+func control_changed(value : float, index : int) -> void:
+	match index:
 		0:
-			show_control_settings()
+			tilt_sens[1].text = "[right]%.1f " % (value * 10)
 		1:
-			show_visual_settings()
+			camera_sens[1].text = "[right]%.1f " % value
 		2:
-			pass
+			deadzone[1].text = "[right]%.1f " % value
 
-func show_control_settings() -> void:
-	control_labels.visible = true
-	control_changers.visible = true
-	control_values.visible = true
-	
-	hide_visual_settings()
+func visual_changed() -> void:
+	aspect_ratio[1].text = "[right]" + PlayerInfo.player_settings.aspect_ratio + " "
+	resolution[1].text = "[right]" + PlayerInfo.player_settings.resolution + " "
 
-func show_visual_settings() -> void:
-	visual_labels.visible = true
-	visual_changers.visible = true
-	visual_values.visible = true
-	
-	hide_control_settings()
 
-func hide_control_settings() -> void:
-	control_labels.visible = false
-	control_changers.visible = false
-	control_values.visible = false
-
-func hide_visual_settings() -> void:
-	visual_labels.visible = false
-	visual_changers.visible = false
-	visual_values.visible = false
-
-# Others
 func save_settings() -> void:
-	var settings := PlayerInfo.player_settings
-	settings.tilt_sens = tilt_slider.value / 100
-	settings.camera_sens = camera_slider.value
-	settings.tilt_deadzone = deadzone_slider.value
-	settings.tilt_pinch = pinch_slider.value
-	
-	settings.aspect_ratio = aspect_options.get_item_text(aspect_options.selected)
-	if settings.resolution != res_options.get_item_text(res_options.selected):
-		settings.resolution = res_options.get_item_text(res_options.selected)
-		Global.set_resolution()
-		place_control()
-		Global.current_scene.place_control()
-	
-	PlayerInfo.save_settings()
-	
-	aspect_value.text = "[right]" + PlayerInfo.player_settings.aspect_ratio
-	res_value.text = "[right]" + PlayerInfo.player_settings.resolution
+	pass
 
 func reset_settings() -> void:
 	PlayerInfo.player_settings = Settings.new()
