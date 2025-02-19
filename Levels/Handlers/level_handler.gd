@@ -25,8 +25,10 @@ func pick_level() -> void:
 func generate_level(delay : bool) -> void:
 	pick_level()
 	if delay:
-		await get_tree().create_timer(0.4).timeout
-		master.prev_instance.queue_free()
+		if master.prev_instance != null:
+			await get_tree().create_timer(0.4).timeout
+			master.prev_instance.queue_free()
+			master.prev_instance = null
 	
 	var instanced_level := current_level.associated_scene.instantiate()
 

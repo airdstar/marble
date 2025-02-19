@@ -10,7 +10,6 @@ extends Node
 @export var easy_container : VBoxContainer
 @export var medium_container : VBoxContainer
 @export var hard_container : VBoxContainer
-
 func _ready() -> void:
 	place_control()
 	
@@ -47,7 +46,7 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("back"):
-		Global.open_scene("main_menu")
+		Global.open_scene(Global.main_scene.prev_scene)
 
 func place_control() -> void:
 	
@@ -59,6 +58,7 @@ func place_control() -> void:
 func create_button(level_info : level_resource) -> Button:
 	var to_return : Button = Button.new()
 	to_return.text = level_info.name
+	to_return.set_custom_minimum_size(Vector2(option_container.size.x / 1.5, get_window().size.y / 17.5))
 	to_return.pressed.connect(level_selected.bind(level_info))
 	return to_return
 

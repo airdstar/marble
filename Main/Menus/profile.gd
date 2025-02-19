@@ -1,6 +1,7 @@
 extends Control
 
 @export var background : Panel
+@export var header : RichTextLabel
 @export var player_info : RichTextLabel
 
 func _ready() -> void:
@@ -14,16 +15,16 @@ func place_control() -> void:
 	background.set_size(Vector2(get_window().get_size().x / 1.25, get_window().get_size().y / 1.25))
 	background.set_position(Vector2(get_window().get_size().x / 2 - background.size.x / 2, get_window().get_size().y / 2 - background.size.y / 2))
 	
+	header.set_size(background.size)
+	header.add_theme_font_size_override("normal_font_size", 40 * get_window().get_size().x / 1280)
+	header.set_position(Vector2(0, 10 * get_window().get_size().y / 720))
+	
 	player_info.set_size(background.size / 1.1)
 	player_info.set_position(Vector2(background.size.x / 2 - player_info.size.x / 2, background.size.y / 30))
 
 func set_data(playerdata : PlayerData) -> void:
-	player_info.text = "[center][font_size=40]Player Stats[/font_size][/center]\n"
-	if playerdata.game_over_count != 0: 
-		player_info.text += "Highest level reached: %d\n" % playerdata.highest_level
-		player_info.text += "Amount of runs done: %d\n" % playerdata.game_over_count
-	else:
-		player_info.text += "Not played yet\n"
+	player_info.text = "\n\nHighest level reached: %d\n" % playerdata.highest_level
+	player_info.text += "Amount of runs done: %d\n" % playerdata.game_over_count
 
 func close_pressed() -> void:
 	queue_free()

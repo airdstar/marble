@@ -1,60 +1,47 @@
-[gd_scene load_steps=2 format=3 uid="uid://c07ml3t05iu7q"]
+[gd_scene load_steps=4 format=3 uid="uid://c07ml3t05iu7q"]
 
-[sub_resource type="GDScript" id="GDScript_4j44s"]
-script/source = "extends Node
+[ext_resource type="Theme" uid="uid://baqdiduk3wnvc" path="res://Assets/Themes/Alt1.tres" id="1_ob1tf"]
+[ext_resource type="Script" path="res://Levels/Handlers/run_end.gd" id="2_cux77"]
+[ext_resource type="FontFile" uid="uid://ehmcqwp0knfm" path="res://Assets/Themes/Fonts/barlow/Barlow-Bold.ttf" id="3_a35ka"]
 
-@onready var level_display = $CenterContainer/VBoxContainer/points
-
-func _ready():
-	PlayerInfo.player_data.game_over_count += 1
-	var level_reached : int = Global.current_scene.run_handler.current_level
-	level_display.text = \"[center][rainbow]\"
-	if level_reached > PlayerInfo.player_data.highest_level:
-		level_display.text += \"New Record!\\n\"
-		PlayerInfo.player_data.highest_level = level_reached
-	level_display.text += \"You reached level %d!\" % level_reached
-	PlayerInfo.save_data()
-
-func place_control() -> void:
-	pass
-
-func run_restart() -> void:
-	Global.current_scene.start_game()
-	Global.close_popup()
-"
-
-[node name="RunEnd" type="Control"]
+[node name="RunEnd" type="Control" node_paths=PackedStringArray("background", "container", "stats", "restart")]
 process_mode = 3
 layout_mode = 3
 anchors_preset = 0
-script = SubResource("GDScript_4j44s")
+theme = ExtResource("1_ob1tf")
+script = ExtResource("2_cux77")
+background = NodePath("Panel")
+container = NodePath("Panel/VBoxContainer")
+stats = NodePath("Panel/VBoxContainer/points")
+restart = NodePath("Panel/VBoxContainer/CenterContainer/Restart")
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="Panel" type="Panel" parent="."]
 layout_mode = 0
-offset_left = -9.0
-offset_top = -15.0
-offset_right = 1288.0
-offset_bottom = 726.0
-color = Color(0, 0, 0, 0.5)
+offset_right = 825.0
+offset_bottom = 599.0
 
-[node name="CenterContainer" type="CenterContainer" parent="."]
-layout_mode = 0
-offset_right = 1280.0
-offset_bottom = 720.0
-
-[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
 layout_mode = 2
+offset_left = 551.0
+offset_top = 320.0
+offset_right = 728.0
+offset_bottom = 400.0
+alignment = 1
 
-[node name="points" type="RichTextLabel" parent="CenterContainer/VBoxContainer"]
+[node name="points" type="RichTextLabel" parent="Panel/VBoxContainer"]
 layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("3_a35ka")
 bbcode_enabled = true
-text = "[center][rainbow]New Record!
+text = "[center]New Record!
 You reached level 11!"
 fit_content = true
 autowrap_mode = 0
 
-[node name="Restart" type="Button" parent="CenterContainer/VBoxContainer"]
+[node name="CenterContainer" type="CenterContainer" parent="Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="Restart" type="Button" parent="Panel/VBoxContainer/CenterContainer"]
 layout_mode = 2
 text = "Restart"
 
-[connection signal="pressed" from="CenterContainer/VBoxContainer/Restart" to="." method="run_restart"]
+[connection signal="pressed" from="Panel/VBoxContainer/CenterContainer/Restart" to="." method="run_restart"]

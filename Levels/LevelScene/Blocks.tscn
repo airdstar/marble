@@ -1,23 +1,23 @@
-[gd_scene load_steps=34 format=4]
+[gd_scene load_steps=35 format=4]
 
-[ext_resource type="Script" path="res://Levels/Handlers/level.gd" id="1_fhgoh"]
-[ext_resource type="PackedScene" path="res://Editor/Parts/Important/SpawnZone.tscn" id="2_e6gtl"]
-[ext_resource type="Script" path="res://Editor/Parts/Important/spawn_zone.gd" id="3_j83n7"]
-[ext_resource type="Texture2D" path="res://Assets/Spawn.png" id="4_db0i1"]
-[ext_resource type="PackedScene" path="res://Editor/Parts/ProcMesh.tscn" id="5_bjqie"]
-[ext_resource type="Script" path="res://Editor/Parts/proc_mesh.gd" id="6_f43as"]
-[ext_resource type="Script" path="res://Resources/shape_resource.gd" id="7_676ey"]
-[ext_resource type="Script" path="res://Editor/Shapes/polygon.gd" id="8_s6kll"]
-[ext_resource type="PackedScene" path="res://Editor/Parts/Important/EndZone.tscn" id="9_ugst3"]
-[ext_resource type="Script" path="res://Editor/Parts/Important/end_zone.gd" id="10_o27fh"]
-[ext_resource type="Script" path="res://Editor/Shapes/cube.gd" id="11_2kgmn"]
+[ext_resource type="Script" path="res://Levels/Handlers/level.gd" id="1_wnfoe"]
+[ext_resource type="PackedScene" path="res://Editor/Parts/Important/SpawnZone.tscn" id="2_5snd4"]
+[ext_resource type="Script" path="res://Editor/Parts/Important/spawn_zone.gd" id="3_h0psu"]
+[ext_resource type="Texture2D" path="res://Assets/Spawn.png" id="4_jfkp3"]
+[ext_resource type="PackedScene" path="res://Editor/Parts/ProcMesh.tscn" id="5_ljdbk"]
+[ext_resource type="Script" path="res://Editor/Parts/proc_mesh.gd" id="6_dbfnh"]
+[ext_resource type="Script" path="res://Resources/shape_resource.gd" id="7_bbo4e"]
+[ext_resource type="Script" path="res://Editor/Shapes/polygon.gd" id="8_3n0e2"]
+[ext_resource type="Script" path="res://Editor/Shapes/cube.gd" id="9_2j04m"]
+[ext_resource type="PackedScene" path="res://Editor/Parts/Important/EndZone.tscn" id="10_7vcfl"]
+[ext_resource type="Script" path="res://Editor/Parts/Important/end_zone.gd" id="11_0kvni"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_mcfgt"]
 size = Vector3(3, 1, 3)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ykvgg"]
 transparency = 1
-albedo_texture = ExtResource("4_db0i1")
+albedo_texture = ExtResource("4_jfkp3")
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_7faxf"]
 material = SubResource("StandardMaterial3D_ykvgg")
@@ -28,7 +28,7 @@ size = Vector3(3, 1, 3)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dh7ft"]
 transparency = 1
-albedo_texture = ExtResource("4_db0i1")
+albedo_texture = ExtResource("4_jfkp3")
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_3hfgk"]
 material = SubResource("StandardMaterial3D_dh7ft")
@@ -50,7 +50,7 @@ _surfaces = [{
 }]
 
 [sub_resource type="Resource" id="Resource_xt6nc"]
-script = ExtResource("8_s6kll")
+script = ExtResource("8_3n0e2")
 sides = 32
 point_direction = 1
 hole_size = 0.5
@@ -67,7 +67,7 @@ total_offset = Vector3(0, 0, 0)
 size = Vector3(16, 0.6, 16)
 rotation = Quaternion(0, 0, 0, 1)
 
-[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_hlnib"]
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_wb8e2"]
 data = PackedVector3Array(8, 0.3, 0, 8, -0.3, 0, 7.8463, 0.3, 1.5607, 7.8463, 0.3, 1.5607, 8, -0.3, 0, 7.8463, -0.3, 1.5607, 7.8463, 0.3, 1.5607, 7.8463, -0.3, 1.5607, 7.391, 0.3, 3.0615, 7.391, 0.3, 3.0615, 7.8463, -0.3, 1.5607, 7.391, -0.3, 3.0615, 7.391, 0.3, 3.0615, 7.391, -0.3, 3.0615, 6.6518, 0.3, 4.4446, 6.6518, 0.3, 4.4446, 7.391, -0.3, 3.0615, 6.6518, -0.3, 4.4446, 6.6518, 0.3, 4.4446, 6.6518, -0.3, 4.4446, 5.6569, 0.3, 5.6569, 5.6569, 0.3, 5.6569, 6.6518, -0.3, 4.4446, 5.6569, -0.3, 5.6569, 5.6569, 0.3, 5.6569, 5.6569, -0.3, 5.6569, 4.4446, 0.3, 6.6518, 4.4446, 0.3, 6.6518, 5.6569, -0.3, 5.6569, 4.4446, -0.3, 6.6518, 4.4446, 0.3, 6.6518, 4.4446, -0.3, 6.6518, 3.0615, 0.3, 7.391, 3.0615, 0.3, 7.391, 4.4446, -0.3, 6.6518, 3.0615, -0.3, 7.391, 3.0615, 0.3, 7.391, 3.0615, -0.3, 7.391, 1.5607, 0.3, 7.8463, 1.5607, 0.3, 7.8463, 3.0615, -0.3, 7.391, 1.5607, -0.3, 7.8463, 1.5607, 0.3, 7.8463, 1.5607, -0.3, 7.8463, 0, 0.3, 8, 0, 0.3, 8, 1.5607, -0.3, 7.8463, 0, -0.3, 8, 0, 0.3, 8, 0, -0.3, 8, -1.5607, 0.3, 7.8463, -1.5607, 0.3, 7.8463, 0, -0.3, 8, -1.5607, -0.3, 7.8463, -1.5607, 0.3, 7.8463, -1.5607, -0.3, 7.8463, -3.0615, 0.3, 7.391, -3.0615, 0.3, 7.391, -1.5607, -0.3, 7.8463, -3.0615, -0.3, 7.391, -3.0615, 0.3, 7.391, -3.0615, -0.3, 7.391, -4.4446, 0.3, 6.6518, -4.4446, 0.3, 6.6518, -3.0615, -0.3, 7.391, -4.4446, -0.3, 6.6518, -4.4446, 0.3, 6.6518, -4.4446, -0.3, 6.6518, -5.6569, 0.3, 5.6569, -5.6569, 0.3, 5.6569, -4.4446, -0.3, 6.6518, -5.6569, -0.3, 5.6569, -5.6569, 0.3, 5.6569, -5.6569, -0.3, 5.6569, -6.6518, 0.3, 4.4446, -6.6518, 0.3, 4.4446, -5.6569, -0.3, 5.6569, -6.6518, -0.3, 4.4446, -6.6518, 0.3, 4.4446, -6.6518, -0.3, 4.4446, -7.391, 0.3, 3.0615, -7.391, 0.3, 3.0615, -6.6518, -0.3, 4.4446, -7.391, -0.3, 3.0615, -7.391, 0.3, 3.0615, -7.391, -0.3, 3.0615, -7.8463, 0.3, 1.5607, -7.8463, 0.3, 1.5607, -7.391, -0.3, 3.0615, -7.8463, -0.3, 1.5607, -7.8463, 0.3, 1.5607, -7.8463, -0.3, 1.5607, -8, 0.3, 0, -8, 0.3, 0, -7.8463, -0.3, 1.5607, -8, -0.3, 0, -8, 0.3, 0, -8, -0.3, 0, -7.8463, 0.3, -1.5607, -7.8463, 0.3, -1.5607, -8, -0.3, 0, -7.8463, -0.3, -1.5607, -7.8463, 0.3, -1.5607, -7.8463, -0.3, -1.5607, -7.391, 0.3, -3.0615, -7.391, 0.3, -3.0615, -7.8463, -0.3, -1.5607, -7.391, -0.3, -3.0615, -7.391, 0.3, -3.0615, -7.391, -0.3, -3.0615, -6.6518, 0.3, -4.4446, -6.6518, 0.3, -4.4446, -7.391, -0.3, -3.0615, -6.6518, -0.3, -4.4446, -6.6518, 0.3, -4.4446, -6.6518, -0.3, -4.4446, -5.6569, 0.3, -5.6569, -5.6569, 0.3, -5.6569, -6.6518, -0.3, -4.4446, -5.6569, -0.3, -5.6569, -5.6569, 0.3, -5.6569, -5.6569, -0.3, -5.6569, -4.4446, 0.3, -6.6518, -4.4446, 0.3, -6.6518, -5.6569, -0.3, -5.6569, -4.4446, -0.3, -6.6518, -4.4446, 0.3, -6.6518, -4.4446, -0.3, -6.6518, -3.0615, 0.3, -7.391, -3.0615, 0.3, -7.391, -4.4446, -0.3, -6.6518, -3.0615, -0.3, -7.391, -3.0615, 0.3, -7.391, -3.0615, -0.3, -7.391, -1.5607, 0.3, -7.8463, -1.5607, 0.3, -7.8463, -3.0615, -0.3, -7.391, -1.5607, -0.3, -7.8463, -1.5607, 0.3, -7.8463, -1.5607, -0.3, -7.8463, 0, 0.3, -8, 0, 0.3, -8, -1.5607, -0.3, -7.8463, 0, -0.3, -8, 0, 0.3, -8, 0, -0.3, -8, 1.5607, 0.3, -7.8463, 1.5607, 0.3, -7.8463, 0, -0.3, -8, 1.5607, -0.3, -7.8463, 1.5607, 0.3, -7.8463, 1.5607, -0.3, -7.8463, 3.0615, 0.3, -7.391, 3.0615, 0.3, -7.391, 1.5607, -0.3, -7.8463, 3.0615, -0.3, -7.391, 3.0615, 0.3, -7.391, 3.0615, -0.3, -7.391, 4.4446, 0.3, -6.6518, 4.4446, 0.3, -6.6518, 3.0615, -0.3, -7.391, 4.4446, -0.3, -6.6518, 4.4446, 0.3, -6.6518, 4.4446, -0.3, -6.6518, 5.6569, 0.3, -5.6569, 5.6569, 0.3, -5.6569, 4.4446, -0.3, -6.6518, 5.6569, -0.3, -5.6569, 5.6569, 0.3, -5.6569, 5.6569, -0.3, -5.6569, 6.6518, 0.3, -4.4446, 6.6518, 0.3, -4.4446, 5.6569, -0.3, -5.6569, 6.6518, -0.3, -4.4446, 6.6518, 0.3, -4.4446, 6.6518, -0.3, -4.4446, 7.391, 0.3, -3.0615, 7.391, 0.3, -3.0615, 6.6518, -0.3, -4.4446, 7.391, -0.3, -3.0615, 7.391, 0.3, -3.0615, 7.391, -0.3, -3.0615, 7.8463, 0.3, -1.5607, 7.8463, 0.3, -1.5607, 7.391, -0.3, -3.0615, 7.8463, -0.3, -1.5607, 7.8463, 0.3, -1.5607, 7.8463, -0.3, -1.5607, 8, 0.3, 0, 8, 0.3, 0, 7.8463, -0.3, -1.5607, 8, -0.3, 0, 0, 0.3, 0, 8, 0.3, 0, 7.8463, 0.3, 1.5607, 0, 0.3, 0, 7.8463, 0.3, 1.5607, 7.391, 0.3, 3.0615, 0, 0.3, 0, 7.391, 0.3, 3.0615, 6.6518, 0.3, 4.4446, 0, 0.3, 0, 6.6518, 0.3, 4.4446, 5.6569, 0.3, 5.6569, 0, 0.3, 0, 5.6569, 0.3, 5.6569, 4.4446, 0.3, 6.6518, 0, 0.3, 0, 4.4446, 0.3, 6.6518, 3.0615, 0.3, 7.391, 0, 0.3, 0, 3.0615, 0.3, 7.391, 1.5607, 0.3, 7.8463, 0, 0.3, 0, 1.5607, 0.3, 7.8463, 0, 0.3, 8, 0, 0.3, 0, 0, 0.3, 8, -1.5607, 0.3, 7.8463, 0, 0.3, 0, -1.5607, 0.3, 7.8463, -3.0615, 0.3, 7.391, 0, 0.3, 0, -3.0615, 0.3, 7.391, -4.4446, 0.3, 6.6518, 0, 0.3, 0, -4.4446, 0.3, 6.6518, -5.6569, 0.3, 5.6569, 0, 0.3, 0, -5.6569, 0.3, 5.6569, -6.6518, 0.3, 4.4446, 0, 0.3, 0, -6.6518, 0.3, 4.4446, -7.391, 0.3, 3.0615, 0, 0.3, 0, -7.391, 0.3, 3.0615, -7.8463, 0.3, 1.5607, 0, 0.3, 0, -7.8463, 0.3, 1.5607, -8, 0.3, 0, 0, 0.3, 0, -8, 0.3, 0, -7.8463, 0.3, -1.5607, 0, 0.3, 0, -7.8463, 0.3, -1.5607, -7.391, 0.3, -3.0615, 0, 0.3, 0, -7.391, 0.3, -3.0615, -6.6518, 0.3, -4.4446, 0, 0.3, 0, -6.6518, 0.3, -4.4446, -5.6569, 0.3, -5.6569, 0, 0.3, 0, -5.6569, 0.3, -5.6569, -4.4446, 0.3, -6.6518, 0, 0.3, 0, -4.4446, 0.3, -6.6518, -3.0615, 0.3, -7.391, 0, 0.3, 0, -3.0615, 0.3, -7.391, -1.5607, 0.3, -7.8463, 0, 0.3, 0, -1.5607, 0.3, -7.8463, 0, 0.3, -8, 0, 0.3, 0, 0, 0.3, -8, 1.5607, 0.3, -7.8463, 0, 0.3, 0, 1.5607, 0.3, -7.8463, 3.0615, 0.3, -7.391, 0, 0.3, 0, 3.0615, 0.3, -7.391, 4.4446, 0.3, -6.6518, 0, 0.3, 0, 4.4446, 0.3, -6.6518, 5.6569, 0.3, -5.6569, 0, 0.3, 0, 5.6569, 0.3, -5.6569, 6.6518, 0.3, -4.4446, 0, 0.3, 0, 6.6518, 0.3, -4.4446, 7.391, 0.3, -3.0615, 0, 0.3, 0, 7.391, 0.3, -3.0615, 7.8463, 0.3, -1.5607, 0, 0.3, 0, 7.8463, 0.3, -1.5607, 8, 0.3, 0, 7.8463, -0.3, 1.5607, 8, -0.3, 0, 0, -0.3, 0, 7.391, -0.3, 3.0615, 7.8463, -0.3, 1.5607, 0, -0.3, 0, 6.6518, -0.3, 4.4446, 7.391, -0.3, 3.0615, 0, -0.3, 0, 5.6569, -0.3, 5.6569, 6.6518, -0.3, 4.4446, 0, -0.3, 0, 4.4446, -0.3, 6.6518, 5.6569, -0.3, 5.6569, 0, -0.3, 0, 3.0615, -0.3, 7.391, 4.4446, -0.3, 6.6518, 0, -0.3, 0, 1.5607, -0.3, 7.8463, 3.0615, -0.3, 7.391, 0, -0.3, 0, 0, -0.3, 8, 1.5607, -0.3, 7.8463, 0, -0.3, 0, -1.5607, -0.3, 7.8463, 0, -0.3, 8, 0, -0.3, 0, -3.0615, -0.3, 7.391, -1.5607, -0.3, 7.8463, 0, -0.3, 0, -4.4446, -0.3, 6.6518, -3.0615, -0.3, 7.391, 0, -0.3, 0, -5.6569, -0.3, 5.6569, -4.4446, -0.3, 6.6518, 0, -0.3, 0, -6.6518, -0.3, 4.4446, -5.6569, -0.3, 5.6569, 0, -0.3, 0, -7.391, -0.3, 3.0615, -6.6518, -0.3, 4.4446, 0, -0.3, 0, -7.8463, -0.3, 1.5607, -7.391, -0.3, 3.0615, 0, -0.3, 0, -8, -0.3, 0, -7.8463, -0.3, 1.5607, 0, -0.3, 0, -7.8463, -0.3, -1.5607, -8, -0.3, 0, 0, -0.3, 0, -7.391, -0.3, -3.0615, -7.8463, -0.3, -1.5607, 0, -0.3, 0, -6.6518, -0.3, -4.4446, -7.391, -0.3, -3.0615, 0, -0.3, 0, -5.6569, -0.3, -5.6569, -6.6518, -0.3, -4.4446, 0, -0.3, 0, -4.4446, -0.3, -6.6518, -5.6569, -0.3, -5.6569, 0, -0.3, 0, -3.0615, -0.3, -7.391, -4.4446, -0.3, -6.6518, 0, -0.3, 0, -1.5607, -0.3, -7.8463, -3.0615, -0.3, -7.391, 0, -0.3, 0, 0, -0.3, -8, -1.5607, -0.3, -7.8463, 0, -0.3, 0, 1.5607, -0.3, -7.8463, 0, -0.3, -8, 0, -0.3, 0, 3.0615, -0.3, -7.391, 1.5607, -0.3, -7.8463, 0, -0.3, 0, 4.4446, -0.3, -6.6518, 3.0615, -0.3, -7.391, 0, -0.3, 0, 5.6569, -0.3, -5.6569, 4.4446, -0.3, -6.6518, 0, -0.3, 0, 6.6518, -0.3, -4.4446, 5.6569, -0.3, -5.6569, 0, -0.3, 0, 7.391, -0.3, -3.0615, 6.6518, -0.3, -4.4446, 0, -0.3, 0, 7.8463, -0.3, -1.5607, 7.391, -0.3, -3.0615, 0, -0.3, 0, 8, -0.3, 0, 7.8463, -0.3, -1.5607, 0, -0.3, 0)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4t1h0"]
@@ -76,24 +76,6 @@ albedo_color = Color(0, 0, 0, 0.1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_b8fir"]
 material = SubResource("StandardMaterial3D_4t1h0")
-
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_kv84c"]
-height = 1.0
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jcltm"]
-transparency = 1
-albedo_color = Color(0.377688, 0.559348, 0.378798, 0.4)
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_mcbnd"]
-material = SubResource("StandardMaterial3D_jcltm")
-height = 1.0
-radial_segments = 10
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_0ehph"]
-top_radius = 0.55
-bottom_radius = 0.55
-height = 0.025
-radial_segments = 10
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_ixlan"]
 _surfaces = [{
@@ -108,7 +90,7 @@ _surfaces = [{
 }]
 
 [sub_resource type="Resource" id="Resource_tmlo6"]
-script = ExtResource("11_2kgmn")
+script = ExtResource("9_2j04m")
 subdivisions = 1
 locked = false
 shape_name = "Shape"
@@ -121,7 +103,7 @@ size = Vector3(3.5, 1, 3.5)
 rotation = Quaternion(0, 0, 0, 1)
 
 [sub_resource type="Resource" id="Resource_oelnq"]
-script = ExtResource("11_2kgmn")
+script = ExtResource("9_2j04m")
 subdivisions = 1
 locked = false
 shape_name = "Shape"
@@ -134,7 +116,7 @@ size = Vector3(3.5, 1, 3.5)
 rotation = Quaternion(0, 0, 0, 1)
 
 [sub_resource type="Resource" id="Resource_4g43f"]
-script = ExtResource("11_2kgmn")
+script = ExtResource("9_2j04m")
 subdivisions = 1
 locked = false
 shape_name = "Shape"
@@ -147,7 +129,7 @@ size = Vector3(3.5, 1, 3.5)
 rotation = Quaternion(0, 0, 0, 1)
 
 [sub_resource type="Resource" id="Resource_4tf2m"]
-script = ExtResource("11_2kgmn")
+script = ExtResource("9_2j04m")
 subdivisions = 1
 locked = false
 shape_name = "Shape"
@@ -159,24 +141,46 @@ total_offset = Vector3(2.5, 0.8, -2.5)
 size = Vector3(3.5, 1, 3.5)
 rotation = Quaternion(0, 0, 0, 1)
 
-[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_43xyw"]
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_bran7"]
 data = PackedVector3Array(-4.25, 1.3, 0.75, -0.75, 1.3, 0.75, -0.75, 1.3, 4.25, -4.25, 1.3, 0.75, -0.75, 1.3, 4.25, -4.25, 1.3, 4.25, -4.25, 0.3, 4.25, -0.75, 0.3, 4.25, -0.75, 0.3, 0.75, -4.25, 0.3, 4.25, -0.75, 0.3, 0.75, -4.25, 0.3, 0.75, -0.75, 0.3, 0.75, -0.75, 0.3, 4.25, -0.75, 1.3, 4.25, -0.75, 0.3, 0.75, -0.75, 1.3, 4.25, -0.75, 1.3, 0.75, -4.25, 1.3, 0.75, -4.25, 1.3, 4.25, -4.25, 0.3, 4.25, -4.25, 1.3, 0.75, -4.25, 0.3, 4.25, -4.25, 0.3, 0.75, -4.25, 0.3, 4.25, -4.25, 1.3, 4.25, -0.75, 1.3, 4.25, -4.25, 0.3, 4.25, -0.75, 1.3, 4.25, -0.75, 0.3, 4.25, -0.75, 0.3, 0.75, -0.75, 1.3, 0.75, -4.25, 1.3, 0.75, -0.75, 0.3, 0.75, -4.25, 1.3, 0.75, -4.25, 0.3, 0.75, 0.75, 1.3, 0.75, 4.25, 1.3, 0.75, 4.25, 1.3, 4.25, 0.75, 1.3, 0.75, 4.25, 1.3, 4.25, 0.75, 1.3, 4.25, 0.75, 0.3, 4.25, 4.25, 0.3, 4.25, 4.25, 0.3, 0.75, 0.75, 0.3, 4.25, 4.25, 0.3, 0.75, 0.75, 0.3, 0.75, 4.25, 0.3, 0.75, 4.25, 0.3, 4.25, 4.25, 1.3, 4.25, 4.25, 0.3, 0.75, 4.25, 1.3, 4.25, 4.25, 1.3, 0.75, 0.75, 1.3, 0.75, 0.75, 1.3, 4.25, 0.75, 0.3, 4.25, 0.75, 1.3, 0.75, 0.75, 0.3, 4.25, 0.75, 0.3, 0.75, 0.75, 0.3, 4.25, 0.75, 1.3, 4.25, 4.25, 1.3, 4.25, 0.75, 0.3, 4.25, 4.25, 1.3, 4.25, 4.25, 0.3, 4.25, 4.25, 0.3, 0.75, 4.25, 1.3, 0.75, 0.75, 1.3, 0.75, 4.25, 0.3, 0.75, 0.75, 1.3, 0.75, 0.75, 0.3, 0.75, -4.25, 1.3, -4.25, -0.75, 1.3, -4.25, -0.75, 1.3, -0.75, -4.25, 1.3, -4.25, -0.75, 1.3, -0.75, -4.25, 1.3, -0.75, -4.25, 0.3, -0.75, -0.75, 0.3, -0.75, -0.75, 0.3, -4.25, -4.25, 0.3, -0.75, -0.75, 0.3, -4.25, -4.25, 0.3, -4.25, -0.75, 0.3, -4.25, -0.75, 0.3, -0.75, -0.75, 1.3, -0.75, -0.75, 0.3, -4.25, -0.75, 1.3, -0.75, -0.75, 1.3, -4.25, -4.25, 1.3, -4.25, -4.25, 1.3, -0.75, -4.25, 0.3, -0.75, -4.25, 1.3, -4.25, -4.25, 0.3, -0.75, -4.25, 0.3, -4.25, -4.25, 0.3, -0.75, -4.25, 1.3, -0.75, -0.75, 1.3, -0.75, -4.25, 0.3, -0.75, -0.75, 1.3, -0.75, -0.75, 0.3, -0.75, -0.75, 0.3, -4.25, -0.75, 1.3, -4.25, -4.25, 1.3, -4.25, -0.75, 0.3, -4.25, -4.25, 1.3, -4.25, -4.25, 0.3, -4.25, 0.75, 1.3, -4.25, 4.25, 1.3, -4.25, 4.25, 1.3, -0.75, 0.75, 1.3, -4.25, 4.25, 1.3, -0.75, 0.75, 1.3, -0.75, 0.75, 0.3, -0.75, 4.25, 0.3, -0.75, 4.25, 0.3, -4.25, 0.75, 0.3, -0.75, 4.25, 0.3, -4.25, 0.75, 0.3, -4.25, 4.25, 0.3, -4.25, 4.25, 0.3, -0.75, 4.25, 1.3, -0.75, 4.25, 0.3, -4.25, 4.25, 1.3, -0.75, 4.25, 1.3, -4.25, 0.75, 1.3, -4.25, 0.75, 1.3, -0.75, 0.75, 0.3, -0.75, 0.75, 1.3, -4.25, 0.75, 0.3, -0.75, 0.75, 0.3, -4.25, 0.75, 0.3, -0.75, 0.75, 1.3, -0.75, 4.25, 1.3, -0.75, 0.75, 0.3, -0.75, 4.25, 1.3, -0.75, 4.25, 0.3, -0.75, 4.25, 0.3, -4.25, 4.25, 1.3, -4.25, 0.75, 1.3, -4.25, 4.25, 0.3, -4.25, 0.75, 1.3, -4.25, 0.75, 0.3, -4.25)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_kv84c"]
+height = 1.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jcltm"]
+transparency = 1
+albedo_color = Color(0.377688, 0.559348, 0.378798, 0.4)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_mcbnd"]
+material = SubResource("StandardMaterial3D_jcltm")
+height = 1.0
+radial_segments = 10
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tmk0d"]
+albedo_color = Color(0.15, 0.15, 0.15, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_0ehph"]
+material = SubResource("StandardMaterial3D_tmk0d")
+top_radius = 0.55
+bottom_radius = 0.55
+height = 0.025
+radial_segments = 10
 
 [node name="LevelBase" type="RigidBody3D" node_paths=PackedStringArray("parts", "start_node", "input_node", "input_collider")]
 freeze = true
-script = ExtResource("1_fhgoh")
-parts = [NodePath("ProcMesh"), NodePath("EndZone"), NodePath("@MeshInstance3D@955"), NodePath("Starts/SpawnZone"), NodePath("Starts/@CollisionShape3D@105"), NodePath("Starts/@CollisionShape3D@107"), NodePath("Starts/@CollisionShape3D@109"), NodePath("Starts/@CollisionShape3D@1869"), NodePath("Starts/@CollisionShape3D@1871"), NodePath("Starts/@CollisionShape3D@1873"), NodePath("Starts/@CollisionShape3D@1875")]
+script = ExtResource("1_wnfoe")
+parts = [NodePath("ProcMesh"), NodePath("@MeshInstance3D@955"), NodePath("Starts/SpawnZone"), NodePath("Starts/@CollisionShape3D@105"), NodePath("Starts/@CollisionShape3D@107"), NodePath("Starts/@CollisionShape3D@109"), NodePath("Starts/@CollisionShape3D@1869"), NodePath("Starts/@CollisionShape3D@1871"), NodePath("Starts/@CollisionShape3D@1873"), NodePath("Starts/@CollisionShape3D@1875"), NodePath("EndZone")]
 start_node = NodePath("Starts")
 input_node = NodePath("InputTrigger")
 input_collider = NodePath("InputTrigger/CollisionShape3D")
 
 [node name="Starts" type="Area3D" parent="."]
 
-[node name="SpawnZone" type="CollisionShape3D" parent="Starts" node_paths=PackedStringArray("collider", "editor_visibility") instance=ExtResource("2_e6gtl")]
+[node name="SpawnZone" type="CollisionShape3D" parent="Starts" node_paths=PackedStringArray("collider", "editor_visibility") instance=ExtResource("2_5snd4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 0.1, -6)
 shape = SubResource("BoxShape3D_mcfgt")
 disabled = true
-script = ExtResource("3_j83n7")
+script = ExtResource("3_h0psu")
 collider = NodePath(".")
 editor_visibility = NodePath("MeshInstance3D")
 metadata/part_name = "Start"
@@ -186,11 +190,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.284508, 0)
 mesh = SubResource("PlaneMesh_7faxf")
 skeleton = NodePath("")
 
-[node name="@CollisionShape3D@105" type="CollisionShape3D" parent="Starts" node_paths=PackedStringArray("collider", "editor_visibility") instance=ExtResource("2_e6gtl")]
+[node name="@CollisionShape3D@105" type="CollisionShape3D" parent="Starts" node_paths=PackedStringArray("collider", "editor_visibility") instance=ExtResource("2_5snd4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0.1, -6)
 shape = SubResource("BoxShape3D_mcfgt")
 disabled = true
-script = ExtResource("3_j83n7")
+script = ExtResource("3_h0psu")
 collider = NodePath(".")
 editor_visibility = NodePath("MeshInstance3D")
 metadata/part_name = "Start"
@@ -200,11 +204,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.284508, 0)
 mesh = SubResource("PlaneMesh_7faxf")
 skeleton = NodePath("")
 
-[node name="@CollisionShape3D@107" type="CollisionShape3D" parent="Starts" node_paths=PackedStringArray("collider", "editor_visibility") instance=ExtResource("2_e6gtl")]
+[node name="@CollisionShape3D@107" type="CollisionShape3D" parent="Starts" node_paths=PackedStringArray("collider", "editor_visibility") instance=ExtResource("2_5snd4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0.1, -2.5)
 shape = SubResource("BoxShape3D_mcfgt")
 disabled = true
-script = ExtResource("3_j83n7")
+script = ExtResource("3_h0psu")
 collider = NodePath(".")
 editor_visibility = NodePath("MeshInstance3D")
 metadata/part_name = "Start"
@@ -214,11 +218,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.284508, 0)
 mesh = SubResource("PlaneMesh_7faxf")
 skeleton = NodePath("")
 
-[node name="@CollisionShape3D@109" type="CollisionShape3D" parent="Starts" node_paths=PackedStringArray("collider", "editor_visibility") instance=ExtResource("2_e6gtl")]
+[node name="@CollisionShape3D@109" type="CollisionShape3D" parent="Starts" node_paths=PackedStringArray("collider", "editor_visibility") instance=ExtResource("2_5snd4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0.1, 2.5)
 shape = SubResource("BoxShape3D_mcfgt")
 disabled = true
-script = ExtResource("3_j83n7")
+script = ExtResource("3_h0psu")
 collider = NodePath(".")
 editor_visibility = NodePath("MeshInstance3D")
 metadata/part_name = "Start"
@@ -228,11 +232,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.284508, 0)
 mesh = SubResource("PlaneMesh_7faxf")
 skeleton = NodePath("")
 
-[node name="@CollisionShape3D@1869" type="CollisionShape3D" parent="Starts" node_paths=PackedStringArray("collider", "editor_visibility") instance=ExtResource("2_e6gtl")]
+[node name="@CollisionShape3D@1869" type="CollisionShape3D" parent="Starts" node_paths=PackedStringArray("collider", "editor_visibility") instance=ExtResource("2_5snd4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0.1, 2.5)
 shape = SubResource("BoxShape3D_3d3xk")
 disabled = true
-script = ExtResource("3_j83n7")
+script = ExtResource("3_h0psu")
 collider = NodePath(".")
 editor_visibility = NodePath("MeshInstance3D")
 metadata/part_name = "Start"
@@ -242,11 +246,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.284508, 0)
 mesh = SubResource("PlaneMesh_3hfgk")
 skeleton = NodePath("")
 
-[node name="@CollisionShape3D@1871" type="CollisionShape3D" parent="Starts" node_paths=PackedStringArray("collider", "editor_visibility") instance=ExtResource("2_e6gtl")]
+[node name="@CollisionShape3D@1871" type="CollisionShape3D" parent="Starts" node_paths=PackedStringArray("collider", "editor_visibility") instance=ExtResource("2_5snd4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0.1, -2.5)
 shape = SubResource("BoxShape3D_3d3xk")
 disabled = true
-script = ExtResource("3_j83n7")
+script = ExtResource("3_h0psu")
 collider = NodePath(".")
 editor_visibility = NodePath("MeshInstance3D")
 metadata/part_name = "Start"
@@ -256,11 +260,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.284508, 0)
 mesh = SubResource("PlaneMesh_3hfgk")
 skeleton = NodePath("")
 
-[node name="@CollisionShape3D@1873" type="CollisionShape3D" parent="Starts" node_paths=PackedStringArray("collider", "editor_visibility") instance=ExtResource("2_e6gtl")]
+[node name="@CollisionShape3D@1873" type="CollisionShape3D" parent="Starts" node_paths=PackedStringArray("collider", "editor_visibility") instance=ExtResource("2_5snd4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 0.1, 6)
 shape = SubResource("BoxShape3D_3d3xk")
 disabled = true
-script = ExtResource("3_j83n7")
+script = ExtResource("3_h0psu")
 collider = NodePath(".")
 editor_visibility = NodePath("MeshInstance3D")
 metadata/part_name = "Start"
@@ -270,11 +274,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.284508, 0)
 mesh = SubResource("PlaneMesh_3hfgk")
 skeleton = NodePath("")
 
-[node name="@CollisionShape3D@1875" type="CollisionShape3D" parent="Starts" node_paths=PackedStringArray("collider", "editor_visibility") instance=ExtResource("2_e6gtl")]
+[node name="@CollisionShape3D@1875" type="CollisionShape3D" parent="Starts" node_paths=PackedStringArray("collider", "editor_visibility") instance=ExtResource("2_5snd4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0.1, 6)
 shape = SubResource("BoxShape3D_3d3xk")
 disabled = true
-script = ExtResource("3_j83n7")
+script = ExtResource("3_h0psu")
 collider = NodePath(".")
 editor_visibility = NodePath("MeshInstance3D")
 metadata/part_name = "Start"
@@ -290,13 +294,13 @@ skeleton = NodePath("")
 shape = SubResource("BoxShape3D_ndgqk")
 disabled = true
 
-[node name="ProcMesh" type="MeshInstance3D" parent="." node_paths=PackedStringArray("editor_visibility", "body", "collider") instance=ExtResource("5_bjqie")]
+[node name="ProcMesh" type="MeshInstance3D" parent="." node_paths=PackedStringArray("editor_visibility", "body", "collider") instance=ExtResource("5_ljdbk")]
 mesh = SubResource("ArrayMesh_11mmd")
-script = ExtResource("6_f43as")
+script = ExtResource("6_dbfnh")
 editor_visibility = NodePath("MeshInstance3D")
 body = NodePath("StaticBody3D")
 collider = NodePath("StaticBody3D/CollisionShape3D")
-shape_info = Array[ExtResource("7_676ey")]([SubResource("Resource_xt6nc")])
+shape_info = Array[ExtResource("7_bbo4e")]([SubResource("Resource_xt6nc")])
 array_mesh = SubResource("ArrayMesh_11mmd")
 metadata/part_name = "Proc Mesh"
 
@@ -304,15 +308,35 @@ metadata/part_name = "Proc Mesh"
 collision_layer = 3
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ProcMesh/StaticBody3D"]
-shape = SubResource("ConcavePolygonShape3D_hlnib")
+shape = SubResource("ConcavePolygonShape3D_wb8e2")
 disabled = true
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="ProcMesh"]
 mesh = SubResource("BoxMesh_b8fir")
 
-[node name="EndZone" type="Node3D" parent="." node_paths=PackedStringArray("collider") instance=ExtResource("9_ugst3")]
-transform = Transform3D(1.5, 0, 0, 0, 2, 0, 0, 0, 1.5, 0, 1.3, 0)
-script = ExtResource("10_o27fh")
+[node name="@MeshInstance3D@955" type="MeshInstance3D" parent="." node_paths=PackedStringArray("editor_visibility", "body", "collider") instance=ExtResource("5_ljdbk")]
+mesh = SubResource("ArrayMesh_ixlan")
+script = ExtResource("6_dbfnh")
+editor_visibility = NodePath("MeshInstance3D")
+body = NodePath("StaticBody3D")
+collider = NodePath("StaticBody3D/CollisionShape3D")
+shape_info = Array[ExtResource("7_bbo4e")]([SubResource("Resource_tmlo6"), SubResource("Resource_oelnq"), SubResource("Resource_4g43f"), SubResource("Resource_4tf2m")])
+array_mesh = SubResource("ArrayMesh_ixlan")
+metadata/part_name = "Proc Mesh"
+
+[node name="StaticBody3D" type="StaticBody3D" parent="@MeshInstance3D@955"]
+collision_layer = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="@MeshInstance3D@955/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_bran7")
+disabled = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="@MeshInstance3D@955"]
+mesh = SubResource("BoxMesh_b8fir")
+
+[node name="EndZone" type="Node3D" parent="." node_paths=PackedStringArray("collider") instance=ExtResource("10_7vcfl")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 1.3, 0)
+script = ExtResource("11_0kvni")
 collider = NodePath("Area3D/CollisionShape3D")
 metadata/part_name = "Goal"
 
@@ -348,26 +372,6 @@ light_energy = 0.5
 light_color = Color(0.376471, 0.560784, 0.380392, 1)
 light_energy = 0.5
 omni_range = 10.0
-
-[node name="@MeshInstance3D@955" type="MeshInstance3D" parent="." node_paths=PackedStringArray("editor_visibility", "body", "collider") instance=ExtResource("5_bjqie")]
-mesh = SubResource("ArrayMesh_ixlan")
-script = ExtResource("6_f43as")
-editor_visibility = NodePath("MeshInstance3D")
-body = NodePath("StaticBody3D")
-collider = NodePath("StaticBody3D/CollisionShape3D")
-shape_info = Array[ExtResource("7_676ey")]([SubResource("Resource_tmlo6"), SubResource("Resource_oelnq"), SubResource("Resource_4g43f"), SubResource("Resource_4tf2m")])
-array_mesh = SubResource("ArrayMesh_ixlan")
-metadata/part_name = "Proc Mesh"
-
-[node name="StaticBody3D" type="StaticBody3D" parent="@MeshInstance3D@955"]
-collision_layer = 3
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="@MeshInstance3D@955/StaticBody3D"]
-shape = SubResource("ConcavePolygonShape3D_43xyw")
-disabled = true
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="@MeshInstance3D@955"]
-mesh = SubResource("BoxMesh_b8fir")
 
 [connection signal="area_entered" from="Starts" to="." method="start_timer"]
 [connection signal="area_entered" from="InputTrigger" to="." method="input_trigger"]

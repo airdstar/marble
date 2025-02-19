@@ -1,0 +1,7 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://bd6npdpb40flh"]
+
+[ext_resource type="FontFile" uid="uid://bujprr8ua7he7" path="res://Assets/Themes/Fonts/barlow/Barlow-Black.ttf" id="1_2hx1q"]
+
+[resource]
+default_font = ExtResource("1_2hx1q")
+default_font_size = 20

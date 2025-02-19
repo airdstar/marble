@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://df3msx1k8vfiy"]
+[gd_scene load_steps=7 format=3 uid="uid://df3msx1k8vfiy"]
 
 [ext_resource type="Script" path="res://Editor/Parts/Important/end_zone.gd" id="1_at64b"]
 
@@ -14,7 +14,11 @@ material = SubResource("StandardMaterial3D_jcltm")
 height = 1.0
 radial_segments = 10
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tmk0d"]
+albedo_color = Color(0.15, 0.15, 0.15, 1)
+
 [sub_resource type="CylinderMesh" id="CylinderMesh_0ehph"]
+material = SubResource("StandardMaterial3D_tmk0d")
 top_radius = 0.55
 bottom_radius = 0.55
 height = 0.025

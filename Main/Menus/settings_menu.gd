@@ -53,7 +53,7 @@ func place_control() -> void:
 		n.set_custom_minimum_size(Vector2(background.size.x / 10, 0))
 	
 	for n in changers:
-		n.set_custom_minimum_size(Vector2(background.size.x * 3 / 5, 20))
+		n.set_custom_minimum_size(Vector2(background.size.x * 3 / 5, 20 * get_window().get_size().x / 1280))
 
 func tab_changed(index : int) -> void:
 	control_container.visible = false
@@ -107,7 +107,19 @@ func visual_changed() -> void:
 
 
 func save_settings() -> void:
-	pass
+	PlayerInfo.player_settings.tilt_sens = tilt_sens[0].value / 100
+	PlayerInfo.player_settings.camera_sens = camera_sens[0].value
+	PlayerInfo.player_settings.tilt_deadzone = deadzone[0].value
+	
+	if PlayerInfo.player_settings.resolution != resolution[0].get_item_text(resolution[0].selected):
+		PlayerInfo.player_settings.aspect_ratio = aspect_ratio[0].get_item_text(aspect_ratio[0].selected)
+		PlayerInfo.player_settings.resolution = resolution[0].get_item_text(resolution[0].selected)
+		Global.set_resolution()
+		place_control()
+		Global.current_scene.place_control()
+		visual_changed()
+	
+	PlayerInfo.save_settings()
 
 func reset_settings() -> void:
 	PlayerInfo.player_settings = Settings.new()

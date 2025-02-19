@@ -33,6 +33,9 @@ var chosenSpawn : Vector2
 #Player related
 var settings = PlayerInfo.player_settings
 
+
+@export var UI : Control
+
 @onready var camera := $camera_y
 @onready var origin := $Origin
 @onready var timer : Timer = $Timer
@@ -41,7 +44,7 @@ var settings = PlayerInfo.player_settings
 @onready var run_handler : RunHandler = $RunHandler
 
 @onready var timer_text = $UI/Timer
-@onready var name_text = $UI/VBoxContainer/name
+@onready var name_text = $UI/name
 @onready var fps_text = $UI/VBoxContainer/fps
 @onready var speed_text = $UI/VBoxContainer/speed
 
@@ -50,8 +53,8 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	
-	fps_text.text = "FPS %d" % Engine.get_frames_per_second()
-	speed_text.text = "Speed %.2f" % (abs(marble.angular_velocity.x) + abs(marble.angular_velocity.y) + abs(marble.angular_velocity.z))
+	fps_text.text = "FPS: %d" % Engine.get_frames_per_second()
+	speed_text.text = "Speed: %.2f" % (abs(marble.angular_velocity.x) + abs(marble.angular_velocity.y) + abs(marble.angular_velocity.z))
 	
 	if allow_input:
 		var input = Input.get_last_mouse_velocity()
@@ -100,8 +103,13 @@ func _physics_process(delta: float) -> void:
 
 func place_control() -> void:
 	
+	name_text.set_size(get_window().get_size())
+	name_text.set_position(Vector2(0, get_window().get_size().y / 40))
+	name_text.add_theme_font_size_override("normal_font_size", 20 * get_window().get_size().x / 1280)
+	
 	timer_text.set_size(get_window().get_size())
 	timer_text.set_position(Vector2(0, get_window().get_size().y / 20))
+	timer_text.add_theme_font_size_override("normal_font_size", 35 * get_window().get_size().x / 1280)
 	
 	timer_text.visible = false
 	
@@ -109,7 +117,7 @@ func place_control() -> void:
 func start_game() -> void:
 	transitioning = true
 	allow_input = false
-	
+	UI.visible = true
 	
 	if is_run:
 		run_handler.reset_run()
@@ -162,7 +170,7 @@ func game_over() -> void:
 		allow_input = false
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 		
-		timer_text.visible = false
+		UI.visible = false
 		marble.visible = false
 		marble.collision.set_deferred("monitorable", false)
 		
@@ -222,7 +230,7 @@ func killzone_touched(_area: Area3D) -> void:
 	reset_orientation()
 
 func level_generated(level_info : level_resource) -> void:
-	name_text.text = level_info.name
+	name_text.text = "[center]" + level_info.name
 	level_type = level_info.level_type
 	default_camera_skybox()
 	

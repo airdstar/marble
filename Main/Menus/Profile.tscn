@@ -1,32 +1,19 @@
-[gd_scene load_steps=4 format=3 uid="uid://dh7dc6u5iari0"]
+[gd_scene load_steps=3 format=3 uid="uid://dh7dc6u5iari0"]
 
 [ext_resource type="Script" path="res://Main/Menus/profile.gd" id="1_ds35u"]
-[ext_resource type="Theme" uid="uid://bblhstx3bttr7" path="res://Assets/Themes/Main.tres" id="1_r5l1o"]
+[ext_resource type="Theme" uid="uid://baqdiduk3wnvc" path="res://Assets/Themes/Alt1.tres" id="1_ph8md"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1xjct"]
-bg_color = Color(0.596, 0.886, 0.776, 0.3)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.596, 0.886, 0.776, 1)
-corner_radius_top_left = 20
-corner_radius_top_right = 20
-corner_radius_bottom_right = 20
-corner_radius_bottom_left = 20
-shadow_color = Color(0, 0, 0, 0.7)
-shadow_size = 1
-
-[node name="Profile" type="Control" node_paths=PackedStringArray("background", "player_info")]
+[node name="Profile" type="Control" node_paths=PackedStringArray("background", "header", "player_info")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("1_r5l1o")
+theme = ExtResource("1_ph8md")
 script = ExtResource("1_ds35u")
 background = NodePath("Panel")
+header = NodePath("Panel/Header")
 player_info = NodePath("Panel/Info")
 
 [node name="Panel" type="Panel" parent="."]
@@ -35,15 +22,19 @@ offset_left = 373.0
 offset_top = 171.0
 offset_right = 699.0
 offset_bottom = 469.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_1xjct")
+
+[node name="Header" type="RichTextLabel" parent="Panel"]
+layout_mode = 0
+offset_right = 177.0
+offset_bottom = 40.0
+bbcode_enabled = true
+text = "[center]Player Stats"
+fit_content = true
 
 [node name="Info" type="RichTextLabel" parent="Panel"]
 layout_mode = 0
 offset_right = 357.0
 offset_bottom = 172.0
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_constants/shadow_outline_size = 4
-theme_override_constants/line_separation = 10
 bbcode_enabled = true
 text = "[font_size=40]Hi[/font_size]
 Hi"
