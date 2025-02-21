@@ -1,6 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://2nsb0c22moeb"]
+[gd_scene load_steps=5 format=3 uid="uid://2nsb0c22moeb"]
 
 [ext_resource type="Script" path="res://Editor/Parts/proc_mesh.gd" id="1_gq2ps"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4lfcj"]
+resource_local_to_scene = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4t1h0"]
 transparency = 1
@@ -10,6 +13,7 @@ albedo_color = Color(0, 0, 0, 0.1)
 material = SubResource("StandardMaterial3D_4t1h0")
 
 [node name="ProcMesh" type="MeshInstance3D" node_paths=PackedStringArray("editor_visibility", "body", "collider")]
+material_override = SubResource("StandardMaterial3D_4lfcj")
 script = ExtResource("1_gq2ps")
 editor_visibility = NodePath("MeshInstance3D")
 body = NodePath("StaticBody3D")

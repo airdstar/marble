@@ -1,13 +1,15 @@
-[gd_scene load_steps=7 format=3 uid="uid://df3msx1k8vfiy"]
+[gd_scene load_steps=11 format=3 uid="uid://df3msx1k8vfiy"]
 
 [ext_resource type="Script" path="res://Editor/Parts/Important/end_zone.gd" id="1_at64b"]
+[ext_resource type="Texture2D" uid="uid://bupa5jgoolv5x" path="res://Assets/marble.png" id="2_fy6ji"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_kv84c"]
 height = 1.0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jcltm"]
 transparency = 1
-albedo_color = Color(0.377688, 0.559348, 0.378798, 0.4)
+albedo_color = Color(0.378, 0.559, 0.379, 0.7)
+roughness = 0.0
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_mcbnd"]
 material = SubResource("StandardMaterial3D_jcltm")
@@ -16,6 +18,7 @@ radial_segments = 10
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tmk0d"]
 albedo_color = Color(0.15, 0.15, 0.15, 1)
+metallic = 0.5
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_0ehph"]
 material = SubResource("StandardMaterial3D_tmk0d")
@@ -23,6 +26,22 @@ top_radius = 0.55
 bottom_radius = 0.55
 height = 0.025
 radial_segments = 10
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_24ye2"]
+spread = 180.0
+initial_velocity_min = 0.5
+initial_velocity_max = 0.5
+gravity = Vector3(0, 0, 0)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rpxdr"]
+transparency = 1
+albedo_color = Color(0.495, 0.649, 0.502, 0.5)
+albedo_texture = ExtResource("2_fy6ji")
+billboard_mode = 1
+
+[sub_resource type="QuadMesh" id="QuadMesh_7yhb5"]
+material = SubResource("StandardMaterial3D_rpxdr")
+size = Vector2(0.6, 0.6)
 
 [node name="EndZone" type="Node3D" node_paths=PackedStringArray("collider")]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
@@ -60,7 +79,12 @@ light_energy = 0.5
 
 [node name="OmniLight3D3" type="OmniLight3D" parent="."]
 light_color = Color(0.376471, 0.560784, 0.380392, 1)
-light_energy = 0.5
+light_energy = 2.0
 omni_range = 10.0
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+lifetime = 0.75
+process_material = SubResource("ParticleProcessMaterial_24ye2")
+draw_pass_1 = SubResource("QuadMesh_7yhb5")
 
 [connection signal="area_entered" from="Area3D" to="." method="next_level"]

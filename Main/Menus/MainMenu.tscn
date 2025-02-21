@@ -38,19 +38,20 @@ volumetric_fog_enabled = true
 volumetric_fog_density = 0.0001
 volumetric_fog_albedo = Color(0.4, 1, 0.415686, 1)
 
-[node name="MainMenu" type="Control" node_paths=PackedStringArray("main_container", "extras_container", "important_container", "logo", "rotate_logo", "background", "small_buttons")]
+[node name="MainMenu" type="Control" node_paths=PackedStringArray("main_container", "extras_container", "important_container", "logo", "rotate_logo", "background", "small_buttons", "big_buttons")]
 process_mode = 1
 layout_mode = 3
 anchors_preset = 0
 theme = ExtResource("1_lrwul")
 script = ExtResource("1_tofsu")
-main_container = NodePath("HBoxContainer")
-extras_container = NodePath("VBoxContainer")
+main_container = NodePath("GridContainer2")
+extras_container = NodePath("GridContainer")
 important_container = NodePath("HBoxContainer2")
 logo = NodePath("Sprite2D")
 rotate_logo = NodePath("Sprite2D/Sprite2D2")
 background = NodePath("SubViewport")
 small_buttons = [NodePath("HBoxContainer2/Customization"), NodePath("HBoxContainer2/Profile"), NodePath("HBoxContainer2/Settings")]
+big_buttons = [NodePath("GridContainer/Gallery"), NodePath("GridContainer/Editor"), NodePath("GridContainer/Challenges"), NodePath("GridContainer/??"), NodePath("GridContainer2/Play"), NodePath("GridContainer2/Extras")]
 
 [node name="Background" type="TextureRect" parent="."]
 layout_mode = 0
@@ -58,77 +59,69 @@ offset_right = 1284.0
 offset_bottom = 720.0
 texture = SubResource("ViewportTexture_ltt8l")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
-layout_mode = 2
-offset_left = 427.0
-offset_top = 464.0
-offset_right = 823.0
-offset_bottom = 534.0
-size_flags_vertical = 3
+[node name="GridContainer2" type="GridContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+columns = 2
 
-[node name="Play" type="Button" parent="HBoxContainer"]
+[node name="Play" type="Button" parent="GridContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 3
 text = "Play"
 
-[node name="MarginContainer6" type="MarginContainer" parent="HBoxContainer"]
-layout_mode = 2
-theme_override_constants/margin_right = -20
-
-[node name="Extras" type="Button" parent="HBoxContainer"]
+[node name="Extras" type="Button" parent="GridContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Extras"
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="GridContainer" type="GridContainer" parent="."]
 visible = false
-layout_mode = 0
-offset_right = 493.0
-offset_bottom = 150.0
-
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
-size_flags_vertical = 3
+offset_right = 182.0
+offset_bottom = 95.0
+columns = 2
 
-[node name="Gallery" type="Button" parent="VBoxContainer/HBoxContainer"]
+[node name="Gallery" type="Button" parent="GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Gallery"
 
-[node name="MarginContainer7" type="MarginContainer" parent="VBoxContainer/HBoxContainer"]
-layout_mode = 2
-theme_override_constants/margin_right = -20
-
-[node name="Editor" type="Button" parent="VBoxContainer/HBoxContainer"]
+[node name="Editor" type="Button" parent="GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Editor"
 
-[node name="MarginContainer8" type="MarginContainer" parent="VBoxContainer"]
-layout_mode = 2
-theme_override_constants/margin_right = -20
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="Challenges" type="Button" parent="VBoxContainer/HBoxContainer2"]
+[node name="Challenges" type="Button" parent="GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 disabled = true
 text = "???"
 
-[node name="MarginContainer7" type="MarginContainer" parent="VBoxContainer/HBoxContainer2"]
-layout_mode = 2
-theme_override_constants/margin_right = -20
-
-[node name="??" type="Button" parent="VBoxContainer/HBoxContainer2"]
+[node name="??" type="Button" parent="GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 disabled = true
 text = "???"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="."]
+layout_mode = 2
+offset_top = 55.0
+offset_right = 200.0
+offset_bottom = 103.0
+
+[node name="Customization" type="Button" parent="HBoxContainer2"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+
+[node name="Profile" type="Button" parent="HBoxContainer2"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+
+[node name="Settings" type="Button" parent="HBoxContainer2"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(640, 180)
@@ -137,33 +130,6 @@ texture = ExtResource("5_lcnhj")
 
 [node name="Sprite2D2" type="Sprite2D" parent="Sprite2D"]
 texture = ExtResource("6_yv5bw")
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="."]
-layout_mode = 2
-offset_left = 540.0
-offset_top = 616.0
-offset_right = 740.0
-offset_bottom = 664.0
-
-[node name="Customization" type="Button" parent="HBoxContainer2"]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-
-[node name="MarginContainer6" type="MarginContainer" parent="HBoxContainer2"]
-layout_mode = 2
-theme_override_constants/margin_right = -20
-
-[node name="Profile" type="Button" parent="HBoxContainer2"]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-
-[node name="MarginContainer7" type="MarginContainer" parent="HBoxContainer2"]
-layout_mode = 2
-theme_override_constants/margin_right = -20
-
-[node name="Settings" type="Button" parent="HBoxContainer2"]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
 
 [node name="SubViewport" type="SubViewport" parent="."]
 size = Vector2i(1280, 720)
@@ -212,10 +178,10 @@ environment = SubResource("Environment_jhntf")
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 6.94082, 0)
 light_energy = 0.3
 
-[connection signal="pressed" from="HBoxContainer/Play" to="." method="open_floor"]
-[connection signal="pressed" from="HBoxContainer/Extras" to="." method="extras_pressed"]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/Gallery" to="." method="open_scene" binds= ["gallery"]]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/Editor" to="." method="open_scene" binds= ["editor"]]
+[connection signal="pressed" from="GridContainer2/Play" to="." method="open_floor"]
+[connection signal="pressed" from="GridContainer2/Extras" to="." method="extras_pressed"]
+[connection signal="pressed" from="GridContainer/Gallery" to="." method="open_scene" binds= ["gallery"]]
+[connection signal="pressed" from="GridContainer/Editor" to="." method="open_scene" binds= ["editor"]]
 [connection signal="pressed" from="HBoxContainer2/Customization" to="." method="open_scene" binds= ["customization"]]
 [connection signal="pressed" from="HBoxContainer2/Profile" to="." method="open_profile"]
 [connection signal="pressed" from="HBoxContainer2/Settings" to="." method="open_popup" binds= ["settings"]]

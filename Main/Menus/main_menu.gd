@@ -1,7 +1,7 @@
 extends Node
 
-@export var main_container : HBoxContainer
-@export var extras_container : VBoxContainer
+@export var main_container : GridContainer
+@export var extras_container : GridContainer
 @export var important_container : HBoxContainer
 @export var logo : Sprite2D
 @export var rotate_logo : Sprite2D
@@ -9,26 +9,30 @@ extends Node
 @export var background : SubViewport
 
 @export var small_buttons : Array[Button]
-
-var extras_opened : bool = false
+@export var big_buttons : Array[Button]
 
 func _ready() -> void:
 	place_control()
 	set_background()
 
 func place_control() -> void:
-	main_container.set_size(Vector2(get_window().get_size().x / 3, get_window().get_size().y / 10))
-	main_container.set_position(Vector2(get_window().get_size().x / 2 - (main_container.size.x / 2), get_window().get_size().y / 2 + get_window().get_size().y / 10))
-	
-	extras_container.set_size(Vector2(get_window().get_size().x / 3, get_window().get_size().y * 5 / 20))
-	extras_container.set_position(Vector2(get_window().get_size().x / 2 - (extras_container.size.x / 2), get_window().get_size().y / 2))
-	
-	
 	for n : Button in small_buttons:
 		n.set_custom_minimum_size(Vector2(get_window().get_size().y / 15, get_window().get_size().y / 15))
+	
+	for n : Button in big_buttons:
+		n.set_custom_minimum_size(Vector2(get_window().get_size().x * 3 / 20, get_window().get_size().y / 10))
+	
+	main_container.add_theme_constant_override("h_separation", 20 * get_window().get_size().x / 1280)
+	main_container.add_theme_constant_override("v_separation", 20 * get_window().get_size().x / 1280)
+	main_container.set_position(Vector2(get_window().get_size().x / 2 - (main_container.size.x / 2), get_window().get_size().y / 2 + extras_container.size.y / 2))
+	
+	extras_container.add_theme_constant_override("h_separation", 20 * get_window().get_size().x / 1280)
+	extras_container.add_theme_constant_override("v_separation", 20 * get_window().get_size().x / 1280)
+	extras_container.set_position(Vector2(get_window().get_size().x / 2 - (extras_container.size.x / 2), get_window().get_size().y / 2))
+	
+	important_container.add_theme_constant_override("separation", 20 * get_window().get_size().x / 1280)
 	important_container.set_size(Vector2.ZERO)
 	important_container.set_position(Vector2(get_window().get_size().x / 2 - (important_container.size.x / 2), get_window().get_size().y * 9 / 10 - important_container.size.y) )
-	
 	
 	logo.set_scale(Vector2(float(get_window().get_size().x) / 4000, float(get_window().get_size().x) / 4000))
 	logo.set_position(Vector2(get_window().get_size().x / 2, get_window().get_size().y / 4))
@@ -40,10 +44,9 @@ func _process(delta: float) -> void:
 	
 	if Input.is_action_just_pressed("back"):
 		if Global.main_scene.popup_scene == null:
-			if !extras_opened:
+			if !extras_container.visible:
 				get_tree().quit()
 			else:
-				extras_opened = false
 				main_container.visible = true
 				extras_container.visible = false
 
@@ -60,10 +63,8 @@ func open_profile() -> void:
 	Global.open_profile(PlayerInfo.player_data)
 
 func extras_pressed() -> void:
-	extras_opened = true
 	main_container.visible = false
 	extras_container.visible = true
-
 
 func set_background() -> void:
 	var holder
