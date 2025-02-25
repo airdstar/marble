@@ -1,6 +1,6 @@
 extends Control
 
-@onready var option_container := $LevelSelect/ScrollContainer/VBoxContainer
+@export var option_container : GridContainer
 
 @onready var level_select := $LevelSelect
 @onready var new_level := $NewLevel
@@ -14,6 +14,11 @@ var selected_level : level_resource = null
 signal level_selected
 
 func _ready() -> void:
+	set_size(Vector2(get_window().size.x / 2, get_window().size.y / 1.5))
+	set_position(Vector2(get_window().size.x / 2 - size.x / 2, get_window().size.y / 4))
+	level_select.set_size(size)
+	new_level.set_size(size)
+	
 	var dir = DirAccess.open(resource_path)
 	dir.list_dir_begin()
 	var currentLevel : String = dir.get_next()
@@ -40,6 +45,8 @@ func add_level(level_info : level_resource) -> void:
 	var option : Button = Button.new()
 	option.text = level_info.name
 	option.toggle_mode = true
+	option.set_custom_minimum_size(Vector2(0, size.x / 9))
+	option.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	option_container.add_child(option)
 	option.toggled.connect(level_pressed.bind(level_info, option))
 

@@ -40,11 +40,6 @@ func place_control() -> void:
 	var top_border : int = get_window().size.y / 45
 	var bottom_border : int = get_window().size.y * 44 / 45
 	
-	level_select.set_size(Vector2(get_window().size.x / 5, get_window().size.y / 2))
-	level_select.set_position(Vector2(get_window().size.x / 2 - level_select.size.x / 2, get_window().size.y / 4))
-	level_select_container.set_size(level_select.size)
-	level_select_new_container.set_size(level_select.size)
-	
 	settings.set_size(Vector2(get_window().size.x / 5, get_window().size.y / 2))
 	settings.set_position(Vector2(get_window().size.x / 2 - settings.size.x / 2, get_window().size.y / 4))
 	settings_container.set_size(settings.size)

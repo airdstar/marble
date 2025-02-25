@@ -844,13 +844,15 @@ fit_content = true
 [node name="CheckBox" type="CheckBox" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/Rotation/HBoxContainer"]
 layout_mode = 2
 
-[node name="Parts" type="Panel" parent="UI" node_paths=PackedStringArray("shape_holder", "important_holder")]
+[node name="Parts" type="Panel" parent="UI" node_paths=PackedStringArray("shape_holder", "parts_holder", "important_holder", "misc_holder")]
 layout_mode = 0
 offset_right = 300.0
 offset_bottom = 300.0
 script = ExtResource("6_xrgr4")
 shape_holder = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/Shapes")
-important_holder = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/ImportantParts")
+parts_holder = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/Parts")
+important_holder = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/Parts/Important")
+misc_holder = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/Parts/Misc")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UI/Parts"]
 layout_mode = 0
@@ -879,13 +881,24 @@ size_flags_vertical = 3
 
 [node name="Shapes" type="GridContainer" parent="UI/Parts/VBoxContainer/ScrollContainer/VBoxContainer"]
 layout_mode = 2
-columns = 4
+size_flags_vertical = 3
+columns = 3
 
-[node name="ImportantParts" type="VBoxContainer" parent="UI/Parts/VBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="Parts" type="VBoxContainer" parent="UI/Parts/VBoxContainer/ScrollContainer/VBoxContainer"]
 visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+
+[node name="Important" type="GridContainer" parent="UI/Parts/VBoxContainer/ScrollContainer/VBoxContainer/Parts"]
+layout_mode = 2
+size_flags_vertical = 3
+columns = 3
+
+[node name="Misc" type="GridContainer" parent="UI/Parts/VBoxContainer/ScrollContainer/VBoxContainer/Parts"]
+layout_mode = 2
+size_flags_vertical = 3
+columns = 3
 
 [node name="Sections" type="Panel" parent="UI" node_paths=PackedStringArray("tab_bar", "geometry_holder", "shape_holder", "geometry_options", "part_holder")]
 visible = false
@@ -1067,26 +1080,19 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "Settings"
 
-[node name="LevelSelect" type="Panel" parent="UI"]
+[node name="LevelSelect" type="Panel" parent="UI" node_paths=PackedStringArray("option_container")]
 layout_mode = 0
 offset_left = 363.0
 offset_top = 57.0
 offset_right = 493.0
 offset_bottom = 322.0
 script = ExtResource("5_kbbl2")
+option_container = NodePath("LevelSelect/ScrollContainer/GridContainer")
 
 [node name="LevelSelect" type="VBoxContainer" parent="UI/LevelSelect"]
 layout_mode = 0
-offset_right = 130.0
+offset_right = 140.0
 offset_bottom = 265.0
-
-[node name="ScrollContainer" type="ScrollContainer" parent="UI/LevelSelect/LevelSelect"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/LevelSelect/LevelSelect/ScrollContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
 
 [node name="HBoxContainer" type="HBoxContainer" parent="UI/LevelSelect/LevelSelect"]
 layout_mode = 2
@@ -1105,6 +1111,16 @@ text = "Edit"
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Delete"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="UI/LevelSelect/LevelSelect"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="GridContainer" type="GridContainer" parent="UI/LevelSelect/LevelSelect/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+columns = 2
 
 [node name="NewLevel" type="VBoxContainer" parent="UI/LevelSelect"]
 visible = false
@@ -1125,6 +1141,7 @@ size_flags_horizontal = 3
 layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "Level Name"
+max_length = 32
 
 [node name="OptionButton" type="OptionButton" parent="UI/LevelSelect/NewLevel/VBoxContainer"]
 layout_mode = 2

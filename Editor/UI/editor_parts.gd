@@ -14,8 +14,15 @@ var important_parts : Dictionary = {
 	"False Goal" : "res://Editor/Parts/Important/FalseEndZone.tscn"
 }
 
+var misc_parts : Dictionary = {
+	"Boost" : "res://Editor/Parts/Important/Boost.tscn"
+}
+
 @export var shape_holder : GridContainer
-@export var important_holder : VBoxContainer
+@export var parts_holder : VBoxContainer
+
+@export var important_holder : GridContainer
+@export var misc_holder : GridContainer
 
 signal new_part_selected
 signal new_shape_selected
@@ -23,18 +30,27 @@ signal new_shape_selected
 func _ready() -> void:
 	tab_changed(0)
 	for n : String in shapes:
-		var current_button : Button = Button.new()
-		current_button.custom_minimum_size = Vector2(size.x / 4, size.x / 4 )
+		var current_button : Button = create_button()
 		current_button.text = n
 		shape_holder.add_child(current_button)
 		current_button.pressed.connect(shape_selected.bind(shapes[n]))
 	
 	for n : String in important_parts:
-		var current_button : Button = Button.new()
-		current_button.custom_minimum_size = Vector2(32,32)
+		var current_button : Button = create_button()
 		current_button.text = n
 		important_holder.add_child(current_button)
 		current_button.pressed.connect(part_selected.bind(important_parts[n]))
+	
+	for n : String in misc_parts:
+		var current_button : Button = create_button()
+		current_button.text = n
+		misc_holder.add_child(current_button)
+		current_button.pressed.connect(part_selected.bind(misc_parts[n]))
+	
+func create_button() -> Button:
+	var to_return = Button.new()
+	to_return.custom_minimum_size = Vector2(size.x / 4, size.x / 4)
+	return to_return
 
 func part_selected(part_path : String) -> void:
 	var holder = load(part_path)
@@ -46,9 +62,10 @@ func shape_selected(shape : Resource) -> void:
 
 func tab_changed(tab: int) -> void:
 	shape_holder.visible = false
-	important_holder.visible = false
+	parts_holder.visible = false
 	match tab:
 		0:
 			shape_holder.visible = true
 		1:
-			important_holder.visible = true
+			parts_holder.visible = true
+			

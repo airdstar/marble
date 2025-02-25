@@ -41,6 +41,7 @@ window/size/resizable=false
 
 Respawner=""
 Goal=""
+Boost=""
 
 [input]
 

@@ -50,6 +50,9 @@ func collision_detected(body: Node3D) -> void:
 	elif body.is_in_group("Respawner"):
 		orientation_change.emit()
 		reset()
+	elif body.is_in_group("Boost"):
+		await get_tree().create_timer(body.delay)
+		apply_force(Vector3(1,0,0) * body.amount)
 
 func reset() -> void:
 	visible = true
