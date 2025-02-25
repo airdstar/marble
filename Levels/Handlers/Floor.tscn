@@ -45,10 +45,10 @@ transform = Transform3D(1, 0, 0, 0, 0.866026, 0.5, 0, -0.5, 0.866026, 0, 0, 16.5
 current = true
 fov = 70.0
 
-[node name="KillArea" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -50, 0)
+[node name="StaticBody3D" type="StaticBody3D" parent="." groups=["Respawner"]]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="KillArea"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -50, 0)
 shape = SubResource("BoxShape3D_omjb2")
 
 [node name="UI" type="Control" parent="."]
@@ -138,4 +138,3 @@ script = ExtResource("7_vjknv")
 [connection signal="level_generated" from="LevelHandler" to="." method="level_generated"]
 [connection signal="difficulty_changed" from="RunHandler" to="LevelHandler" method="set_level_pool"]
 [connection signal="timeout" from="Timer" to="." method="game_over"]
-[connection signal="area_entered" from="KillArea" to="." method="killzone_touched"]

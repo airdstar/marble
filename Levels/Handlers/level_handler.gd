@@ -33,7 +33,8 @@ func generate_level(delay : bool) -> void:
 	var instanced_level := current_level.associated_scene.instantiate()
 
 	master.instanced = instanced_level
-	master.origin.add_child(master.instanced)
+	master.origin.add_child(instanced_level)
+	
 
 	if master.allow_timer:
 		instanced_level.timer_start.connect(master.start_timer)

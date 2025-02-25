@@ -131,10 +131,30 @@ func set_resolution() -> void:
 	var window_size = get_window().get_size_with_decorations()
 	get_window().set_position(screen_center - window_size / 2)
 	
-	if PlayerInfo.player_settings.fullscreen:
-		pass
-
+	
+	if main_scene != null:
+		if current_scene != null:
+			current_scene.place_control()
+		
+		if main_scene.popup_scene != null:
+			main_scene.popup_scene.place_control()
+	
 	adjust_themes()
+
+func set_fullscreen() -> void:
+	if PlayerInfo.player_settings.fullscreen:
+		#get_tree().root.set_content_scale_mode(Window.CONTENT_SCALE_MODE_VIEWPORT)
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN)
+	else:
+		#get_tree().root.set_content_scale_mode(Window.CONTENT_SCALE_MODE_DISABLED)
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+	
+	if main_scene != null:
+		if current_scene != null:
+			current_scene.place_control()
+		
+		if main_scene.popup_scene != null:
+			main_scene.popup_scene.place_control()
 
 func adjust_themes() -> void:
 	var main_theme : Theme = ResourceLoader.load("res://Assets/Themes/Main.tres")

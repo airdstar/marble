@@ -38,7 +38,7 @@ volumetric_fog_enabled = true
 volumetric_fog_density = 0.0001
 volumetric_fog_albedo = Color(0.4, 1, 0.415686, 1)
 
-[node name="MainMenu" type="Control" node_paths=PackedStringArray("main_container", "extras_container", "important_container", "logo", "rotate_logo", "background", "small_buttons", "big_buttons")]
+[node name="MainMenu" type="Control" node_paths=PackedStringArray("main_container", "extras_container", "important_container", "logo", "rotate_logo", "background")]
 process_mode = 1
 layout_mode = 3
 anchors_preset = 0
@@ -50,8 +50,6 @@ important_container = NodePath("HBoxContainer2")
 logo = NodePath("Sprite2D")
 rotate_logo = NodePath("Sprite2D/Sprite2D2")
 background = NodePath("SubViewport")
-small_buttons = [NodePath("HBoxContainer2/Customization"), NodePath("HBoxContainer2/Profile"), NodePath("HBoxContainer2/Settings")]
-big_buttons = [NodePath("GridContainer/Gallery"), NodePath("GridContainer/Editor"), NodePath("GridContainer/Challenges"), NodePath("GridContainer/??"), NodePath("GridContainer2/Play"), NodePath("GridContainer2/Extras")]
 
 [node name="Background" type="TextureRect" parent="."]
 layout_mode = 0
@@ -121,6 +119,9 @@ layout_mode = 2
 
 [node name="Settings" type="Button" parent="HBoxContainer2"]
 custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+
+[node name="Info" type="Button" parent="HBoxContainer2"]
 layout_mode = 2
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

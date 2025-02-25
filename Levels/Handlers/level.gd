@@ -22,7 +22,7 @@ func open_editor():
 		if "editor_visibility" in n:
 			n.visible = true
 
-func start_level():
+func start_level() -> void:
 	input_collider.disabled = false
 	for n : Node3D in parts:
 		for m in n.get_children():
@@ -32,9 +32,8 @@ func start_level():
 			n.collider.disabled = false
 		if "editor_visibility" in n:
 			n.editor_visibility.visible = false
-	choose_spawn()
 
-func choose_spawn():
+func choose_spawn() -> Vector3:
 	var holder = []
 	for n in start_node.get_children():
 		holder.append(Vector2(n.position.x, n.position.z))
@@ -42,7 +41,7 @@ func choose_spawn():
 		holder.append(Vector2.ZERO)
 	var chosen_spawn = holder.pick_random()
 	input_collider.position = Vector3(chosen_spawn.x, 10, chosen_spawn.y)
-	Global.current_scene.chosenSpawn = chosen_spawn
+	return Vector3(chosen_spawn.x, 20, chosen_spawn.y)
 
 func input_trigger(area: Area3D) -> void:
 	if area.get_parent() is player:

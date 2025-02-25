@@ -39,7 +39,6 @@ window/size/resizable=false
 
 [global_group]
 
-Player=""
 Respawner=""
 Goal=""
 

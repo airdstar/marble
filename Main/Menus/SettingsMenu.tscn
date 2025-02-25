@@ -3,7 +3,7 @@
 [ext_resource type="Theme" uid="uid://baqdiduk3wnvc" path="res://Assets/Themes/Alt1.tres" id="1_ark2b"]
 [ext_resource type="Script" path="res://Main/Menus/settings_menu.gd" id="2_2ej18"]
 
-[node name="Settings" type="Control" node_paths=PackedStringArray("background", "holding_container", "control_container", "visual_container", "binds_container", "tab_buttons", "io_buttons", "values", "changers", "tilt_sens", "camera_sens", "deadzone", "aspect_ratio", "resolution")]
+[node name="Settings" type="Control" node_paths=PackedStringArray("background", "holding_container", "control_container", "visual_container", "binds_container", "tab_buttons", "io_buttons", "values", "changers", "tilt_sens", "camera_sens", "deadzone", "aspect_ratio", "resolution", "fullscreen")]
 layout_mode = 3
 anchors_preset = 0
 theme = ExtResource("1_ark2b")
@@ -22,6 +22,7 @@ camera_sens = [NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Contr
 deadzone = [NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control/DeadzoneSlider"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control/DeadzoneValue")]
 aspect_ratio = [NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Visual/AspectOptions"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Visual/AspectValue")]
 resolution = [NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Visual/ResOptions"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Visual/ResValue")]
+fullscreen = [NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Visual/FullscreenOptions"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Visual/FullscreenValue")]
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 0
@@ -200,6 +201,26 @@ fit_to_longest_item = false
 layout_mode = 2
 bbcode_enabled = true
 text = "[right]1280x720"
+fit_content = true
+
+[node name="FullscreenLabel" type="RichTextLabel" parent="Panel/VBoxContainer/ScrollContainer/VBoxContainer/Visual"]
+layout_mode = 2
+text = "Fullscreen"
+fit_content = true
+
+[node name="FullscreenOptions" type="OptionButton" parent="Panel/VBoxContainer/ScrollContainer/VBoxContainer/Visual"]
+layout_mode = 2
+selected = 0
+fit_to_longest_item = false
+item_count = 2
+popup/item_0/text = "Windowed"
+popup/item_1/text = "Fullscreen"
+popup/item_1/id = 2
+
+[node name="FullscreenValue" type="RichTextLabel" parent="Panel/VBoxContainer/ScrollContainer/VBoxContainer/Visual"]
+layout_mode = 2
+bbcode_enabled = true
+text = "Fullscreen"
 fit_content = true
 
 [node name="Binds" type="GridContainer" parent="Panel/VBoxContainer/ScrollContainer/VBoxContainer"]

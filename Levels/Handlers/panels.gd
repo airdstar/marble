@@ -10,9 +10,9 @@ var chosen_style : FloorLevel.panel_style
 func _ready() -> void:
 	choose_random()
 	for m in rows:
-		var pivot = Node3D.new()
-		add_child(pivot)
-		pivots.append(pivot)
+		var pivot_point = Node3D.new()
+		add_child(pivot_point)
+		pivots.append(pivot_point)
 		for n in columns:
 			var holder = MeshInstance3D.new()
 			holder.mesh = ResourceLoader.load("res://Levels/Parts/Panel.obj")
@@ -20,7 +20,7 @@ func _ready() -> void:
 			holder.rotation = Vector3(0, PI * 2.0 * (float(n + float(m) / 3) / columns), deg_to_rad(20))
 			holder.set_layer_mask_value(7, true)
 			holder.set_layer_mask_value(1, false)
-			pivot.add_child(holder)
+			pivot_point.add_child(holder)
 
 func choose_random() -> void:
 	pass

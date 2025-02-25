@@ -11,6 +11,11 @@ var customization : PlayerCustomization
 @export var light : OmniLight3D
 @export var collision : Area3D
 
+var reset_pos : Vector3
+
+signal next_level
+signal orientation_change
+
 func _ready():
 	set_color()
 	set_face()
@@ -38,5 +43,17 @@ func set_flair() -> void:
 	else:
 		flair.visible = false
 
-func enable_monitoring() -> void:
+func collision_detected(body: Node3D) -> void:
+	if body.is_in_group("Goal"):
+		next_level.emit()
+		collision.set_deferred("monitorable", false)
+	elif body.is_in_group("Respawner"):
+		orientation_change.emit()
+		reset()
+
+func reset() -> void:
+	visible = true
+	position = reset_pos
+	angular_velocity = Vector3.ZERO
+	linear_velocity = Vector3.ZERO
 	collision.set_deferred("monitorable", true)

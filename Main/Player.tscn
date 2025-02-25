@@ -1,6 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://daqk2roaa6h1v"]
+[gd_scene load_steps=9 format=3 uid="uid://daqk2roaa6h1v"]
 
 [ext_resource type="Script" path="res://Main/player.gd" id="1_8df3t"]
+[ext_resource type="Texture2D" uid="uid://bb4qn3pn0oavo" path="res://Assets/smallbutton.png" id="2_l5m83"]
 [ext_resource type="Texture2D" uid="uid://580l6qpyteqr" path="res://Assets/Customization/Faces/test face.png" id="2_upe4j"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_vmld2"]
@@ -49,6 +50,7 @@ mesh = SubResource("SphereMesh_ijwjb")
 transform = Transform3D(-4.37114e-08, -1, 0, -4.37114e-08, 1.91069e-15, -1, 1, -4.37114e-08, -4.37114e-08, -0.4, 0, 0)
 layers = 16
 size = Vector3(0.4, 0.3, 0.4)
+texture_albedo = ExtResource("2_l5m83")
 upper_fade = 1e-05
 lower_fade = 1e-05
 cull_mask = 1047568
@@ -69,3 +71,5 @@ shape = SubResource("SphereShape3D_84e8f")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
 light_energy = 0.5
+
+[connection signal="body_entered" from="Area3D" to="." method="collision_detected"]

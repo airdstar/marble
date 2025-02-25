@@ -46,7 +46,7 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("back"):
-		Global.open_scene(Global.main_scene.prev_scene)
+		Global.open_scene("main_menu")
 
 func place_control() -> void:
 	
@@ -63,7 +63,7 @@ func create_button(level_info : level_resource) -> Button:
 	return to_return
 
 func level_selected(level_info : level_resource) -> void:
-	Global.open_floor(Global.floor_type.GALLERY, [level_info])
+	Global.open_floor(FloorLevel.floor_type.GALLERY, [level_info])
 
 func tab_changed(index : int) -> void:
 	easy_container.visible = false

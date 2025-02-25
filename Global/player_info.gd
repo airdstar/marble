@@ -24,6 +24,7 @@ func load_info() -> void:
 		player_settings = ResourceLoader.load(settings_save_path)
 		player_settings.check_info()
 		Global.set_resolution()
+		Global.set_fullscreen()
 
 func save_data() -> void:
 	ResourceSaver.save(player_data, data_save_path)
@@ -39,3 +40,4 @@ func clear_settings() -> void:
 	player_settings = Settings.new()
 	ResourceSaver.save(player_settings, settings_save_path)
 	Global.set_resolution()
+	Global.set_fullscreen()

@@ -46,13 +46,12 @@ size = Vector2(0.6, 0.6)
 [node name="EndZone" type="Node3D" node_paths=PackedStringArray("collider")]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
 script = ExtResource("1_at64b")
-collider = NodePath("Area3D/CollisionShape3D")
+collider = NodePath("StaticBody3D/CollisionShape3D")
 metadata/part_name = "Goal"
 
-[node name="Area3D" type="Area3D" parent="."]
-collision_layer = 3
+[node name="StaticBody3D" type="StaticBody3D" parent="." groups=["Goal"]]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
 shape = SubResource("CylinderShape3D_kv84c")
 disabled = true
 
@@ -86,5 +85,3 @@ omni_range = 10.0
 lifetime = 0.75
 process_material = SubResource("ParticleProcessMaterial_24ye2")
 draw_pass_1 = SubResource("QuadMesh_7yhb5")
-
-[connection signal="area_entered" from="Area3D" to="." method="next_level"]

@@ -10,6 +10,7 @@ var in_order := false
 var allow_timer := false
 # If timer should count up
 var timer_count_up := false
+var time_taken : float = 0.0
 
 #State related
 var transitioning : bool = true
@@ -28,11 +29,10 @@ var level_type : int
 var instanced : level
 var prev_instance : level
 var marble : player
-var chosenSpawn : Vector2
+
 
 #Player related
 var settings = PlayerInfo.player_settings
-
 
 @export var UI : Control
 
@@ -52,9 +52,9 @@ func _ready() -> void:
 	place_control()
 
 func _process(delta: float) -> void:
-	
-	fps_text.text = "FPS: %d" % Engine.get_frames_per_second()
-	speed_text.text = "Speed: %.2f" % (abs(marble.angular_velocity.x) + abs(marble.angular_velocity.y) + abs(marble.angular_velocity.z))
+	if UI.visible:
+		fps_text.text = "FPS: %d" % Engine.get_frames_per_second()
+		speed_text.text = "Speed: %.2f" % (abs(marble.angular_velocity.x) + abs(marble.angular_velocity.y) + abs(marble.angular_velocity.z))
 	
 	if allow_input:
 		var input = Input.get_last_mouse_velocity()
@@ -82,9 +82,14 @@ func _process(delta: float) -> void:
 	
 	if allow_timer:
 		if !transitioning:
-			timer_text.text = "[center]" + "%.2f" % timer.time_left
+			if timer_count_up:
+				time_taken += delta
+				timer_text.text = "[center]" + "%.2f" % time_taken
+			else:
+				timer_text.text = "[center]" + "%.2f" % timer.time_left
 		else:
-			timer_text.text = "[center]" + "%.2f" % timer.wait_time
+			if !timer_count_up:
+				timer_text.text = "[center]" + "%.2f" % timer.wait_time
 	
 	
 	if Input.is_action_just_pressed("back"):
@@ -119,6 +124,13 @@ func start_game() -> void:
 	allow_input = false
 	UI.visible = true
 	
+	var holder = preload("res://Main/Player.tscn").instantiate()
+	holder.set_customization(PlayerInfo.player_data.player_customization)
+	marble = holder
+	add_child(marble)
+	marble.next_level.connect(next_level)
+	marble.orientation_change.connect(reset_orientation)
+	
 	if is_run:
 		run_handler.reset_run()
 	
@@ -133,13 +145,7 @@ func start_game() -> void:
 	
 	run_handler.inRun = true
 	
-	if marble == null:
-		var holder = preload("res://Main/Player.tscn").instantiate()
-		holder.set_customization(PlayerInfo.player_data.player_customization)
-		add_child(holder)
-		marble = holder
-	
-	call_deferred("reset_marble")
+	marble.reset()
 
 func next_level() -> void:
 	transitioning = true
@@ -158,7 +164,7 @@ func next_level() -> void:
 
 	await get_tree().create_timer(0.91).timeout
 	
-	reset_marble()
+	marble.reset()
 
 func game_over() -> void:
 	if is_run and Global.main_scene.popup_scene == null:
@@ -171,8 +177,8 @@ func game_over() -> void:
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 		
 		UI.visible = false
-		marble.visible = false
-		marble.collision.set_deferred("monitorable", false)
+		marble.queue_free()
+		marble = null
 		
 		PlayerInfo.player_data.game_over_count += 1
 		
@@ -180,16 +186,18 @@ func game_over() -> void:
 	else:
 		prev_scene()
 
-
 func set_time() -> void:
 	if allow_timer:
 		timer_text.visible = true
 		if run_handler.inRun:
-			var remaining_time = timer.time_left
-			timer.stop()
-			var tween = create_tween()
-			tween.tween_method(timer.set_wait_time, remaining_time, remaining_time + 3, 1).set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_IN_OUT)
+			if !timer_count_up:
+				var remaining_time = timer.time_left
+				timer.stop()
+				var tween = create_tween()
+				tween.tween_method(timer.set_wait_time, remaining_time, remaining_time + 3, 1).set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_IN_OUT)
 		else:
+			if timer_count_up:
+				time_taken = 0.0
 			timer.stop()
 			timer.set_wait_time(20)
 
@@ -213,28 +221,17 @@ func default_camera_skybox() -> void:
 				1:
 					camera.rotation.y = deg_to_rad(-90)
 
-func reset_marble() -> void:
-	marble.visible = true
-	marble.linear_velocity = Vector3.ZERO
-	marble.angular_velocity = Vector3.ZERO
-	marble.position = Vector3(chosenSpawn.x,20,chosenSpawn.y)
-	marble.enable_monitoring()
-
 func reset_orientation() -> void:
 	allow_input = false
 	if level_type == 0:
 		camera.rand_rotation()
 
-func killzone_touched(_area: Area3D) -> void:
-	reset_marble()
-	reset_orientation()
-
 func level_generated(level_info : level_resource) -> void:
 	name_text.text = "[center]" + level_info.name
 	level_type = level_info.level_type
 	default_camera_skybox()
-	
 	instanced.start_level()
+	marble.reset_pos = instanced.choose_spawn()
 	
 func prev_scene() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)

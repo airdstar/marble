@@ -8,27 +8,35 @@ extends Node
 
 @export var background : SubViewport
 
-@export var small_buttons : Array[Button]
-@export var big_buttons : Array[Button]
 
 func _ready() -> void:
 	place_control()
 	set_background()
 
 func place_control() -> void:
-	for n : Button in small_buttons:
-		n.set_custom_minimum_size(Vector2(get_window().get_size().y / 15, get_window().get_size().y / 15))
+	for n in important_container.get_children():
+		n.set_custom_minimum_size(Vector2(get_window().get_size().x / 25, get_window().get_size().x / 25))
+		n.size = Vector2.ZERO
 	
-	for n : Button in big_buttons:
+	for n in main_container.get_children():
+		print(n.size)
 		n.set_custom_minimum_size(Vector2(get_window().get_size().x * 3 / 20, get_window().get_size().y / 10))
+		n.size = Vector2.ZERO
+		print(n.size)
 	
-	main_container.add_theme_constant_override("h_separation", 20 * get_window().get_size().x / 1280)
-	main_container.add_theme_constant_override("v_separation", 20 * get_window().get_size().x / 1280)
-	main_container.set_position(Vector2(get_window().get_size().x / 2 - (main_container.size.x / 2), get_window().get_size().y / 2 + extras_container.size.y / 2))
+	for n in extras_container.get_children():
+		n.set_custom_minimum_size(Vector2(get_window().get_size().x * 3 / 20, get_window().get_size().y / 10))
+		n.size = Vector2.ZERO
 	
 	extras_container.add_theme_constant_override("h_separation", 20 * get_window().get_size().x / 1280)
 	extras_container.add_theme_constant_override("v_separation", 20 * get_window().get_size().x / 1280)
+	extras_container.set_size(Vector2.ZERO)
 	extras_container.set_position(Vector2(get_window().get_size().x / 2 - (extras_container.size.x / 2), get_window().get_size().y / 2))
+	
+	main_container.add_theme_constant_override("h_separation", 20 * get_window().get_size().x / 1280)
+	main_container.add_theme_constant_override("v_separation", 20 * get_window().get_size().x / 1280)
+	main_container.set_size(Vector2.ZERO)
+	main_container.set_position(Vector2(get_window().get_size().x / 2 - (main_container.size.x / 2), get_window().get_size().y / 2 + extras_container.size.y / 4))
 	
 	important_container.add_theme_constant_override("separation", 20 * get_window().get_size().x / 1280)
 	important_container.set_size(Vector2.ZERO)

@@ -23,6 +23,7 @@ extends Node
 
 @export var aspect_ratio : Array[Control]
 @export var resolution : Array[Control]
+@export var fullscreen : Array[Control]
 
 func _ready() -> void:
 	for n in Global.aspect_ratios:
@@ -73,6 +74,11 @@ func set_values() -> void:
 	camera_sens[0].value = PlayerInfo.player_settings.camera_sens
 	deadzone[0].value = PlayerInfo.player_settings.tilt_deadzone
 	
+	if PlayerInfo.player_settings.fullscreen:
+		fullscreen[0].selected = 1
+	else:
+		fullscreen[0].selected = 0
+	
 	visual_changed()
 	
 	for n in aspect_ratio[0].item_count:
@@ -95,15 +101,19 @@ func set_res_options(index : int) -> void:
 func control_changed(value : float, index : int) -> void:
 	match index:
 		0:
-			tilt_sens[1].text = "[right]%.1f " % (value * 10)
+			tilt_sens[1].text = "[right]%.1f" % (value * 10)
 		1:
-			camera_sens[1].text = "[right]%.1f " % value
+			camera_sens[1].text = "[right]%.1f" % value
 		2:
-			deadzone[1].text = "[right]%.1f " % value
+			deadzone[1].text = "[right]%.1f" % value
 
 func visual_changed() -> void:
-	aspect_ratio[1].text = "[right]" + PlayerInfo.player_settings.aspect_ratio + " "
-	resolution[1].text = "[right]" + PlayerInfo.player_settings.resolution + " "
+	aspect_ratio[1].text = "[right]" + PlayerInfo.player_settings.aspect_ratio
+	resolution[1].text = "[right]" + PlayerInfo.player_settings.resolution
+	if PlayerInfo.player_settings.fullscreen:
+		fullscreen[1].text = "[right]Fullscreen"
+	else:
+		fullscreen[1].text = "[right]Windowed"
 
 
 func save_settings() -> void:
@@ -115,8 +125,15 @@ func save_settings() -> void:
 		PlayerInfo.player_settings.aspect_ratio = aspect_ratio[0].get_item_text(aspect_ratio[0].selected)
 		PlayerInfo.player_settings.resolution = resolution[0].get_item_text(resolution[0].selected)
 		Global.set_resolution()
-		place_control()
-		Global.current_scene.place_control()
+		visual_changed()
+	
+	if fullscreen[0].selected == 1 and !PlayerInfo.player_settings.fullscreen:
+		PlayerInfo.player_settings.fullscreen = true
+		Global.set_fullscreen()
+		visual_changed()
+	elif fullscreen[0].selected == 0 and PlayerInfo.player_settings.fullscreen:
+		PlayerInfo.player_settings.fullscreen = false
+		Global.set_fullscreen()
 		visual_changed()
 	
 	PlayerInfo.save_settings()
