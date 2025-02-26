@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://cm6h8dtxs0l7l"]
+
+[ext_resource type="Script" path="res://Editor/Parts/Misc/boost.gd" id="1_mvefp"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ew6yf"]
+
+[node name="LaunchPad" type="StaticBody3D" node_paths=PackedStringArray("collider") groups=["Boost"]]
+script = ExtResource("1_mvefp")
+collider = NodePath("CollisionShape3D")
+direction = Vector3(0, 1, 0)
+amount = 400
+delay = 1.0
+metadata/part_name = "Launch Pad"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_ew6yf")

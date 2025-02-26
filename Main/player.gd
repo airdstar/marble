@@ -45,6 +45,7 @@ func set_flair() -> void:
 
 func collision_detected(body: Node3D) -> void:
 	if body.is_in_group("Goal"):
+		print("hi")
 		next_level.emit()
 		collision.set_deferred("monitorable", false)
 	elif body.is_in_group("Respawner"):
@@ -52,7 +53,7 @@ func collision_detected(body: Node3D) -> void:
 		reset()
 	elif body.is_in_group("Boost"):
 		await get_tree().create_timer(body.delay)
-		apply_force(Vector3(1,0,0) * body.amount)
+		apply_force(body.transform.basis * body.direction * body.amount * 100)
 
 func reset() -> void:
 	visible = true

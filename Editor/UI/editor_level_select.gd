@@ -29,7 +29,6 @@ func _ready() -> void:
 		
 		levels.append(holder)
 		
-		
 		new_level.unavailable_names.append(holder.name)
 		
 		currentLevel = dir.get_next()

@@ -1,0 +1,41 @@
+[gd_scene load_steps=7 format=3 uid="uid://5j0egucg3uo2"]
+
+[ext_resource type="Script" path="res://Editor/Parts/Misc/boost.gd" id="1_5bry6"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_g2m4f"]
+size = Vector3(1, 0.1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ucelh"]
+albedo_color = Color(0.676899, 0.469476, 0.433517, 0.2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_amcb5"]
+material = SubResource("StandardMaterial3D_ucelh")
+size = Vector3(1, 0.05, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_oi5na"]
+size = Vector3(0.1, 0.01, 0.5)
+
+[sub_resource type="PrismMesh" id="PrismMesh_gqr5o"]
+size = Vector3(0.2, 0.2, 0.01)
+
+[node name="BoostPad" type="StaticBody3D" node_paths=PackedStringArray("collider") groups=["Boost"]]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+script = ExtResource("1_5bry6")
+collider = NodePath("CollisionShape3D")
+direction = Vector3(0, 0, 1)
+metadata/part_name = "Boost Pad"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.075, 0)
+shape = SubResource("BoxShape3D_g2m4f")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_amcb5")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03, 0)
+mesh = SubResource("BoxMesh_oi5na")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.03, 0.25)
+mesh = SubResource("PrismMesh_gqr5o")

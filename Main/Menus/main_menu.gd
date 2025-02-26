@@ -19,10 +19,8 @@ func place_control() -> void:
 		n.size = Vector2.ZERO
 	
 	for n in main_container.get_children():
-		print(n.size)
 		n.set_custom_minimum_size(Vector2(get_window().get_size().x * 3 / 20, get_window().get_size().y / 10))
 		n.size = Vector2.ZERO
-		print(n.size)
 	
 	for n in extras_container.get_children():
 		n.set_custom_minimum_size(Vector2(get_window().get_size().x * 3 / 20, get_window().get_size().y / 10))

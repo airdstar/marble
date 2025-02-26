@@ -15,7 +15,9 @@ var important_parts : Dictionary = {
 }
 
 var misc_parts : Dictionary = {
-	"Boost" : "res://Editor/Parts/Important/Boost.tscn"
+	"Boost Pad" : "res://Editor/Parts/Misc/BoostPad.tscn",
+	"Launch Pad" : "res://Editor/Parts/Misc/LaunchPad.tscn",
+	"Boost Zone" : "res://Editor/Parts/Misc/BoostZone.tscn"
 }
 
 @export var shape_holder : GridContainer
