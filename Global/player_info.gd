@@ -12,9 +12,7 @@ func load_info() -> void:
 		clear_data()
 	else:
 		player_data = ResourceLoader.load(data_save_path)
-		if player_data != null:
-			player_data.check_info()
-		else:
+		if player_data == null:
 			clear_data()
 	
 	if !FileAccess.file_exists(settings_save_path):
@@ -22,7 +20,6 @@ func load_info() -> void:
 		clear_settings()
 	else:
 		player_settings = ResourceLoader.load(settings_save_path)
-		player_settings.check_info()
 		Global.set_resolution()
 		Global.set_fullscreen()
 

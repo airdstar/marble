@@ -3,7 +3,7 @@
 [ext_resource type="Theme" uid="uid://baqdiduk3wnvc" path="res://Assets/Themes/Alt1.tres" id="1_ark2b"]
 [ext_resource type="Script" path="res://Main/Menus/settings_menu.gd" id="2_2ej18"]
 
-[node name="Settings" type="Control" node_paths=PackedStringArray("background", "holding_container", "control_container", "visual_container", "binds_container", "tab_buttons", "io_buttons", "values", "changers", "tilt_sens", "camera_sens", "deadzone", "aspect_ratio", "resolution", "fullscreen")]
+[node name="Settings" type="Control" node_paths=PackedStringArray("background", "holding_container", "control_container", "visual_container", "accessability_container", "binds_container", "tab_buttons", "io_buttons", "values", "changers", "tilt_sens", "camera_sens", "deadzone", "aspect_ratio", "resolution", "fullscreen")]
 layout_mode = 3
 anchors_preset = 0
 theme = ExtResource("1_ark2b")
@@ -12,6 +12,7 @@ background = NodePath("Panel")
 holding_container = NodePath("Panel/VBoxContainer")
 control_container = NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control")
 visual_container = NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Visual")
+accessability_container = NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Accessability")
 binds_container = NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Binds")
 tab_buttons = [NodePath("Panel/VBoxContainer/CenterContainer/Tabs/Button"), NodePath("Panel/VBoxContainer/CenterContainer/Tabs/Button2"), NodePath("Panel/VBoxContainer/CenterContainer/Tabs/Button3")]
 io_buttons = [NodePath("Panel/VBoxContainer/CenterContainer2/IO/Save"), NodePath("Panel/VBoxContainer/CenterContainer2/IO/Reset")]
@@ -53,6 +54,10 @@ layout_mode = 2
 text = "Visual"
 
 [node name="Button3" type="Button" parent="Panel/VBoxContainer/CenterContainer/Tabs"]
+layout_mode = 2
+text = "Accessability"
+
+[node name="Button4" type="Button" parent="Panel/VBoxContainer/CenterContainer/Tabs"]
 layout_mode = 2
 text = "Binds"
 
@@ -153,6 +158,7 @@ fit_content = true
 scroll_active = false
 
 [node name="Visual" type="GridContainer" parent="Panel/VBoxContainer/ScrollContainer/VBoxContainer"]
+visible = false
 layout_mode = 2
 columns = 3
 
@@ -208,16 +214,40 @@ layout_mode = 2
 text = "Fullscreen"
 fit_content = true
 
-[node name="FullscreenOptions" type="OptionButton" parent="Panel/VBoxContainer/ScrollContainer/VBoxContainer/Visual"]
+[node name="FullscreenOptions" type="CheckButton" parent="Panel/VBoxContainer/ScrollContainer/VBoxContainer/Visual"]
 layout_mode = 2
-selected = 0
-fit_to_longest_item = false
-item_count = 2
-popup/item_0/text = "Windowed"
-popup/item_1/text = "Fullscreen"
-popup/item_1/id = 2
 
 [node name="FullscreenValue" type="RichTextLabel" parent="Panel/VBoxContainer/ScrollContainer/VBoxContainer/Visual"]
+layout_mode = 2
+bbcode_enabled = true
+text = "Fullscreen"
+fit_content = true
+
+[node name="Accessability" type="GridContainer" parent="Panel/VBoxContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+columns = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/VBoxContainer/ScrollContainer/VBoxContainer/Accessability"]
+layout_mode = 2
+theme_override_constants/margin_bottom = 5
+
+[node name="MarginContainer2" type="MarginContainer" parent="Panel/VBoxContainer/ScrollContainer/VBoxContainer/Accessability"]
+layout_mode = 2
+theme_override_constants/margin_bottom = 5
+
+[node name="MarginContainer3" type="MarginContainer" parent="Panel/VBoxContainer/ScrollContainer/VBoxContainer/Accessability"]
+layout_mode = 2
+theme_override_constants/margin_bottom = 5
+
+[node name="SpeedLabel" type="RichTextLabel" parent="Panel/VBoxContainer/ScrollContainer/VBoxContainer/Accessability"]
+layout_mode = 2
+text = "Show Speed"
+fit_content = true
+
+[node name="SpeedOptions" type="CheckButton" parent="Panel/VBoxContainer/ScrollContainer/VBoxContainer/Accessability"]
+layout_mode = 2
+
+[node name="SpeedValue" type="RichTextLabel" parent="Panel/VBoxContainer/ScrollContainer/VBoxContainer/Accessability"]
 layout_mode = 2
 bbcode_enabled = true
 text = "Fullscreen"
@@ -245,6 +275,7 @@ text = "Reset to default"
 [connection signal="pressed" from="Panel/VBoxContainer/CenterContainer/Tabs/Button" to="." method="tab_changed" binds= [0]]
 [connection signal="pressed" from="Panel/VBoxContainer/CenterContainer/Tabs/Button2" to="." method="tab_changed" binds= [1]]
 [connection signal="pressed" from="Panel/VBoxContainer/CenterContainer/Tabs/Button3" to="." method="tab_changed" binds= [2]]
+[connection signal="pressed" from="Panel/VBoxContainer/CenterContainer/Tabs/Button4" to="." method="tab_changed" binds= [3]]
 [connection signal="value_changed" from="Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control/TiltSlider" to="." method="control_changed" binds= [0]]
 [connection signal="value_changed" from="Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control/CameraSlider" to="." method="control_changed" binds= [1]]
 [connection signal="value_changed" from="Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control/DeadzoneSlider" to="." method="control_changed" binds= [2]]

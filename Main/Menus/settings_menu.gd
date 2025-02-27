@@ -6,6 +6,7 @@ extends Node
 @export var holding_container : VBoxContainer
 @export var control_container : GridContainer
 @export var visual_container : GridContainer
+@export var accessability_container : GridContainer
 @export var binds_container : GridContainer
 
 @export_category("Buttons")
@@ -59,6 +60,7 @@ func place_control() -> void:
 func tab_changed(index : int) -> void:
 	control_container.visible = false
 	visual_container.visible = false
+	accessability_container.visible = false
 	binds_container.visible = false
 	
 	match index:
@@ -67,6 +69,8 @@ func tab_changed(index : int) -> void:
 		1:
 			visual_container.visible = true
 		2:
+			accessability_container.visible = true
+		3:
 			binds_container.visible = true
 
 func set_values() -> void:
@@ -75,9 +79,9 @@ func set_values() -> void:
 	deadzone[0].value = PlayerInfo.player_settings.tilt_deadzone
 	
 	if PlayerInfo.player_settings.fullscreen:
-		fullscreen[0].selected = 1
+		fullscreen[0].button_pressed = true
 	else:
-		fullscreen[0].selected = 0
+		fullscreen[0].button_pressed = false
 	
 	visual_changed()
 	
@@ -111,9 +115,9 @@ func visual_changed() -> void:
 	aspect_ratio[1].text = "[right]" + PlayerInfo.player_settings.aspect_ratio
 	resolution[1].text = "[right]" + PlayerInfo.player_settings.resolution
 	if PlayerInfo.player_settings.fullscreen:
-		fullscreen[1].text = "[right]Fullscreen"
+		fullscreen[1].text = "[right]Enabled"
 	else:
-		fullscreen[1].text = "[right]Windowed"
+		fullscreen[1].text = "[right]Disabled"
 
 
 func save_settings() -> void:
@@ -121,18 +125,15 @@ func save_settings() -> void:
 	PlayerInfo.player_settings.camera_sens = camera_sens[0].value
 	PlayerInfo.player_settings.tilt_deadzone = deadzone[0].value
 	
+	
 	if PlayerInfo.player_settings.resolution != resolution[0].get_item_text(resolution[0].selected):
 		PlayerInfo.player_settings.aspect_ratio = aspect_ratio[0].get_item_text(aspect_ratio[0].selected)
 		PlayerInfo.player_settings.resolution = resolution[0].get_item_text(resolution[0].selected)
 		Global.set_resolution()
 		visual_changed()
 	
-	if fullscreen[0].selected == 1 and !PlayerInfo.player_settings.fullscreen:
-		PlayerInfo.player_settings.fullscreen = true
-		Global.set_fullscreen()
-		visual_changed()
-	elif fullscreen[0].selected == 0 and PlayerInfo.player_settings.fullscreen:
-		PlayerInfo.player_settings.fullscreen = false
+	if fullscreen[0].button_pressed != PlayerInfo.player_settings.fullscreen:
+		PlayerInfo.player_settings.fullscreen = fullscreen[0].button_pressed
 		Global.set_fullscreen()
 		visual_changed()
 	
