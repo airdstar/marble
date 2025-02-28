@@ -89,6 +89,10 @@ func _process(delta: float) -> void:
 			else:
 				timer_text.text = "[center]%d" % timer.time_left
 				secondary_timer_text.text = "[center]%03d" % (int(timer.time_left * 1000) % 1000)
+		else:
+			if !timer_count_up:
+				timer_text.text = "[center]%d" % timer.wait_time
+				secondary_timer_text.text = "[center]%03d" % (int(timer.wait_time * 1000) % 1000)
 	if Input.is_action_just_pressed("back"):
 		game_over()
 

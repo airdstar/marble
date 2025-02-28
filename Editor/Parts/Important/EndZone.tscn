@@ -15,6 +15,8 @@ roughness = 0.0
 material = SubResource("StandardMaterial3D_jcltm")
 height = 1.0
 radial_segments = 10
+cap_top = false
+cap_bottom = false
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tmk0d"]
 albedo_color = Color(0.15, 0.15, 0.15, 1)
@@ -53,7 +55,6 @@ metadata/part_name = "Goal"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
 shape = SubResource("CylinderShape3D_kv84c")
-disabled = true
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("CylinderMesh_mcbnd")

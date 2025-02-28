@@ -141,6 +141,8 @@ func new_part_created(part : Node3D) -> void:
 	else:
 		level_base.add_child(part)
 	rec_set_owner(part)
+	if "collider" in part:
+		part.collider.disabled = true
 	UI.sections.add_part(part, true)
 
 func rec_set_owner(part : Node3D) -> void:
