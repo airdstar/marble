@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://2nsb0c22moeb"]
 
-[ext_resource type="Script" path="res://Editor/Parts/proc_mesh.gd" id="1_gq2ps"]
+[ext_resource type="Script" path="res://Editor/Parts/Important/Scripts/proc_mesh.gd" id="1_gq2ps"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4lfcj"]
 resource_local_to_scene = true
@@ -16,6 +16,7 @@ material = SubResource("StandardMaterial3D_4t1h0")
 material_override = SubResource("StandardMaterial3D_4lfcj")
 script = ExtResource("1_gq2ps")
 editor_visibility = NodePath("MeshInstance3D")
+base = "res://Editor/Parts/Important/ProcMesh.tscn"
 body = NodePath("StaticBody3D")
 collider = NodePath("StaticBody3D/CollisionShape3D")
 metadata/part_name = "Proc Mesh"

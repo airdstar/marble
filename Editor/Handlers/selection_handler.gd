@@ -4,7 +4,7 @@ extends Node
 @export var UI : Control
 @export var shape_preview : ProcMesh
 
-var selected_part : Node3D = null
+var selected_part : Node = null
 var selected_shape : shape_resource = null
 var held_shape : shape_resource = null
 var selected_component : component = null
@@ -12,17 +12,17 @@ var selected_component : component = null
 signal part_selected
 signal shape_selected
 
-func _part_selected(part : Node3D) -> void:
+func _part_selected(_part : Node) -> void:
 	var holder : Node3D
-	if part is ProcMesh:
-		if part.is_preview:
+	if _part is ProcMesh:
+		if _part.is_preview:
 			holder = selected_part
 	
-	master.adjuster.selected_pos_changed(part.position)
-	master.adjuster.selected_size_changed(part.scale)
-	master.adjuster.selected_rotation_changed(part.rotation)
+	master.adjuster.selected_pos_changed(_part.position)
+	master.adjuster.selected_size_changed(_part.scale)
+	master.adjuster.selected_rotation_changed(_part.rotation)
 	
-	selected_part = part
+	selected_part = _part
 	part_selected.emit(selected_part)
 
 func _part_unselected() -> void:

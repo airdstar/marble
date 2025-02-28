@@ -1,7 +1,9 @@
 [gd_scene load_steps=2 format=3 uid="uid://bji1xtvf4wyts"]
 
-[ext_resource type="Script" path="res://Editor/Parts/Important/pivot.gd" id="1_ndc68"]
+[ext_resource type="Script" path="res://Editor/Parts/part.gd" id="1_csfim"]
 
 [node name="Pivot" type="Node3D"]
-script = ExtResource("1_ndc68")
+script = ExtResource("1_csfim")
+base = "res://Editor/Parts/Important/Pivot.tscn"
+part_type = 2
 metadata/part_name = "Pivot"

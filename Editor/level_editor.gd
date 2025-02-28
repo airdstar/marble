@@ -130,24 +130,61 @@ func create_and_place() -> void:
 	selection_handler._shape_unselected()
 
 func new_procmesh_created() -> ProcMesh:
-	var holder = preload("res://Editor/Parts/ProcMesh.tscn").instantiate()
+	var holder = preload("res://Editor/Parts/Important/ProcMesh.tscn").instantiate()
 	new_part_created(holder)
 	return holder
 
-func new_part_created(part : Node3D) -> void:
-	level_base.parts.append(part)
-	if part is start:
-		level_base.start_node.add_child(part)
-	else:
-		level_base.add_child(part)
-	rec_set_owner(part)
-	if "collider" in part:
-		part.collider.disabled = true
-	UI.sections.add_part(part, true)
+func new_part_created(_part : Node) -> void:
+	level_base.parts.append(_part)
+	if _part.part_type == part.type.START:
+		level_base.starts.append(_part)
+	level_base.add_child(_part)
+	rec_set_owner(_part)
+	if _part.collider != null:
+		_part.collider.disabled = true
+	UI.sections.add_part(_part, true)
 
-func rec_set_owner(part : Node3D) -> void:
-	part.set_owner(level_base)
-	for n in part.get_children():
+
+func reload_part() -> void:
+	var reloaded_part = load(selection_handler.selected_part.base)
+	reloaded_part = reloaded_part.instantiate()
+	var info_holder : Array = []
+	var child_holder : Array = []
+	info_holder.append(selection_handler.selected_part.get_parent())
+	info_holder.append(selection_handler.selected_part.scale)
+	info_holder.append(selection_handler.selected_part.rotation)
+	info_holder.append(selection_handler.selected_part.position)
+	
+	if selection_handler.selected_part is ProcMesh:
+		reloaded_part.shape_info = selection_handler.selected_part.shape_info
+	
+	if selection_handler.selected_part.part_type == part.type.PIVOT:
+		for n in selection_handler.selected_part.get_children():
+			child_holder.append(n)
+	else:
+		for n in selection_handler.selected_part.get_children():
+			if n is component:
+				child_holder.append(n)
+	
+	UI.sections.remove_selected()
+	new_part_created(reloaded_part)
+	reloaded_part.reparent(info_holder[0])
+	reloaded_part.scale = info_holder[1]
+	reloaded_part.rotation = info_holder[2]
+	reloaded_part.position = info_holder[3]
+	
+	if reloaded_part is ProcMesh:
+		reloaded_part.regenerate_mesh()
+	
+	for n in child_holder:
+		n.reparent(reloaded_part)
+	
+	selection_handler._part_selected(reloaded_part)
+
+
+func rec_set_owner(_part : Node) -> void:
+	_part.set_owner(level_base)
+	for n in _part.get_children():
 		rec_set_owner(n)
 
 func part_rotation_toggled(toggled_on: bool) -> void:
@@ -174,10 +211,10 @@ func part_movement_toggled(toggled_on : bool) -> void:
 	pass
 
 func get_all_non_pivot_parts() -> void:
-	var to_return : Array[Node3D]
+	var to_return : Array[Node]
 	
 	for n in level_base.parts:
-		if n is not pivot:
+		if n.part_type != part.type.PIVOT:
 			to_return.append(n)
 	
 	all_non_pivots.emit(to_return)

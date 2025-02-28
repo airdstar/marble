@@ -57,7 +57,7 @@ func rot_changed(new_rot : Vector3) -> void:
 		"Shape":
 			shape_properties.shape_rot.text = " Rotation: %d" % new_rot.x + ", %d" % new_rot.y + ", %d" % new_rot.z
 
-func part_selected(part : Node3D) -> void:
+func part_selected(_part : Node) -> void:
 	var select_tab : int = get_tab("Part")
 	if select_tab == -1:
 		select_tab = property_options.tab_count
@@ -65,11 +65,8 @@ func part_selected(part : Node3D) -> void:
 	
 	property_options.current_tab = select_tab
 	
-	for n in part.get_children():
-		pass
-	
 	property_group_changed(select_tab)
-	part_properties.display_part_properties(part)
+	part_properties.display_part_properties(_part)
 
 func part_unselected() -> void:
 	if get_tab("Part") != -1:

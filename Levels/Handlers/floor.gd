@@ -135,6 +135,8 @@ func start_game() -> void:
 	add_child(marble)
 	marble.next_level.connect(next_level)
 	marble.orientation_change.connect(reset_orientation)
+	if allow_timer:
+		marble.level_start.connect(start_timer)
 	
 	if is_run:
 		run_handler.reset_run()
@@ -209,8 +211,9 @@ func set_time() -> void:
 			secondary_timer_text.text = "[center]%03d" % 0
 
 func start_timer():
-	timer.start()
-	transitioning = false
+	if timer.is_stopped():
+		timer.start()
+		transitioning = false
 
 func default_camera_skybox() -> void:
 	match level_type:

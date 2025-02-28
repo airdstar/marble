@@ -44,6 +44,8 @@ func remove_selected() -> void:
 				part_buttons[n].queue_free()
 				part_buttons.remove_at(n)
 				level_info.parts.remove_at(level_info.parts.find(selected_part))
+				if selected_part.part_type == part.type.START:
+					level_info.starts.remove_at(level_info.starts.find(selected_part))
 				selected_part.queue_free()
 				selected_part = null
 				for m : Button in shape_holder.get_children():

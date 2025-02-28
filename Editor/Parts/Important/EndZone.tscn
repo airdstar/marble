@@ -1,6 +1,6 @@
 [gd_scene load_steps=11 format=3 uid="uid://df3msx1k8vfiy"]
 
-[ext_resource type="Script" path="res://Editor/Parts/Important/end_zone.gd" id="1_at64b"]
+[ext_resource type="Script" path="res://Editor/Parts/part.gd" id="1_at64b"]
 [ext_resource type="Texture2D" uid="uid://bupa5jgoolv5x" path="res://Assets/marble.png" id="2_fy6ji"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_kv84c"]
@@ -45,15 +45,14 @@ billboard_mode = 1
 material = SubResource("StandardMaterial3D_rpxdr")
 size = Vector2(0.6, 0.6)
 
-[node name="EndZone" type="Node3D" node_paths=PackedStringArray("collider")]
+[node name="EndZone" type="StaticBody3D" node_paths=PackedStringArray("collider") groups=["Goal"]]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
 script = ExtResource("1_at64b")
-collider = NodePath("StaticBody3D/CollisionShape3D")
+collider = NodePath("CollisionShape3D")
+base = "res://Editor/Parts/Important/EndZone.tscn"
 metadata/part_name = "Goal"
 
-[node name="StaticBody3D" type="StaticBody3D" parent="." groups=["Goal"]]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CylinderShape3D_kv84c")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]

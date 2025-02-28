@@ -2,6 +2,8 @@ extends MeshInstance3D
 class_name ProcMesh
 
 @export var editor_visibility : Node3D
+@export var base : String
+@export var part_type : part.type = part.type.NA
 
 @export var body : StaticBody3D
 @export var collider : CollisionShape3D

@@ -19,12 +19,22 @@ func _ready() -> void:
 	
 	tab_changed(0)
 	place_control()
+	
+	var null_button : Button = create_button()
+	face_container.add_child(null_button)
+	null_button.pressed.connect(set_face.bind(null))
+	
+	null_button = create_button()
+	flair_container.add_child(null_button)
+	null_button.pressed.connect(set_flair.bind(null))
+	
 	for n in Cosmetic.colors:
 		for m in Cosmetic.get_shades(n):
 			var current_button : Button = create_button()
 			color_container.add_child(current_button)
 			current_button.modulate = m
 			current_button.pressed.connect(set_color.bind(m))
+	
 	
 	for n in Cosmetic.faces:
 		var current_button : Button = create_button()

@@ -13,6 +13,7 @@ var customization : PlayerCustomization
 
 var reset_pos : Vector3
 
+signal level_start
 signal next_level
 signal orientation_change
 
@@ -30,29 +31,30 @@ func set_color() -> void:
 	light.light_color = customization.chosen_color
 
 func set_face() -> void:
-	if customization.chosen_face != ResourceLoader.load("res://Assets/Customization/Faces/1.png"):
+	if customization.chosen_face != null:
 		face.visible = true
 		face.texture_albedo = customization.chosen_face
 	else:
 		face.visible = false
 
 func set_flair() -> void:
-	if customization.chosen_flair != ResourceLoader.load("res://Assets/Customization/Flairs/1.png"):
+	if customization.chosen_flair != null:
 		flair.visible = true
 		flair.texture_albedo = customization.chosen_flair
 	else:
 		flair.visible = false
 
 func collision_detected(body: Node3D) -> void:
-	if body.is_in_group("Goal"):
-		print("hi")
+	if body.is_in_group("Start"):
+		level_start.emit()
+	elif body.is_in_group("Goal"):
 		next_level.emit()
 		collision.set_deferred("monitorable", false)
 	elif body.is_in_group("Respawner"):
 		orientation_change.emit()
 		reset()
 	elif body.is_in_group("Boost"):
-		await get_tree().create_timer(body.delay)
+		await get_tree().create_timer(body.delay).timeout
 		apply_force(body.transform.basis * body.direction * body.amount * 100)
 
 func reset() -> void:

@@ -1,13 +1,13 @@
 [gd_scene load_steps=3 format=3 uid="uid://dh3uachfaer3g"]
 
-[ext_resource type="Script" path="res://Editor/Parts/Misc/boost.gd" id="1_a5rv8"]
+[ext_resource type="Script" path="res://Editor/Parts/Misc/Scripts/boost.gd" id="1_a5rv8"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_7li2w"]
 
 [node name="BoostZone" type="StaticBody3D" node_paths=PackedStringArray("collider") groups=["Boost"]]
 script = ExtResource("1_a5rv8")
-collider = NodePath("CollisionShape3D")
 direction = Vector3(0, 0, 1)
+collider = NodePath("CollisionShape3D")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_7li2w")

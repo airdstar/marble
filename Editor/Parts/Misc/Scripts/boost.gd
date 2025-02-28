@@ -1,7 +1,5 @@
-extends Node3D
+extends part
 class_name boost
-
-@export var collider : CollisionShape3D
 
 @export var direction : Vector3
 @export var amount : int = 100
