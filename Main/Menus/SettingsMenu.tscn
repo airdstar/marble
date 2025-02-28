@@ -6,6 +6,7 @@
 [node name="Settings" type="Control" node_paths=PackedStringArray("background", "holding_container", "control_container", "visual_container", "accessability_container", "binds_container", "tab_buttons", "io_buttons", "values", "changers", "tilt_sens", "camera_sens", "deadzone", "aspect_ratio", "resolution", "fullscreen")]
 layout_mode = 3
 anchors_preset = 0
+size_flags_horizontal = 3
 theme = ExtResource("1_ark2b")
 script = ExtResource("2_2ej18")
 background = NodePath("Panel")
@@ -14,10 +15,10 @@ control_container = NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/
 visual_container = NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Visual")
 accessability_container = NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Accessability")
 binds_container = NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Binds")
-tab_buttons = [NodePath("Panel/VBoxContainer/CenterContainer/Tabs/Button"), NodePath("Panel/VBoxContainer/CenterContainer/Tabs/Button2"), NodePath("Panel/VBoxContainer/CenterContainer/Tabs/Button3")]
+tab_buttons = [NodePath("Panel/VBoxContainer/HBoxContainer/Button"), NodePath("Panel/VBoxContainer/HBoxContainer/Button2"), NodePath("Panel/VBoxContainer/HBoxContainer/Button3")]
 io_buttons = [NodePath("Panel/VBoxContainer/CenterContainer2/IO/Save"), NodePath("Panel/VBoxContainer/CenterContainer2/IO/Reset")]
-values = [NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control/TiltSensValue"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control/CameraSensValue"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control/DeadzoneValue"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Visual/AspectValue"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Visual/ResValue")]
-changers = [NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control/TiltSlider"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control/CameraSlider"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control/DeadzoneSlider"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Visual/AspectOptions"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Visual/ResOptions")]
+values = [NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control/TiltSensValue"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control/CameraSensValue"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control/DeadzoneValue"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Visual/AspectValue"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Visual/ResValue"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Visual/FullscreenValue"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Accessability/SpeedValue")]
+changers = [NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control/TiltSlider"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control/CameraSlider"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control/DeadzoneSlider"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Visual/AspectOptions"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Visual/ResOptions"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Accessability/SpeedOptions")]
 tilt_sens = [NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control/TiltSlider"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control/TiltSensValue")]
 camera_sens = [NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control/CameraSlider"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control/CameraSensValue")]
 deadzone = [NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control/DeadzoneSlider"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control/DeadzoneValue")]
@@ -38,27 +39,28 @@ offset_right = 572.0
 offset_bottom = 265.0
 theme_override_constants/separation = 10
 
-[node name="CenterContainer" type="CenterContainer" parent="Panel/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/VBoxContainer"]
 layout_mode = 2
+alignment = 1
 
-[node name="Tabs" type="GridContainer" parent="Panel/VBoxContainer/CenterContainer"]
+[node name="Button" type="Button" parent="Panel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
-columns = 3
-
-[node name="Button" type="Button" parent="Panel/VBoxContainer/CenterContainer/Tabs"]
-layout_mode = 2
+size_flags_horizontal = 3
 text = "Control"
 
-[node name="Button2" type="Button" parent="Panel/VBoxContainer/CenterContainer/Tabs"]
+[node name="Button2" type="Button" parent="Panel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 3
 text = "Visual"
 
-[node name="Button3" type="Button" parent="Panel/VBoxContainer/CenterContainer/Tabs"]
+[node name="Button3" type="Button" parent="Panel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 3
 text = "Accessability"
 
-[node name="Button4" type="Button" parent="Panel/VBoxContainer/CenterContainer/Tabs"]
+[node name="Button4" type="Button" parent="Panel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 3
 text = "Binds"
 
 [node name="ScrollContainer" type="ScrollContainer" parent="Panel/VBoxContainer"]
@@ -241,6 +243,7 @@ theme_override_constants/margin_bottom = 5
 
 [node name="SpeedLabel" type="RichTextLabel" parent="Panel/VBoxContainer/ScrollContainer/VBoxContainer/Accessability"]
 layout_mode = 2
+size_flags_horizontal = 3
 text = "Show Speed"
 fit_content = true
 
@@ -249,6 +252,7 @@ layout_mode = 2
 
 [node name="SpeedValue" type="RichTextLabel" parent="Panel/VBoxContainer/ScrollContainer/VBoxContainer/Accessability"]
 layout_mode = 2
+size_flags_horizontal = 3
 bbcode_enabled = true
 text = "Fullscreen"
 fit_content = true
@@ -272,10 +276,10 @@ text = "Save Settings"
 layout_mode = 2
 text = "Reset to default"
 
-[connection signal="pressed" from="Panel/VBoxContainer/CenterContainer/Tabs/Button" to="." method="tab_changed" binds= [0]]
-[connection signal="pressed" from="Panel/VBoxContainer/CenterContainer/Tabs/Button2" to="." method="tab_changed" binds= [1]]
-[connection signal="pressed" from="Panel/VBoxContainer/CenterContainer/Tabs/Button3" to="." method="tab_changed" binds= [2]]
-[connection signal="pressed" from="Panel/VBoxContainer/CenterContainer/Tabs/Button4" to="." method="tab_changed" binds= [3]]
+[connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer/Button" to="." method="tab_changed" binds= [0]]
+[connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer/Button2" to="." method="tab_changed" binds= [1]]
+[connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer/Button3" to="." method="tab_changed" binds= [2]]
+[connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer/Button4" to="." method="tab_changed" binds= [3]]
 [connection signal="value_changed" from="Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control/TiltSlider" to="." method="control_changed" binds= [0]]
 [connection signal="value_changed" from="Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control/CameraSlider" to="." method="control_changed" binds= [1]]
 [connection signal="value_changed" from="Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control/DeadzoneSlider" to="." method="control_changed" binds= [2]]

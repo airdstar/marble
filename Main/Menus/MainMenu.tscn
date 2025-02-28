@@ -36,7 +36,7 @@ background_mode = 1
 fog_light_energy = 0.2
 volumetric_fog_enabled = true
 volumetric_fog_density = 0.0001
-volumetric_fog_albedo = Color(0.4, 1, 0.415686, 1)
+volumetric_fog_albedo = Color(0.855694, 0.852657, 0.851354, 1)
 
 [node name="MainMenu" type="Control" node_paths=PackedStringArray("main_container", "extras_container", "important_container", "logo", "rotate_logo", "background")]
 process_mode = 1

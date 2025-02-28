@@ -35,6 +35,8 @@ var marble : player
 var settings = PlayerInfo.player_settings
 
 @export var UI : Control
+@export var timer_text : RichTextLabel
+@export var secondary_timer_text : RichTextLabel
 
 @onready var camera := $camera_y
 @onready var origin := $Origin
@@ -43,7 +45,6 @@ var settings = PlayerInfo.player_settings
 @onready var level_handler : LevelHandler = $LevelHandler
 @onready var run_handler : RunHandler = $RunHandler
 
-@onready var timer_text = $UI/Timer
 @onready var name_text = $UI/name
 @onready var fps_text = $UI/VBoxContainer/fps
 @onready var speed_text = $UI/VBoxContainer/speed
@@ -86,11 +87,8 @@ func _process(delta: float) -> void:
 				time_taken += delta
 				timer_text.text = "[center]%.2f" % time_taken
 			else:
-				timer_text.text = "[center]%.2f" % timer.time_left
-		else:
-			if !timer_count_up:
-				timer_text.text = "[center]%.2f" % timer.wait_time
-	
+				timer_text.text = "[center]%d" % timer.time_left
+				secondary_timer_text.text = "[center]%03d" % (int(timer.time_left * 1000) % 1000)
 	if Input.is_action_just_pressed("back"):
 		game_over()
 
@@ -114,6 +112,10 @@ func place_control() -> void:
 	timer_text.set_size(get_window().get_size())
 	timer_text.set_position(Vector2(0, get_window().get_size().y / 20))
 	timer_text.add_theme_font_size_override("normal_font_size", 35 * get_window().get_size().x / 1280)
+	
+	secondary_timer_text.set_size(get_window().get_size())
+	secondary_timer_text.set_position(Vector2(0, timer_text.get_theme_font_size("normal_font_size") * 6 / 7))
+	secondary_timer_text.add_theme_font_size_override("normal_font_size", 18 * get_window().get_size().x / 1280)
 	
 	timer_text.visible = false
 	
@@ -199,6 +201,8 @@ func set_time() -> void:
 				time_taken = 0.0
 			timer.stop()
 			timer.set_wait_time(20)
+			timer_text.text = "[center]%d" % 20
+			secondary_timer_text.text = "[center]%03d" % 0
 
 func start_timer():
 	timer.start()
