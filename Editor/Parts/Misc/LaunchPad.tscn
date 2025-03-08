@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://cm6h8dtxs0l7l"]
 
-[ext_resource type="Script" path="res://Editor/Parts/Misc/Scripts/boost.gd" id="1_mvefp"]
+[ext_resource type="Script" uid="uid://dq6lmvqwvbjb0" path="res://Editor/Parts/Misc/Scripts/boost.gd" id="1_mvefp"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_mh878"]
 size = Vector3(1, 0.1, 1)
@@ -14,6 +14,8 @@ material = SubResource("StandardMaterial3D_ucelh")
 size = Vector3(1, 0.05, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cgyuy"]
+backlight_enabled = true
+backlight = Color(1, 1, 1, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_67yqh"]
 material = SubResource("StandardMaterial3D_cgyuy")
@@ -23,13 +25,16 @@ size = Vector3(0.1, 0.01, 0.5)
 material = SubResource("StandardMaterial3D_cgyuy")
 size = Vector3(0.5, 0.01, 0.1)
 
-[node name="LaunchPad" type="StaticBody3D" node_paths=PackedStringArray("collider") groups=["Boost"]]
+[node name="LaunchPad" type="Area3D" node_paths=PackedStringArray("collider", "not_scale") groups=["Boost"]]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+collision_layer = 2
 script = ExtResource("1_mvefp")
 direction = Vector3(0, 1, 0)
 amount = 300
+part_name = "Launch Pad"
 collider = NodePath("CollisionShape3D")
-metadata/part_name = "Launch Pad"
+not_scale = NodePath("MeshInstance3D6")
+base = "res://Editor/Parts/Misc/LaunchPad.tscn"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.075, 0)
@@ -42,6 +47,6 @@ mesh = SubResource("BoxMesh_ducak")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03, 0)
 mesh = SubResource("BoxMesh_67yqh")
 
-[node name="MeshInstance3D7" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03, 0)
+[node name="MeshInstance3D7" type="MeshInstance3D" parent="MeshInstance3D6"]
 mesh = SubResource("BoxMesh_qsc84")
+skeleton = NodePath("../..")

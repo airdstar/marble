@@ -2,7 +2,7 @@ extends Control
 
 var level_info : level
 
-var selected_part : Node3D
+var selected_part : part
 var selected_shape : shape_resource
 
 var part_buttons : Array[Button]
@@ -23,7 +23,7 @@ signal part_unselected
 
 func _on_level_loaded(loaded_level : level) -> void:
 	level_info = loaded_level
-	for n : Node3D in loaded_level.parts:
+	for n : part in loaded_level.parts:
 		add_part(n, false)
 	
 	tab_changed(0)
@@ -34,7 +34,7 @@ func remove_selected() -> void:
 			if shape_buttons[n].button_pressed:
 				shape_buttons[n].queue_free()
 				shape_buttons.remove_at(n)
-				if selected_part is ProcMesh:
+				if selected_part is geometry:
 					selected_part.remove_shape(selected_shape)
 				selected_shape = null
 				break
@@ -44,7 +44,7 @@ func remove_selected() -> void:
 				part_buttons[n].queue_free()
 				part_buttons.remove_at(n)
 				level_info.parts.remove_at(level_info.parts.find(selected_part))
-				if selected_part.part_type == part.type.START:
+				if selected_part.is_start:
 					level_info.starts.remove_at(level_info.starts.find(selected_part))
 				selected_part.queue_free()
 				selected_part = null
@@ -65,40 +65,40 @@ func clear_all() -> void:
 		shape_buttons.remove_at(0)
 		
 
-func add_part(part : Node3D, toggle_button : bool) -> void:
+func add_part(_part : part, toggle_button : bool) -> void:
 	var current_button : Button = Button.new()
-	current_button.text = part.get_meta("part_name")
+	current_button.text = _part.part_name
 	current_button.toggle_mode = true
 	part_buttons.append(current_button)
 	
-	if part is ProcMesh:
+	if _part is geometry:
 		geometry_holder.add_child(current_button)
 	else:
 		part_holder.add_child(current_button)
 	
-	current_button.toggled.connect(part_toggled.bind(part, current_button))
+	current_button.toggled.connect(part_toggled.bind(_part, current_button))
 	
 	if toggle_button:
 		current_button.button_pressed = true
 
-func part_toggled(toggled_on : bool, part : Node3D, button : Button) -> void:
+func part_toggled(toggled_on : bool, _part : part, button : Button) -> void:
 	for n : Button in shape_holder.get_children():
 		n.queue_free()
 	if toggled_on:
-		selected_part = part
+		selected_part = _part
 		
 		for n : Button in part_buttons:
 			if n != button:
 				n.button_pressed = false
 		
-		if part is ProcMesh:
-			for n : shape_resource in part.shape_info:
+		if _part is geometry:
+			for n : shape_resource in _part.get_shape_info():
 				add_shape(n)
 		
-		part_selected.emit(part)
+		part_selected.emit(_part)
 		
 	else:
-		if part == selected_part:
+		if _part == selected_part:
 			selected_part = null
 			part_unselected.emit()
 
@@ -138,7 +138,7 @@ func tab_changed(tab: int) -> void:
 
 func _on_take_pressed() -> void:
 	if selected_part != null:
-		if selected_part is ProcMesh:
+		if selected_part is geometry:
 			if selected_shape != null:
 			
 				selected_part.remove_shape(selected_shape)
@@ -148,7 +148,7 @@ func _on_take_pressed() -> void:
 				for n : Button in shape_holder.get_children():
 					n.queue_free()
 				
-				for n : shape_resource in selected_part.shape_info:
+				for n : shape_resource in selected_part.get_shape_info():
 					add_shape(n)
 				selected_shape = null
 

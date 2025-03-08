@@ -1,6 +1,6 @@
 extends Node
 
-@export var master : ProcMesh
+@export var master : MeshInstance3D
 
 signal offset_change_successful
 signal size_change_successful

@@ -1,15 +1,13 @@
 [gd_resource type="Resource" script_class="level_resource" load_steps=3 format=3 uid="uid://beriny6solvbv"]
 
 [ext_resource type="PackedScene" uid="uid://bhhsj6x2yla26" path="res://Levels/OldLevels/Scenes/L7.tscn" id="1_7q6ff"]
-[ext_resource type="Script" path="res://Resources/LevelResource.gd" id="1_paosp"]
+[ext_resource type="Script" uid="uid://b4jhwccoticml" path="res://Resources/LevelResource.gd" id="1_paosp"]
 
 [resource]
 script = ExtResource("1_paosp")
-tagline = "Triple :P"
-given_time = 5.0
-possible_rotations = Vector2(0, 360)
+name = "Name"
+level_difficulty = 0
 level_type = 0
 associated_scene = ExtResource("1_7q6ff")
-needs_testing = false
-max_tilt = 35.0
-gravity = Vector3(0, 9.8, 0)
+include_in_pool = false
+camera_pos = 0.0

@@ -1,27 +1,27 @@
 [gd_scene load_steps=52 format=3 uid="uid://1yq80goel736"]
 
-[ext_resource type="Script" path="res://Editor/level_editor.gd" id="1_gkh0n"]
-[ext_resource type="Script" path="res://Editor/Handlers/selection_handler.gd" id="2_hx4of"]
-[ext_resource type="Script" path="res://Editor/Handlers/change_handler.gd" id="3_p55so"]
-[ext_resource type="Script" path="res://Editor/Handlers/shape_handler.gd" id="4_a0qo3"]
-[ext_resource type="PackedScene" uid="uid://2nsb0c22moeb" path="res://Editor/Parts/Important/ProcMesh.tscn" id="4_stuxe"]
-[ext_resource type="Script" path="res://Editor/editor_adjust.gd" id="5_6wt44"]
-[ext_resource type="Script" path="res://Editor/UI/editor_level_select.gd" id="5_kbbl2"]
+[ext_resource type="Script" uid="uid://dq0jj5b6vbes0" path="res://Editor/level_editor.gd" id="1_gkh0n"]
+[ext_resource type="Script" uid="uid://dorpwk1ptjwea" path="res://Editor/Handlers/selection_handler.gd" id="2_hx4of"]
+[ext_resource type="Script" uid="uid://c2flyys623p6s" path="res://Editor/Handlers/change_handler.gd" id="3_p55so"]
+[ext_resource type="Script" uid="uid://cyoanhirawf0b" path="res://Editor/Parts/Important/Scripts/geometry_base.gd" id="4_7a5fv"]
+[ext_resource type="Script" uid="uid://bmbxsyjs1hqqa" path="res://Editor/Handlers/shape_handler.gd" id="4_a0qo3"]
+[ext_resource type="Script" uid="uid://cs5fwmr7dskjx" path="res://Editor/editor_adjust.gd" id="5_6wt44"]
+[ext_resource type="Script" uid="uid://bv2hfcyeymuhy" path="res://Editor/UI/editor_level_select.gd" id="5_kbbl2"]
 [ext_resource type="Theme" uid="uid://dyhnu7yerr3w2" path="res://Assets/Themes/Editor.tres" id="5_msf75"]
-[ext_resource type="Script" path="res://Editor/UI/editor_ui.gd" id="6_mhsjx"]
-[ext_resource type="Script" path="res://Editor/UI/editor_property.gd" id="6_mogux"]
-[ext_resource type="Script" path="res://Editor/UI/editor_parts.gd" id="6_xrgr4"]
-[ext_resource type="Script" path="res://Editor/UI/editor_sections.gd" id="7_2n8hv"]
-[ext_resource type="Script" path="res://Editor/UI/editor_shape_properties.gd" id="8_1kyoo"]
-[ext_resource type="Script" path="res://Editor/UI/editor_tools.gd" id="8_pcger"]
-[ext_resource type="Script" path="res://Editor/UI/editor_rotation_properties.gd" id="9_q2et2"]
-[ext_resource type="Script" path="res://Editor/UI/editor_part_properties.gd" id="10_f3w8y"]
-[ext_resource type="Script" path="res://Editor/UI/editor_options.gd" id="11_dvs47"]
-[ext_resource type="Script" path="res://Editor/UI/editor_new_level.gd" id="12_hpcey"]
-[ext_resource type="Script" path="res://Editor/UI/editor_settings.gd" id="14_5wu5f"]
+[ext_resource type="Script" uid="uid://b6l4cqth2k5od" path="res://Editor/UI/editor_ui.gd" id="6_mhsjx"]
+[ext_resource type="Script" uid="uid://btea26w5v3jx0" path="res://Editor/UI/editor_property.gd" id="6_mogux"]
+[ext_resource type="Script" uid="uid://dlawg50qt102k" path="res://Editor/UI/editor_parts.gd" id="6_xrgr4"]
+[ext_resource type="Script" uid="uid://rjahlt46xf1y" path="res://Editor/UI/editor_sections.gd" id="7_2n8hv"]
+[ext_resource type="Script" uid="uid://cm8fy5wsl35bj" path="res://Editor/UI/editor_shape_properties.gd" id="8_1kyoo"]
+[ext_resource type="Script" uid="uid://bw0excdlcln0h" path="res://Editor/UI/editor_tools.gd" id="8_pcger"]
+[ext_resource type="Script" uid="uid://c4t07au0sfl0b" path="res://Editor/UI/editor_rotation_properties.gd" id="9_q2et2"]
+[ext_resource type="Script" uid="uid://bt1v3byg4fhqb" path="res://Editor/UI/editor_part_properties.gd" id="10_f3w8y"]
+[ext_resource type="Script" uid="uid://dp24f0u05ws10" path="res://Editor/UI/editor_options.gd" id="11_dvs47"]
+[ext_resource type="Script" uid="uid://dthgkbma4es6t" path="res://Editor/UI/editor_new_level.gd" id="12_hpcey"]
+[ext_resource type="Script" uid="uid://cbwnmcxk5bu3q" path="res://Editor/UI/editor_settings.gd" id="14_5wu5f"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7e7vf"]
-albedo_color = Color(0.621933, 0.399482, 0.227957, 1)
+[sub_resource type="BoxShape3D" id="BoxShape3D_j7xly"]
+size = Vector3(50, 50, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ytq3e"]
 no_depth_test = true
@@ -188,6 +188,12 @@ transform = Transform3D(1, 0, 0, 0, 0.984808, 0.173648, 0, -0.173648, 0.984808, 
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10)
 fov = 37.8493
 
+[node name="Area3D" type="Area3D" parent="CameraPivot/Camera3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CameraPivot/Camera3D/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -40)
+shape = SubResource("BoxShape3D_j7xly")
+
 [node name="SpotLight3D2" type="SpotLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 30, 0)
 light_energy = 4.0
@@ -214,8 +220,8 @@ light_energy = 4.0
 light_cull_mask = 4294966784
 spot_range = 160.0
 
-[node name="ShapePreview" parent="." instance=ExtResource("4_stuxe")]
-material_override = SubResource("StandardMaterial3D_7e7vf")
+[node name="ShapePreview" type="MeshInstance3D" parent="."]
+script = ExtResource("4_7a5fv")
 
 [node name="ShapeHandler" type="Node" parent="ShapePreview" node_paths=PackedStringArray("master")]
 script = ExtResource("4_a0qo3")
@@ -247,7 +253,6 @@ rot_y_mesh = NodePath("Rotation/Y")
 rot_z_mesh = NodePath("Rotation/Z")
 
 [node name="Position" type="Node3D" parent="Adjust"]
-visible = false
 
 [node name="X" type="MeshInstance3D" parent="Adjust/Position"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0)
@@ -289,7 +294,6 @@ input_capture_on_drag = true
 shape = SubResource("BoxShape3D_x408b")
 
 [node name="Size" type="Node3D" parent="Adjust"]
-visible = false
 
 [node name="X" type="MeshInstance3D" parent="Adjust/Size"]
 layers = 512
@@ -653,6 +657,7 @@ size_flags_horizontal = 3
 selected = 1
 item_count = 3
 popup/item_0/text = "X"
+popup/item_0/id = 0
 popup/item_1/text = "Y"
 popup/item_1/id = 1
 popup/item_2/text = "Z"
@@ -1152,6 +1157,7 @@ layout_mode = 2
 selected = 0
 item_count = 1
 popup/item_0/text = "Platform"
+popup/item_0/id = 0
 
 [node name="Create" type="Button" parent="UI/LevelSelect/NewLevel/VBoxContainer"]
 layout_mode = 2
@@ -1185,12 +1191,14 @@ layout_mode = 2
 selected = 0
 item_count = 1
 popup/item_0/text = "Platform"
+popup/item_0/id = 0
 
 [node name="OptionButton2" type="OptionButton" parent="UI/Settings/VBoxContainer"]
 layout_mode = 2
 selected = 0
 item_count = 3
 popup/item_0/text = "Easy"
+popup/item_0/id = 0
 popup/item_1/text = "Medium"
 popup/item_1/id = 1
 popup/item_2/text = "Hard"
@@ -1488,15 +1496,11 @@ mesh = SubResource("BoxMesh_qr2x0")
 [connection signal="remove_extra_tabs" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/Part" to="UI/Properties" method="remove_extra_tabs"]
 [connection signal="text_changed" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/Part/PartName" to="ChangeHandler" method="part_name_changed"]
 [connection signal="pressed" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/Part/Reload" to="." method="reload_part"]
-[connection signal="pressed" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/Part/Pos/Button" to="ChangeHandler" method="movement_detected" binds= [Vector3(0, 0, 0)]]
-[connection signal="pressed" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/Part/Size/Button" to="ChangeHandler" method="resize_detected" binds= [Vector3(1, 1, 1)]]
 [connection signal="pressed" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/Part/Rot/Button" to="ChangeHandler" method="reset_rotation"]
 [connection signal="toggled" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/Part/DynamicRot/CheckBox" to="ChangeHandler" method="part_rotation_toggled"]
 [connection signal="_hole_offset_changed" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties" to="ShapePreview/ShapeHandler" method="hole_offset_changed"]
 [connection signal="_hole_size_changed" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties" to="ShapePreview/ShapeHandler" method="hole_size_changed"]
 [connection signal="text_changed" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeName" to="ShapePreview/ShapeHandler" method="name_changed"]
-[connection signal="pressed" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Pos/Button" to="ChangeHandler" method="movement_detected" binds= [Vector3(0, 0, 0)]]
-[connection signal="pressed" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Size/Button" to="ChangeHandler" method="resize_detected" binds= [Vector3(1, 1, 1)]]
 [connection signal="pressed" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Rot/Button" to="ChangeHandler" method="reset_rotation"]
 [connection signal="item_selected" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeModifier/Modifier" to="ShapePreview/ShapeHandler" method="modifier_changed"]
 [connection signal="item_selected" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeModifier/Modifier" to="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties" method="mod_changed"]
@@ -1520,8 +1524,7 @@ mesh = SubResource("BoxMesh_qr2x0")
 [connection signal="tab_changed" from="UI/Sections/VBoxContainer/TabBar" to="UI/Parts" method="tab_changed"]
 [connection signal="tab_changed" from="UI/Sections/VBoxContainer/TabBar" to="UI/Sections" method="tab_changed"]
 [connection signal="pressed" from="UI/Sections/VBoxContainer/Delete" to="UI/Sections" method="remove_selected"]
-[connection signal="pressed" from="UI/Sections/VBoxContainer/GeometryOptions/NewMesh" to="." method="new_procmesh_created"]
-[connection signal="pressed" from="UI/Sections/VBoxContainer/GeometryOptions/NewMesh" to="UI/Sections" method="_on_new_mesh_pressed"]
+[connection signal="pressed" from="UI/Sections/VBoxContainer/GeometryOptions/NewMesh" to="." method="new_geometry_created"]
 [connection signal="pressed" from="UI/Sections/VBoxContainer/GeometryOptions/Take" to="UI/Sections" method="_on_take_pressed"]
 [connection signal="pressed" from="UI/Sections/VBoxContainer/GeometryOptions/Place" to="." method="_on_place_pressed"]
 [connection signal="pressed" from="UI/Sections/VBoxContainer/GeometryOptions/Place" to="UI/Properties" method="shape_unselected"]

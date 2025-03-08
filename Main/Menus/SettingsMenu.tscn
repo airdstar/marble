@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://bq4emjmf4ogdr"]
 
 [ext_resource type="Theme" uid="uid://baqdiduk3wnvc" path="res://Assets/Themes/Alt1.tres" id="1_ark2b"]
-[ext_resource type="Script" path="res://Main/Menus/settings_menu.gd" id="2_2ej18"]
+[ext_resource type="Script" uid="uid://bfiallxnbkrki" path="res://Main/Menus/settings_menu.gd" id="2_2ej18"]
 
 [node name="Settings" type="Control" node_paths=PackedStringArray("background", "holding_container", "control_container", "visual_container", "accessability_container", "binds_container", "tab_buttons", "io_buttons", "values", "changers", "tilt_sens", "camera_sens", "deadzone", "aspect_ratio", "resolution", "fullscreen")]
 layout_mode = 3

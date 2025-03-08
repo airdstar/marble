@@ -1,17 +1,11 @@
 extends Node
 class_name level
 
-@export var parts : Array[Node]
+@export var parts : Array[part]
 @export var starts : Array[Node]
 
 @export var input_node : Area3D
 @export var input_collider : CollisionShape3D
-
-
-signal timer_start
-
-func _ready():
-	pass
 
 func open_editor():
 	input_collider.disabled = true

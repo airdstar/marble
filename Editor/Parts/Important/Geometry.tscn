@@ -1,0 +1,35 @@
+[gd_scene load_steps=6 format=3 uid="uid://bjqo7dyfayxa0"]
+
+[ext_resource type="Script" uid="uid://b83mxq8c75rwv" path="res://Editor/Parts/Important/Scripts/geometry.gd" id="1_5f0y0"]
+[ext_resource type="Script" uid="uid://cyoanhirawf0b" path="res://Editor/Parts/Important/Scripts/geometry_base.gd" id="2_j4wwm"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ltixw"]
+resource_local_to_scene = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4t1h0"]
+transparency = 1
+albedo_color = Color(0, 0, 0, 0.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_l01um"]
+material = SubResource("StandardMaterial3D_4t1h0")
+
+[node name="Geometry" type="StaticBody3D" node_paths=PackedStringArray("geometry_base", "collider", "editor_visibility")]
+collision_layer = 2
+script = ExtResource("1_5f0y0")
+geometry_base = NodePath("Base")
+part_name = "Geometry"
+collider = NodePath("CollisionShape3D")
+editor_visibility = NodePath("Base/Visibility")
+base = "res://Editor/Parts/Important/Geometry.tscn"
+scalable = false
+rotatable = false
+
+[node name="Base" type="MeshInstance3D" parent="."]
+material_override = SubResource("StandardMaterial3D_ltixw")
+script = ExtResource("2_j4wwm")
+
+[node name="Visibility" type="MeshInstance3D" parent="Base"]
+mesh = SubResource("BoxMesh_l01um")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]

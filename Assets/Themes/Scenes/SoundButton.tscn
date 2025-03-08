@@ -1,0 +1,3 @@
+[gd_scene format=3 uid="uid://bnd0uic0px8a8"]
+
+[node name="SoundButton" type="Button"]

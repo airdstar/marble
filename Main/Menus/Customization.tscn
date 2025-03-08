@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://cdnwnrtmoq7x2"]
 
 [ext_resource type="Theme" uid="uid://bblhstx3bttr7" path="res://Assets/Themes/Main.tres" id="1_64pkv"]
-[ext_resource type="Script" path="res://Main/Menus/customization.gd" id="1_hei57"]
+[ext_resource type="Script" uid="uid://b138e3p08qf2i" path="res://Main/Menus/customization.gd" id="1_hei57"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_20uu7"]
 viewport_path = NodePath("SubViewport")

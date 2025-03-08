@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://bxvh0pps2xxw0"]
 
 [ext_resource type="Texture2D" uid="uid://wg1rc5sjx0ud" path="res://Assets/Spawn.png" id="1_akh53"]
-[ext_resource type="Script" path="res://Editor/Parts/part.gd" id="1_cbq41"]
+[ext_resource type="Script" uid="uid://bapnmtxwf7gwq" path="res://Editor/Parts/part.gd" id="1_cbq41"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ykvgg"]
 transparency = 1
@@ -14,12 +14,16 @@ size = Vector2(3, 3)
 [sub_resource type="BoxShape3D" id="BoxShape3D_mcfgt"]
 size = Vector3(3, 1, 3)
 
-[node name="SpawnZone" type="StaticBody3D" node_paths=PackedStringArray("editor_visibility") groups=["Start"]]
+[node name="SpawnZone" type="Area3D" node_paths=PackedStringArray("collider", "editor_visibility") groups=["Start"]]
+collision_layer = 2
 script = ExtResource("1_cbq41")
+part_name = "Spawn"
+collider = NodePath("CollisionShape3D")
 editor_visibility = NodePath("MeshInstance3D")
 base = "res://Editor/Parts/Important/SpawnZone.tscn"
-part_type = 1
-metadata/part_name = "Start"
+is_start = true
+scalable = false
+rotatable = false
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.284508, 0)

@@ -1,13 +1,50 @@
-[gd_scene load_steps=3 format=3 uid="uid://dh3uachfaer3g"]
+[gd_scene load_steps=9 format=3 uid="uid://dh3uachfaer3g"]
 
-[ext_resource type="Script" path="res://Editor/Parts/Misc/Scripts/boost.gd" id="1_a5rv8"]
+[ext_resource type="Script" uid="uid://dq6lmvqwvbjb0" path="res://Editor/Parts/Misc/Scripts/boost.gd" id="1_a5rv8"]
+[ext_resource type="Shader" uid="uid://lceu0ve4a8jc" path="res://Assets/outline2.gdshader" id="2_guv1r"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_7li2w"]
 
-[node name="BoostZone" type="StaticBody3D" node_paths=PackedStringArray("collider") groups=["Boost"]]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_54ndq"]
+transparency = 1
+albedo_color = Color(0.678, 0.471, 0.435, 0.4)
+backlight_enabled = true
+backlight = Color(1, 1, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_guv1r"]
+material = SubResource("StandardMaterial3D_54ndq")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_guv1r"]
+render_priority = 0
+shader = ExtResource("2_guv1r")
+shader_parameter/color = Color(0, 0, 0, 1)
+shader_parameter/size = 1.2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_guv1r"]
+next_pass = SubResource("ShaderMaterial_guv1r")
+backlight_enabled = true
+backlight = Color(1, 1, 1, 1)
+
+[sub_resource type="PrismMesh" id="PrismMesh_54ndq"]
+material = SubResource("StandardMaterial3D_guv1r")
+size = Vector3(0.5, 0.5, 0.1)
+
+[node name="BoostZone" type="Area3D" node_paths=PackedStringArray("collider", "not_scale") groups=["Boost"]]
+collision_layer = 2
 script = ExtResource("1_a5rv8")
-direction = Vector3(0, 0, 1)
+direction = Vector3(0, 1, 0)
+part_name = "Boost Zone"
 collider = NodePath("CollisionShape3D")
+not_scale = NodePath("MeshInstance3D3")
+base = "res://Editor/Parts/Misc/BoostZone.tscn"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_7li2w")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_guv1r")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
+cast_shadow = 0
+mesh = SubResource("PrismMesh_54ndq")
+skeleton = NodePath("")

@@ -20,21 +20,21 @@ signal remove_extra_tabs
 signal create_rotation_tab
 signal get_all_non_pivot_parts
 
-func display_part_properties(_part : Node) -> void:
-	part_name.text = _part.get_meta("part_name")
+func display_part_properties(_part : part) -> void:
+	part_name.text = _part.part_name
 	
 	part_pos.text = " Position: %.2f" % _part.position.x + ", %.2f" % _part.position.y + ", %.2f" % _part.position.z
 	part_size.text = " Size: %.2f" % _part.scale.x + ", %.2f" % _part.scale.y + ", %.2f" % _part.scale.z
 	part_rot.text = " Rotation: %d" % _part.rotation.x + ", %d" % _part.rotation.y + ", %d" % _part.rotation.z
 	
-	if _part is ProcMesh:
+	if _part is geometry:
 		texture_container.visible = true
 	else:
 		texture_container.visible = false
 	
 	remove_extra_tabs.emit()
 	
-	if _part.part_type != part.type.START:
+	if !_part.is_start:
 		for n in dynamic_containers:
 			n.visible = true
 		dynamic_rotation.set_pressed_no_signal(false)
@@ -50,7 +50,7 @@ func display_part_properties(_part : Node) -> void:
 		for n in dynamic_containers:
 			n.visible = false
 	
-	if _part.part_type == part.type.PIVOT:
+	if _part.is_pivot:
 		pivot_container.visible = true
 		for m in pivot_container.get_children():
 			if m is not RichTextLabel:
@@ -64,7 +64,7 @@ func display_non_pivots(parts : Array[Node]) -> void:
 		var option_container = HBoxContainer.new()
 		pivot_container.add_child(option_container)
 		var label = RichTextLabel.new()
-		label.text = n.get_meta("part_name")
+		label.text = n.part_name
 		label.fit_content = true
 		label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		var check = CheckBox.new()

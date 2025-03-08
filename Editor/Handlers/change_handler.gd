@@ -40,8 +40,10 @@ func movement_detected(pos_change : Vector3) -> void:
 func resize_detected(size_change : Vector3) -> void:
 	match master.adjusting:
 		editor.adjustable.PART:
-			if selection.selected_part is not ProcMesh and selection.selected_part.type != part.type.PIVOT:
+			if selection.selected_part is not geometry and !selection.selected_part.is_pivot:
 				selection.selected_part.scale = size_change
+				if selection.selected_part.not_scale != null:
+					selection.selected_part.not_scale.scale = Vector3(1/size_change.x, 1/size_change.y, 1/size_change.z)
 				size_changed.emit(size_change)
 		editor.adjustable.SHAPE:
 			shape_handler.size_changed(size_change)
@@ -49,7 +51,7 @@ func resize_detected(size_change : Vector3) -> void:
 func rotation_detected(rotation_change : Vector3) -> void:
 	match master.adjusting:
 		editor.adjustable.PART:
-			if selection.selected_part is not ProcMesh and selection.selected_part.type != part.type.PIVOT:
+			if selection.selected_part is not geometry and !selection.selected_part.is_pivot:
 				selection.selected_part.rotate_x(deg_to_rad(rotation_change.x))
 				selection.selected_part.rotate_y(deg_to_rad(rotation_change.y))
 				selection.selected_part.rotate_z(deg_to_rad(rotation_change.z))

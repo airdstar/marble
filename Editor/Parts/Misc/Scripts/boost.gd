@@ -3,4 +3,4 @@ class_name boost
 
 @export var direction : Vector3
 @export var amount : int = 100
-@export var delay : float = 0.5
+var delay : float = 0.05

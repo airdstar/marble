@@ -13,7 +13,7 @@ config_version=5
 config/name="Rolling Channel"
 config/version="0.0.2"
 run/main_scene="res://Main/main.tscn"
-config/features=PackedStringArray("4.3", "Forward Plus")
+config/features=PackedStringArray("4.4", "Forward Plus")
 boot_splash/bg_color=Color(0, 0, 0, 1)
 boot_splash/show_image=false
 config/icon="res://Assets/icon.png"
@@ -109,4 +109,7 @@ move_backward={
 
 [physics]
 
+3d/run_on_separate_thread=true
 common/physics_ticks_per_second=120
+jolt_physics_3d/simulation/areas_detect_static_bodies=true
+jolt_physics_3d/collisions/collision_margin_fraction=1.0

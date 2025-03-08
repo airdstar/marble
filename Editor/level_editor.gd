@@ -16,7 +16,7 @@ var selected_section : section = section.GEOMETRY
 var adjusting : editor.adjustable = editor.adjustable.NONE
 var selected_tool : editor.tool = editor.tool.NONE
 
-@export var shape_preview : ProcMesh
+@export var shape_preview : MeshInstance3D
 
 @export var camera_pivot : Node3D
 @export var camera : Camera3D
@@ -37,8 +37,6 @@ signal new_shape_selected
 signal all_non_pivots
 
 func _ready() -> void:
-	shape_preview.is_preview = true
-	shape_preview.editor_visibility.visible = false
 	tool_visible(false)
 	open_level_select()
 
@@ -114,7 +112,7 @@ func level_selected(level_info : level_resource) -> void:
 func _on_place_pressed() -> void:
 	if selection_handler.selected_shape != null:
 		if UI.sections.selected_part != null:
-			if UI.sections.selected_part is ProcMesh:
+			if UI.sections.selected_part is geometry:
 				UI.sections.selected_part.add_shape(selection_handler.selected_shape)
 				shape_placed.emit(selection_handler.selected_shape)
 				selection_handler._shape_unselected()
@@ -124,19 +122,19 @@ func _on_place_pressed() -> void:
 			create_and_place()
 
 func create_and_place() -> void:
-	var proc_mesh_holder = new_procmesh_created()
-	proc_mesh_holder.add_shape(selection_handler.selected_shape)
+	var geometry_holder = new_geometry_created()
+	geometry_holder.add_shape(selection_handler.selected_shape)
 	shape_placed.emit(selection_handler.selected_shape)
 	selection_handler._shape_unselected()
 
-func new_procmesh_created() -> ProcMesh:
-	var holder = preload("res://Editor/Parts/Important/ProcMesh.tscn").instantiate()
+func new_geometry_created() -> geometry:
+	var holder = preload("res://Editor/Parts/Important/Geometry.tscn").instantiate()
 	new_part_created(holder)
 	return holder
 
-func new_part_created(_part : Node) -> void:
+func new_part_created(_part : part) -> void:
 	level_base.parts.append(_part)
-	if _part.part_type == part.type.START:
+	if _part.is_start:
 		level_base.starts.append(_part)
 	level_base.add_child(_part)
 	rec_set_owner(_part)
@@ -155,10 +153,10 @@ func reload_part() -> void:
 	info_holder.append(selection_handler.selected_part.rotation)
 	info_holder.append(selection_handler.selected_part.position)
 	
-	if selection_handler.selected_part is ProcMesh:
-		reloaded_part.shape_info = selection_handler.selected_part.shape_info
+	if selection_handler.selected_part is geometry:
+		reloaded_part.set_shape_info(selection_handler.selected_part.get_shape_info())
 	
-	if selection_handler.selected_part.part_type == part.type.PIVOT:
+	if selection_handler.selected_part.is_pivot:
 		for n in selection_handler.selected_part.get_children():
 			child_holder.append(n)
 	else:
@@ -173,7 +171,7 @@ func reload_part() -> void:
 	reloaded_part.rotation = info_holder[2]
 	reloaded_part.position = info_holder[3]
 	
-	if reloaded_part is ProcMesh:
+	if reloaded_part is geometry:
 		reloaded_part.regenerate_mesh()
 	
 	for n in child_holder:
@@ -214,7 +212,7 @@ func get_all_non_pivot_parts() -> void:
 	var to_return : Array[Node]
 	
 	for n in level_base.parts:
-		if n.part_type != part.type.PIVOT:
+		if !n.is_pivot:
 			to_return.append(n)
 	
 	all_non_pivots.emit(to_return)
@@ -297,9 +295,9 @@ func pre_save() -> void:
 		if abs(n.position.z) + n.scale.z / 2 > furthest_point:
 			furthest_point = abs(n.position.z) + n.scale.z / 2
 		
-		if n is ProcMesh:
+		if n is geometry:
 			n.create_collision()
-			for m in n.shape_info:
+			for m in n.get_shape_info():
 				if n.position.x + abs(m.total_offset.x) + m.size.x / 2 > furthest_point:
 					furthest_point = n.position.x + abs(m.total_offset.x) + m.size.x / 2
 				

@@ -1,15 +1,13 @@
 [gd_resource type="Resource" script_class="level_resource" load_steps=3 format=3 uid="uid://b2ib6klveitem"]
 
 [ext_resource type="PackedScene" uid="uid://be0xhgfgqlhlo" path="res://Levels/OldLevels/Scenes/L2.tscn" id="1_86ac7"]
-[ext_resource type="Script" path="res://Resources/LevelResource.gd" id="1_h2u1c"]
+[ext_resource type="Script" uid="uid://b4jhwccoticml" path="res://Resources/LevelResource.gd" id="1_h2u1c"]
 
 [resource]
 script = ExtResource("1_h2u1c")
-tagline = "Double circle *drols"
-given_time = 5.0
-possible_rotations = Vector2(0, 360)
-goal_type = "Fall"
+name = "Name"
+level_difficulty = 0
+level_type = 0
 associated_scene = ExtResource("1_86ac7")
-needs_testing = false
-max_tilt = 35.0
-gravity = Vector3(0, 9.8, 0)
+include_in_pool = false
+camera_pos = 0.0

@@ -45,17 +45,21 @@ func set_flair() -> void:
 		flair.visible = false
 
 func collision_detected(body: Node3D) -> void:
-	if body.is_in_group("Start"):
-		level_start.emit()
-	elif body.is_in_group("Goal"):
+	if body.is_in_group("Goal"):
 		next_level.emit()
 		collision.set_deferred("monitorable", false)
 	elif body.is_in_group("Respawner"):
 		orientation_change.emit()
 		reset()
-	elif body.is_in_group("Boost"):
-		await get_tree().create_timer(body.delay).timeout
-		apply_force(body.transform.basis * body.direction * body.amount * 100)
+
+func _collision_detected(area: Area3D) -> void:
+	if area.is_in_group("Start"):
+		level_start.emit()
+	elif area.is_in_group("Boost"):
+		await get_tree().create_timer(area.delay).timeout
+		if collision.overlaps_area(area):
+			apply_force(area.transform.basis * area.direction * area.amount * 100 / area.scale)
+			_collision_detected(area)
 
 func reset() -> void:
 	visible = true

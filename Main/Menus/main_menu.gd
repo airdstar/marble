@@ -47,7 +47,6 @@ func place_control() -> void:
 
 func _process(delta: float) -> void:
 	rotate_logo.rotation = (rotate_logo.rotation + 0.3 * delta)
-	
 	if Input.is_action_just_pressed("back"):
 		if Global.main_scene.popup_scene == null:
 			if !extras_container.visible:

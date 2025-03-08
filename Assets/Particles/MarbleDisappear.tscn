@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://bvhhnbbi7axb7"]
 
-[ext_resource type="Script" path="res://Assets/Particles/particle.gd" id="1_wsjm1"]
+[ext_resource type="Script" uid="uid://caak87aatqi6h" path="res://Assets/Particles/particle.gd" id="1_wsjm1"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_edbj7"]
 transparency = 1

@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://dh7dc6u5iari0"]
 
-[ext_resource type="Script" path="res://Main/Menus/profile.gd" id="1_ds35u"]
+[ext_resource type="Script" uid="uid://of4j8qrj4qjb" path="res://Main/Menus/profile.gd" id="1_ds35u"]
 [ext_resource type="Theme" uid="uid://baqdiduk3wnvc" path="res://Assets/Themes/Alt1.tres" id="1_ph8md"]
 
 [node name="Profile" type="Control" node_paths=PackedStringArray("background", "header", "player_info")]

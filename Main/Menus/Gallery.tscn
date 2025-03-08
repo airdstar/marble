@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://c71r3yctnr0pa"]
 
 [ext_resource type="Theme" uid="uid://baqdiduk3wnvc" path="res://Assets/Themes/Alt1.tres" id="1_b31j6"]
-[ext_resource type="Script" path="res://Main/Menus/gallery.gd" id="1_njmjq"]
+[ext_resource type="Script" uid="uid://df3p61un26etc" path="res://Main/Menus/gallery.gd" id="1_njmjq"]
 
 [node name="Gallery" type="Control" node_paths=PackedStringArray("easy_button", "medium_button", "hard_button", "tab_container", "option_container", "easy_container", "medium_container", "hard_container")]
 layout_mode = 3

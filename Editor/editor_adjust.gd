@@ -55,7 +55,7 @@ var size_cap_y := MAX_SIZE
 var size_cap_z := MAX_SIZE
 
 var axis_grabbed : int = 0
-const RAY_LENGTH := 40
+const RAY_LENGTH := 100
 
 signal pos_changed
 signal size_changed
@@ -72,10 +72,19 @@ func _ready() -> void:
 	$Rotation/Y/Area3D.input_event.connect(grabbed.bind(rot_y.shape.size, 2, rot_y_mesh, rot_y))
 	$Rotation/Z/Area3D.input_event.connect(grabbed.bind(rot_z.shape.size, 3, rot_z_mesh, rot_z))
 
-func _process(_delta : float) -> void:
-	if pos.visible:
-		if axis_grabbed != 0:
-			var global_pos = get_mouse_world_position()
+func _physics_process(_delta : float) -> void:
+	if axis_grabbed != 0:
+		var cam = get_viewport().get_camera_3d()
+		var mousepos = get_viewport().get_mouse_position()
+
+		var origin = cam.project_ray_origin(mousepos)
+		var end = origin + cam.project_ray_normal(mousepos) * RAY_LENGTH
+		var query = PhysicsRayQueryParameters3D.create(origin, end)
+		var space_state = get_world_3d().direct_space_state
+		query.collide_with_areas = true
+		var global_pos = space_state.intersect_ray(query)["position"]
+		
+		if pos.visible:
 			if global_pos != null:
 				match axis_grabbed:
 					1:
@@ -86,9 +95,7 @@ func _process(_delta : float) -> void:
 						global_pos = Vector3(position.x, position.y, clamp(snapped(global_pos.z - 0.5, snapping), -pos_cap_z, pos_cap_z))
 				
 				pos_changed.emit(global_pos)
-	elif size.visible:
-		if axis_grabbed != 0:
-			var global_pos = get_mouse_world_position()
+		elif size.visible:
 			if global_pos != null:
 				match axis_grabbed:
 					1:
@@ -98,9 +105,7 @@ func _process(_delta : float) -> void:
 					3:
 						global_pos = Vector3(size_x_mesh.position.x * 2, size_y_mesh.position.y * 2, clamp(snapped((global_pos.z - position.z) * 2, snapping), snapping, size_cap_z))
 				size_changed.emit(global_pos)
-	elif rot.visible:
-		if axis_grabbed != 0:
-			var global_pos = get_mouse_world_position()
+		elif rot.visible:
 			var holder = 0
 			if global_pos != null:
 				match axis_grabbed:
@@ -117,28 +122,6 @@ func _process(_delta : float) -> void:
 				prev_rotation = holder
 				if global_pos != Vector3.ZERO:
 					rot_changed.emit(global_pos)
-		
-
-func _do_raycast_on_mouse_position(collision_mask: int = 0b00000000_00000000_00000000_00000001):
-	# Raycast related code
-	var space_state = get_world_3d().direct_space_state
-	var cam = get_viewport().get_camera_3d()
-	var mousepos = get_viewport().get_mouse_position()
-
-	var origin = cam.project_ray_origin(mousepos)
-	var end = origin + cam.project_ray_normal(mousepos) * RAY_LENGTH
-	var query = PhysicsRayQueryParameters3D.create(origin, end)
-	query.collide_with_areas = true
-	query.collision_mask = collision_mask
-	
-	var result = space_state.intersect_ray(query) # raycast result
-	return result
-
-func get_mouse_world_position(collision_mask: int = 0b00000000_00000000_00000000_00000001):
-	var raycast_result = _do_raycast_on_mouse_position(collision_mask)
-	if raycast_result:
-		return raycast_result.position
-	return null
 
 func selected_pos_changed(new_pos : Vector3) -> void:
 	position = new_pos

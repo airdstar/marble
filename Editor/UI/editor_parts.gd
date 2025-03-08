@@ -10,8 +10,7 @@ var shapes : Dictionary = {
 var important_parts : Dictionary = {
 	"Pivot" : "res://Editor/Parts/Important/Pivot.tscn",
 	"Start" : "res://Editor/Parts/Important/SpawnZone.tscn",
-	"Goal" : "res://Editor/Parts/Important/EndZone.tscn",
-	"False Goal" : "res://Editor/Parts/Important/FalseEndZone.tscn"
+	"Goal" : "res://Editor/Parts/Important/Goal.tscn"
 }
 
 var misc_parts : Dictionary = {

@@ -1,9 +1,11 @@
 [gd_scene load_steps=2 format=3 uid="uid://bji1xtvf4wyts"]
 
-[ext_resource type="Script" path="res://Editor/Parts/part.gd" id="1_csfim"]
+[ext_resource type="Script" uid="uid://bapnmtxwf7gwq" path="res://Editor/Parts/part.gd" id="1_csfim"]
 
 [node name="Pivot" type="Node3D"]
 script = ExtResource("1_csfim")
+part_name = "Pivot"
 base = "res://Editor/Parts/Important/Pivot.tscn"
-part_type = 2
-metadata/part_name = "Pivot"
+is_pivot = true
+scalable = false
+rotatable = false

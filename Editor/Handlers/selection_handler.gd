@@ -2,9 +2,9 @@ extends Node
 
 @export var master : Node
 @export var UI : Control
-@export var shape_preview : ProcMesh
+@export var shape_preview : MeshInstance3D
 
-var selected_part : Node = null
+var selected_part : part = null
 var selected_shape : shape_resource = null
 var held_shape : shape_resource = null
 var selected_component : component = null
@@ -12,11 +12,7 @@ var selected_component : component = null
 signal part_selected
 signal shape_selected
 
-func _part_selected(_part : Node) -> void:
-	var holder : Node3D
-	if _part is ProcMesh:
-		if _part.is_preview:
-			holder = selected_part
+func _part_selected(_part : part) -> void:
 	
 	master.adjuster.selected_pos_changed(_part.position)
 	master.adjuster.selected_size_changed(_part.scale)
