@@ -9,7 +9,7 @@ class_name level
 
 func open_editor():
 	input_collider.disabled = true
-	for n : Node in parts:
+	for n : part in parts:
 		if n.collider != null:
 			n.collider.disabled = true
 		if n.editor_visibility != null:
@@ -26,7 +26,8 @@ func start_level() -> void:
 			n.collider.disabled = false
 		if n.editor_visibility != null:
 			n.editor_visibility.visible = false
-		
+
+
 
 func choose_spawn() -> Vector3:
 	var holder = []

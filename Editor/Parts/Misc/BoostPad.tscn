@@ -1,19 +1,27 @@
-[gd_scene load_steps=7 format=3 uid="uid://5j0egucg3uo2"]
+[gd_scene load_steps=9 format=3 uid="uid://5j0egucg3uo2"]
 
 [ext_resource type="Script" uid="uid://dq6lmvqwvbjb0" path="res://Editor/Parts/Misc/Scripts/boost.gd" id="1_5bry6"]
+[ext_resource type="Shader" uid="uid://lceu0ve4a8jc" path="res://Assets/outline2.gdshader" id="2_a0ft8"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_g2m4f"]
 size = Vector3(1, 0.1, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_72ona"]
 transparency = 1
-albedo_color = Color(0.677, 0.469, 0.434, 0.9)
+albedo_color = Color(0.677, 0.469, 0.434, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_amcb5"]
 material = SubResource("StandardMaterial3D_72ona")
 size = Vector3(1, 0.05, 1)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_srkea"]
+render_priority = 0
+shader = ExtResource("2_a0ft8")
+shader_parameter/color = Color(0, 0, 0, 1)
+shader_parameter/size = 1.2
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vv3bw"]
+next_pass = SubResource("ShaderMaterial_srkea")
 backlight_enabled = true
 backlight = Color(1, 1, 1, 1)
 

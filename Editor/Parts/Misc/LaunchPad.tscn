@@ -1,29 +1,32 @@
-[gd_scene load_steps=8 format=3 uid="uid://cm6h8dtxs0l7l"]
+[gd_scene load_steps=9 format=3 uid="uid://cm6h8dtxs0l7l"]
 
 [ext_resource type="Script" uid="uid://dq6lmvqwvbjb0" path="res://Editor/Parts/Misc/Scripts/boost.gd" id="1_mvefp"]
+[ext_resource type="Shader" uid="uid://lceu0ve4a8jc" path="res://Assets/outline2.gdshader" id="2_04yjm"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_mh878"]
 size = Vector3(1, 0.1, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ucelh"]
 transparency = 1
-albedo_color = Color(0.677, 0.469, 0.434, 0.9)
+albedo_color = Color(0.677, 0.469, 0.434, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_ducak"]
 material = SubResource("StandardMaterial3D_ucelh")
 size = Vector3(1, 0.05, 1)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cgyuy"]
-backlight_enabled = true
-backlight = Color(1, 1, 1, 1)
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_f8jks"]
+render_priority = 0
+shader = ExtResource("2_04yjm")
+shader_parameter/color = Color(0, 0, 0, 1)
+shader_parameter/size = 1.2
 
-[sub_resource type="BoxMesh" id="BoxMesh_67yqh"]
-material = SubResource("StandardMaterial3D_cgyuy")
-size = Vector3(0.1, 0.01, 0.5)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ao63l"]
+next_pass = SubResource("ShaderMaterial_f8jks")
 
-[sub_resource type="BoxMesh" id="BoxMesh_qsc84"]
-material = SubResource("StandardMaterial3D_cgyuy")
-size = Vector3(0.5, 0.01, 0.1)
+[sub_resource type="SphereMesh" id="SphereMesh_cm1o4"]
+material = SubResource("StandardMaterial3D_ao63l")
+radius = 0.25
+height = 0.05
 
 [node name="LaunchPad" type="Area3D" node_paths=PackedStringArray("collider", "not_scale") groups=["Boost"]]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
@@ -45,8 +48,4 @@ mesh = SubResource("BoxMesh_ducak")
 
 [node name="MeshInstance3D6" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03, 0)
-mesh = SubResource("BoxMesh_67yqh")
-
-[node name="MeshInstance3D7" type="MeshInstance3D" parent="MeshInstance3D6"]
-mesh = SubResource("BoxMesh_qsc84")
-skeleton = NodePath("../..")
+mesh = SubResource("SphereMesh_cm1o4")

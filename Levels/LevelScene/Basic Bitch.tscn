@@ -1,24 +1,21 @@
-[gd_scene load_steps=28 format=4]
+[gd_scene load_steps=22 format=4]
 
-[ext_resource type="Script" path="res://Levels/Handlers/level.gd" id="1_4l6dx"]
-[ext_resource type="PackedScene" path="res://Editor/Parts/Important/Geometry.tscn" id="2_7rgtp"]
-[ext_resource type="Script" path="res://Editor/Parts/Important/Scripts/geometry.gd" id="3_mrxqv"]
-[ext_resource type="Script" path="res://Editor/Parts/Important/Scripts/geometry_base.gd" id="4_gpxi0"]
-[ext_resource type="Script" path="res://Resources/shape_resource.gd" id="5_hj3c0"]
-[ext_resource type="Script" path="res://Editor/Shapes/polygon.gd" id="6_wrip8"]
-[ext_resource type="PackedScene" path="res://Editor/Parts/Important/Goal.tscn" id="7_hgdmi"]
-[ext_resource type="Script" path="res://Editor/Parts/part.gd" id="8_3c1yw"]
-[ext_resource type="Shader" path="res://Assets/outline.gdshader" id="9_b6srd"]
-[ext_resource type="PackedScene" path="res://Editor/Parts/Important/SpawnZone.tscn" id="10_1y2w7"]
-[ext_resource type="Texture2D" path="res://Assets/Spawn.png" id="11_17p1v"]
+[ext_resource type="Script" path="res://Levels/Handlers/level.gd" id="1_r0yl8"]
+[ext_resource type="Script" path="res://Editor/Parts/Important/Scripts/geometry.gd" id="2_77487"]
+[ext_resource type="Script" path="res://Editor/Parts/Important/Scripts/geometry_base.gd" id="3_3l33y"]
+[ext_resource type="Script" path="res://Resources/shape_resource.gd" id="4_4l6dx"]
+[ext_resource type="Script" path="res://Editor/Shapes/polygon.gd" id="5_7rgtp"]
+[ext_resource type="Script" path="res://Editor/Parts/part.gd" id="6_mrxqv"]
+[ext_resource type="Shader" path="res://Assets/outline.gdshader" id="7_gpxi0"]
+[ext_resource type="Texture2D" path="res://Assets/Spawn.png" id="8_hj3c0"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ndgqk"]
 size = Vector3(3, 1, 3)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lvmph"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wrip8"]
 resource_local_to_scene = true
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_koto6"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_hgdmi"]
 _surfaces = [{
 "aabb": AABB(-11, -0.3, -11, 22, 0.6, 22),
 "format": 34359742471,
@@ -31,7 +28,7 @@ _surfaces = [{
 }]
 
 [sub_resource type="Resource" id="Resource_2de3b"]
-script = ExtResource("6_wrip8")
+script = ExtResource("5_7rgtp")
 sides = 32
 point_direction = 1
 hole_size = 0.5
@@ -55,7 +52,7 @@ albedo_color = Color(0, 0, 0, 0.1)
 [sub_resource type="BoxMesh" id="BoxMesh_l01um"]
 material = SubResource("StandardMaterial3D_4t1h0")
 
-[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_4l6dx"]
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_r0yl8"]
 data = PackedVector3Array(11, 0.3, 0, 11, -0.3, 0, 10.7886, 0.3, 2.146, 10.7886, 0.3, 2.146, 11, -0.3, 0, 10.7886, -0.3, 2.146, 10.7886, 0.3, 2.146, 10.7886, -0.3, 2.146, 10.1627, 0.3, 4.2095, 10.1627, 0.3, 4.2095, 10.7886, -0.3, 2.146, 10.1627, -0.3, 4.2095, 10.1627, 0.3, 4.2095, 10.1627, -0.3, 4.2095, 9.1462, 0.3, 6.1113, 9.1462, 0.3, 6.1113, 10.1627, -0.3, 4.2095, 9.1462, -0.3, 6.1113, 9.1462, 0.3, 6.1113, 9.1462, -0.3, 6.1113, 7.7782, 0.3, 7.7782, 7.7782, 0.3, 7.7782, 9.1462, -0.3, 6.1113, 7.7782, -0.3, 7.7782, 7.7782, 0.3, 7.7782, 7.7782, -0.3, 7.7782, 6.1113, 0.3, 9.1462, 6.1113, 0.3, 9.1462, 7.7782, -0.3, 7.7782, 6.1113, -0.3, 9.1462, 6.1113, 0.3, 9.1462, 6.1113, -0.3, 9.1462, 4.2095, 0.3, 10.1627, 4.2095, 0.3, 10.1627, 6.1113, -0.3, 9.1462, 4.2095, -0.3, 10.1627, 4.2095, 0.3, 10.1627, 4.2095, -0.3, 10.1627, 2.146, 0.3, 10.7886, 2.146, 0.3, 10.7886, 4.2095, -0.3, 10.1627, 2.146, -0.3, 10.7886, 2.146, 0.3, 10.7886, 2.146, -0.3, 10.7886, 0, 0.3, 11, 0, 0.3, 11, 2.146, -0.3, 10.7886, 0, -0.3, 11, 0, 0.3, 11, 0, -0.3, 11, -2.146, 0.3, 10.7886, -2.146, 0.3, 10.7886, 0, -0.3, 11, -2.146, -0.3, 10.7886, -2.146, 0.3, 10.7886, -2.146, -0.3, 10.7886, -4.2095, 0.3, 10.1627, -4.2095, 0.3, 10.1627, -2.146, -0.3, 10.7886, -4.2095, -0.3, 10.1627, -4.2095, 0.3, 10.1627, -4.2095, -0.3, 10.1627, -6.1113, 0.3, 9.1462, -6.1113, 0.3, 9.1462, -4.2095, -0.3, 10.1627, -6.1113, -0.3, 9.1462, -6.1113, 0.3, 9.1462, -6.1113, -0.3, 9.1462, -7.7782, 0.3, 7.7782, -7.7782, 0.3, 7.7782, -6.1113, -0.3, 9.1462, -7.7782, -0.3, 7.7782, -7.7782, 0.3, 7.7782, -7.7782, -0.3, 7.7782, -9.1462, 0.3, 6.1113, -9.1462, 0.3, 6.1113, -7.7782, -0.3, 7.7782, -9.1462, -0.3, 6.1113, -9.1462, 0.3, 6.1113, -9.1462, -0.3, 6.1113, -10.1627, 0.3, 4.2095, -10.1627, 0.3, 4.2095, -9.1462, -0.3, 6.1113, -10.1627, -0.3, 4.2095, -10.1627, 0.3, 4.2095, -10.1627, -0.3, 4.2095, -10.7886, 0.3, 2.146, -10.7886, 0.3, 2.146, -10.1627, -0.3, 4.2095, -10.7886, -0.3, 2.146, -10.7886, 0.3, 2.146, -10.7886, -0.3, 2.146, -11, 0.3, 0, -11, 0.3, 0, -10.7886, -0.3, 2.146, -11, -0.3, 0, -11, 0.3, 0, -11, -0.3, 0, -10.7886, 0.3, -2.146, -10.7886, 0.3, -2.146, -11, -0.3, 0, -10.7886, -0.3, -2.146, -10.7886, 0.3, -2.146, -10.7886, -0.3, -2.146, -10.1627, 0.3, -4.2095, -10.1627, 0.3, -4.2095, -10.7886, -0.3, -2.146, -10.1627, -0.3, -4.2095, -10.1627, 0.3, -4.2095, -10.1627, -0.3, -4.2095, -9.1462, 0.3, -6.1113, -9.1462, 0.3, -6.1113, -10.1627, -0.3, -4.2095, -9.1462, -0.3, -6.1113, -9.1462, 0.3, -6.1113, -9.1462, -0.3, -6.1113, -7.7782, 0.3, -7.7782, -7.7782, 0.3, -7.7782, -9.1462, -0.3, -6.1113, -7.7782, -0.3, -7.7782, -7.7782, 0.3, -7.7782, -7.7782, -0.3, -7.7782, -6.1113, 0.3, -9.1462, -6.1113, 0.3, -9.1462, -7.7782, -0.3, -7.7782, -6.1113, -0.3, -9.1462, -6.1113, 0.3, -9.1462, -6.1113, -0.3, -9.1462, -4.2095, 0.3, -10.1627, -4.2095, 0.3, -10.1627, -6.1113, -0.3, -9.1462, -4.2095, -0.3, -10.1627, -4.2095, 0.3, -10.1627, -4.2095, -0.3, -10.1627, -2.146, 0.3, -10.7886, -2.146, 0.3, -10.7886, -4.2095, -0.3, -10.1627, -2.146, -0.3, -10.7886, -2.146, 0.3, -10.7886, -2.146, -0.3, -10.7886, 0, 0.3, -11, 0, 0.3, -11, -2.146, -0.3, -10.7886, 0, -0.3, -11, 0, 0.3, -11, 0, -0.3, -11, 2.146, 0.3, -10.7886, 2.146, 0.3, -10.7886, 0, -0.3, -11, 2.146, -0.3, -10.7886, 2.146, 0.3, -10.7886, 2.146, -0.3, -10.7886, 4.2095, 0.3, -10.1627, 4.2095, 0.3, -10.1627, 2.146, -0.3, -10.7886, 4.2095, -0.3, -10.1627, 4.2095, 0.3, -10.1627, 4.2095, -0.3, -10.1627, 6.1113, 0.3, -9.1462, 6.1113, 0.3, -9.1462, 4.2095, -0.3, -10.1627, 6.1113, -0.3, -9.1462, 6.1113, 0.3, -9.1462, 6.1113, -0.3, -9.1462, 7.7782, 0.3, -7.7782, 7.7782, 0.3, -7.7782, 6.1113, -0.3, -9.1462, 7.7782, -0.3, -7.7782, 7.7782, 0.3, -7.7782, 7.7782, -0.3, -7.7782, 9.1462, 0.3, -6.1113, 9.1462, 0.3, -6.1113, 7.7782, -0.3, -7.7782, 9.1462, -0.3, -6.1113, 9.1462, 0.3, -6.1113, 9.1462, -0.3, -6.1113, 10.1627, 0.3, -4.2095, 10.1627, 0.3, -4.2095, 9.1462, -0.3, -6.1113, 10.1627, -0.3, -4.2095, 10.1627, 0.3, -4.2095, 10.1627, -0.3, -4.2095, 10.7886, 0.3, -2.146, 10.7886, 0.3, -2.146, 10.1627, -0.3, -4.2095, 10.7886, -0.3, -2.146, 10.7886, 0.3, -2.146, 10.7886, -0.3, -2.146, 11, 0.3, 0, 11, 0.3, 0, 10.7886, -0.3, -2.146, 11, -0.3, 0, 0, 0.3, 0, 11, 0.3, 0, 10.7886, 0.3, 2.146, 0, 0.3, 0, 10.7886, 0.3, 2.146, 10.1627, 0.3, 4.2095, 0, 0.3, 0, 10.1627, 0.3, 4.2095, 9.1462, 0.3, 6.1113, 0, 0.3, 0, 9.1462, 0.3, 6.1113, 7.7782, 0.3, 7.7782, 0, 0.3, 0, 7.7782, 0.3, 7.7782, 6.1113, 0.3, 9.1462, 0, 0.3, 0, 6.1113, 0.3, 9.1462, 4.2095, 0.3, 10.1627, 0, 0.3, 0, 4.2095, 0.3, 10.1627, 2.146, 0.3, 10.7886, 0, 0.3, 0, 2.146, 0.3, 10.7886, 0, 0.3, 11, 0, 0.3, 0, 0, 0.3, 11, -2.146, 0.3, 10.7886, 0, 0.3, 0, -2.146, 0.3, 10.7886, -4.2095, 0.3, 10.1627, 0, 0.3, 0, -4.2095, 0.3, 10.1627, -6.1113, 0.3, 9.1462, 0, 0.3, 0, -6.1113, 0.3, 9.1462, -7.7782, 0.3, 7.7782, 0, 0.3, 0, -7.7782, 0.3, 7.7782, -9.1462, 0.3, 6.1113, 0, 0.3, 0, -9.1462, 0.3, 6.1113, -10.1627, 0.3, 4.2095, 0, 0.3, 0, -10.1627, 0.3, 4.2095, -10.7886, 0.3, 2.146, 0, 0.3, 0, -10.7886, 0.3, 2.146, -11, 0.3, 0, 0, 0.3, 0, -11, 0.3, 0, -10.7886, 0.3, -2.146, 0, 0.3, 0, -10.7886, 0.3, -2.146, -10.1627, 0.3, -4.2095, 0, 0.3, 0, -10.1627, 0.3, -4.2095, -9.1462, 0.3, -6.1113, 0, 0.3, 0, -9.1462, 0.3, -6.1113, -7.7782, 0.3, -7.7782, 0, 0.3, 0, -7.7782, 0.3, -7.7782, -6.1113, 0.3, -9.1462, 0, 0.3, 0, -6.1113, 0.3, -9.1462, -4.2095, 0.3, -10.1627, 0, 0.3, 0, -4.2095, 0.3, -10.1627, -2.146, 0.3, -10.7886, 0, 0.3, 0, -2.146, 0.3, -10.7886, 0, 0.3, -11, 0, 0.3, 0, 0, 0.3, -11, 2.146, 0.3, -10.7886, 0, 0.3, 0, 2.146, 0.3, -10.7886, 4.2095, 0.3, -10.1627, 0, 0.3, 0, 4.2095, 0.3, -10.1627, 6.1113, 0.3, -9.1462, 0, 0.3, 0, 6.1113, 0.3, -9.1462, 7.7782, 0.3, -7.7782, 0, 0.3, 0, 7.7782, 0.3, -7.7782, 9.1462, 0.3, -6.1113, 0, 0.3, 0, 9.1462, 0.3, -6.1113, 10.1627, 0.3, -4.2095, 0, 0.3, 0, 10.1627, 0.3, -4.2095, 10.7886, 0.3, -2.146, 0, 0.3, 0, 10.7886, 0.3, -2.146, 11, 0.3, 0, 10.7886, -0.3, 2.146, 11, -0.3, 0, 0, -0.3, 0, 10.1627, -0.3, 4.2095, 10.7886, -0.3, 2.146, 0, -0.3, 0, 9.1462, -0.3, 6.1113, 10.1627, -0.3, 4.2095, 0, -0.3, 0, 7.7782, -0.3, 7.7782, 9.1462, -0.3, 6.1113, 0, -0.3, 0, 6.1113, -0.3, 9.1462, 7.7782, -0.3, 7.7782, 0, -0.3, 0, 4.2095, -0.3, 10.1627, 6.1113, -0.3, 9.1462, 0, -0.3, 0, 2.146, -0.3, 10.7886, 4.2095, -0.3, 10.1627, 0, -0.3, 0, 0, -0.3, 11, 2.146, -0.3, 10.7886, 0, -0.3, 0, -2.146, -0.3, 10.7886, 0, -0.3, 11, 0, -0.3, 0, -4.2095, -0.3, 10.1627, -2.146, -0.3, 10.7886, 0, -0.3, 0, -6.1113, -0.3, 9.1462, -4.2095, -0.3, 10.1627, 0, -0.3, 0, -7.7782, -0.3, 7.7782, -6.1113, -0.3, 9.1462, 0, -0.3, 0, -9.1462, -0.3, 6.1113, -7.7782, -0.3, 7.7782, 0, -0.3, 0, -10.1627, -0.3, 4.2095, -9.1462, -0.3, 6.1113, 0, -0.3, 0, -10.7886, -0.3, 2.146, -10.1627, -0.3, 4.2095, 0, -0.3, 0, -11, -0.3, 0, -10.7886, -0.3, 2.146, 0, -0.3, 0, -10.7886, -0.3, -2.146, -11, -0.3, 0, 0, -0.3, 0, -10.1627, -0.3, -4.2095, -10.7886, -0.3, -2.146, 0, -0.3, 0, -9.1462, -0.3, -6.1113, -10.1627, -0.3, -4.2095, 0, -0.3, 0, -7.7782, -0.3, -7.7782, -9.1462, -0.3, -6.1113, 0, -0.3, 0, -6.1113, -0.3, -9.1462, -7.7782, -0.3, -7.7782, 0, -0.3, 0, -4.2095, -0.3, -10.1627, -6.1113, -0.3, -9.1462, 0, -0.3, 0, -2.146, -0.3, -10.7886, -4.2095, -0.3, -10.1627, 0, -0.3, 0, 0, -0.3, -11, -2.146, -0.3, -10.7886, 0, -0.3, 0, 2.146, -0.3, -10.7886, 0, -0.3, -11, 0, -0.3, 0, 4.2095, -0.3, -10.1627, 2.146, -0.3, -10.7886, 0, -0.3, 0, 6.1113, -0.3, -9.1462, 4.2095, -0.3, -10.1627, 0, -0.3, 0, 7.7782, -0.3, -7.7782, 6.1113, -0.3, -9.1462, 0, -0.3, 0, 9.1462, -0.3, -6.1113, 7.7782, -0.3, -7.7782, 0, -0.3, 0, 10.1627, -0.3, -4.2095, 9.1462, -0.3, -6.1113, 0, -0.3, 0, 10.7886, -0.3, -2.146, 10.1627, -0.3, -4.2095, 0, -0.3, 0, 11, -0.3, 0, 10.7886, -0.3, -2.146, 0, -0.3, 0)
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_kv84c"]
@@ -63,7 +60,7 @@ height = 1.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_r262j"]
 render_priority = 0
-shader = ExtResource("9_b6srd")
+shader = ExtResource("7_gpxi0")
 shader_parameter/color1 = Color(0.376, 0.561, 0.38, 0.1)
 shader_parameter/color2 = Color(0.376, 0.561, 0.38, 1)
 shader_parameter/threshold = 0.2
@@ -75,7 +72,7 @@ height = 1.0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ykvgg"]
 transparency = 1
-albedo_texture = ExtResource("11_17p1v")
+albedo_texture = ExtResource("8_hj3c0")
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_7faxf"]
 material = SubResource("StandardMaterial3D_ykvgg")
@@ -84,22 +81,11 @@ size = Vector2(3, 3)
 [sub_resource type="BoxShape3D" id="BoxShape3D_mcfgt"]
 size = Vector3(3, 1, 3)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p6t6a"]
-transparency = 1
-albedo_texture = ExtResource("11_17p1v")
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_i8s56"]
-material = SubResource("StandardMaterial3D_p6t6a")
-size = Vector2(3, 3)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_gkm4e"]
-size = Vector3(3, 1, 3)
-
 [node name="LevelBase" type="RigidBody3D" node_paths=PackedStringArray("parts", "starts", "input_node", "input_collider")]
 freeze = true
-script = ExtResource("1_4l6dx")
-parts = [NodePath("@StaticBody3D@96"), NodePath("Goal"), NodePath("SpawnZone"), NodePath("@Area3D@223")]
-starts = [NodePath("SpawnZone"), NodePath("@Area3D@223")]
+script = ExtResource("1_r0yl8")
+parts = [NodePath("Geometry"), NodePath("@StaticBody3D@1225"), NodePath("@Area3D@1227"), NodePath("@Area3D@1229")]
+starts = [NodePath("@Area3D@1227"), NodePath("@Area3D@1229")]
 input_node = NodePath("InputTrigger")
 input_collider = NodePath("InputTrigger/CollisionShape3D")
 
@@ -109,9 +95,9 @@ input_collider = NodePath("InputTrigger/CollisionShape3D")
 shape = SubResource("BoxShape3D_ndgqk")
 disabled = true
 
-[node name="@StaticBody3D@96" type="StaticBody3D" parent="." node_paths=PackedStringArray("geometry_base", "collider", "editor_visibility") instance=ExtResource("2_7rgtp")]
+[node name="Geometry" type="StaticBody3D" parent="." node_paths=PackedStringArray("geometry_base", "collider", "editor_visibility")]
 collision_layer = 2
-script = ExtResource("3_mrxqv")
+script = ExtResource("2_77487")
 geometry_base = NodePath("Base")
 part_name = "Geometry"
 collider = NodePath("CollisionShape3D")
@@ -120,55 +106,59 @@ base = "res://Editor/Parts/Important/Geometry.tscn"
 scalable = false
 rotatable = false
 
-[node name="Base" type="MeshInstance3D" parent="@StaticBody3D@96"]
-material_override = SubResource("StandardMaterial3D_lvmph")
-mesh = SubResource("ArrayMesh_koto6")
-script = ExtResource("4_gpxi0")
-shape_info = Array[ExtResource("5_hj3c0")]([SubResource("Resource_2de3b")])
-array_mesh = SubResource("ArrayMesh_koto6")
+[node name="Base" type="MeshInstance3D" parent="Geometry"]
+material_override = SubResource("StandardMaterial3D_wrip8")
+mesh = SubResource("ArrayMesh_hgdmi")
+script = ExtResource("3_3l33y")
+shape_info = Array[ExtResource("4_4l6dx")]([SubResource("Resource_2de3b")])
+array_mesh = SubResource("ArrayMesh_hgdmi")
 
-[node name="Visibility" type="MeshInstance3D" parent="@StaticBody3D@96/Base"]
+[node name="Visibility" type="MeshInstance3D" parent="Geometry/Base"]
 mesh = SubResource("BoxMesh_l01um")
 skeleton = NodePath("../..")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="@StaticBody3D@96"]
-shape = SubResource("ConcavePolygonShape3D_4l6dx")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry"]
+shape = SubResource("ConcavePolygonShape3D_r0yl8")
 disabled = true
 
-[node name="Goal" type="StaticBody3D" parent="." node_paths=PackedStringArray("collider") groups=["Goal"] instance=ExtResource("7_hgdmi")]
+[node name="@StaticBody3D@1225" type="StaticBody3D" parent="." node_paths=PackedStringArray("collider") groups=["Goal"]]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 1.1, -7.1)
 collision_layer = 4
-script = ExtResource("8_3c1yw")
+script = ExtResource("6_mrxqv")
 part_name = "Goal"
 collider = NodePath("CollisionShape3D")
 base = "res://Editor/Parts/Important/Goal.tscn"
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Goal"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="@StaticBody3D@1225"]
 shape = SubResource("CylinderShape3D_kv84c")
 disabled = true
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Goal"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="@StaticBody3D@1225"]
 mesh = SubResource("CylinderMesh_d22mm")
 
-[node name="OmniLight3D" type="OmniLight3D" parent="Goal"]
+[node name="OmniLight3D" type="OmniLight3D" parent="@StaticBody3D@1225"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
 light_color = Color(0.376471, 0.560784, 0.380392, 1)
 light_energy = 0.5
+light_cull_mask = 4294967231
 
-[node name="OmniLight3D2" type="OmniLight3D" parent="Goal"]
+[node name="OmniLight3D2" type="OmniLight3D" parent="@StaticBody3D@1225"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.3, 0)
 light_color = Color(0.376471, 0.560784, 0.380392, 1)
 light_energy = 0.5
+light_cull_mask = 4294967231
 
-[node name="OmniLight3D3" type="OmniLight3D" parent="Goal"]
+[node name="OmniLight3D3" type="OmniLight3D" parent="@StaticBody3D@1225"]
 light_color = Color(0.376471, 0.560784, 0.380392, 1)
 light_energy = 4.0
+light_cull_mask = 4294967231
 omni_range = 10.0
 
-[node name="SpawnZone" type="Area3D" parent="." node_paths=PackedStringArray("collider", "editor_visibility") groups=["Start"] instance=ExtResource("10_1y2w7")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 8.7)
+[node name="@Area3D@1227" type="Area3D" parent="." node_paths=PackedStringArray("collider", "editor_visibility") groups=["Start"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 0.1, 7.1)
 collision_layer = 2
-script = ExtResource("8_3c1yw")
+script = ExtResource("6_mrxqv")
+part_name = "Spawn"
 collider = NodePath("CollisionShape3D")
 editor_visibility = NodePath("MeshInstance3D")
 base = "res://Editor/Parts/Important/SpawnZone.tscn"
@@ -176,19 +166,20 @@ is_start = true
 scalable = false
 rotatable = false
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="SpawnZone"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="@Area3D@1227"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.284508, 0)
 mesh = SubResource("PlaneMesh_7faxf")
 skeleton = NodePath("")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="SpawnZone"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="@Area3D@1227"]
 shape = SubResource("BoxShape3D_mcfgt")
 disabled = true
 
-[node name="@Area3D@223" type="Area3D" parent="." node_paths=PackedStringArray("collider", "editor_visibility") groups=["Start"] instance=ExtResource("10_1y2w7")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 0.1, 7.1)
+[node name="@Area3D@1229" type="Area3D" parent="." node_paths=PackedStringArray("collider", "editor_visibility") groups=["Start"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 8.7)
 collision_layer = 2
-script = ExtResource("8_3c1yw")
+script = ExtResource("6_mrxqv")
+part_name = "Spawn"
 collider = NodePath("CollisionShape3D")
 editor_visibility = NodePath("MeshInstance3D")
 base = "res://Editor/Parts/Important/SpawnZone.tscn"
@@ -196,13 +187,13 @@ is_start = true
 scalable = false
 rotatable = false
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="@Area3D@223"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="@Area3D@1229"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.284508, 0)
-mesh = SubResource("PlaneMesh_i8s56")
+mesh = SubResource("PlaneMesh_7faxf")
 skeleton = NodePath("")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="@Area3D@223"]
-shape = SubResource("BoxShape3D_gkm4e")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="@Area3D@1229"]
+shape = SubResource("BoxShape3D_mcfgt")
 disabled = true
 
 [connection signal="area_entered" from="InputTrigger" to="." method="input_trigger"]

@@ -105,9 +105,11 @@ func level_selected(level_info : level_resource) -> void:
 	UI.settings.set_settings(level_info)
 	level_base = chosen_level.associated_scene.instantiate()
 	add_child(level_base)
-	level_base.open_editor()
 	level_loaded.emit(level_base)
 	UI.show_all()
+	level_base.open_editor()
+	print_orphan_nodes()
+	
 
 func _on_place_pressed() -> void:
 	if selection_handler.selected_shape != null:
@@ -141,6 +143,7 @@ func new_part_created(_part : part) -> void:
 	if _part.collider != null:
 		_part.collider.disabled = true
 	UI.sections.add_part(_part, true)
+	
 
 
 func reload_part() -> void:
@@ -181,6 +184,7 @@ func reload_part() -> void:
 
 
 func rec_set_owner(_part : Node) -> void:
+	_part.scene_file_path = ""
 	_part.set_owner(level_base)
 	for n in _part.get_children():
 		rec_set_owner(n)
@@ -307,9 +311,8 @@ func pre_save() -> void:
 	save_scene()
 
 func save_scene() -> void:
-	var node_to_save = level_base
 	var to_save := PackedScene.new()
-	to_save.pack(node_to_save)
+	to_save.pack(level_base)
 	var saving = ResourceSaver.save(to_save, Global.level_scene_path + chosen_level.name + ".tscn")
 	if saving != OK:
 		print("Error with saving scene")
