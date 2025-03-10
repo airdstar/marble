@@ -26,6 +26,9 @@ extends Node
 @export var resolution : Array[Control]
 @export var fullscreen : Array[Control]
 
+@export var speed : Array[Control]
+@export var fps : Array[Control]
+
 func _ready() -> void:
 	for n in Global.aspect_ratios:
 		aspect_ratio[0].add_item(n)
@@ -90,6 +93,10 @@ func set_values() -> void:
 			aspect_ratio[0].selected = n
 			set_res_options(n)
 			break
+	
+	speed[0].button_pressed = PlayerInfo.player_settings.speed_display
+	fps[0].button_pressed = PlayerInfo.player_settings.fps_display
+	accessability_changed()
 
 func set_res_options(index : int) -> void:
 	resolution[0].clear()
@@ -119,13 +126,25 @@ func visual_changed() -> void:
 	else:
 		fullscreen[1].text = "[right]Disabled"
 
+func accessability_changed() -> void:
+	if speed[0].button_pressed:
+		speed[1].text = "[right]Enabled"
+	else:
+		speed[1].text = "[right]Disabled"
+	
+	if fps[0].button_pressed:
+		fps[1].text = "[right]Enabled"
+	else:
+		fps[1].text = "[right]Disabled"
 
 func save_settings() -> void:
 	PlayerInfo.player_settings.tilt_sens = tilt_sens[0].value / 100
 	PlayerInfo.player_settings.camera_sens = camera_sens[0].value
 	PlayerInfo.player_settings.tilt_deadzone = deadzone[0].value
+	PlayerInfo.player_settings.speed_display = speed[0].button_pressed
+	PlayerInfo.player_settings.fps_display = fps[0].button_pressed
 	
-	
+	accessability_changed()
 	if PlayerInfo.player_settings.resolution != resolution[0].get_item_text(resolution[0].selected):
 		PlayerInfo.player_settings.aspect_ratio = aspect_ratio[0].get_item_text(aspect_ratio[0].selected)
 		PlayerInfo.player_settings.resolution = resolution[0].get_item_text(resolution[0].selected)

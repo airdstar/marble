@@ -17,7 +17,7 @@ size = Vector3(1, 0.05, 1)
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_f8jks"]
 render_priority = 0
 shader = ExtResource("2_04yjm")
-shader_parameter/color = Color(0, 0, 0, 1)
+shader_parameter/color = Color(0.4, 0.25098, 0.2, 1)
 shader_parameter/size = 1.2
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ao63l"]

@@ -128,6 +128,7 @@ Button/styles/pressed = SubResource("StyleBoxFlat_jjmlj")
 CheckButton/styles/hover = SubResource("StyleBoxEmpty_g4ltk")
 CheckButton/styles/normal = SubResource("StyleBoxEmpty_5r5u6")
 CheckButton/styles/pressed = SubResource("StyleBoxEmpty_7ccoy")
+GridContainer/constants/v_separation = 15
 OptionButton/constants/outline_size = 1
 OptionButton/styles/hover = SubResource("StyleBoxFlat_a6n66")
 OptionButton/styles/normal = SubResource("StyleBoxFlat_8bt47")

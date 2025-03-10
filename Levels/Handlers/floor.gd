@@ -37,6 +37,7 @@ var settings = PlayerInfo.player_settings
 @export var UI : Control
 @export var timer_text : RichTextLabel
 @export var secondary_timer_text : RichTextLabel
+@export var points : RichTextLabel
 
 @onready var camera := $camera_y
 @onready var origin := $Origin
@@ -121,7 +122,17 @@ func place_control() -> void:
 	secondary_timer_text.set_position(Vector2(0, timer_text.get_theme_font_size("normal_font_size") * 6 / 7))
 	secondary_timer_text.add_theme_font_size_override("normal_font_size", 18 * get_window().get_size().x / 1280)
 	
+	points.set_size(get_window().get_size())
+	points.set_position(Vector2(0, -get_window().get_size().y / 50))
+	points.add_theme_font_size_override("normal_font_size", 120 * get_window().get_size().x / 1280)
+	
 	timer_text.visible = false
+	
+	if PlayerInfo.player_settings.speed_display:
+		speed_text.visible = true
+	
+	if PlayerInfo.player_settings.fps_display:
+		fps_text.visible = true
 	
 
 func start_game() -> void:
@@ -140,6 +151,7 @@ func start_game() -> void:
 	
 	if is_run:
 		run_handler.reset_run()
+		points.text = "[center]%d" % run_handler.current_level
 	
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	
@@ -165,6 +177,9 @@ func next_level() -> void:
 	set_time()
 	
 	run_handler.next_level()
+	
+	if is_run:
+		points.text = "[center]%d" % run_handler.current_level
 	
 	level_handler.generate_level(true)
 

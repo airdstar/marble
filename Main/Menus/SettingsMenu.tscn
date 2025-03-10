@@ -3,7 +3,7 @@
 [ext_resource type="Theme" uid="uid://baqdiduk3wnvc" path="res://Assets/Themes/Alt1.tres" id="1_ark2b"]
 [ext_resource type="Script" uid="uid://bfiallxnbkrki" path="res://Main/Menus/settings_menu.gd" id="2_2ej18"]
 
-[node name="Settings" type="Control" node_paths=PackedStringArray("background", "holding_container", "control_container", "visual_container", "accessability_container", "binds_container", "tab_buttons", "io_buttons", "values", "changers", "tilt_sens", "camera_sens", "deadzone", "aspect_ratio", "resolution", "fullscreen")]
+[node name="Settings" type="Control" node_paths=PackedStringArray("background", "holding_container", "control_container", "visual_container", "accessability_container", "binds_container", "tab_buttons", "io_buttons", "values", "changers", "tilt_sens", "camera_sens", "deadzone", "aspect_ratio", "resolution", "fullscreen", "speed", "fps")]
 layout_mode = 3
 anchors_preset = 0
 size_flags_horizontal = 3
@@ -17,14 +17,16 @@ accessability_container = NodePath("Panel/VBoxContainer/ScrollContainer/VBoxCont
 binds_container = NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Binds")
 tab_buttons = [NodePath("Panel/VBoxContainer/HBoxContainer/Button"), NodePath("Panel/VBoxContainer/HBoxContainer/Button2"), NodePath("Panel/VBoxContainer/HBoxContainer/Button3")]
 io_buttons = [NodePath("Panel/VBoxContainer/CenterContainer2/IO/Save"), NodePath("Panel/VBoxContainer/CenterContainer2/IO/Reset")]
-values = [NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control/TiltSensValue"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control/CameraSensValue"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control/DeadzoneValue"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Visual/AspectValue"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Visual/ResValue"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Visual/FullscreenValue"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Accessability/SpeedValue")]
-changers = [NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control/TiltSlider"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control/CameraSlider"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control/DeadzoneSlider"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Visual/AspectOptions"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Visual/ResOptions"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Accessability/SpeedOptions")]
+values = [NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control/TiltSensValue"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control/CameraSensValue"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control/DeadzoneValue"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Visual/AspectValue"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Visual/ResValue"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Visual/FullscreenValue"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Accessability/SpeedValue"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Accessability/FPSValue")]
+changers = [NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control/TiltSlider"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control/CameraSlider"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control/DeadzoneSlider"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Visual/AspectOptions"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Visual/ResOptions"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Accessability/SpeedOption"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Accessability/FPSOption")]
 tilt_sens = [NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control/TiltSlider"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control/TiltSensValue")]
 camera_sens = [NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control/CameraSlider"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control/CameraSensValue")]
 deadzone = [NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control/DeadzoneSlider"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control/DeadzoneValue")]
 aspect_ratio = [NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Visual/AspectOptions"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Visual/AspectValue")]
 resolution = [NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Visual/ResOptions"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Visual/ResValue")]
 fullscreen = [NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Visual/FullscreenOptions"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Visual/FullscreenValue")]
+speed = [NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Accessability/SpeedOption"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Accessability/SpeedValue")]
+fps = [NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Accessability/FPSOption"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Accessability/FPSValue")]
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 0
@@ -244,17 +246,33 @@ theme_override_constants/margin_bottom = 5
 [node name="SpeedLabel" type="RichTextLabel" parent="Panel/VBoxContainer/ScrollContainer/VBoxContainer/Accessability"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Show Speed"
+text = "Display Speed"
 fit_content = true
 
-[node name="SpeedOptions" type="CheckButton" parent="Panel/VBoxContainer/ScrollContainer/VBoxContainer/Accessability"]
+[node name="SpeedOption" type="CheckButton" parent="Panel/VBoxContainer/ScrollContainer/VBoxContainer/Accessability"]
 layout_mode = 2
 
 [node name="SpeedValue" type="RichTextLabel" parent="Panel/VBoxContainer/ScrollContainer/VBoxContainer/Accessability"]
 layout_mode = 2
 size_flags_horizontal = 3
 bbcode_enabled = true
-text = "Fullscreen"
+text = "Enabled"
+fit_content = true
+
+[node name="FPSLabel" type="RichTextLabel" parent="Panel/VBoxContainer/ScrollContainer/VBoxContainer/Accessability"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Display FPS"
+fit_content = true
+
+[node name="FPSOption" type="CheckButton" parent="Panel/VBoxContainer/ScrollContainer/VBoxContainer/Accessability"]
+layout_mode = 2
+
+[node name="FPSValue" type="RichTextLabel" parent="Panel/VBoxContainer/ScrollContainer/VBoxContainer/Accessability"]
+layout_mode = 2
+size_flags_horizontal = 3
+bbcode_enabled = true
+text = "Enabled"
 fit_content = true
 
 [node name="Binds" type="GridContainer" parent="Panel/VBoxContainer/ScrollContainer/VBoxContainer"]
