@@ -26,7 +26,7 @@ func part_rotation_toggled(toggled_on: bool) -> void:
 
 
 func part_name_changed(new_text: String) -> void:
-	selection.selected_part.set_meta("part_name", new_text)
+	selection.selected_part.part_name = new_text
 	UI.sections.get_selected_part().text = new_text
 
 func movement_detected(pos_change : Vector3) -> void:
