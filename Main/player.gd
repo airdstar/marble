@@ -5,8 +5,8 @@ var customization : PlayerCustomization
 
 @export var visible_mesh : MeshInstance3D
 
-@export var face : Decal
-@export var flair : Decal
+@export var front : Decal
+@export var back : Decal
 
 @export var light : OmniLight3D
 @export var collision : Area3D
@@ -31,18 +31,18 @@ func set_color() -> void:
 	light.light_color = customization.chosen_color
 
 func set_face() -> void:
-	if customization.chosen_face != null:
-		face.visible = true
-		face.texture_albedo = customization.chosen_face
+	if customization.chosen_front != null:
+		front.visible = true
+		front.texture_albedo = customization.chosen_front
 	else:
-		face.visible = false
+		front.visible = false
 
 func set_flair() -> void:
-	if customization.chosen_flair != null:
-		flair.visible = true
-		flair.texture_albedo = customization.chosen_flair
+	if customization.chosen_back != null:
+		back.visible = true
+		back.texture_albedo = customization.chosen_back
 	else:
-		flair.visible = false
+		back.visible = false
 
 func collision_detected(body: Node3D) -> void:
 	if body.is_in_group("Goal"):

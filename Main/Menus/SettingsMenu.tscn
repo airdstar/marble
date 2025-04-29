@@ -58,7 +58,7 @@ text = "Visual"
 [node name="Button3" type="Button" parent="Panel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Accessability"
+text = "Accessibility"
 
 [node name="Button4" type="Button" parent="Panel/VBoxContainer/HBoxContainer"]
 layout_mode = 2

@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dr7knw5yrpe8x" path="res://Main/player.gd" id="1_8df3t"]
 [ext_resource type="Texture2D" uid="uid://bb4qn3pn0oavo" path="res://Assets/smallbutton.png" id="2_l5m83"]
-[ext_resource type="Texture2D" uid="uid://580l6qpyteqr" path="res://Assets/Customization/Faces/test face.png" id="2_upe4j"]
+[ext_resource type="Texture2D" uid="uid://580l6qpyteqr" path="res://Assets/Customization/test face.png" id="2_upe4j"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_vmld2"]
 rough = true
@@ -26,7 +26,7 @@ no_depth_test = true
 resource_local_to_scene = true
 material = SubResource("StandardMaterial3D_38p8a")
 
-[node name="Player" type="RigidBody3D" node_paths=PackedStringArray("visible_mesh", "face", "flair", "light", "collision")]
+[node name="Player" type="RigidBody3D" node_paths=PackedStringArray("visible_mesh", "front", "back", "light", "collision")]
 collision_mask = 6
 mass = 10.0
 physics_material_override = SubResource("PhysicsMaterial_vmld2")
@@ -34,8 +34,8 @@ gravity_scale = 7.5
 angular_damp = 3.5
 script = ExtResource("1_8df3t")
 visible_mesh = NodePath("VisibleMesh")
-face = NodePath("VisibleMesh/Face")
-flair = NodePath("VisibleMesh/Flair")
+front = NodePath("VisibleMesh/Front")
+back = NodePath("VisibleMesh/Back")
 light = NodePath("OmniLight3D")
 collision = NodePath("Area3D")
 
@@ -46,7 +46,7 @@ shape = SubResource("SphereShape3D_84e8f")
 layers = 17
 mesh = SubResource("SphereMesh_ijwjb")
 
-[node name="Flair" type="Decal" parent="VisibleMesh"]
+[node name="Back" type="Decal" parent="VisibleMesh"]
 transform = Transform3D(-4.37114e-08, -1, 0, -4.37114e-08, 1.91069e-15, -1, 1, -4.37114e-08, -4.37114e-08, -0.4, 0, 0)
 layers = 16
 size = Vector3(0.4, 0.3, 0.4)
@@ -55,7 +55,7 @@ upper_fade = 1e-05
 lower_fade = 1e-05
 cull_mask = 1047568
 
-[node name="Face" type="Decal" parent="VisibleMesh"]
+[node name="Front" type="Decal" parent="VisibleMesh"]
 transform = Transform3D(-4.37114e-08, -1, 0, -4.37114e-08, 1.91069e-15, -1, 1, -4.37114e-08, -4.37114e-08, 0.4, 0, 0)
 layers = 16
 size = Vector3(0.8, 0.4, 0.8)

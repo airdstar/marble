@@ -8,8 +8,8 @@ var player_dummy : RigidBody3D
 @export var option_container : VBoxContainer
 @export var tab_container : HBoxContainer
 @export var color_container : GridContainer
-@export var face_container : GridContainer
-@export var flair_container : GridContainer
+@export var front_container : GridContainer
+@export var back_container : GridContainer
 
 func _ready() -> void:
 	player_dummy = preload("res://Main/Player.tscn").instantiate()
@@ -21,11 +21,11 @@ func _ready() -> void:
 	place_control()
 	
 	var null_button : Button = create_button()
-	face_container.add_child(null_button)
+	front_container.add_child(null_button)
 	null_button.pressed.connect(set_face.bind(null))
 	
 	null_button = create_button()
-	flair_container.add_child(null_button)
+	back_container.add_child(null_button)
 	null_button.pressed.connect(set_flair.bind(null))
 	
 	for n in Cosmetic.colors:
@@ -36,16 +36,15 @@ func _ready() -> void:
 			current_button.pressed.connect(set_color.bind(m))
 	
 	
-	for n in Cosmetic.faces:
+	for n in Cosmetic.cosmetics:
 		var current_button : Button = create_button()
 		current_button.icon = n
-		face_container.add_child(current_button)
+		front_container.add_child(current_button)
 		current_button.pressed.connect(set_face.bind(n))
-	
-	for n in Cosmetic.flairs:
-		var current_button = create_button()
+		
+		current_button = create_button()
 		current_button.icon = n
-		flair_container.add_child(current_button)
+		back_container.add_child(current_button)
 		current_button.pressed.connect(set_flair.bind(n))
 
 
@@ -72,15 +71,15 @@ func create_button() -> Button:
 
 func tab_changed(index : int) -> void:
 	color_container.visible = false
-	face_container.visible = false
-	flair_container.visible = false
+	front_container.visible = false
+	back_container.visible = false
 	match index:
 		0:
 			color_container.visible = true
 		1:
-			face_container.visible = true
+			front_container.visible = true
 		2:
-			flair_container.visible = true
+			back_container.visible = true
 
 
 func set_color(color : Color) -> void:
@@ -90,13 +89,13 @@ func set_color(color : Color) -> void:
 	player_dummy.rotation = Vector3.ZERO
 
 func set_face(face : Texture2D) -> void:
-	PlayerInfo.player_data.player_customization.chosen_face = face
+	PlayerInfo.player_data.player_customization.chosen_front = face
 	PlayerInfo.save_data()
 	player_dummy.set_face()
 	player_dummy.rotation = Vector3.ZERO
 
 func set_flair(flair : Texture2D) -> void:
-	PlayerInfo.player_data.player_customization.chosen_flair = flair
+	PlayerInfo.player_data.player_customization.chosen_back = flair
 	PlayerInfo.save_data()
 	player_dummy.set_flair()
 	player_dummy.rotation = Vector3(0,deg_to_rad(180),0)

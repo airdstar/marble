@@ -185,8 +185,8 @@ func next_level() -> void:
 
 
 	await get_tree().create_timer(0.91).timeout
-	
-	marble.reset()
+	if marble != null:
+		marble.reset()
 
 func game_over() -> void:
 	if is_run and Global.main_scene.popup_scene == null:
@@ -256,7 +256,8 @@ func level_generated(level_info : level_resource) -> void:
 	level_type = level_info.level_type
 	default_camera_skybox()
 	instanced.start_level()
-	marble.reset_pos = instanced.choose_spawn()
+	if marble != null:
+		marble.reset_pos = instanced.choose_spawn()
 	
 func prev_scene() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)

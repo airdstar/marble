@@ -96,7 +96,7 @@ func set_values() -> void:
 	
 	speed[0].button_pressed = PlayerInfo.player_settings.speed_display
 	fps[0].button_pressed = PlayerInfo.player_settings.fps_display
-	accessability_changed()
+	accessibility_changed()
 
 func set_res_options(index : int) -> void:
 	resolution[0].clear()
@@ -126,7 +126,7 @@ func visual_changed() -> void:
 	else:
 		fullscreen[1].text = "[right]Disabled"
 
-func accessability_changed() -> void:
+func accessibility_changed() -> void:
 	if speed[0].button_pressed:
 		speed[1].text = "[right]Enabled"
 	else:
@@ -144,7 +144,7 @@ func save_settings() -> void:
 	PlayerInfo.player_settings.speed_display = speed[0].button_pressed
 	PlayerInfo.player_settings.fps_display = fps[0].button_pressed
 	
-	accessability_changed()
+	accessibility_changed()
 	if PlayerInfo.player_settings.resolution != resolution[0].get_item_text(resolution[0].selected):
 		PlayerInfo.player_settings.aspect_ratio = aspect_ratio[0].get_item_text(aspect_ratio[0].selected)
 		PlayerInfo.player_settings.resolution = resolution[0].get_item_text(resolution[0].selected)

@@ -40,7 +40,7 @@ Button/styles/hover = SubResource("StyleBoxFlat_o5axi")
 Button/styles/normal = SubResource("StyleBoxFlat_68ad3")
 Button/styles/pressed = SubResource("StyleBoxFlat_x8167")
 
-[node name="Customization" type="Control" node_paths=PackedStringArray("dummy_display", "dummy_view", "option_container", "tab_container", "color_container", "face_container", "flair_container")]
+[node name="Customization" type="Control" node_paths=PackedStringArray("dummy_display", "dummy_view", "option_container", "tab_container", "color_container", "front_container", "back_container")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -54,8 +54,8 @@ dummy_view = NodePath("SubViewport")
 option_container = NodePath("VBoxContainer")
 tab_container = NodePath("VBoxContainer/CenterContainer/HBoxContainer")
 color_container = NodePath("VBoxContainer/ScrollContainer/CenterContainer/VBoxContainer/GridContainer")
-face_container = NodePath("VBoxContainer/ScrollContainer/CenterContainer/VBoxContainer/GridContainer2")
-flair_container = NodePath("VBoxContainer/ScrollContainer/CenterContainer/VBoxContainer/GridContainer3")
+front_container = NodePath("VBoxContainer/ScrollContainer/CenterContainer/VBoxContainer/GridContainer3")
+back_container = NodePath("VBoxContainer/ScrollContainer/CenterContainer/VBoxContainer/GridContainer2")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 0
@@ -92,7 +92,7 @@ theme_override_constants/margin_left = 5
 [node name="Button2" type="Button" parent="VBoxContainer/CenterContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Faces"
+text = "Front"
 
 [node name="MarginContainer2" type="MarginContainer" parent="VBoxContainer/CenterContainer/HBoxContainer"]
 layout_mode = 2
@@ -101,7 +101,7 @@ theme_override_constants/margin_left = 5
 [node name="Button3" type="Button" parent="VBoxContainer/CenterContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Flairs"
+text = "Back"
 
 [node name="MarginContainer8" type="MarginContainer" parent="VBoxContainer"]
 layout_mode = 2
