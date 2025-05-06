@@ -4,7 +4,6 @@ extends Node
 @export var extras_container : GridContainer
 @export var important_container : HBoxContainer
 @export var logo : Sprite2D
-@export var rotate_logo : Sprite2D
 
 @export var background : SubViewport
 
@@ -46,7 +45,7 @@ func place_control() -> void:
 	background.set_size(get_window().get_size())
 
 func _process(delta: float) -> void:
-	rotate_logo.rotation = (rotate_logo.rotation + 0.3 * delta)
+	logo.rotation = (logo.rotation + 0.3 * delta)
 	if Input.is_action_just_pressed("back"):
 		if Global.main_scene.popup_scene == null:
 			if !extras_container.visible:

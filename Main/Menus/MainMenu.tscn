@@ -1,9 +1,8 @@
-[gd_scene load_steps=14 format=3 uid="uid://dqdv1dvpasyd"]
+[gd_scene load_steps=13 format=3 uid="uid://dqdv1dvpasyd"]
 
 [ext_resource type="Theme" uid="uid://bblhstx3bttr7" path="res://Assets/Themes/Main.tres" id="1_lrwul"]
 [ext_resource type="Script" uid="uid://b5o6vajgbtx03" path="res://Main/Menus/main_menu.gd" id="1_tofsu"]
-[ext_resource type="Texture2D" uid="uid://d2lssy42jcrl5" path="res://Assets/Logo middle.png" id="5_lcnhj"]
-[ext_resource type="Texture2D" uid="uid://bwv7mtqpdc47l" path="res://Assets/Logo spin.png" id="6_yv5bw"]
+[ext_resource type="Texture2D" uid="uid://bfsra60mc5svj" path="res://Assets/Logo.png" id="3_ol107"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_ltt8l"]
 viewport_path = NodePath("SubViewport")
@@ -38,7 +37,7 @@ volumetric_fog_enabled = true
 volumetric_fog_density = 0.0001
 volumetric_fog_albedo = Color(0.855694, 0.852657, 0.851354, 1)
 
-[node name="MainMenu" type="Control" node_paths=PackedStringArray("main_container", "extras_container", "important_container", "logo", "rotate_logo", "background")]
+[node name="MainMenu" type="Control" node_paths=PackedStringArray("main_container", "extras_container", "important_container", "logo", "background")]
 process_mode = 1
 layout_mode = 3
 anchors_preset = 0
@@ -47,8 +46,7 @@ script = ExtResource("1_tofsu")
 main_container = NodePath("GridContainer2")
 extras_container = NodePath("GridContainer")
 important_container = NodePath("HBoxContainer2")
-logo = NodePath("Sprite2D")
-rotate_logo = NodePath("Sprite2D/Sprite2D2")
+logo = NodePath("Logo")
 background = NodePath("SubViewport")
 
 [node name="Background" type="TextureRect" parent="."]
@@ -124,13 +122,10 @@ layout_mode = 2
 [node name="Info" type="Button" parent="HBoxContainer2"]
 layout_mode = 2
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(640, 180)
-scale = Vector2(0.3, 0.3)
-texture = ExtResource("5_lcnhj")
-
-[node name="Sprite2D2" type="Sprite2D" parent="Sprite2D"]
-texture = ExtResource("6_yv5bw")
+[node name="Logo" type="Sprite2D" parent="."]
+position = Vector2(640, 240)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_ol107")
 
 [node name="SubViewport" type="SubViewport" parent="."]
 size = Vector2i(1280, 720)
