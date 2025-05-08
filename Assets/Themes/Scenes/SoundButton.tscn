@@ -1,3 +1,13 @@
-[gd_scene format=3 uid="uid://bnd0uic0px8a8"]
+[gd_scene load_steps=3 format=3 uid="uid://bnd0uic0px8a8"]
+
+[ext_resource type="Script" uid="uid://3sxkiu6l3vk3" path="res://Assets/Themes/Scenes/sound_button.gd" id="1_x4gak"]
+[ext_resource type="AudioStream" uid="uid://ca1qqlxtijjjk" path="res://Assets/Audio/hover-button-287656.mp3" id="2_jlfj3"]
 
 [node name="SoundButton" type="Button"]
+script = ExtResource("1_x4gak")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_jlfj3")
+pitch_scale = 1.2
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]

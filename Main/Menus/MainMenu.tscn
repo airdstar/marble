@@ -1,8 +1,9 @@
-[gd_scene load_steps=13 format=3 uid="uid://dqdv1dvpasyd"]
+[gd_scene load_steps=14 format=3 uid="uid://dqdv1dvpasyd"]
 
 [ext_resource type="Theme" uid="uid://bblhstx3bttr7" path="res://Assets/Themes/Main.tres" id="1_lrwul"]
 [ext_resource type="Script" uid="uid://b5o6vajgbtx03" path="res://Main/Menus/main_menu.gd" id="1_tofsu"]
 [ext_resource type="Texture2D" uid="uid://bfsra60mc5svj" path="res://Assets/Logo.png" id="3_ol107"]
+[ext_resource type="PackedScene" uid="uid://bnd0uic0px8a8" path="res://Assets/Themes/Scenes/SoundButton.tscn" id="4_a8qpw"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_ltt8l"]
 viewport_path = NodePath("SubViewport")
@@ -57,8 +58,10 @@ texture = SubResource("ViewportTexture_ltt8l")
 
 [node name="GridContainer2" type="GridContainer" parent="."]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = 1029.0
+offset_top = 175.0
+offset_right = 1184.0
+offset_bottom = 218.0
 columns = 2
 
 [node name="Play" type="Button" parent="GridContainer2"]
@@ -103,9 +106,10 @@ text = "???"
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="."]
 layout_mode = 2
-offset_top = 55.0
-offset_right = 200.0
-offset_bottom = 103.0
+offset_left = 992.0
+offset_top = 239.0
+offset_right = 1192.0
+offset_bottom = 287.0
 
 [node name="Customization" type="Button" parent="HBoxContainer2"]
 custom_minimum_size = Vector2(48, 48)
@@ -173,6 +177,22 @@ environment = SubResource("Environment_jhntf")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewport"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 6.94082, 0)
 light_energy = 0.3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 33.0
+offset_right = 72.0
+offset_bottom = 250.0
+theme_override_constants/separation = 10
+
+[node name="Exit" parent="VBoxContainer" instance=ExtResource("4_a8qpw")]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+
+[node name="Exit2" parent="VBoxContainer" instance=ExtResource("4_a8qpw")]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
 
 [connection signal="pressed" from="GridContainer2/Play" to="." method="open_floor"]
 [connection signal="pressed" from="GridContainer2/Extras" to="." method="extras_pressed"]
