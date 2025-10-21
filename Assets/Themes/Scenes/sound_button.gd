@@ -1,5 +1,4 @@
 extends Button
 
-
 func _on_pressed() -> void:
-	$AudioStreamPlayer.play()
+	Audio.play_sfx("res://Assets/Audio/hover-button-287656.mp3")

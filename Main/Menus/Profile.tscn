@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://dh7dc6u5iari0"]
 
+[ext_resource type="Theme" uid="uid://d2ltakj580awj" path="res://MainTheme.tres" id="1_c3g5u"]
 [ext_resource type="Script" uid="uid://of4j8qrj4qjb" path="res://Main/Menus/profile.gd" id="1_ds35u"]
-[ext_resource type="Theme" uid="uid://baqdiduk3wnvc" path="res://Assets/Themes/Alt1.tres" id="1_ph8md"]
 
 [node name="Profile" type="Control" node_paths=PackedStringArray("background", "header", "player_info")]
 layout_mode = 3
@@ -10,7 +10,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("1_ph8md")
+theme = ExtResource("1_c3g5u")
 script = ExtResource("1_ds35u")
 background = NodePath("Panel")
 header = NodePath("Panel/Header")
@@ -18,10 +18,10 @@ player_info = NodePath("Panel/Info")
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 0
-offset_left = 373.0
-offset_top = 171.0
-offset_right = 699.0
-offset_bottom = 469.0
+offset_left = 50.0
+offset_top = 50.0
+offset_right = 1102.0
+offset_bottom = 598.0
 
 [node name="Header" type="RichTextLabel" parent="Panel"]
 layout_mode = 0

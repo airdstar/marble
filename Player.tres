@@ -1,0 +1,26 @@
+[gd_resource type="StandardMaterial3D" load_steps=4 format=3 uid="uid://cghyc6k52o8t0"]
+
+[ext_resource type="Shader" uid="uid://cs71ll34smi8g" path="res://outline.gdshader" id="1_vo43o"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lqyjc"]
+render_priority = 0
+shader = ExtResource("1_vo43o")
+shader_parameter/step_count = 3
+shader_parameter/thickness = 3.0
+shader_parameter/edge_color = Color(0, 0, 0, 1)
+shader_parameter/fade_start = 100.0
+shader_parameter/fade_length = 200.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ge73a"]
+resource_local_to_scene = true
+next_pass = SubResource("ShaderMaterial_lqyjc")
+transparency = 1
+clearcoat = 0.0
+clearcoat_roughness = 0.21
+
+[resource]
+resource_local_to_scene = true
+render_priority = -1
+next_pass = SubResource("StandardMaterial3D_ge73a")
+transparency = 1
+no_depth_test = true

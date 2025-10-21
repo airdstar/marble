@@ -1,6 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://daqk2roaa6h1v"]
+[gd_scene load_steps=8 format=3 uid="uid://daqk2roaa6h1v"]
 
 [ext_resource type="Script" uid="uid://dr7knw5yrpe8x" path="res://Main/player.gd" id="1_8df3t"]
+[ext_resource type="Material" uid="uid://cghyc6k52o8t0" path="res://Player.tres" id="2_2pnue"]
 [ext_resource type="Texture2D" uid="uid://bb4qn3pn0oavo" path="res://Assets/smallbutton.png" id="2_l5m83"]
 [ext_resource type="Texture2D" uid="uid://580l6qpyteqr" path="res://Assets/Customization/test face.png" id="2_upe4j"]
 
@@ -9,22 +10,9 @@ rough = true
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_84e8f"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ge73a"]
-resource_local_to_scene = true
-transparency = 1
-clearcoat = 0.0
-clearcoat_roughness = 0.21
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_38p8a"]
-resource_local_to_scene = true
-render_priority = -1
-next_pass = SubResource("StandardMaterial3D_ge73a")
-transparency = 1
-no_depth_test = true
-
 [sub_resource type="SphereMesh" id="SphereMesh_ijwjb"]
 resource_local_to_scene = true
-material = SubResource("StandardMaterial3D_38p8a")
+material = ExtResource("2_2pnue")
 
 [node name="Player" type="RigidBody3D" node_paths=PackedStringArray("visible_mesh", "front", "back", "light", "collision")]
 collision_mask = 6

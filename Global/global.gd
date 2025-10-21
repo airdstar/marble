@@ -155,9 +155,4 @@ func set_fullscreen() -> void:
 			main_scene.popup_scene.place_control()
 
 func adjust_themes() -> void:
-	var main_theme : Theme = ResourceLoader.load("res://Assets/Themes/Main.tres")
-	main_theme.set_default_font_size(26 * get_window().get_size().x / 1280)
-	
-	var alt_theme1 : Theme = ResourceLoader.load("res://Assets/Themes/Alt1.tres")
-	alt_theme1.set_default_font_size(20 * get_window().get_size().x / 1280)
-	alt_theme1.set_constant("GridContainer", "v_separation", (15 * get_window().get_size().y / 720))
+	pass
