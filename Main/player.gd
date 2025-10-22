@@ -19,8 +19,7 @@ signal orientation_change
 
 func _ready():
 	set_color()
-	set_face()
-	set_flair()
+	set_decal()
 
 func set_customization(player_customization : PlayerCustomization) -> void:
 	customization = player_customization
@@ -29,6 +28,9 @@ func set_color() -> void:
 	visible_mesh.mesh.material.albedo_color = customization.chosen_color.lightened(0.7)
 	visible_mesh.mesh.material.next_pass.albedo_color = customization.chosen_color
 	light.light_color = customization.chosen_color
+
+func set_decal() -> void:
+	pass
 
 func set_face() -> void:
 	if customization.chosen_front != null:

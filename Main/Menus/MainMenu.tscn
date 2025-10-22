@@ -44,11 +44,12 @@ layout_mode = 3
 anchors_preset = 0
 theme = ExtResource("3_ryd52")
 script = ExtResource("1_tofsu")
-extras_container = NodePath("GridContainer")
-important_container = NodePath("HBoxContainer2")
+extras_container = NodePath("")
+important_container = NodePath("")
 background = NodePath("SubViewport")
 
 [node name="Background" type="TextureRect" parent="."]
+visible = false
 layout_mode = 0
 offset_left = -1.0
 offset_right = 1279.0
@@ -57,32 +58,33 @@ texture = SubResource("ViewportTexture_ltt8l")
 
 [node name="Button" type="Button" parent="."]
 layout_mode = 0
-offset_left = 36.0
-offset_top = 45.0
-offset_right = 175.0
-offset_bottom = 127.0
+offset_left = 73.0
+offset_top = 444.0
+offset_right = 212.0
+offset_bottom = 526.0
 text = "Editor"
+
+[node name="Gallery" parent="." instance=ExtResource("4_a8qpw")]
+layout_mode = 0
+offset_left = 69.0
+offset_top = 250.0
+offset_right = 179.0
+offset_bottom = 331.0
+size_flags_horizontal = 3
+text = "Gallery"
 
 [node name="MainPanel" type="PanelContainer" parent="."]
 layout_mode = 0
-offset_left = 326.0
-offset_top = 482.0
-offset_right = 826.0
-offset_bottom = 563.0
+offset_left = 456.0
+offset_top = 467.0
+offset_right = 696.0
+offset_bottom = 548.0
 theme = ExtResource("3_ryd52")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MainPanel"]
-layout_mode = 2
-
-[node name="Play" parent="MainPanel/HBoxContainer" instance=ExtResource("4_a8qpw")]
+[node name="Play" parent="MainPanel" instance=ExtResource("4_a8qpw")]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Play"
-
-[node name="Gallery" parent="MainPanel/HBoxContainer" instance=ExtResource("4_a8qpw")]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Gallery"
 
 [node name="SystemPanel" type="PanelContainer" parent="."]
 layout_mode = 0
@@ -94,19 +96,20 @@ offset_bottom = 195.0
 [node name="VBoxContainer" type="VBoxContainer" parent="SystemPanel"]
 layout_mode = 2
 
-[node name="Exit" type="Button" parent="SystemPanel/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_font_sizes/font_size = 20
-text = "Exit"
-
 [node name="Settings" type="Button" parent="SystemPanel/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_font_sizes/font_size = 20
 text = "Settings"
 
+[node name="Stats" parent="SystemPanel/VBoxContainer" instance=ExtResource("4_a8qpw")]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 20
+text = "Stats"
+
 [node name="PlayerPanel" type="PanelContainer" parent="."]
+visible = false
 layout_mode = 0
 offset_left = 45.0
 offset_top = 453.0
@@ -116,69 +119,11 @@ offset_bottom = 603.0
 [node name="VBoxContainer" type="VBoxContainer" parent="PlayerPanel"]
 layout_mode = 2
 
-[node name="Player Info" parent="PlayerPanel/VBoxContainer" instance=ExtResource("4_a8qpw")]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_font_sizes/font_size = 20
-text = "Player Info"
-
 [node name="Customization" type="Button" parent="PlayerPanel/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_font_sizes/font_size = 20
 text = "Customization"
-
-[node name="GridContainer" type="GridContainer" parent="."]
-visible = false
-layout_mode = 0
-offset_right = 182.0
-offset_bottom = 95.0
-columns = 2
-
-[node name="Gallery" type="Button" parent="GridContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Gallery"
-
-[node name="Editor" type="Button" parent="GridContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Editor"
-
-[node name="Challenges" type="Button" parent="GridContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-disabled = true
-text = "???"
-
-[node name="??" type="Button" parent="GridContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-disabled = true
-text = "???"
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="."]
-visible = false
-layout_mode = 0
-offset_left = 992.0
-offset_top = 239.0
-offset_right = 1192.0
-offset_bottom = 287.0
-
-[node name="Customization" type="Button" parent="HBoxContainer2"]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-
-[node name="Profile" type="Button" parent="HBoxContainer2"]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-
-[node name="Settings" type="Button" parent="HBoxContainer2"]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-
-[node name="Info" type="Button" parent="HBoxContainer2"]
-layout_mode = 2
 
 [node name="Logo" type="Sprite2D" parent="."]
 position = Vector2(576, 200)
@@ -232,30 +177,8 @@ environment = SubResource("Environment_jhntf")
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 6.94082, 0)
 light_energy = 0.3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
-visible = false
-layout_mode = 0
-offset_left = 24.0
-offset_top = 33.0
-offset_right = 72.0
-offset_bottom = 250.0
-theme_override_constants/separation = 10
-
-[node name="Exit" parent="VBoxContainer" instance=ExtResource("4_a8qpw")]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-
-[node name="Exit2" parent="VBoxContainer" instance=ExtResource("4_a8qpw")]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-
 [connection signal="pressed" from="Button" to="." method="open_scene" binds= ["editor"]]
-[connection signal="pressed" from="MainPanel/HBoxContainer/Play" to="." method="open_floor"]
-[connection signal="pressed" from="MainPanel/HBoxContainer/Gallery" to="." method="open_scene" binds= ["gallery"]]
-[connection signal="pressed" from="PlayerPanel/VBoxContainer/Player Info" to="." method="open_profile"]
-[connection signal="pressed" from="GridContainer/Gallery" to="." method="open_scene" binds= ["gallery"]]
-[connection signal="pressed" from="GridContainer/Editor" to="." method="open_scene" binds= ["editor"]]
-[connection signal="pressed" from="HBoxContainer2/Customization" to="." method="open_scene" binds= ["customization"]]
-[connection signal="pressed" from="HBoxContainer2/Profile" to="." method="open_profile"]
-[connection signal="pressed" from="HBoxContainer2/Settings" to="." method="open_popup" binds= ["settings"]]
+[connection signal="pressed" from="Gallery" to="." method="open_scene" binds= ["gallery"]]
+[connection signal="pressed" from="MainPanel/Play" to="." method="open_floor"]
+[connection signal="pressed" from="SystemPanel/VBoxContainer/Stats" to="." method="open_profile"]
 [connection signal="body_entered" from="SubViewport/Area3D" to="." method="cull_dummy"]

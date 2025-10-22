@@ -9,7 +9,7 @@ var colors : Array[Color] = [
 	Color(0.9,0.3,0)
 ]
 
-var cosmetics : Array[Texture2D]
+var decals : Array[Texture2D]
 var path : String = "res://Assets/Customization/"
 
 
@@ -26,7 +26,7 @@ func _ready() -> void:
 			continue
 		
 		var holder = ResourceLoader.load(path + current)
-		cosmetics.append(holder)
+		decals.append(holder)
 		current = dir.get_next()
 	dir.list_dir_end()
 
@@ -43,7 +43,6 @@ func generate_random() -> PlayerCustomization:
 	var to_return = PlayerCustomization.new()
 	
 	to_return.chosen_color = get_shades(colors.pick_random()).pick_random()
-	to_return.chosen_front = cosmetics.pick_random()
-	to_return.chosen_back = cosmetics.pick_random()
+	to_return.chosen_decal = decals.pick_random()
 	
 	return to_return

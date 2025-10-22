@@ -1,4 +1,6 @@
-[gd_resource type="Theme" load_steps=6 format=3 uid="uid://d2ltakj580awj"]
+[gd_resource type="Theme" load_steps=7 format=3 uid="uid://d2ltakj580awj"]
+
+[ext_resource type="FontFile" uid="uid://bq5bnktcrnc38" path="res://Tschichold.ttf" id="1_4as0w"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8s18r"]
 
@@ -60,7 +62,8 @@ expand_margin_right = 20.0
 expand_margin_bottom = 20.0
 
 [resource]
-default_font_size = 26
+default_font = ExtResource("1_4as0w")
+default_font_size = 30
 Button/colors/font_color = Color(0.59607846, 0.8862745, 0.7764706, 1)
 Button/colors/font_focus_color = Color(0.59607846, 0.8862745, 0.7764706, 1)
 Button/colors/font_hover_color = Color(0.95, 0.95, 0.95, 1)
@@ -73,4 +76,5 @@ Button/styles/normal = SubResource("StyleBoxFlat_ryd52")
 Button/styles/pressed = SubResource("StyleBoxFlat_8s18r")
 HBoxContainer/constants/separation = 20
 PanelContainer/styles/panel = SubResource("StyleBoxFlat_a8qpw")
+RichTextLabel/constants/paragraph_separation = 8
 VBoxContainer/constants/separation = 20
