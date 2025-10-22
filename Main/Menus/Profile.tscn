@@ -1,7 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://dh7dc6u5iari0"]
+[gd_scene load_steps=5 format=3 uid="uid://dh7dc6u5iari0"]
 
 [ext_resource type="Theme" uid="uid://d2ltakj580awj" path="res://MainTheme.tres" id="1_c3g5u"]
 [ext_resource type="Script" uid="uid://of4j8qrj4qjb" path="res://Main/Menus/profile.gd" id="1_ds35u"]
+[ext_resource type="PackedScene" uid="uid://bnd0uic0px8a8" path="res://Assets/Themes/Scenes/SoundButton.tscn" id="3_jmxxm"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_c3g5u"]
+viewport_path = NodePath("SubViewport")
 
 [node name="Profile" type="Control"]
 layout_mode = 3
@@ -10,11 +14,12 @@ theme = ExtResource("1_c3g5u")
 script = ExtResource("1_ds35u")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
+visible = false
 layout_mode = 0
-offset_left = 45.0
-offset_top = 45.0
-offset_right = 158.0
-offset_bottom = 105.0
+offset_left = 74.0
+offset_top = 74.0
+offset_right = 211.0
+offset_bottom = 134.0
 
 [node name="GridContainer" type="GridContainer" parent="PanelContainer"]
 layout_mode = 2
@@ -31,7 +36,7 @@ text = "|"
 [node name="Runs" type="Label" parent="PanelContainer/GridContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "50"
+text = "5000"
 
 [node name="Label4" type="Label" parent="PanelContainer/GridContainer"]
 layout_mode = 2
@@ -45,3 +50,49 @@ text = "|"
 unique_name_in_owner = true
 layout_mode = 2
 text = "50"
+
+[node name="SubViewport" type="SubViewport" parent="."]
+own_world_3d = true
+transparent_bg = true
+size = Vector2i(300, 300)
+
+[node name="Camera3D" type="Camera3D" parent="SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
+current = true
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.160025)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 792.0
+offset_top = 113.0
+offset_right = 1092.0
+offset_bottom = 535.0
+theme_override_constants/separation = 60
+
+[node name="PlayerContainer" type="PanelContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/PlayerContainer"]
+layout_mode = 2
+texture = SubResource("ViewportTexture_c3g5u")
+
+[node name="TabContainer" type="PanelContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/TabContainer"]
+layout_mode = 2
+
+[node name="SoundButton" parent="VBoxContainer/TabContainer/HBoxContainer" instance=ExtResource("3_jmxxm")]
+layout_mode = 2
+size_flags_horizontal = 3
+toggle_mode = true
+text = "Colors"
+
+[node name="SoundButton2" parent="VBoxContainer/TabContainer/HBoxContainer" instance=ExtResource("3_jmxxm")]
+layout_mode = 2
+size_flags_horizontal = 3
+toggle_mode = true
+text = "Decals"
