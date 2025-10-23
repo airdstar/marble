@@ -17,5 +17,10 @@ func set_data(playerdata : PlayerData) -> void:
 	player_dummy.freeze = true
 	$SubViewport.add_child(player_dummy)
 
-func close_pressed() -> void:
-	queue_free()
+func colors_toggled(toggled_on: bool) -> void:
+	if toggled_on:
+		%Decals.button_pressed = false
+
+func decals_toggled(toggled_on: bool) -> void:
+	if toggled_on:
+		%Colors.button_pressed = false
