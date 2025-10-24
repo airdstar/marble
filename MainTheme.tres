@@ -2,6 +2,24 @@
 
 [ext_resource type="FontFile" uid="uid://bq5bnktcrnc38" path="res://Tschichold.ttf" id="1_4as0w"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8s18r"]
+bg_color = Color(0.32172796, 0.32172796, 0.321728, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.59607846, 0.8862745, 0.7764706, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+expand_margin_left = 3.0
+expand_margin_top = 3.0
+expand_margin_right = 3.0
+expand_margin_bottom = 3.0
+shadow_size = 4
+shadow_offset = Vector2(4, 4)
+
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8s18r"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_68dw4"]
@@ -32,24 +50,6 @@ corner_radius_bottom_left = 15
 shadow_size = 4
 shadow_offset = Vector2(4, 4)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8s18r"]
-bg_color = Color(0.32172796, 0.32172796, 0.321728, 1)
-border_width_left = 5
-border_width_top = 5
-border_width_right = 5
-border_width_bottom = 5
-border_color = Color(0.59607846, 0.8862745, 0.7764706, 1)
-corner_radius_top_left = 15
-corner_radius_top_right = 15
-corner_radius_bottom_right = 15
-corner_radius_bottom_left = 15
-expand_margin_left = 3.0
-expand_margin_top = 3.0
-expand_margin_right = 3.0
-expand_margin_bottom = 3.0
-shadow_size = 4
-shadow_offset = Vector2(4, 4)
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a8qpw"]
 bg_color = Color(0.18000486, 0.1800049, 0.18000478, 0.41568628)
 corner_radius_top_left = 20
@@ -71,11 +71,13 @@ content_margin_bottom = 8.0
 default_font = ExtResource("1_4as0w")
 default_font_size = 30
 Button/colors/font_color = Color(0.59607846, 0.8862745, 0.7764706, 1)
+Button/colors/font_disabled_color = Color(1, 1, 1, 1)
 Button/colors/font_focus_color = Color(0.59607846, 0.8862745, 0.7764706, 1)
 Button/colors/font_hover_color = Color(0.95, 0.95, 0.95, 1)
 Button/colors/font_outline_color = Color(0.5917481, 0.8823829, 0.7723388, 0.07700001)
 Button/colors/font_pressed_color = Color(1, 1, 1, 1)
 Button/constants/outline_size = 10
+Button/styles/disabled = SubResource("StyleBoxFlat_8s18r")
 Button/styles/focus = SubResource("StyleBoxEmpty_8s18r")
 Button/styles/hover = SubResource("StyleBoxFlat_68dw4")
 Button/styles/normal = SubResource("StyleBoxFlat_ryd52")

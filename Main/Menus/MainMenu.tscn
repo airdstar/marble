@@ -1,58 +1,27 @@
-[gd_scene load_steps=14 format=3 uid="uid://dqdv1dvpasyd"]
+[gd_scene load_steps=6 format=3 uid="uid://dqdv1dvpasyd"]
 
 [ext_resource type="Script" uid="uid://b5o6vajgbtx03" path="res://Main/Menus/main_menu.gd" id="1_tofsu"]
 [ext_resource type="Texture2D" uid="uid://bfsra60mc5svj" path="res://Assets/Logo.png" id="3_ol107"]
 [ext_resource type="Theme" uid="uid://d2ltakj580awj" path="res://MainTheme.tres" id="3_ryd52"]
 [ext_resource type="PackedScene" uid="uid://bnd0uic0px8a8" path="res://Assets/Themes/Scenes/SoundButton.tscn" id="4_a8qpw"]
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_ltt8l"]
-viewport_path = NodePath("SubViewport")
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a8qpw"]
+bg_color = Color(0.6755825, 0.71932274, 0.60634255, 1)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7eqhe"]
-transparency = 1
-albedo_color = Color(0.502, 1, 0.631, 0.5)
-
-[sub_resource type="BoxMesh" id="BoxMesh_pqkpq"]
-material = SubResource("StandardMaterial3D_7eqhe")
-size = Vector3(30, 1, 20)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_mj71b"]
-size = Vector3(40, 1, 40)
-
-[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_yogpe"]
-plane = Plane(0, 0, 1, 0)
-
-[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_xq8n0"]
-plane = Plane(0, 0, -1, 0)
-
-[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_8lsy3"]
-plane = Plane(-1, 0, 0, 0)
-
-[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_q6lmd"]
-plane = Plane(1, 0, 0, 0)
-
-[sub_resource type="Environment" id="Environment_jhntf"]
-background_mode = 1
-fog_light_energy = 0.2
-volumetric_fog_enabled = true
-volumetric_fog_density = 0.0001
-volumetric_fog_albedo = Color(0.855694, 0.852657, 0.851354, 1)
-
-[node name="MainMenu" type="Control" node_paths=PackedStringArray("background")]
+[node name="MainMenu" type="Control"]
 process_mode = 1
 layout_mode = 3
 anchors_preset = 0
 theme = ExtResource("3_ryd52")
 script = ExtResource("1_tofsu")
-background = NodePath("SubViewport")
 
-[node name="Background" type="TextureRect" parent="."]
-visible = false
+[node name="Panel" type="Panel" parent="."]
 layout_mode = 0
-offset_left = -1.0
-offset_right = 1279.0
-offset_bottom = 720.0
-texture = SubResource("ViewportTexture_ltt8l")
+offset_left = -10.0
+offset_top = -11.0
+offset_right = 1171.0
+offset_bottom = 672.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_a8qpw")
 
 [node name="Button" type="Button" parent="."]
 visible = false
@@ -96,7 +65,7 @@ offset_bottom = 195.0
 [node name="VBoxContainer" type="VBoxContainer" parent="SystemPanel"]
 layout_mode = 2
 
-[node name="Settings" type="Button" parent="SystemPanel/VBoxContainer"]
+[node name="Settings" parent="SystemPanel/VBoxContainer" instance=ExtResource("4_a8qpw")]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_font_sizes/font_size = 20
@@ -130,55 +99,8 @@ position = Vector2(576, 200)
 scale = Vector2(0.35, 0.35)
 texture = ExtResource("3_ol107")
 
-[node name="SubViewport" type="SubViewport" parent="."]
-size = Vector2i(1280, 720)
-
-[node name="Camera3D" type="Camera3D" parent="SubViewport"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 10, 0)
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewport"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
-mesh = SubResource("BoxMesh_pqkpq")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="SubViewport/MeshInstance3D"]
-collision_layer = 2
-collision_mask = 3
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="SubViewport/MeshInstance3D/StaticBody3D"]
-shape = SubResource("BoxShape3D_mj71b")
-
-[node name="Area3D" type="Area3D" parent="SubViewport"]
-collision_layer = 2
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="SubViewport/Area3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20)
-shape = SubResource("WorldBoundaryShape3D_yogpe")
-
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="SubViewport/Area3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 20)
-shape = SubResource("WorldBoundaryShape3D_xq8n0")
-
-[node name="CollisionShape3D3" type="CollisionShape3D" parent="SubViewport/Area3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 0)
-shape = SubResource("WorldBoundaryShape3D_8lsy3")
-
-[node name="CollisionShape3D4" type="CollisionShape3D" parent="SubViewport/Area3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 0, 0)
-shape = SubResource("WorldBoundaryShape3D_q6lmd")
-
-[node name="FogVolume" type="FogVolume" parent="SubViewport"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 1.45813, 0)
-size = Vector3(30, 2, 30)
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="SubViewport"]
-environment = SubResource("Environment_jhntf")
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewport"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 6.94082, 0)
-light_energy = 0.3
-
 [connection signal="pressed" from="Button" to="." method="open_scene" binds= ["editor"]]
 [connection signal="pressed" from="Gallery" to="." method="open_scene" binds= ["gallery"]]
 [connection signal="pressed" from="MainPanel/Play" to="." method="open_floor"]
+[connection signal="pressed" from="SystemPanel/VBoxContainer/Settings" to="." method="open_popup" binds= ["settings"]]
 [connection signal="pressed" from="SystemPanel/VBoxContainer/Stats" to="." method="open_profile"]
-[connection signal="body_entered" from="SubViewport/Area3D" to="." method="cull_dummy"]

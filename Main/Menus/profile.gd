@@ -3,6 +3,9 @@ extends Control
 var player_dummy : player
 
 func _ready() -> void:
+	
+	%CustomizationContainer.hide()
+	
 	for n in Cosmetic.colors:
 		var current := make_button()
 		%ColorContainer.add_child(current)

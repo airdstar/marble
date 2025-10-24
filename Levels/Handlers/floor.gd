@@ -64,10 +64,10 @@ func _process(delta: float) -> void:
 		input = Vector2(tilt_transform.x, tilt_transform.z)
 		var prev_input = input_tilt
 		if input.y > settings.tilt_deadzone or input.y < -settings.tilt_deadzone:
-			input_tilt.x += input.y * settings.tilt_sens * delta
+			input_tilt.x += input.y * settings.tilt_sens * 0.001 * delta
 			input_tilt.x = clamp(input_tilt.x, deg_to_rad(-15), deg_to_rad(15))
 		if input.x > settings.tilt_deadzone or input.x < -settings.tilt_deadzone:
-			input_tilt.y += -input.x * settings.tilt_sens * delta
+			input_tilt.y += -input.x * settings.tilt_sens * 0.001 * delta
 			input_tilt.y = clamp(input_tilt.y, deg_to_rad(-15), deg_to_rad(15))
 		
 		

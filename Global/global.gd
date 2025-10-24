@@ -1,6 +1,6 @@
 extends Node
 
-var resolutions_16_9 : Dictionary = {
+var resolutions : Dictionary = {
 	"1920x1080" : Vector2(1920,1080),
 	"1600x900" : Vector2(1600,900),
 	"1366x768" : Vector2(1366,768),
@@ -8,18 +8,6 @@ var resolutions_16_9 : Dictionary = {
 	"960x540" : Vector2(960,540),
 	"854x480" : Vector2(854,480),
 	}
-
-var resolutions_16_10 : Dictionary = {
-	"1920x1200" : Vector2(1920,1200)
-	}
-
-var resolutions_4_3 : Dictionary = {
-	"1200x900" : Vector2(1200,900)
-	}
-
-var aspect_ratios : Dictionary = {"16:9" : resolutions_16_9,
-									"4:3" : resolutions_4_3,
-									"16:10" : resolutions_16_10}
 
 var level_scene_path : String = "res://Levels/LevelScene/"
 var level_resource_path : String = "res://Levels/LevelInfo/"
@@ -37,30 +25,28 @@ var pos_popup_scenes : Dictionary = {
 	"run_end" : "res://Levels/Handlers/RunEnd.tscn"
 }
 
-var main_scene : main
+var cur_scene : String
+var prev_scene : String
 var current_scene : Node
+
+var popup_scene : Node
+
 
 func _ready():
 	PlayerInfo.load_info()
+	open_scene("res://Main/Menus/MainMenu.tscn")
 
-func set_main(main_in : main) -> void:
-	main_scene = main_in
-	open_scene("main_menu")
 
 func open_scene(scene : String) -> void:
-	main_scene.prev_scene = main_scene.cur_scene
-	main_scene.cur_scene = scene
-	
-	if main_scene.child_scene != null:
-		main_scene.child_scene.queue_free()
-	
-	var holder = load(pos_scenes[scene])
+	var holder = load(scene)
 	holder = holder.instantiate()
 	
-	if holder != null:
-		current_scene = holder
-		main_scene.child_scene = holder
-		main_scene.add_child(holder)
+	if current_scene != null:
+		current_scene.queue_free()
+	
+	add_child(holder)
+	current_scene = holder
+	
 
 func open_floor(type : FloorLevel.floor_type, level_pool : Array[level_resource]):
 	main_scene.prev_scene = main_scene.cur_scene
@@ -125,34 +111,13 @@ func open_profile(player_info : PlayerData) -> void:
 	
 
 func set_resolution() -> void:
-	get_window().set_size(aspect_ratios[PlayerInfo.player_settings.aspect_ratio][PlayerInfo.player_settings.resolution])
-	
+	get_window().set_size(resolutions[PlayerInfo.player_settings.resolution])
 	var screen_center = DisplayServer.screen_get_position() + DisplayServer.screen_get_size() / 2
 	var window_size = get_window().get_size_with_decorations()
 	get_window().set_position(screen_center - window_size / 2)
-	
-	
-	if main_scene != null:
-		if current_scene != null:
-			current_scene.place_control()
-		
-		if main_scene.popup_scene != null:
-			main_scene.popup_scene.place_control()
-	
-	adjust_themes()
 
 func set_fullscreen() -> void:
 	if PlayerInfo.player_settings.fullscreen:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN)
 	else:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
-	
-	if main_scene != null:
-		if current_scene != null:
-			current_scene.place_control()
-		
-		if main_scene.popup_scene != null:
-			main_scene.popup_scene.place_control()
-
-func adjust_themes() -> void:
-	pass

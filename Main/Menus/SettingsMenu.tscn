@@ -1,44 +1,248 @@
-[gd_scene load_steps=3 format=3 uid="uid://bq4emjmf4ogdr"]
+[gd_scene load_steps=7 format=3 uid="uid://bq4emjmf4ogdr"]
 
-[ext_resource type="Theme" uid="uid://baqdiduk3wnvc" path="res://Assets/Themes/Alt1.tres" id="1_ark2b"]
+[ext_resource type="Theme" uid="uid://d2ltakj580awj" path="res://MainTheme.tres" id="1_bv8j2"]
 [ext_resource type="Script" uid="uid://bfiallxnbkrki" path="res://Main/Menus/settings_menu.gd" id="2_2ej18"]
+[ext_resource type="PackedScene" uid="uid://bnd0uic0px8a8" path="res://Assets/Themes/Scenes/SoundButton.tscn" id="3_ax6xg"]
 
-[node name="Settings" type="Control" node_paths=PackedStringArray("background", "holding_container", "control_container", "visual_container", "accessability_container", "binds_container", "tab_buttons", "io_buttons", "values", "changers", "tilt_sens", "camera_sens", "deadzone", "aspect_ratio", "resolution", "fullscreen", "speed", "fps")]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bv8j2"]
+bg_color = Color(0.60038817, 0.60038817, 0.60038817, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ax6xg"]
+bg_color = Color(0.6255972, 0.6255971, 0.6255972, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.59607846, 0.8862745, 0.7764706, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+shadow_size = 4
+shadow_offset = Vector2(4, 4)
+
+[sub_resource type="Theme" id="Theme_q0te7"]
+Button/styles/pressed = SubResource("StyleBoxFlat_ax6xg")
+
+[node name="Settings" type="Control"]
 layout_mode = 3
 anchors_preset = 0
 size_flags_horizontal = 3
-theme = ExtResource("1_ark2b")
+theme = ExtResource("1_bv8j2")
 script = ExtResource("2_2ej18")
-background = NodePath("Panel")
-holding_container = NodePath("Panel/VBoxContainer")
-control_container = NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control")
-visual_container = NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Visual")
-accessability_container = NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Accessability")
-binds_container = NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Binds")
-tab_buttons = [NodePath("Panel/VBoxContainer/HBoxContainer/Button"), NodePath("Panel/VBoxContainer/HBoxContainer/Button2"), NodePath("Panel/VBoxContainer/HBoxContainer/Button3")]
-io_buttons = [NodePath("Panel/VBoxContainer/CenterContainer2/IO/Save"), NodePath("Panel/VBoxContainer/CenterContainer2/IO/Reset")]
-values = [NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control/TiltSensValue"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control/CameraSensValue"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control/DeadzoneValue"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Visual/AspectValue"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Visual/ResValue"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Visual/FullscreenValue"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Accessability/SpeedValue"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Accessability/FPSValue")]
-changers = [NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control/TiltSlider"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control/CameraSlider"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control/DeadzoneSlider"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Visual/AspectOptions"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Visual/ResOptions"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Accessability/SpeedOption"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Accessability/FPSOption")]
-tilt_sens = [NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control/TiltSlider"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control/TiltSensValue")]
-camera_sens = [NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control/CameraSlider"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control/CameraSensValue")]
-deadzone = [NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control/DeadzoneSlider"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control/DeadzoneValue")]
-aspect_ratio = [NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Visual/AspectOptions"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Visual/AspectValue")]
-resolution = [NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Visual/ResOptions"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Visual/ResValue")]
-fullscreen = [NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Visual/FullscreenOptions"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Visual/FullscreenValue")]
-speed = [NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Accessability/SpeedOption"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Accessability/SpeedValue")]
-fps = [NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Accessability/FPSOption"), NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Accessability/FPSValue")]
+
+[node name="Back" type="Panel" parent="."]
+layout_mode = 0
+offset_left = -19.0
+offset_top = -29.0
+offset_right = 1164.0
+offset_bottom = 665.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_bv8j2")
+
+[node name="TabContainer" type="PanelContainer" parent="."]
+layout_mode = 0
+offset_left = 60.0
+offset_top = 60.0
+offset_right = 429.0
+offset_bottom = 122.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer"]
+layout_mode = 2
+
+[node name="ControlButton" parent="TabContainer/HBoxContainer" instance=ExtResource("3_ax6xg")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Control"
+
+[node name="VisualButton" parent="TabContainer/HBoxContainer" instance=ExtResource("3_ax6xg")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Visual"
+
+[node name="ResetContainer" type="PanelContainer" parent="."]
+layout_mode = 0
+offset_left = 918.0
+offset_top = 60.0
+offset_right = 1092.0
+offset_bottom = 122.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ResetContainer"]
+layout_mode = 2
+
+[node name="ResetButton" parent="ResetContainer/HBoxContainer" instance=ExtResource("3_ax6xg")]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Reset"
+
+[node name="SettingContainer" type="PanelContainer" parent="."]
+layout_mode = 0
+offset_left = 60.0
+offset_top = 182.0
+offset_right = 1092.0
+offset_bottom = 588.0
+theme = SubResource("Theme_q0te7")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="SettingContainer"]
+layout_mode = 2
+
+[node name="ControlContainer" type="GridContainer" parent="SettingContainer/ScrollContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/h_separation = 20
+theme_override_constants/v_separation = 20
+columns = 3
+
+[node name="Label" type="Label" parent="SettingContainer/ScrollContainer/ControlContainer"]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+text = "Tilt Sensitivity"
+vertical_alignment = 1
+
+[node name="TiltSlider" type="HSlider" parent="SettingContainer/ScrollContainer/ControlContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+min_value = 0.1
+max_value = 2.0
+step = 0.01
+value = 1.0
+
+[node name="TiltBox" type="SpinBox" parent="SettingContainer/ScrollContainer/ControlContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+min_value = 0.1
+max_value = 2.0
+step = 0.01
+value = 1.0
+
+[node name="Label2" type="Label" parent="SettingContainer/ScrollContainer/ControlContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+text = "Camera Sensitivity"
+vertical_alignment = 1
+
+[node name="CameraSlider" type="HSlider" parent="SettingContainer/ScrollContainer/ControlContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+min_value = 0.1
+max_value = 4.0
+step = 0.1
+value = 1.0
+
+[node name="CameraBox" type="SpinBox" parent="SettingContainer/ScrollContainer/ControlContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+min_value = 0.1
+max_value = 4.0
+step = 0.1
+value = 1.0
+
+[node name="Label3" type="Label" parent="SettingContainer/ScrollContainer/ControlContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+text = "Tilt Deadzone"
+vertical_alignment = 1
+
+[node name="HSlider3" type="HSlider" parent="SettingContainer/ScrollContainer/ControlContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+
+[node name="SpinBox3" type="SpinBox" parent="SettingContainer/ScrollContainer/ControlContainer"]
+layout_mode = 2
+
+[node name="VisualContainer" type="GridContainer" parent="SettingContainer/ScrollContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/h_separation = 20
+theme_override_constants/v_separation = 20
+columns = 3
+
+[node name="Label2" type="Label" parent="SettingContainer/ScrollContainer/VisualContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+text = "Resolution"
+vertical_alignment = 1
+
+[node name="MarginContainer4" type="MarginContainer" parent="SettingContainer/ScrollContainer/VisualContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="OptionButton2" type="OptionButton" parent="SettingContainer/ScrollContainer/VisualContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SettingContainer/ScrollContainer/VisualContainer"]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+text = "Fullscreen"
+vertical_alignment = 1
+
+[node name="MarginContainer3" type="MarginContainer" parent="SettingContainer/ScrollContainer/VisualContainer"]
+layout_mode = 2
+
+[node name="Fullscreen" type="Button" parent="SettingContainer/ScrollContainer/VisualContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+toggle_mode = true
+
+[node name="Label3" type="Label" parent="SettingContainer/ScrollContainer/VisualContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+text = "Display FPS"
+vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="SettingContainer/ScrollContainer/VisualContainer"]
+layout_mode = 2
+
+[node name="FPS" type="Button" parent="SettingContainer/ScrollContainer/VisualContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+toggle_mode = true
+
+[node name="Label4" type="Label" parent="SettingContainer/ScrollContainer/VisualContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+text = "Display Speed"
+vertical_alignment = 1
+
+[node name="MarginContainer2" type="MarginContainer" parent="SettingContainer/ScrollContainer/VisualContainer"]
+layout_mode = 2
+
+[node name="Speed" type="Button" parent="SettingContainer/ScrollContainer/VisualContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+toggle_mode = true
 
 [node name="Panel" type="Panel" parent="."]
+visible = false
 layout_mode = 0
 offset_left = 125.0
 offset_top = 171.0
-offset_right = 699.0
-offset_bottom = 469.0
+offset_right = 1005.0
+offset_bottom = 705.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
 layout_mode = 0
-offset_right = 572.0
-offset_bottom = 265.0
+offset_right = 855.0
+offset_bottom = 511.0
 theme_override_constants/separation = 10
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Panel/VBoxContainer"]
@@ -68,6 +272,7 @@ text = "Binds"
 [node name="ScrollContainer" type="ScrollContainer" parent="Panel/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+scroll_vertical = 45
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel/VBoxContainer/ScrollContainer"]
 layout_mode = 2
@@ -162,7 +367,6 @@ fit_content = true
 scroll_active = false
 
 [node name="Visual" type="GridContainer" parent="Panel/VBoxContainer/ScrollContainer/VBoxContainer"]
-visible = false
 layout_mode = 2
 columns = 3
 
@@ -228,6 +432,7 @@ text = "Fullscreen"
 fit_content = true
 
 [node name="Accessability" type="GridContainer" parent="Panel/VBoxContainer/ScrollContainer/VBoxContainer"]
+visible = false
 layout_mode = 2
 columns = 3
 
@@ -294,6 +499,12 @@ text = "Save Settings"
 layout_mode = 2
 text = "Reset to default"
 
+[connection signal="pressed" from="TabContainer/HBoxContainer/ControlButton" to="." method="control_pressed"]
+[connection signal="pressed" from="TabContainer/HBoxContainer/VisualButton" to="." method="visual_pressed"]
+[connection signal="pressed" from="ResetContainer/HBoxContainer/ResetButton" to="." method="reset_settings"]
+[connection signal="value_changed" from="SettingContainer/ScrollContainer/ControlContainer/TiltSlider" to="." method="tilt_sens_changed"]
+[connection signal="value_changed" from="SettingContainer/ScrollContainer/ControlContainer/CameraSlider" to="." method="camera_sens_changed"]
+[connection signal="value_changed" from="SettingContainer/ScrollContainer/ControlContainer/CameraBox" to="." method="camera_sens_changed"]
 [connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer/Button" to="." method="tab_changed" binds= [0]]
 [connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer/Button2" to="." method="tab_changed" binds= [1]]
 [connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer/Button3" to="." method="tab_changed" binds= [2]]
