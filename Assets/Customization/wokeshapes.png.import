@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://hirs7pfs5alx"
-path="res://.godot/imported/EpicFace.png-37441ec27a4e5281a80959f0f29977fe.ctex"
+uid="uid://dwntftauujmlb"
+path="res://.godot/imported/wokeshapes.png-e4137c232ec6c9a3c066ef848b0f4655.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Customization/EpicFace.png"
-dest_files=["res://.godot/imported/EpicFace.png-37441ec27a4e5281a80959f0f29977fe.ctex"]
+source_file="res://Assets/Customization/wokeshapes.png"
+dest_files=["res://.godot/imported/wokeshapes.png-e4137c232ec6c9a3c066ef848b0f4655.ctex"]
 
 [params]
 

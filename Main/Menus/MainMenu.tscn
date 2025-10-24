@@ -38,14 +38,12 @@ volumetric_fog_enabled = true
 volumetric_fog_density = 0.0001
 volumetric_fog_albedo = Color(0.855694, 0.852657, 0.851354, 1)
 
-[node name="MainMenu" type="Control" node_paths=PackedStringArray("extras_container", "important_container", "background")]
+[node name="MainMenu" type="Control" node_paths=PackedStringArray("background")]
 process_mode = 1
 layout_mode = 3
 anchors_preset = 0
 theme = ExtResource("3_ryd52")
 script = ExtResource("1_tofsu")
-extras_container = NodePath("")
-important_container = NodePath("")
 background = NodePath("SubViewport")
 
 [node name="Background" type="TextureRect" parent="."]
@@ -57,6 +55,7 @@ offset_bottom = 720.0
 texture = SubResource("ViewportTexture_ltt8l")
 
 [node name="Button" type="Button" parent="."]
+visible = false
 layout_mode = 0
 offset_left = 73.0
 offset_top = 444.0
@@ -65,6 +64,7 @@ offset_bottom = 526.0
 text = "Editor"
 
 [node name="Gallery" parent="." instance=ExtResource("4_a8qpw")]
+visible = false
 layout_mode = 0
 offset_left = 69.0
 offset_top = 250.0
@@ -106,7 +106,7 @@ text = "Settings"
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_font_sizes/font_size = 20
-text = "Stats"
+text = "Player"
 
 [node name="PlayerPanel" type="PanelContainer" parent="."]
 visible = false

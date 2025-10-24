@@ -1,12 +1,12 @@
 extends Node
 
 var colors : Array[Color] = [
-	Color(0.9,0,0.1),
-	Color(0,0.9,0.4),
-	Color(0.1,0,0.9),
-	Color(0.9,0.7,0),
-	Color(0.6,0,0.9),
-	Color(0.9,0.3,0)
+	Color(0.9, 0.2, 0.339, 1.0),
+	Color(0.0, 0.769, 0.4, 1.0),
+	Color(0.1, 0.49, 0.9, 1.0),
+	Color(0.9, 0.827, 0.0, 1.0),
+	Color(0.6, 0.232, 0.704, 1.0),
+	Color(0.9, 0.3, 0.307, 1.0)
 ]
 
 var decals : Array[Texture2D]
@@ -30,19 +30,10 @@ func _ready() -> void:
 		current = dir.get_next()
 	dir.list_dir_end()
 
-func get_shades(color : Color) -> Array[Color]:
-	var to_return : Array[Color]
-	to_return.append(color.lightened(0.5))
-	to_return.append(color.lightened(0.25))
-	to_return.append(color)
-	to_return.append(color.darkened(0.25))
-	to_return.append(color.darkened(0.5))
-	return to_return
-
 func generate_random() -> PlayerCustomization:
 	var to_return = PlayerCustomization.new()
 	
-	to_return.chosen_color = get_shades(colors.pick_random()).pick_random()
+	to_return.chosen_color = colors.pick_random()
 	to_return.chosen_decal = decals.pick_random()
 	
 	return to_return

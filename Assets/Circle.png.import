@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://hirs7pfs5alx"
-path="res://.godot/imported/EpicFace.png-37441ec27a4e5281a80959f0f29977fe.ctex"
+uid="uid://dae62ciaavuus"
+path="res://.godot/imported/Circle.png-4c2daeed5b68bce1e78feca310d5dbd2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Customization/EpicFace.png"
-dest_files=["res://.godot/imported/EpicFace.png-37441ec27a4e5281a80959f0f29977fe.ctex"]
+source_file="res://Assets/Circle.png"
+dest_files=["res://.godot/imported/Circle.png-4c2daeed5b68bce1e78feca310d5dbd2.ctex"]
 
 [params]
 

@@ -52,107 +52,82 @@ size_flags_horizontal = 3
 toggle_mode = true
 text = "Decals"
 
-[node name="PanelContainer" type="PanelContainer" parent="."]
+[node name="StatsContainer" type="PanelContainer" parent="."]
 layout_mode = 0
 offset_left = 60.0
-offset_top = 60.0
-offset_right = 197.0
-offset_bottom = 120.0
+offset_top = 265.0
+offset_right = 320.0
+offset_bottom = 383.0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="StatsContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="PanelContainer/VBoxContainer"]
+[node name="Label" type="Label" parent="StatsContainer/VBoxContainer"]
 layout_mode = 2
 text = "Stats"
 label_settings = SubResource("LabelSettings_jmxxm")
 horizontal_alignment = 1
 
-[node name="GridContainer" type="GridContainer" parent="PanelContainer/VBoxContainer"]
+[node name="GridContainer" type="GridContainer" parent="StatsContainer/VBoxContainer"]
 layout_mode = 2
 columns = 3
 
-[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/GridContainer"]
+[node name="Label" type="Label" parent="StatsContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
+size_flags_horizontal = 3
 text = "Runs"
 
-[node name="Label2" type="Label" parent="PanelContainer/VBoxContainer/GridContainer"]
+[node name="Label2" type="Label" parent="StatsContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 text = "|"
 
-[node name="Runs" type="Label" parent="PanelContainer/VBoxContainer/GridContainer"]
+[node name="Runs" type="Label" parent="StatsContainer/VBoxContainer/GridContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_horizontal = 3
 text = "5000"
+horizontal_alignment = 2
 
-[node name="Label4" type="Label" parent="PanelContainer/VBoxContainer/GridContainer"]
+[node name="Label4" type="Label" parent="StatsContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 text = "Highest"
 
-[node name="Label5" type="Label" parent="PanelContainer/VBoxContainer/GridContainer"]
+[node name="Label5" type="Label" parent="StatsContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 text = "|"
 
-[node name="Highest" type="Label" parent="PanelContainer/VBoxContainer/GridContainer"]
+[node name="Highest" type="Label" parent="StatsContainer/VBoxContainer/GridContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "50"
+horizontal_alignment = 2
 
-[node name="ColorContainer" type="PanelContainer" parent="."]
+[node name="CustomizationContainer" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+visible = false
 layout_mode = 0
-offset_left = 398.0
+offset_left = 380.0
 offset_top = 60.0
 offset_right = 732.0
 offset_bottom = 588.0
 
-[node name="ScrollContainer" type="ScrollContainer" parent="ColorContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="CustomizationContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 
-[node name="GridContainer" type="GridContainer" parent="ColorContainer/ScrollContainer"]
+[node name="ColorContainer" type="GridContainer" parent="CustomizationContainer/ScrollContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/h_separation = 20
 theme_override_constants/v_separation = 20
 columns = 2
 
-[node name="Button" type="Button" parent="ColorContainer/ScrollContainer/GridContainer"]
-custom_minimum_size = Vector2(150, 150)
+[node name="DecalContainer" type="GridContainer" parent="CustomizationContainer/ScrollContainer"]
+unique_name_in_owner = true
 layout_mode = 2
-text = "Button"
-
-[node name="Button2" type="Button" parent="ColorContainer/ScrollContainer/GridContainer"]
-custom_minimum_size = Vector2(150, 150)
-layout_mode = 2
-text = "Button"
-
-[node name="Button3" type="Button" parent="ColorContainer/ScrollContainer/GridContainer"]
-custom_minimum_size = Vector2(150, 150)
-layout_mode = 2
-text = "Button"
-
-[node name="Button4" type="Button" parent="ColorContainer/ScrollContainer/GridContainer"]
-custom_minimum_size = Vector2(150, 150)
-layout_mode = 2
-text = "Button"
-
-[node name="Button5" type="Button" parent="ColorContainer/ScrollContainer/GridContainer"]
-custom_minimum_size = Vector2(150, 150)
-layout_mode = 2
-text = "Button"
-
-[node name="Button6" type="Button" parent="ColorContainer/ScrollContainer/GridContainer"]
-custom_minimum_size = Vector2(150, 150)
-layout_mode = 2
-text = "Button"
-
-[node name="Button7" type="Button" parent="ColorContainer/ScrollContainer/GridContainer"]
-custom_minimum_size = Vector2(150, 150)
-layout_mode = 2
-text = "Button"
-
-[node name="Button8" type="Button" parent="ColorContainer/ScrollContainer/GridContainer"]
-custom_minimum_size = Vector2(150, 150)
-layout_mode = 2
-text = "Button"
+theme_override_constants/h_separation = 20
+theme_override_constants/v_separation = 20
+columns = 2
 
 [node name="SubViewport" type="SubViewport" parent="."]
 own_world_3d = true
@@ -160,11 +135,11 @@ transparent_bg = true
 size = Vector2i(300, 300)
 
 [node name="Camera3D" type="Camera3D" parent="SubViewport"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 1, 0, 0)
 current = true
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewport"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.160025)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 1.8845239, 0, 1.160025)
 
 [connection signal="toggled" from="TabContainer/HBoxContainer/Colors" to="." method="colors_toggled"]
 [connection signal="toggled" from="TabContainer/HBoxContainer/Decals" to="." method="decals_toggled"]

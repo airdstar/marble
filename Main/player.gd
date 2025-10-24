@@ -30,21 +30,12 @@ func set_color() -> void:
 	light.light_color = customization.chosen_color
 
 func set_decal() -> void:
-	pass
-
-func set_face() -> void:
-	if customization.chosen_front != null:
-		front.visible = true
-		front.texture_albedo = customization.chosen_front
+	if customization.chosen_decal != null:
+		%Decal.show()
+		%Decal.texture_albedo = customization.chosen_decal
 	else:
-		front.visible = false
+		%Decal.hide()
 
-func set_flair() -> void:
-	if customization.chosen_back != null:
-		back.visible = true
-		back.texture_albedo = customization.chosen_back
-	else:
-		back.visible = false
 
 func collision_detected(body: Node3D) -> void:
 	if body.is_in_group("Goal"):
