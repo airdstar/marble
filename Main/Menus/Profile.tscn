@@ -1,11 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://dh7dc6u5iari0"]
+[gd_scene load_steps=6 format=3 uid="uid://dh7dc6u5iari0"]
 
 [ext_resource type="Theme" uid="uid://d2ltakj580awj" path="res://MainTheme.tres" id="1_c3g5u"]
 [ext_resource type="Script" uid="uid://of4j8qrj4qjb" path="res://Main/Menus/profile.gd" id="1_ds35u"]
 [ext_resource type="PackedScene" uid="uid://bnd0uic0px8a8" path="res://Assets/Themes/Scenes/SoundButton.tscn" id="3_jmxxm"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jmxxm"]
-bg_color = Color(0.6294428, 0.74125385, 0.60634255, 1)
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_c3g5u"]
 viewport_path = NodePath("SubViewport")
@@ -18,14 +15,6 @@ layout_mode = 3
 anchors_preset = 0
 theme = ExtResource("1_c3g5u")
 script = ExtResource("1_ds35u")
-
-[node name="Panel" type="Panel" parent="."]
-layout_mode = 0
-offset_left = -9.0
-offset_top = -11.0
-offset_right = 1172.0
-offset_bottom = 672.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_jmxxm")
 
 [node name="PlayerContainer" type="PanelContainer" parent="."]
 layout_mode = 0
@@ -115,7 +104,6 @@ horizontal_alignment = 2
 
 [node name="CustomizationContainer" type="PanelContainer" parent="."]
 unique_name_in_owner = true
-visible = false
 layout_mode = 0
 offset_left = 380.0
 offset_top = 60.0

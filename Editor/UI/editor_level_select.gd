@@ -2,107 +2,88 @@ extends Control
 
 @export var option_container : GridContainer
 
+@onready var level_container := $Select/ScrollContainer/Levels
+
 @onready var level_select := $LevelSelect
 @onready var new_level := $NewLevel
 
-var resource_path : String = "res://Levels/LevelInfo/"
-
 var levels : Array[level_resource] = []
+var unavailable_names : Array[String] = [""]
 
 var selected_level : level_resource = null
+var pressed_button : Button = null
 
 signal level_selected
 
 func _ready() -> void:
-	set_size(Vector2(get_window().size.x / 2, get_window().size.y / 1.5))
-	set_position(Vector2(get_window().size.x / 2 - size.x / 2, get_window().size.y / 4))
-	level_select.set_size(size)
-	new_level.set_size(size)
-	
-	var dir = DirAccess.open(resource_path)
-	dir.list_dir_begin()
-	var currentLevel : String = dir.get_next()
-	while currentLevel != "":
-		if '.remap' in currentLevel:
-			currentLevel = currentLevel.trim_suffix('.remap')
-		var holder = ResourceLoader.load(resource_path + currentLevel)
-		
-		levels.append(holder)
-		
-		new_level.unavailable_names.append(holder.name)
-		
-		currentLevel = dir.get_next()
-	dir.list_dir_end()
-	display_levels()
-
-
-func display_levels() -> void:
-	for n : level_resource in levels:
+	show()
+	show_select()
+	for n : level_resource in Data.easy_levels + Data.med_levels + Data.hard_levels:
 		add_level(n)
 
 func add_level(level_info : level_resource) -> void:
-	var option : Button = Button.new()
-	option.text = level_info.name
-	option.toggle_mode = true
-	option.set_custom_minimum_size(Vector2(0, size.x / 9))
-	option.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	option_container.add_child(option)
-	option.toggled.connect(level_pressed.bind(level_info, option))
+	var button := Button.new()
+	button.text = level_info.name
+	unavailable_names.append(level_info.name)
+	button.toggle_mode = true
+	button.set_custom_minimum_size(Vector2(0, 50))
+	button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	level_container.add_child(button)
+	button.toggled.connect(level_pressed.bind(level_info, button))
 
-func delete_level():
-	for n : Button in option_container.get_children():
-		if n.button_pressed:
-			new_level.unavailable_names.remove_at(new_level.unavailable_names.find(n.text))
-			n.queue_free()
-			break
-
-func level_pressed(toggled_on : bool, level_info : level_resource, option_button : Button) -> void:
+func level_pressed(toggled_on : bool, level_info : level_resource, button : Button) -> void:
 	if toggled_on:
 		selected_level = level_info
-		
-		for n in option_container.get_children():
-			if n == option_button:
-				continue
-			n.button_pressed = false
+		if pressed_button != null:
+			pressed_button.button_pressed = false
+		pressed_button = button
 	else:
 		if selected_level == level_info:
 			selected_level = null
 
-func level_created(level_info : level_resource) -> void:
-	var level_base = preload("res://Editor/LevelBase.tscn").instantiate()
-	var to_save := PackedScene.new()
-	to_save.pack(level_base)
-	var saving = ResourceSaver.save(to_save, Global.level_scene_path + level_info.name + ".tscn")
-	if saving != OK:
-		print("Error creating level")
-	else:
-		level_info.associated_scene = ResourceLoader.load(Global.level_scene_path + level_info.name + ".tscn")
-		saving = ResourceSaver.save(level_info, Global.level_resource_path + level_info.name + ".tres")
-		if saving != OK:
-			print("Error creating level")
-		else:
-			add_level(level_info)
-			level_select_show()
+func create_level() -> void:
+	if $New/GridContainer/LevelName.text != "" and !unavailable_names.has($New/GridContainer/LevelName.text):
+		var new = level_resource.new()
+		new.name = $New/GridContainer/LevelName.text
+		new.level_type = $New/GridContainer/LevelType.selected
+		unavailable_names.append(new.name)
+		
+		var base = preload("res://Editor/LevelBase.tscn").instantiate()
+		var to_save := PackedScene.new()
+		to_save.pack(base)
+		ResourceSaver.save(to_save, "res://Levels/LevelScene/" + new.name + ".tscn")
+		
+		new.associated_scene = ResourceLoader.load("res://Levels/LevelScene/" + new.name + ".tscn")
+		ResourceSaver.save(new, "res://Levels/LevelInfo/" + new.name + ".tres")
+		
+		add_level(new)
+		show_select()
 
-func new_level_pressed() -> void:
-	level_select.visible = false
-	new_level.visible = true
-
-func level_select_show() -> void:
-	level_select.visible = true
-	new_level.visible = false
-	new_level.reset_fields()
+func new_pressed() -> void:
+	$Select.hide()
+	$New.show()
+	$New/GridContainer/LevelName.text = ""
+	$New/GridContainer/LevelType.selected = 0
+	pressed_button.button_pressed = false
 
 func edit_pressed() -> void:
-	if selected_level != null:
+	if selected_level:
 		level_selected.emit(selected_level)
-		visible = false
+		hide()
 
 func delete_pressed() -> void:
-	if selected_level != null:
-		delete_level()
-		levels.remove_at(levels.find(selected_level))
-		DirAccess.remove_absolute(Global.level_resource_path + selected_level.name + ".tres")
-		if FileAccess.file_exists(Global.level_scene_path + selected_level.name + ".tscn"):
-			DirAccess.remove_absolute(Global.level_scene_path + selected_level.name + ".tscn")
+	if selected_level:
+		unavailable_names.erase(selected_level.text)
+		pressed_button.queue_free()
+		Data.easy_levels.erase(selected_level)
+		Data.med_levels.erase(selected_level)
+		Data.hard_levels.erase(selected_level)
+		DirAccess.remove_absolute("res://Levels/LevelInfo/" + selected_level.name + ".tres")
+		if FileAccess.file_exists("res://Levels/LevelScene/" + selected_level.name + ".tscn"):
+			DirAccess.remove_absolute("res://Levels/LevelScene/" + selected_level.name + ".tscn")
 		selected_level = null
+
+func show_select() -> void:
+	show()
+	$New.hide()
+	$Select.show()

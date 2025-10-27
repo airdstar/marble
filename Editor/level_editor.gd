@@ -37,8 +37,28 @@ signal new_shape_selected
 signal all_non_pivots
 
 func _ready() -> void:
+	var material = StandardMaterial3D.new()
+	material.backlight_enabled = true
+	material.backlight = Color(1.0, 1.0, 1.0, 1.0)
+	
+	for n in range(29):
+		var line = MeshInstance3D.new()
+		line.mesh = BoxMesh.new()
+		line.mesh.size = Vector3(0.005, 0.005, 28)
+		line.position.x = n - 14
+		line.mesh.material = material
+		$Grid.add_child(line)
+		
+		line = MeshInstance3D.new()
+		line.mesh = BoxMesh.new()
+		line.mesh.size = Vector3(28, 0.005, 0.005)
+		line.position.z = n - 14
+		line.mesh.material = material
+		$Grid.add_child(line)
+	
 	tool_visible(false)
 	open_level_select()
+
 
 func _process(delta : float) -> void:
 	if Input.is_action_pressed("camera_right"):
@@ -49,10 +69,10 @@ func _process(delta : float) -> void:
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	
 	if Input.is_action_just_pressed("back"):
-		if !UI.level_select.visible:
+		if !%LevelSelect.visible:
 			open_level_select()
 		else:
-			Global.open_scene("main_menu")
+			Game.open_scene("res://Main/Menus/MainMenu.tscn")
 	
 	if Input.is_action_pressed("move_left"):
 		camera_pivot.position += Vector3(-cos(camera_pivot.rotation.y),0, sin(camera_pivot.rotation.y)) * delta * 5
@@ -95,10 +115,8 @@ func open_level_select():
 		level_base.queue_free()
 		level_base = null
 	UI.hide_all()
-	for n in UI.level_select.option_container.get_children():
-		n.button_pressed = false
 	
-	UI.level_select.visible = true
+	%LevelSelect.show_select()
 
 func level_selected(level_info : level_resource) -> void:
 	chosen_level = level_info
@@ -281,13 +299,13 @@ func level_info_updated() -> void:
 		
 		UI.level_select.add_level(chosen_level)
 		
-		DirAccess.remove_absolute(Global.level_resource_path + prev_name + ".tres")
-		DirAccess.remove_absolute(Global.level_scene_path + prev_name + ".tscn")
-		ResourceSaver.save(holder, Global.level_scene_path + chosen_level.name + ".tscn")
+		DirAccess.remove_absolute("res://Levels/LevelInfo/" + prev_name + ".tres")
+		DirAccess.remove_absolute("res://Levels/LevelScene/" + prev_name + ".tscn")
+		ResourceSaver.save(holder, "res://Levels/LevelScene/" + chosen_level.name + ".tscn")
 	if chosen_level.name == UI.settings.name_field.text:
 		chosen_level.level_difficulty = UI.settings.difficulty_field.selected
 		chosen_level.include_in_pool = UI.settings.include_box.button_pressed
-		ResourceSaver.save(chosen_level, Global.level_resource_path + chosen_level.name + ".tres")
+		ResourceSaver.save(chosen_level, "res://Levels/LevelInfo/" + chosen_level.name + ".tres")
 		UI.settings.close_settings()
 
 func pre_save() -> void:
@@ -313,17 +331,17 @@ func pre_save() -> void:
 func save_scene() -> void:
 	var to_save := PackedScene.new()
 	to_save.pack(level_base)
-	var saving = ResourceSaver.save(to_save, Global.level_scene_path + chosen_level.name + ".tscn")
+	var saving = ResourceSaver.save(to_save, "res://Levels/LevelScene/" + chosen_level.name + ".tscn")
 	if saving != OK:
 		print("Error with saving scene")
 	else:
 		chosen_level.associated_scene = to_save
-		saving = ResourceSaver.save(chosen_level, Global.level_resource_path + chosen_level.name + ".tres")
+		saving = ResourceSaver.save(chosen_level, "res://Levels/LevelInfo/" + chosen_level.name + ".tres")
 		if saving != OK:
 			print("Error with saving resource")
 		else:
-			chosen_level = ResourceLoader.load(Global.level_resource_path + chosen_level.name + ".tres")
+			chosen_level = ResourceLoader.load("res://Levels/LevelInfo/" + chosen_level.name + ".tres")
 
 func test_pressed() -> void:
 	pre_save()
-	Global.open_floor(FloorLevel.floor_type.EDITOR, [ResourceLoader.load(Global.level_resource_path + chosen_level.name + ".tres")])
+	Game.test(ResourceLoader.load("res://Levels/LevelInfo/" + chosen_level.name + ".tres"))

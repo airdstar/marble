@@ -4,7 +4,7 @@ var scene : Node
 var popup : Node
 
 func _ready() -> void:
-	open_scene("res://Main/Menus/MainMenu.tscn")
+	call_deferred("open_scene", "res://Main/Menus/MainMenu.tscn")
 
 func set_resolution() -> void:
 	get_window().set_size(Data.resolutions[Data.settings.resolution])

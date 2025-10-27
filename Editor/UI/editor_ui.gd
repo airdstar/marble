@@ -8,9 +8,6 @@ extends Control
 @export var properties : Panel
 @export var properties_container : VBoxContainer
 
-@onready var parts : Panel = $Parts
-@onready var parts_container := $Parts/VBoxContainer
-
 @onready var sections : Panel = $Sections
 @onready var sections_container := $Sections/VBoxContainer
 
@@ -22,16 +19,11 @@ extends Control
 @export var settings : Panel
 @export var settings_container : VBoxContainer
 
-@export_category("Level Select")
-@onready var level_select : Panel = $LevelSelect
-@onready var level_select_container := $LevelSelect/LevelSelect
-@onready var level_select_new_container := $LevelSelect/NewLevel
 
 
 func _ready() -> void:
 	place_control()
 	hide_all()
-	level_select.visible = true
 
 func place_control() -> void:
 	
@@ -55,10 +47,6 @@ func place_control() -> void:
 	sections.set_size(Vector2(get_window().size.x / 4, get_window().size.y / 1.25))
 	sections.set_position(Vector2(right_border - sections.size.x, get_window().size.y / 10))
 	sections_container.set_size(sections.size)
-	
-	parts.set_size(Vector2(get_window().size.x / 4, get_window().size.y / 3))
-	parts.set_position(Vector2(left_border, top_border))
-	parts_container.set_size(parts.size)
 
 	properties.set_size(Vector2(get_window().size.x / 4, get_window().size.y / 2))
 	properties.set_position(Vector2(left_border, bottom_border - properties.size.y))
@@ -67,7 +55,6 @@ func place_control() -> void:
 
 func hide_all() -> void:
 	properties.visible = false
-	parts.visible = false
 	sections.visible = false
 	tools.visible = false
 	options.visible = false
@@ -76,5 +63,4 @@ func hide_all() -> void:
 func show_all() -> void:
 	sections.visible = true
 	options.visible = true
-	parts.visible = true
 	tools.visible = true

@@ -1,13 +1,13 @@
 [gd_scene load_steps=22 format=4]
 
-[ext_resource type="Script" path="res://Levels/Handlers/level.gd" id="1_r0yl8"]
-[ext_resource type="Script" path="res://Editor/Parts/Important/Scripts/geometry.gd" id="2_77487"]
-[ext_resource type="Script" path="res://Editor/Parts/Important/Scripts/geometry_base.gd" id="3_3l33y"]
-[ext_resource type="Script" path="res://Resources/shape_resource.gd" id="4_4l6dx"]
-[ext_resource type="Script" path="res://Editor/Shapes/polygon.gd" id="5_7rgtp"]
-[ext_resource type="Script" path="res://Editor/Parts/part.gd" id="6_mrxqv"]
-[ext_resource type="Shader" path="res://Assets/outline.gdshader" id="7_gpxi0"]
-[ext_resource type="Texture2D" path="res://Assets/Spawn.png" id="8_hj3c0"]
+[ext_resource type="Script" uid="uid://b1i8g53ap4jxx" path="res://Levels/Handlers/level.gd" id="1_r0yl8"]
+[ext_resource type="Script" uid="uid://b83mxq8c75rwv" path="res://Editor/Parts/Important/Scripts/geometry.gd" id="2_77487"]
+[ext_resource type="Script" uid="uid://cyoanhirawf0b" path="res://Editor/Parts/Important/Scripts/geometry_base.gd" id="3_3l33y"]
+[ext_resource type="Script" uid="uid://bhpovwpyj5j88" path="res://Resources/shape_resource.gd" id="4_4l6dx"]
+[ext_resource type="Script" uid="uid://cuc5pp0n1ol14" path="res://Editor/Shapes/Polygon.gd" id="5_7rgtp"]
+[ext_resource type="Script" uid="uid://bapnmtxwf7gwq" path="res://Editor/Parts/part.gd" id="6_mrxqv"]
+[ext_resource type="Shader" uid="uid://bxress7uwdj2y" path="res://Assets/outline.gdshader" id="7_gpxi0"]
+[ext_resource type="Texture2D" uid="uid://wg1rc5sjx0ud" path="res://Assets/Spawn.png" id="8_hj3c0"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ndgqk"]
 size = Vector3(3, 1, 3)

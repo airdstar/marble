@@ -44,7 +44,6 @@ var timer_paused := true
 var remaining_time := 20.0
 var elapsed_time := 0.0
 
-@onready var camera := $camera_y
 @onready var origin := $Origin
 
 func _ready() -> void:
@@ -61,7 +60,7 @@ func _process(delta: float) -> void:
 	
 	if allow_input:
 		var input = Input.get_last_mouse_velocity()
-		var tilt_transform = camera.transform.basis * Vector3(input.x, 0, input.y)
+		var tilt_transform = %Camera.transform.basis * Vector3(input.x, 0, input.y)
 		input = Vector2(tilt_transform.x, tilt_transform.z)
 		var prev_input = input_tilt
 		if input.y > Data.settings.tilt_deadzone or input.y < -Data.settings.tilt_deadzone:
@@ -140,7 +139,7 @@ func next_level() -> void:
 	var tween = create_tween()
 	tween.tween_property(self, "remaining_time", remaining_time + 3, 1).set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_IN_OUT)
 	
-	camera.next_level()
+	%Camera.next_level()
 	
 	if is_run:
 		difficulty_change -= 1
@@ -209,20 +208,20 @@ func start_timer():
 func default_camera_skybox() -> void:
 	match level_type:
 		0:
-			camera.allow_input = true
+			%Camera.allow_input = true
 			var rot = randf_range(0, 360)
-			camera.rotation.y = deg_to_rad(rot)
+			%Camera.rotation.y = deg_to_rad(rot)
 			var tween = create_tween()
-			tween.tween_property($camera_y/Camera3D, "position", Vector3(0,5 + 1.5 * (current.camera_pos / 16.5), current.camera_pos), 0.1)
+			tween.tween_property(%Camera.camera, "position", Vector3(0,5 + 1.5 * (current.camera_pos / 16.5), current.camera_pos), 0.1)
 		1:
-			camera.allow_input = false
+			%Camera.allow_input = false
 			match randi_range(0,1):
 				0:
-					camera.rotation.y = deg_to_rad(90)
+					%Camera.rotation.y = deg_to_rad(90)
 				1:
-					camera.rotation.y = deg_to_rad(-90)
+					%Camera.rotation.y = deg_to_rad(-90)
 
 func reset_orientation() -> void:
 	allow_input = false
 	if level_type == 0:
-		camera.rand_rotation()
+		%Camera.rand_rotation()

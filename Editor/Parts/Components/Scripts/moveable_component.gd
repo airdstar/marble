@@ -42,7 +42,7 @@ func _ready():
 
 func _physics_process(_delta : float) -> void:
 	if disable_collision_below:
-		if Global.runBase.marble.position.y < to_move.global_position.y:
+		if %Player.position.y < to_move.global_position.y:
 			platform_collision.disabled = true
 		else:
 			platform_collision.disabled = false
