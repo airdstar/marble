@@ -1,13 +1,12 @@
-[gd_scene load_steps=11 format=3 uid="uid://4bfdr3xelqm8"]
+[gd_scene load_steps=10 format=3 uid="uid://4bfdr3xelqm8"]
 
 [ext_resource type="Script" uid="uid://7ehqdwe37q52" path="res://Levels/Handlers/floor.gd" id="1_6o7sh"]
-[ext_resource type="Script" uid="uid://ctoo21puymje8" path="res://Levels/Handlers/level_handler.gd" id="1_q6dl6"]
-[ext_resource type="Script" uid="uid://dirp3ddyd8fa5" path="res://Levels/Handlers/run_handler.gd" id="3_2warv"]
+[ext_resource type="FontFile" uid="uid://ehmcqwp0knfm" path="res://Assets/Themes/Fonts/barlow/Barlow-Bold.ttf" id="2_apqds"]
+[ext_resource type="FontFile" uid="uid://bq5bnktcrnc38" path="res://Tschichold.ttf" id="3_0cu8v"]
+[ext_resource type="Theme" uid="uid://d2ltakj580awj" path="res://MainTheme.tres" id="3_apqds"]
 [ext_resource type="Script" uid="uid://bj7sq1m76jpdy" path="res://Levels/Handlers/camera.gd" id="4_e22wn"]
-[ext_resource type="Theme" uid="uid://bd6npdpb40flh" path="res://Assets/Themes/Floor.tres" id="5_wn7bi"]
-[ext_resource type="FontFile" uid="uid://dhr6aeoplstd1" path="res://Assets/Themes/Fonts/barlow/Barlow-SemiBold.ttf" id="6_enyyw"]
-[ext_resource type="FontFile" uid="uid://sa75cwy5yb14" path="res://Assets/Themes/Fonts/barlow/Barlow-Light.ttf" id="6_n272i"]
 [ext_resource type="Script" uid="uid://8i65usawc6qr" path="res://Levels/Handlers/panels.gd" id="7_vjknv"]
+[ext_resource type="PackedScene" uid="uid://daqk2roaa6h1v" path="res://Main/Player.tscn" id="9_0cu8v"]
 
 [sub_resource type="Environment" id="Environment_on5bl"]
 background_mode = 1
@@ -15,35 +14,180 @@ background_mode = 1
 [sub_resource type="BoxShape3D" id="BoxShape3D_omjb2"]
 size = Vector3(200, 1, 200)
 
-[node name="Floor" type="Node3D" node_paths=PackedStringArray("UI", "timer_text", "secondary_timer_text", "points")]
+[node name="Floor" type="Node3D"]
 script = ExtResource("1_6o7sh")
-UI = NodePath("UI")
-timer_text = NodePath("UI/Timer")
-secondary_timer_text = NodePath("UI/Timer/SecondaryTimer")
-points = NodePath("UI/Points")
 
-[node name="LevelHandler" type="Node" parent="." node_paths=PackedStringArray("master")]
-script = ExtResource("1_q6dl6")
-master = NodePath("..")
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="RunHandler" type="Node" parent="."]
-script = ExtResource("3_2warv")
+[node name="NameLabel" type="Label" parent="CanvasLayer"]
+unique_name_in_owner = true
+offset_right = 40.0
+offset_bottom = 23.0
 
-[node name="Timer" type="Timer" parent="."]
-wait_time = 10.0
-one_shot = true
+[node name="LevelNum" type="Label" parent="CanvasLayer"]
+unique_name_in_owner = true
+offset_left = 479.0
+offset_top = -5.0
+offset_right = 673.0
+offset_bottom = 139.0
+theme_override_colors/font_color = Color(0.59607846, 0.8862745, 0.7764706, 1)
+theme_override_fonts/font = ExtResource("2_apqds")
+theme_override_font_sizes/font_size = 120
+text = "3"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Timer" type="Control" parent="CanvasLayer"]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 0
+
+[node name="Seconds" type="Label" parent="CanvasLayer/Timer"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 497.0
+offset_top = 40.0
+offset_right = 655.0
+offset_bottom = 88.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 4
+theme_override_fonts/font = ExtResource("2_apqds")
+theme_override_font_sizes/font_size = 40
+text = "21"
+horizontal_alignment = 1
+
+[node name="Milliseconds" type="Label" parent="CanvasLayer/Timer"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 497.0
+offset_top = 55.0
+offset_right = 655.0
+offset_bottom = 103.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 4
+theme_override_fonts/font = ExtResource("2_apqds")
+theme_override_font_sizes/font_size = 22
+text = "333"
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="Gameover" type="PanelContainer" parent="CanvasLayer"]
+unique_name_in_owner = true
+offset_left = 186.0
+offset_top = 145.0
+offset_right = 576.0
+offset_bottom = 503.0
+theme = ExtResource("3_apqds")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Gameover"]
+layout_mode = 2
+
+[node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/Gameover/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/Gameover/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.70350784, 0.27395758, 0.28707156, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 60
+text = "Game Over"
+horizontal_alignment = 1
+
+[node name="MarginContainer3" type="MarginContainer" parent="CanvasLayer/Gameover/VBoxContainer"]
+layout_mode = 2
+
+[node name="LevelReached" type="RichTextLabel" parent="CanvasLayer/Gameover/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 34.85)
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 40
+bbcode_enabled = true
+text = "Reached Level 30"
+fit_content = true
+autowrap_mode = 0
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Gameover/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/Gameover/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+
+[node name="Highscore" type="RichTextLabel" parent="CanvasLayer/Gameover/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 40
+bbcode_enabled = true
+text = "[rainbow][wave]Highscore Attained"
+fit_content = true
+autowrap_mode = 0
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Gameover/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/Gameover/VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Gameover/VBoxContainer/CenterContainer"]
+layout_mode = 2
+
+[node name="Button2" type="Button" parent="CanvasLayer/Gameover/VBoxContainer/CenterContainer/HBoxContainer"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+button_mask = 0
+text = "Retry?"
+
+[node name="Button" type="Button" parent="CanvasLayer/Gameover/VBoxContainer/CenterContainer/HBoxContainer"]
+custom_minimum_size = Vector2(150, 60)
+layout_mode = 2
+button_mask = 0
+text = "Main Menu"
+
+[node name="Extras" type="VBoxContainer" parent="CanvasLayer"]
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 60.0
+offset_bottom = 50.0
+
+[node name="FPSLabel" type="Label" parent="CanvasLayer/Extras"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_0cu8v")
+theme_override_font_sizes/font_size = 20
+text = "45 FPS"
+
+[node name="SpeedLabel" type="Label" parent="CanvasLayer/Extras"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_0cu8v")
+theme_override_font_sizes/font_size = 20
+text = "45 FPS"
+
+[node name="Player" parent="." instance=ExtResource("9_0cu8v")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 300, 0)
+freeze = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_on5bl")
 
 [node name="Origin" type="Node3D" parent="."]
 
-[node name="camera_y" type="Node3D" parent="." node_paths=PackedStringArray("panels", "camera")]
+[node name="Camera" type="Node3D" parent="." node_paths=PackedStringArray("panels", "camera")]
+unique_name_in_owner = true
 script = ExtResource("4_e22wn")
 panels = NodePath("../Panels")
 camera = NodePath("Camera3D")
 
-[node name="Camera3D" type="Camera3D" parent="camera_y"]
+[node name="Camera3D" type="Camera3D" parent="Camera"]
 transform = Transform3D(1, 0, 0, 0, 0.866026, 0.5, 0, -0.5, 0.866026, 0, 0, 16.5)
 current = true
 fov = 70.0
@@ -54,73 +198,6 @@ collision_layer = 2
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -50, 0)
 shape = SubResource("BoxShape3D_omjb2")
-
-[node name="UI" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-theme = ExtResource("5_wn7bi")
-
-[node name="Points" type="RichTextLabel" parent="UI"]
-layout_mode = 0
-offset_top = 6.0
-offset_right = 1280.0
-offset_bottom = 152.0
-theme_override_colors/default_color = Color(0.536164, 0.644631, 0.532275, 1)
-theme_override_font_sizes/normal_font_size = 120
-bbcode_enabled = true
-
-[node name="name" type="RichTextLabel" parent="UI"]
-layout_mode = 0
-offset_left = 560.0
-offset_top = 6.0
-offset_right = 721.0
-offset_bottom = 30.0
-theme_override_fonts/normal_font = ExtResource("6_enyyw")
-bbcode_enabled = true
-text = "hi"
-fit_content = true
-
-[node name="Timer" type="RichTextLabel" parent="UI"]
-layout_mode = 0
-offset_top = 26.0
-offset_right = 1280.0
-offset_bottom = 581.0
-mouse_filter = 2
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_constants/shadow_outline_size = 4
-bbcode_enabled = true
-text = "[center]0"
-scroll_active = false
-
-[node name="SecondaryTimer" type="RichTextLabel" parent="UI/Timer"]
-layout_mode = 0
-offset_right = 1280.0
-offset_bottom = 555.0
-mouse_filter = 2
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_constants/shadow_outline_size = 4
-bbcode_enabled = true
-text = "[center]Bello"
-scroll_active = false
-
-[node name="VBoxContainer" type="VBoxContainer" parent="UI"]
-layout_mode = 0
-offset_right = 148.0
-offset_bottom = 96.0
-
-[node name="fps" type="RichTextLabel" parent="UI/VBoxContainer"]
-visible = false
-layout_mode = 2
-theme_override_fonts/normal_font = ExtResource("6_n272i")
-text = "fps"
-fit_content = true
-
-[node name="speed" type="RichTextLabel" parent="UI/VBoxContainer"]
-visible = false
-layout_mode = 2
-theme_override_fonts/normal_font = ExtResource("6_n272i")
-text = "speed:"
-fit_content = true
 
 [node name="Lights" type="Node" parent="."]
 
@@ -169,6 +246,6 @@ spot_angle = 30.0
 [node name="Panels" type="Node3D" parent="."]
 script = ExtResource("7_vjknv")
 
-[connection signal="level_generated" from="LevelHandler" to="." method="level_generated"]
-[connection signal="difficulty_changed" from="RunHandler" to="LevelHandler" method="set_level_pool"]
-[connection signal="timeout" from="Timer" to="." method="game_over"]
+[connection signal="level_start" from="Player" to="." method="start_timer"]
+[connection signal="next_level" from="Player" to="." method="next_level"]
+[connection signal="orientation_change" from="Player" to="." method="reset_orientation"]

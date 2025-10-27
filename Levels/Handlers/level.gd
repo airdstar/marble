@@ -40,5 +40,5 @@ func choose_spawn() -> Vector3:
 	return Vector3(chosen_spawn.x, 20, chosen_spawn.y)
 
 func input_trigger(area: Area3D) -> void:
-	if area.get_parent() is player:
-		Global.current_scene.allow_input = true
+	if area.get_parent() is Player:
+		Game.scene.allow_input = true

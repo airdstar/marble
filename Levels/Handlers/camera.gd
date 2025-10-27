@@ -3,15 +3,14 @@ extends Node3D
 @export var panels : Node3D
 @export var camera : Camera3D
 
-var settings = PlayerInfo.player_settings
 var allow_input : bool = true
 
 func _process(delta: float) -> void:
 	if allow_input:
 		var camera_input = Input.get_axis("camera_left", "camera_right")
 		if (camera_input != 0):
-			rotate_y(deg_to_rad(camera_input * settings.camera_sens * 75) * delta)
-			panels.rotate_y(deg_to_rad(camera_input * settings.camera_sens * 75) * delta)
+			rotate_y(deg_to_rad(camera_input * Data.settings.camera_sens * 75) * delta)
+			panels.rotate_y(deg_to_rad(camera_input * Data.settings.camera_sens * 75) * delta)
 
 func rand_rotation():
 	var rotationAmount = deg_to_rad(randf_range(90, 360))

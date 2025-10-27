@@ -1,12 +1,9 @@
 extends RigidBody3D
-class_name player
+class_name Player
 
 var customization : PlayerCustomization
 
 @export var visible_mesh : MeshInstance3D
-
-@export var front : Decal
-@export var back : Decal
 
 @export var light : OmniLight3D
 @export var collision : Area3D
@@ -17,12 +14,10 @@ signal level_start
 signal next_level
 signal orientation_change
 
-func _ready():
-	set_color()
-	set_decal()
-
 func set_customization(player_customization : PlayerCustomization) -> void:
 	customization = player_customization
+	set_color()
+	set_decal()
 
 func set_color() -> void:
 	visible_mesh.mesh.material.albedo_color = customization.chosen_color.lightened(0.7)
@@ -36,11 +31,17 @@ func set_decal() -> void:
 	else:
 		%Decal.hide()
 
+func disable_collision() -> void:
+	collision.set_deferred("monitorable", false)
+
+func enable_collision() -> void:
+	collision.set_deferred("monitorable", true)
 
 func collision_detected(body: Node3D) -> void:
 	if body.is_in_group("Goal"):
+		hide()
 		next_level.emit()
-		collision.set_deferred("monitorable", false)
+		disable_collision()
 	elif body.is_in_group("Respawner"):
 		orientation_change.emit()
 		reset()
@@ -55,8 +56,9 @@ func _collision_detected(area: Area3D) -> void:
 			_collision_detected(area)
 
 func reset() -> void:
-	visible = true
+	show()
+	freeze = false
 	position = reset_pos
 	angular_velocity = Vector3.ZERO
 	linear_velocity = Vector3.ZERO
-	collision.set_deferred("monitorable", true)
+	enable_collision()

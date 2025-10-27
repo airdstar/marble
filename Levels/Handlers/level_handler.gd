@@ -1,7 +1,6 @@
 extends Node
 class_name LevelHandler
 
-@export var master : floor
 
 var current_level : level_resource
 var level_pool : Array[level_resource] = []

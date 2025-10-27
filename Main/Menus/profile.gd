@@ -1,12 +1,12 @@
 extends Control
 
-var player_dummy : player
+var player_dummy : Player
 
 func _ready() -> void:
 	
 	%CustomizationContainer.hide()
 	
-	for n in Cosmetic.colors:
+	for n in Data.colors:
 		var current := make_button()
 		%ColorContainer.add_child(current)
 		var color = TextureRect.new()
@@ -15,7 +15,7 @@ func _ready() -> void:
 		current.add_child(color)
 		current.pressed.connect(set_color.bind(n))
 	
-	for n in Cosmetic.decals:
+	for n in Data.decals:
 		var current := make_button()
 		%DecalContainer.add_child(current)
 		current.icon = n
@@ -23,7 +23,7 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("back"):
-		Global.close_popup()
+		Game.close_popup()
 	
 	if player_dummy != null:
 		player_dummy.rotate_y(0.5 * delta)
@@ -66,15 +66,15 @@ func decals_toggled(toggled_on: bool) -> void:
 			%CustomizationContainer.hide()
 
 func set_color(color : Color) -> void:
-	PlayerInfo.player_data.player_customization.chosen_color = color
+	Data.data.player_customization.chosen_color = color
 	update_dummy()
 
 func set_decal(decal : Texture2D) -> void:
-	PlayerInfo.player_data.player_customization.chosen_decal = decal
+	Data.data.player_customization.chosen_decal = decal
 	player_dummy.rotation.y = 0
 	update_dummy()
 
 func update_dummy() -> void:
-	PlayerInfo.save_data()
+	Data.save_data()
 	player_dummy.set_color()
 	player_dummy.set_decal()

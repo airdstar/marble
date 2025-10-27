@@ -13,7 +13,7 @@ rough = true
 resource_local_to_scene = true
 material = ExtResource("2_2pnue")
 
-[node name="Player" type="RigidBody3D" node_paths=PackedStringArray("visible_mesh", "front", "back", "light", "collision")]
+[node name="Player" type="RigidBody3D" node_paths=PackedStringArray("visible_mesh", "light", "collision")]
 collision_mask = 6
 mass = 10.0
 physics_material_override = SubResource("PhysicsMaterial_vmld2")
@@ -21,8 +21,6 @@ gravity_scale = 7.5
 angular_damp = 3.5
 script = ExtResource("1_8df3t")
 visible_mesh = NodePath("VisibleMesh")
-front = NodePath("VisibleMesh/Decal")
-back = NodePath("")
 light = NodePath("OmniLight3D")
 collision = NodePath("Area3D")
 
@@ -30,6 +28,7 @@ collision = NodePath("Area3D")
 shape = SubResource("SphereShape3D_84e8f")
 
 [node name="VisibleMesh" type="MeshInstance3D" parent="."]
+unique_name_in_owner = true
 layers = 17
 mesh = SubResource("SphereMesh_ijwjb")
 
@@ -51,6 +50,7 @@ monitorable = false
 shape = SubResource("SphereShape3D_84e8f")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
+unique_name_in_owner = true
 light_energy = 0.5
 
 [connection signal="area_entered" from="Area3D" to="." method="_collision_detected"]

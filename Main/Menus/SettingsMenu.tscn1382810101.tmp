@@ -145,20 +145,17 @@ step = 0.1
 value = 1.0
 
 [node name="Label3" type="Label" parent="SettingContainer/ScrollContainer/ControlContainer"]
-visible = false
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 text = "Tilt Deadzone"
 vertical_alignment = 1
 
 [node name="HSlider3" type="HSlider" parent="SettingContainer/ScrollContainer/ControlContainer"]
-visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 
 [node name="SpinBox3" type="SpinBox" parent="SettingContainer/ScrollContainer/ControlContainer"]
-visible = false
 layout_mode = 2
 
 [node name="VisualContainer" type="GridContainer" parent="SettingContainer/ScrollContainer"]
@@ -179,8 +176,7 @@ vertical_alignment = 1
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Resolutions" type="OptionButton" parent="SettingContainer/ScrollContainer/VisualContainer"]
-unique_name_in_owner = true
+[node name="OptionButton2" type="OptionButton" parent="SettingContainer/ScrollContainer/VisualContainer"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 
@@ -197,7 +193,7 @@ layout_mode = 2
 unique_name_in_owner = true
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
-size_flags_horizontal = 8
+size_flags_horizontal = 4
 size_flags_vertical = 4
 toggle_mode = true
 
@@ -214,7 +210,7 @@ layout_mode = 2
 unique_name_in_owner = true
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
-size_flags_horizontal = 8
+size_flags_horizontal = 4
 size_flags_vertical = 4
 toggle_mode = true
 
@@ -231,7 +227,7 @@ layout_mode = 2
 unique_name_in_owner = true
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
-size_flags_horizontal = 8
+size_flags_horizontal = 4
 size_flags_vertical = 4
 toggle_mode = true
 
@@ -239,10 +235,5 @@ toggle_mode = true
 [connection signal="pressed" from="TabContainer/HBoxContainer/VisualButton" to="." method="visual_pressed"]
 [connection signal="pressed" from="ResetContainer/HBoxContainer/ResetButton" to="." method="reset_settings"]
 [connection signal="value_changed" from="SettingContainer/ScrollContainer/ControlContainer/TiltSlider" to="." method="tilt_sens_changed"]
-[connection signal="value_changed" from="SettingContainer/ScrollContainer/ControlContainer/TiltBox" to="." method="tilt_sens_changed"]
 [connection signal="value_changed" from="SettingContainer/ScrollContainer/ControlContainer/CameraSlider" to="." method="camera_sens_changed"]
 [connection signal="value_changed" from="SettingContainer/ScrollContainer/ControlContainer/CameraBox" to="." method="camera_sens_changed"]
-[connection signal="item_selected" from="SettingContainer/ScrollContainer/VisualContainer/Resolutions" to="." method="resolution_selected"]
-[connection signal="toggled" from="SettingContainer/ScrollContainer/VisualContainer/Fullscreen" to="." method="fullscreen_toggled"]
-[connection signal="toggled" from="SettingContainer/ScrollContainer/VisualContainer/FPS" to="." method="fps_toggled"]
-[connection signal="toggled" from="SettingContainer/ScrollContainer/VisualContainer/Speed" to="." method="speed_toggled"]

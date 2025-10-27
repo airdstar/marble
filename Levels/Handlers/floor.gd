@@ -1,13 +1,15 @@
 extends Node3D
-class_name floor
+class_name Floor
 
 #Floor Settings
 var is_run := false
+var test := false
 var set_pool := false
 var in_order := false
 
 # If floor is on a timer
 var allow_timer := false
+
 # If timer should count up
 var timer_count_up := false
 var time_taken : float = 0.0
@@ -26,48 +28,47 @@ var relative_desired_rotation : Vector3 = Vector3.ZERO
 
 #Instanced related
 var level_type : int
-var instanced : level
-var prev_instance : level
-var marble : player
+var instanced_level : level
 
 
-#Player related
-var settings = PlayerInfo.player_settings
+var difficulty : FloorLevel.difficulty
+var difficulty_change := 5
 
-@export var UI : Control
-@export var timer_text : RichTextLabel
-@export var secondary_timer_text : RichTextLabel
-@export var points : RichTextLabel
+var level_num := 1
+var current : level_resource
+var pool : Array[level_resource]
+
+var playing := false
+
+var timer_paused := true
+var remaining_time := 20.0
+var elapsed_time := 0.0
 
 @onready var camera := $camera_y
 @onready var origin := $Origin
-@onready var timer : Timer = $Timer
-
-@onready var level_handler : LevelHandler = $LevelHandler
-@onready var run_handler : RunHandler = $RunHandler
-
-@onready var name_text = $UI/name
-@onready var fps_text = $UI/VBoxContainer/fps
-@onready var speed_text = $UI/VBoxContainer/speed
 
 func _ready() -> void:
-	place_control()
+	%Player.set_customization(Data.data.player_customization)
+	
+	if Data.settings.speed_display:
+		%FPSLabel.show()
+	if Data.settings.fps_display:
+		%SpeedLabel.show()
 
 func _process(delta: float) -> void:
-	if UI.visible:
-		fps_text.text = "FPS: %d" % Engine.get_frames_per_second()
-		speed_text.text = "Speed: %.2f" % (abs(marble.angular_velocity.x) + abs(marble.angular_velocity.y) + abs(marble.angular_velocity.z))
+	%FPSLabel.text = "%d FPS" % Engine.get_frames_per_second()
+	%SpeedLabel.text = "%.2f" % (abs(%Player.angular_velocity.length()))
 	
 	if allow_input:
 		var input = Input.get_last_mouse_velocity()
 		var tilt_transform = camera.transform.basis * Vector3(input.x, 0, input.y)
 		input = Vector2(tilt_transform.x, tilt_transform.z)
 		var prev_input = input_tilt
-		if input.y > settings.tilt_deadzone or input.y < -settings.tilt_deadzone:
-			input_tilt.x += input.y * settings.tilt_sens * 0.001 * delta
+		if input.y > Data.settings.tilt_deadzone or input.y < -Data.settings.tilt_deadzone:
+			input_tilt.x += input.y * Data.settings.tilt_sens * 0.001 * delta
 			input_tilt.x = clamp(input_tilt.x, deg_to_rad(-15), deg_to_rad(15))
-		if input.x > settings.tilt_deadzone or input.x < -settings.tilt_deadzone:
-			input_tilt.y += -input.x * settings.tilt_sens * 0.001 * delta
+		if input.x > Data.settings.tilt_deadzone or input.x < -Data.settings.tilt_deadzone:
+			input_tilt.y += -input.x * Data.settings.tilt_sens * 0.001 * delta
 			input_tilt.y = clamp(input_tilt.y, deg_to_rad(-15), deg_to_rad(15))
 		
 		
@@ -82,22 +83,22 @@ func _process(delta: float) -> void:
 		input_tilt = Vector2.ZERO
 		proxy_tilt = Quaternion.IDENTITY
 	
-	if allow_timer:
-		if !transitioning:
-			if timer_count_up:
-				time_taken += delta
-				timer_text.text = "[center]%.2f" % time_taken
-			else:
-				timer_text.text = "[center]%d" % timer.time_left
-				secondary_timer_text.text = "[center]%03d" % (int(timer.time_left * 1000) % 1000)
-		else:
-			if !timer_count_up:
-				timer_text.text = "[center]%d" % timer.wait_time
-				secondary_timer_text.text = "[center]%03d" % (int(timer.wait_time * 1000) % 1000)
+	if !timer_paused:
+		remaining_time -= delta
+		elapsed_time += delta
+		if remaining_time <= 0:
+			game_over()
+	
+	%Seconds.text = "%d" % remaining_time
+	%Milliseconds.text = "%03d" % (int(remaining_time * 1000) % 1000)
+
 	if Input.is_action_just_pressed("back"):
-		game_over()
-
-
+		if !Game.popup:
+			Game.close_popup()
+			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+			Game.open_scene("res://Main/Menus/MainMenu.tscn")
+		else:
+			game_over()
 
 func _physics_process(delta: float) -> void:
 	var origin_rot = Quaternion(origin.transform.basis)
@@ -105,130 +106,105 @@ func _physics_process(delta: float) -> void:
 		var slerp = origin_rot.slerp(proxy_tilt, 0.1)
 		origin.transform.basis = Basis(slerp)
 
-	if marble != null:
-		marble.apply_force(Vector3(input_tilt.x / 3, 2, input_tilt.y / 3) * delta * 3000)
-
-func place_control() -> void:
-	
-	name_text.set_size(get_window().get_size())
-	name_text.set_position(Vector2(0, get_window().get_size().y / 40))
-	name_text.add_theme_font_size_override("normal_font_size", 20 * get_window().get_size().x / 1280)
-	
-	timer_text.set_size(get_window().get_size())
-	timer_text.set_position(Vector2(0, get_window().get_size().y / 20))
-	timer_text.add_theme_font_size_override("normal_font_size", 35 * get_window().get_size().x / 1280)
-	
-	secondary_timer_text.set_size(get_window().get_size())
-	secondary_timer_text.set_position(Vector2(0, timer_text.get_theme_font_size("normal_font_size") * 6 / 7))
-	secondary_timer_text.add_theme_font_size_override("normal_font_size", 18 * get_window().get_size().x / 1280)
-	
-	points.set_size(get_window().get_size())
-	points.set_position(Vector2(0, -get_window().get_size().y / 50))
-	points.add_theme_font_size_override("normal_font_size", 120 * get_window().get_size().x / 1280)
-	
-	timer_text.visible = false
-	
-	if PlayerInfo.player_settings.speed_display:
-		speed_text.visible = true
-	
-	if PlayerInfo.player_settings.fps_display:
-		fps_text.visible = true
-	
+	%Player.apply_force(Vector3(input_tilt.x / 3, 2, input_tilt.y / 3) * delta * 3000)
 
 func start_game() -> void:
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	transitioning = true
 	allow_input = false
-	UI.visible = true
 	
-	var holder = preload("res://Main/Player.tscn").instantiate()
-	holder.set_customization(PlayerInfo.player_data.player_customization)
-	marble = holder
-	add_child(marble)
-	marble.next_level.connect(next_level)
-	marble.orientation_change.connect(reset_orientation)
-	if allow_timer:
-		marble.level_start.connect(start_timer)
+	%Gameover.hide()
+	%Timer.show()
+	
+	level_num = 1
+	timer_paused = true
+	elapsed_time = 0
+	remaining_time = 20
 	
 	if is_run:
-		run_handler.reset_run()
-		points.text = "[center]%d" % run_handler.current_level
+		difficulty = FloorLevel.difficulty.EASY
+		difficulty_change = 5
+		pool = Data.get_in_pool_levels(difficulty)
+	load_level(false)
 	
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	
-	set_time()
-	
-	if instanced != null:
-		instanced.queue_free()
-	
-	level_handler.generate_level(false)
-	
-	run_handler.inRun = true
-	
-	marble.reset()
+	playing = true
+	%Player.reset()
 
 func next_level() -> void:
 	transitioning = true
 	allow_input = false
 	
-	camera.next_level()
-
-	marble.visible = false
-	prev_instance = instanced
-	set_time()
+	level_num += 1
+	timer_paused = true
+	elapsed_time = 0
+	var tween = create_tween()
+	tween.tween_property(self, "remaining_time", remaining_time + 3, 1).set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_IN_OUT)
 	
-	run_handler.next_level()
+	camera.next_level()
 	
 	if is_run:
-		points.text = "[center]%d" % run_handler.current_level
+		difficulty_change -= 1
+		if difficulty_change == 0:
+			adjust_difficulty()
+	load_level()
 	
-	level_handler.generate_level(true)
-
-
 	await get_tree().create_timer(0.91).timeout
-	if marble != null:
-		marble.reset()
+	%Player.reset()
+
+func load_level(delay := true) -> void:
+	var chosen
+	if !in_order:
+		chosen = pool.pick_random()
+		while chosen == current:
+			chosen = pool.pick_random()
+	else:
+		chosen = pool[level_num]
+	if delay:
+		await get_tree().create_timer(0.4).timeout
+	if instanced_level != null:
+		instanced_level.queue_free()
+	current = chosen
+	instanced_level = current.associated_scene.instantiate()
+	origin.add_child(instanced_level)
+	
+	%LevelNum.text = str(level_num)
+	%NameLabel.text = current.name
+	
+	level_type = current.level_type
+	default_camera_skybox()
+	instanced_level.start_level()
+	%Player.reset_pos = instanced_level.choose_spawn()
+
+func adjust_difficulty() -> void:
+	match difficulty:
+		FloorLevel.difficulty.EASY:
+			difficulty = FloorLevel.difficulty.MEDIUM
+			difficulty_change = 2
+		FloorLevel.difficulty.MEDIUM:
+			difficulty = FloorLevel.difficulty.EASY
+			difficulty_change = 5
+	pool = Data.get_in_pool_levels(difficulty)
 
 func game_over() -> void:
-	if is_run and Global.main_scene.popup_scene == null:
-		if allow_timer:
-			if !timer.is_stopped():
-				timer.stop()
-		
-		run_handler.inRun = false
+	timer_paused = true
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	if is_run:
+		%Player.hide()
+		%Player.disable_collision()
+		playing = false
 		allow_input = false
-		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 		
-		UI.visible = false
-		marble.queue_free()
-		marble = null
+		%Timer.hide()
 		
-		PlayerInfo.player_data.game_over_count += 1
+		%Gameover.show()
 		
-		Global.open_popup("run_end")
+		
 	else:
-		prev_scene()
-
-func set_time() -> void:
-	if allow_timer:
-		timer_text.visible = true
-		if run_handler.inRun:
-			if !timer_count_up:
-				var remaining_time = timer.time_left
-				timer.stop()
-				var tween = create_tween()
-				tween.tween_method(timer.set_wait_time, remaining_time, remaining_time + 3, 1).set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_IN_OUT)
-		else:
-			if timer_count_up:
-				time_taken = 0.0
-			timer.stop()
-			timer.set_wait_time(20)
-			timer_text.text = "[center]%d" % 20
-			secondary_timer_text.text = "[center]%03d" % 0
+		Game.open_scene("res://Main/Menus/MainMenu.tscn")
 
 func start_timer():
-	if timer.is_stopped():
-		timer.start()
-		transitioning = false
+	timer_paused = false
+	transitioning = false
 
 func default_camera_skybox() -> void:
 	match level_type:
@@ -237,7 +213,7 @@ func default_camera_skybox() -> void:
 			var rot = randf_range(0, 360)
 			camera.rotation.y = deg_to_rad(rot)
 			var tween = create_tween()
-			tween.tween_property($camera_y/Camera3D, "position", Vector3(0,5 + 1.5 * (level_handler.current_level.camera_pos / 16.5), level_handler.current_level.camera_pos), 0.1)
+			tween.tween_property($camera_y/Camera3D, "position", Vector3(0,5 + 1.5 * (current.camera_pos / 16.5), current.camera_pos), 0.1)
 		1:
 			camera.allow_input = false
 			match randi_range(0,1):
@@ -250,17 +226,3 @@ func reset_orientation() -> void:
 	allow_input = false
 	if level_type == 0:
 		camera.rand_rotation()
-
-func level_generated(level_info : level_resource) -> void:
-	name_text.text = "[center]" + level_info.name
-	level_type = level_info.level_type
-	default_camera_skybox()
-	instanced.start_level()
-	if marble != null:
-		marble.reset_pos = instanced.choose_spawn()
-	
-func prev_scene() -> void:
-	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-	Global.close_popup()
-	Global.open_scene(Global.main_scene.prev_scene)
-	

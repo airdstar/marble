@@ -4,12 +4,9 @@ var data = PlayerData.new()
 var settings = Settings.new()
 
 var resolutions : Dictionary = {
-	"1920x1080" : Vector2(1920,1080),
-	"1600x900" : Vector2(1600,900),
-	"1366x768" : Vector2(1366,768),
-	"1280x720" : Vector2(1280,720),
-	"960x540" : Vector2(960,540),
-	"854x480" : Vector2(854,480),
+	"1920x1080" : Vector2(1920,1080), "1600x900" : Vector2(1600,900),
+	"1366x768" : Vector2(1366,768), "1280x720" : Vector2(1280,720),
+	"960x540" : Vector2(960,540), "854x480" : Vector2(854,480),
 }
 
 var colors : Array[Color] = [
@@ -34,16 +31,29 @@ func _ready() -> void:
 	load_levels()
 
 func load_data() -> void:
-	if !FileAccess.file_exists("user://data.tres"):
-		return
-	data = ResourceLoader.load("user://data.tres")
-	
+	if FileAccess.file_exists("user://data.tres"):
+		data = ResourceLoader.load("user://data.tres")
 
 func load_settings() -> void:
-	if !FileAccess.file_exists("user://settings.tres"):
-		return
-	settings = ResourceLoader.load("user://settings.tres")
+	if FileAccess.file_exists("user://settings.tres"):
+		settings = ResourceLoader.load("user://settings.tres")
 	Game.set_resolution()
+	Game.set_fullscreen()
+
+func save_data() -> void:
+	ResourceSaver.save(data, "user://data.tres")
+
+func save_settings() -> void:
+	ResourceSaver.save(settings, "user://settings.tres")
+
+func clear_data() -> void:
+	data = PlayerData.new()
+	save_data()
+
+func clear_settings() -> void:
+	settings = Settings.new()
+	Game.set_fullscreen()
+	save_settings()
 
 func load_decals() -> void:
 	var dir = DirAccess.open("res://Assets/Customization/")
@@ -69,13 +79,28 @@ func load_levels() -> void:
 	while currentLevel != "":
 		if '.remap' in currentLevel:
 			currentLevel = currentLevel.trim_suffix('.remap')
-			var holder = ResourceLoader.load("res://Levels/LevelInfo/" + currentLevel)
-			match holder.level_difficulty:
-				FloorLevel.difficulty.EASY:
-					easy_levels.append(holder)
-				FloorLevel.difficulty.MEDIUM:
-					med_levels.append(holder)
-				FloorLevel.difficulty.HARD:
-					hard_levels.append(holder)
+		var holder = ResourceLoader.load("res://Levels/LevelInfo/" + currentLevel)
+		match holder.level_difficulty:
+			FloorLevel.difficulty.EASY:
+				easy_levels.append(holder)
+			FloorLevel.difficulty.MEDIUM:
+				med_levels.append(holder)
+			FloorLevel.difficulty.HARD:
+				hard_levels.append(holder)
 		currentLevel = dir.get_next()
 	dir.list_dir_end()
+
+func get_in_pool_levels(difficulty : FloorLevel.difficulty) -> Array[level_resource]:
+	var to_return : Array[level_resource]
+	var array : Array[level_resource]
+	match difficulty:
+		FloorLevel.difficulty.EASY:
+			array = easy_levels
+		FloorLevel.difficulty.MEDIUM:
+			array = med_levels
+		FloorLevel.difficulty.HARD:
+			array = hard_levels
+	for n in array:
+		if n.include_in_pool:
+			to_return.append(n)
+	return to_return
