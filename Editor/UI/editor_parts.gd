@@ -1,23 +1,5 @@
 extends Control
 
-var important_parts : Dictionary = {
-	"Pivot" : "res://Editor/Parts/Important/Pivot.tscn",
-	"Start" : "res://Editor/Parts/Important/SpawnZone.tscn",
-	"Goal" : "res://Editor/Parts/Important/Goal.tscn"
-}
-
-var misc_parts : Dictionary = {
-	"Boost Pad" : "res://Editor/Parts/Misc/BoostPad.tscn",
-	"Launch Pad" : "res://Editor/Parts/Misc/LaunchPad.tscn",
-	"Boost Zone" : "res://Editor/Parts/Misc/BoostZone.tscn"
-}
-
-@export var shape_holder : GridContainer
-@export var parts_holder : VBoxContainer
-
-@export var important_holder : GridContainer
-@export var misc_holder : GridContainer
-
 signal new_part_selected
 signal new_shape_selected
 
@@ -63,7 +45,6 @@ func load_part(type : int, path : String) -> void:
 func create_button() -> Button:
 	var button = Button.new()
 	button.custom_minimum_size = Vector2(100,100)
-	button.add_theme_font_size_override("font_size", 20)
 	return button
 
 func part_selected(part_path : String) -> void:
