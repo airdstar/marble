@@ -2,8 +2,10 @@ extends Control
 
 var level_info : level
 
-var selected_part : part
-var selected_shape : shape_resource
+var selected_part : Button
+var selected_shape : Button
+
+var selected_shape_info : shape_resource
 
 var part_buttons : Array[Button]
 var shape_buttons : Array[Button]
@@ -25,34 +27,30 @@ func _on_level_loaded(loaded_level : level) -> void:
 	level_info = loaded_level
 	for n : part in loaded_level.parts:
 		add_part(n, false)
-	
-	tab_changed(0)
+	$Sections.modulate = Color(1.0, 1.0, 1.0, 0.0)
 
-func remove_selected() -> void:
-	if selected_shape != null:
-		for n in shape_buttons.size():
-			if shape_buttons[n].button_pressed:
-				shape_buttons[n].queue_free()
-				shape_buttons.remove_at(n)
-				if selected_part is geometry:
-					selected_part.remove_shape(selected_shape)
+func hold() -> void:
+	pass
+
+func delete() -> void:
+	if selected_shape:
+		for n : Button in $Sections/ScrollContainer/Shapes.get_children():
+			if n.button_pressed:
+				n.queue_free()
+				selected_part.remove_shape(selected_shape)
 				selected_shape = null
-				break
-	elif selected_part != null:
-		for n in part_buttons.size():
-			if part_buttons[n].button_pressed:
-				part_buttons[n].queue_free()
-				part_buttons.remove_at(n)
+				return
+	
+	if selected_part:
+		for n : Button in $Sections/ScrollContainer/Parts.get_children():
+			if n.button_pressed:
+				n.queue_free()
 				level_info.parts.remove_at(level_info.parts.find(selected_part))
 				if selected_part.is_start:
 					level_info.starts.remove_at(level_info.starts.find(selected_part))
 				selected_part.queue_free()
-				selected_part = null
-				for m : Button in shape_holder.get_children():
-					m.queue_free()
-				shape_buttons.clear()
 				part_unselected.emit()
-				break
+				return
 
 func clear_all() -> void:
 	selected_shape = null
@@ -66,41 +64,31 @@ func clear_all() -> void:
 		
 
 func add_part(_part : part, toggle_button : bool) -> void:
-	var current_button : Button = Button.new()
-	current_button.text = _part.part_name
-	current_button.toggle_mode = true
-	part_buttons.append(current_button)
-	
-	if _part is geometry:
-		geometry_holder.add_child(current_button)
-	else:
-		part_holder.add_child(current_button)
-	
-	current_button.toggled.connect(part_toggled.bind(_part, current_button))
-	
-	if toggle_button:
-		current_button.button_pressed = true
+	var button := create_button()
+	button.text = _part.part_name
+	part_buttons.append(button)
+	$Sections/ScrollContainer/VBoxContainer.add_child(button)
+	button.toggled.connect(part_toggled.bind(_part, button))
+	button.set_pressed_no_signal(toggle_button)
 
 func part_toggled(toggled_on : bool, _part : part, button : Button) -> void:
-	for n : Button in shape_holder.get_children():
-		n.queue_free()
 	if toggled_on:
-		selected_part = _part
-		
-		for n : Button in part_buttons:
-			if n != button:
-				n.button_pressed = false
+		part_selected.emit(_part)
+		selected_part.set_pressed_no_signal(false)
+		selected_part = button
 		
 		if _part is geometry:
+			$Tabs/HBoxContainer/Shapes.disabled = false
+			for n in $Sections/ScrollContainer/Shapes.get_children():
+				n.queue_free()
 			for n : shape_resource in _part.get_shape_info():
 				add_shape(n)
-		
-		part_selected.emit(_part)
-		
+			
+		else:
+			$Tabs/HBoxContainer/Shapes.disabled = true
 	else:
-		if _part == selected_part:
-			selected_part = null
-			part_unselected.emit()
+		selected_part = null
+		part_unselected.emit()
 
 func add_shape(shape_info : shape_resource):
 	var shape_button : Button = Button.new()
@@ -112,7 +100,7 @@ func add_shape(shape_info : shape_resource):
 
 func shape_toggled(toggled_on : bool, shape : shape_resource, button : Button) -> void:
 	if toggled_on:
-		selected_shape = shape
+		selected_shape_info = shape
 		
 		for n : Button in shape_holder.get_children():
 			if n == button:
@@ -121,36 +109,32 @@ func shape_toggled(toggled_on : bool, shape : shape_resource, button : Button) -
 	else:
 		selected_shape = null
 
+func create_button() -> Button:
+	var button := Button.new()
+	button.custom_minimum_size.y = 45
+	button.toggle_mode = true
+	return button
 
-func tab_changed(tab: int) -> void:
-	shape_holder.visible = false
-	geometry_holder.visible = false
-	geometry_options.visible = false
-	part_holder.visible = false
-	match tab:
-		0:
-			geometry_holder.visible = true
-			shape_holder.visible = true
-			geometry_options.visible = true
-		1:
-			part_holder.visible = true
-
+func tab(toggled_on : bool, _tab : int) -> void:
+	if toggled_on:
+		$Sections.modulate = Color(1.0, 1.0, 1.0, 1.0)
+		if _tab == 0:
+			$Sections/ScrollContainer/Shapes.hide()
+			$Sections/ScrollContainer/Parts.show()
+			$Tabs/HBoxContainer/Shapes.set_pressed_no_signal(false)
+		else:
+			$Sections/ScrollContainer/Parts.hide()
+			$Sections/ScrollContainer/Shapes.show()
+			$Tabs/HBoxContainer/Parts.set_pressed_no_signal(false)
+	else:
+		$Sections.modulate = Color(1.0, 1.0, 1.0, 0.0)
 
 func _on_take_pressed() -> void:
-	if selected_part != null:
-		if selected_part is geometry:
-			if selected_shape != null:
-			
-				selected_part.remove_shape(selected_shape)
-				selected_shape.total_offset += selected_part.position
-				shape_selected.emit(selected_shape)
-				
-				for n : Button in shape_holder.get_children():
-					n.queue_free()
-				
-				for n : shape_resource in selected_part.get_shape_info():
-					add_shape(n)
-				selected_shape = null
+	if selected_shape:
+		%Info.select_shape(selected_shape_info)
+		$Tabs/HBoxContainer/Shapes.remove_child(selected_shape)
+		selected_shape = null
+		selected_shape_info = null
 
 func get_selected_part() -> Button:
 	for n : Button in part_buttons:

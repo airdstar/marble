@@ -1,4 +1,4 @@
-[gd_scene load_steps=52 format=3 uid="uid://1yq80goel736"]
+[gd_scene load_steps=51 format=3 uid="uid://1yq80goel736"]
 
 [ext_resource type="Script" uid="uid://dq0jj5b6vbes0" path="res://Editor/level_editor.gd" id="1_gkh0n"]
 [ext_resource type="Script" uid="uid://dactvxcod666d" path="res://Editor/editor_info.gd" id="2_h10q1"]
@@ -19,7 +19,6 @@
 [ext_resource type="Script" uid="uid://bt1v3byg4fhqb" path="res://Editor/UI/editor_part_properties.gd" id="10_f3w8y"]
 [ext_resource type="Script" uid="uid://dp24f0u05ws10" path="res://Editor/UI/editor_options.gd" id="11_dvs47"]
 [ext_resource type="Script" uid="uid://cbwnmcxk5bu3q" path="res://Editor/UI/editor_settings.gd" id="14_5wu5f"]
-[ext_resource type="Script" uid="uid://isxy4rlb26n4" path="res://Editor/editor_ui.gd" id="17_fht63"]
 [ext_resource type="Theme" uid="uid://c4f25imn7f56f" path="res://Editor.tres" id="19_fve5q"]
 [ext_resource type="Script" uid="uid://q0qj860vf5x" path="res://Editor/UI/editor_top_bar.gd" id="20_h10q1"]
 
@@ -1084,7 +1083,6 @@ text = "Update"
 
 [node name="UI" type="CanvasLayer" parent="."]
 unique_name_in_owner = true
-script = ExtResource("17_fht63")
 
 [node name="LevelSelect" type="PanelContainer" parent="UI"]
 unique_name_in_owner = true
@@ -1229,13 +1227,6 @@ theme_override_font_sizes/font_size = 20
 toggle_mode = true
 text = "Rotation"
 
-[node name="Button" type="Button" parent="UI/TopBar/Tools/HBoxContainer"]
-custom_minimum_size = Vector2(90, 50)
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 20
-text = "Hold"
-
 [node name="Options" type="PanelContainer" parent="UI/TopBar"]
 layout_mode = 2
 
@@ -1333,7 +1324,7 @@ text = "Misc"
 
 [node name="Sections" type="VBoxContainer" parent="UI"]
 unique_name_in_owner = true
-offset_left = 932.0
+offset_left = 827.0
 offset_top = 25.0
 offset_right = 1127.0
 offset_bottom = 623.0
@@ -1347,23 +1338,6 @@ layout_mode = 2
 [node name="VBoxContainer" type="VBoxContainer" parent="UI/Sections/Tool"]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="UI/Sections/Tool/VBoxContainer"]
-layout_mode = 2
-
-[node name="Button2" type="Button" parent="UI/Sections/Tool/VBoxContainer/HBoxContainer"]
-custom_minimum_size = Vector2(90, 50)
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 20
-text = "Delete"
-
-[node name="Button3" type="Button" parent="UI/Sections/Tool/VBoxContainer/HBoxContainer"]
-custom_minimum_size = Vector2(90, 0)
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 20
-text = "Take"
-
 [node name="HBoxContainer2" type="HBoxContainer" parent="UI/Sections/Tool/VBoxContainer"]
 layout_mode = 2
 
@@ -1376,6 +1350,30 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "None"
 horizontal_alignment = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/Sections/Tool/VBoxContainer"]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="UI/Sections/Tool/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(90, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 20
+text = "Hold"
+
+[node name="Button2" type="Button" parent="UI/Sections/Tool/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(90, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 20
+text = "Delete"
+
+[node name="Button3" type="Button" parent="UI/Sections/Tool/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(90, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 20
+text = "Take"
 
 [node name="Sections" type="PanelContainer" parent="UI/Sections"]
 modulate = Color(1, 1, 1, 0)
@@ -1422,8 +1420,6 @@ text = "Shapes"
 [connection signal="new_part_selected" from="." to="UIOld/Properties" method="part_selected"]
 [connection signal="new_shape_selected" from="." to="UIOld/Properties" method="shape_selected"]
 [connection signal="shape_placed" from="." to="UIOld/Sections" method="add_shape"]
-[connection signal="part_created" from="Info" to="." method="part_created"]
-[connection signal="part_created" from="Info" to="UI/Sections" method="add_part" binds= [true]]
 [connection signal="part_selected" from="SelectionHandler" to="UIOld/Properties" method="part_selected"]
 [connection signal="shape_selected" from="SelectionHandler" to="UIOld/Properties" method="shape_selected"]
 [connection signal="pos_changed" from="ChangeHandler" to="Adjust" method="selected_pos_changed"]

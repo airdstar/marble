@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=7 format=3 uid="uid://c4f25imn7f56f"]
+[gd_resource type="Theme" load_steps=8 format=3 uid="uid://c4f25imn7f56f"]
 
 [ext_resource type="FontFile" uid="uid://bq5bnktcrnc38" path="res://Tschichold.ttf" id="1_l6pvj"]
 
@@ -58,6 +58,12 @@ expand_margin_top = 10.0
 expand_margin_right = 10.0
 expand_margin_bottom = 10.0
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_l6pvj"]
+content_margin_left = 5.0
+content_margin_top = 5.0
+content_margin_right = 5.0
+content_margin_bottom = 5.0
+
 [resource]
 default_font = ExtResource("1_l6pvj")
 default_font_size = 20
@@ -73,4 +79,5 @@ GridContainer/constants/h_separation = 15
 GridContainer/constants/v_separation = 15
 HBoxContainer/constants/separation = 15
 PanelContainer/styles/panel = SubResource("StyleBoxFlat_h10q1")
+ScrollContainer/styles/panel = SubResource("StyleBoxEmpty_l6pvj")
 VBoxContainer/constants/separation = 15

@@ -1,11 +1,6 @@
 extends Control
 
-@export var option_container : GridContainer
-
 @onready var level_container := $Select/ScrollContainer/Levels
-
-@onready var level_select := $LevelSelect
-@onready var new_level := $NewLevel
 
 var levels : Array[level_resource] = []
 var unavailable_names : Array[String] = [""]
@@ -26,8 +21,7 @@ func add_level(level_info : level_resource) -> void:
 	button.text = level_info.name
 	unavailable_names.append(level_info.name)
 	button.toggle_mode = true
-	button.set_custom_minimum_size(Vector2(0, 50))
-	button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	button.set_custom_minimum_size(Vector2(145, 50))
 	level_container.add_child(button)
 	button.toggled.connect(level_pressed.bind(level_info, button))
 
@@ -64,7 +58,8 @@ func new_pressed() -> void:
 	$New.show()
 	$New/GridContainer/LevelName.text = ""
 	$New/GridContainer/LevelType.selected = 0
-	pressed_button.button_pressed = false
+	if pressed_button:
+		pressed_button.button_pressed = false
 
 func edit_pressed() -> void:
 	if selected_level:

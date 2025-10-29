@@ -37,7 +37,7 @@ func load_part(type : int, path : String) -> void:
 					$PartContainer/ScrollContainer/Misc.add_child(button)
 				2:
 					$PartContainer/ScrollContainer/Important.add_child(button)
-			button.pressed.connect(part_selected.bind(path + current))
+			button.pressed.connect(%Info.create_part.bind(path + current))
 		
 		current = dir.get_next()
 	dir.list_dir_end()
@@ -48,6 +48,7 @@ func create_button() -> Button:
 	return button
 
 func part_selected(part_path : String) -> void:
+	
 	var holder = load(part_path)
 	holder = holder.instantiate()
 	new_part_selected.emit(holder)

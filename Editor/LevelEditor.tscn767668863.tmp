@@ -1,0 +1,1493 @@
+[gd_scene load_steps=51 format=3 uid="uid://1yq80goel736"]
+
+[ext_resource type="Script" uid="uid://dq0jj5b6vbes0" path="res://Editor/level_editor.gd" id="1_gkh0n"]
+[ext_resource type="Script" uid="uid://dorpwk1ptjwea" path="res://Editor/Handlers/selection_handler.gd" id="2_hx4of"]
+[ext_resource type="Script" uid="uid://c2flyys623p6s" path="res://Editor/Handlers/change_handler.gd" id="3_p55so"]
+[ext_resource type="Script" uid="uid://cyoanhirawf0b" path="res://Editor/Parts/Important/Scripts/geometry_base.gd" id="4_7a5fv"]
+[ext_resource type="Script" uid="uid://bmbxsyjs1hqqa" path="res://Editor/Handlers/shape_handler.gd" id="4_a0qo3"]
+[ext_resource type="Script" uid="uid://cs5fwmr7dskjx" path="res://Editor/editor_adjust.gd" id="5_6wt44"]
+[ext_resource type="Script" uid="uid://bv2hfcyeymuhy" path="res://Editor/UI/editor_level_select.gd" id="5_kbbl2"]
+[ext_resource type="Theme" uid="uid://dyhnu7yerr3w2" path="res://Assets/Themes/Editor.tres" id="5_msf75"]
+[ext_resource type="Script" uid="uid://b6l4cqth2k5od" path="res://Editor/UI/editor_ui.gd" id="6_mhsjx"]
+[ext_resource type="Script" uid="uid://btea26w5v3jx0" path="res://Editor/UI/editor_property.gd" id="6_mogux"]
+[ext_resource type="Script" uid="uid://dlawg50qt102k" path="res://Editor/UI/editor_parts.gd" id="6_xrgr4"]
+[ext_resource type="Script" uid="uid://rjahlt46xf1y" path="res://Editor/UI/editor_sections.gd" id="7_2n8hv"]
+[ext_resource type="Script" uid="uid://cm8fy5wsl35bj" path="res://Editor/UI/editor_shape_properties.gd" id="8_1kyoo"]
+[ext_resource type="Script" uid="uid://bw0excdlcln0h" path="res://Editor/UI/editor_tools.gd" id="8_pcger"]
+[ext_resource type="Script" uid="uid://c4t07au0sfl0b" path="res://Editor/UI/editor_rotation_properties.gd" id="9_q2et2"]
+[ext_resource type="Script" uid="uid://bt1v3byg4fhqb" path="res://Editor/UI/editor_part_properties.gd" id="10_f3w8y"]
+[ext_resource type="Script" uid="uid://dp24f0u05ws10" path="res://Editor/UI/editor_options.gd" id="11_dvs47"]
+[ext_resource type="Script" uid="uid://cbwnmcxk5bu3q" path="res://Editor/UI/editor_settings.gd" id="14_5wu5f"]
+[ext_resource type="Theme" uid="uid://c4f25imn7f56f" path="res://Editor.tres" id="19_fve5q"]
+[ext_resource type="Script" uid="uid://q0qj860vf5x" path="res://Editor/UI/editor_top_bar.gd" id="20_h10q1"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_j7xly"]
+size = Vector3(50, 50, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ytq3e"]
+no_depth_test = true
+albedo_color = Color(0.85, 0, 0.1, 1)
+backlight_enabled = true
+backlight = Color(1, 1, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_oyjqt"]
+material = SubResource("StandardMaterial3D_ytq3e")
+size = Vector3(0.95, 0.05, 0.05)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_cygxg"]
+size = Vector3(0.95, 0.25, 0.25)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_n08y7"]
+no_depth_test = true
+albedo_color = Color(0, 0.85, 0.1, 1)
+backlight_enabled = true
+backlight = Color(1, 1, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_fcbbq"]
+material = SubResource("StandardMaterial3D_n08y7")
+size = Vector3(0.05, 0.95, 0.05)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_rw5tg"]
+size = Vector3(0.25, 0.95, 0.25)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_t87mf"]
+no_depth_test = true
+albedo_color = Color(0.1, 0, 0.85, 1)
+backlight_enabled = true
+backlight = Color(1, 1, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ixdoo"]
+material = SubResource("StandardMaterial3D_t87mf")
+size = Vector3(0.05, 0.05, 0.95)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_x408b"]
+size = Vector3(0.25, 0.25, 0.95)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_14jxn"]
+no_depth_test = true
+albedo_color = Color(0.85, 0, 0.1, 1)
+backlight_enabled = true
+backlight = Color(1, 1, 1, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_8u5sg"]
+material = SubResource("StandardMaterial3D_14jxn")
+radius = 0.1
+height = 0.2
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_p3l4i"]
+size = Vector3(0.95, 0.25, 0.25)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gf1hw"]
+no_depth_test = true
+albedo_color = Color(0, 0.85, 0.1, 1)
+backlight_enabled = true
+backlight = Color(1, 1, 1, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_4kkim"]
+material = SubResource("StandardMaterial3D_gf1hw")
+radius = 0.1
+height = 0.2
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_rhtl5"]
+size = Vector3(0.25, 0.95, 0.25)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6gd3d"]
+no_depth_test = true
+albedo_color = Color(0.1, 0, 0.85, 1)
+backlight_enabled = true
+backlight = Color(1, 1, 1, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_ultul"]
+material = SubResource("StandardMaterial3D_6gd3d")
+radius = 0.1
+height = 0.2
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_vdcb3"]
+size = Vector3(0.25, 0.25, 0.95)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p8aym"]
+no_depth_test = true
+albedo_color = Color(0.85098, 0, 0.101961, 1)
+backlight_enabled = true
+backlight = Color(1, 1, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_g4u1l"]
+material = SubResource("StandardMaterial3D_p8aym")
+size = Vector3(0.05, 0.05, 0.95)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_kidsr"]
+size = Vector3(0.25, 0.25, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6l0vp"]
+no_depth_test = true
+albedo_color = Color(0, 0.85098, 0.101961, 1)
+backlight_enabled = true
+backlight = Color(1, 1, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_1f0sw"]
+material = SubResource("StandardMaterial3D_6l0vp")
+size = Vector3(0.05, 0.05, 0.95)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qyyrk"]
+size = Vector3(1, 0.25, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ra5ch"]
+no_depth_test = true
+albedo_color = Color(0.101961, 0, 0.85098, 1)
+backlight_enabled = true
+backlight = Color(1, 1, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_u0pty"]
+material = SubResource("StandardMaterial3D_ra5ch")
+size = Vector3(0.95, 0.05, 0.05)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ocfkr"]
+size = Vector3(1, 0.25, 0.25)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_h10q1"]
+content_margin_left = 5.0
+content_margin_top = 5.0
+content_margin_right = 5.0
+content_margin_bottom = 5.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fve5q"]
+content_margin_left = 3.0
+content_margin_top = 3.0
+
+[node name="LevelEditor" type="Node3D" node_paths=PackedStringArray("shape_preview", "camera_pivot", "camera", "shape_handler", "selection_handler", "UI")]
+script = ExtResource("1_gkh0n")
+shape_preview = NodePath("ShapePreview")
+camera_pivot = NodePath("CameraPivot")
+camera = NodePath("CameraPivot/Camera3D")
+shape_handler = NodePath("ShapePreview/ShapeHandler")
+selection_handler = NodePath("SelectionHandler")
+UI = NodePath("UI")
+
+[node name="SelectionHandler" type="Node" parent="." node_paths=PackedStringArray("master", "UI", "shape_preview")]
+script = ExtResource("2_hx4of")
+master = NodePath("..")
+UI = NodePath("../UI")
+shape_preview = NodePath("../ShapePreview")
+
+[node name="ChangeHandler" type="Node" parent="." node_paths=PackedStringArray("master", "selection", "shape_handler", "UI")]
+script = ExtResource("3_p55so")
+master = NodePath("..")
+selection = NodePath("../SelectionHandler")
+shape_handler = NodePath("../ShapePreview/ShapeHandler")
+UI = NodePath("../UI")
+
+[node name="CameraPivot" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.984808, 0.173648, 0, -0.173648, 0.984808, 0, 0, 0)
+
+[node name="Camera3D" type="Camera3D" parent="CameraPivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10)
+fov = 37.8493
+
+[node name="Area3D" type="Area3D" parent="CameraPivot/Camera3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CameraPivot/Camera3D/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -40)
+shape = SubResource("BoxShape3D_j7xly")
+
+[node name="SpotLight3D2" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 30, 0)
+light_energy = 4.0
+light_cull_mask = 4294966783
+shadow_enabled = true
+spot_range = 160.0
+
+[node name="SpotLight3D4" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 30, 0)
+light_energy = 4.0
+light_cull_mask = 4294966784
+spot_range = 160.0
+
+[node name="SpotLight3D3" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, -30, 0)
+light_energy = 4.0
+light_cull_mask = 4294966783
+shadow_enabled = true
+spot_range = 160.0
+
+[node name="SpotLight3D5" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, -30, 0)
+light_energy = 4.0
+light_cull_mask = 4294966784
+spot_range = 160.0
+
+[node name="ShapePreview" type="MeshInstance3D" parent="."]
+script = ExtResource("4_7a5fv")
+
+[node name="ShapeHandler" type="Node" parent="ShapePreview" node_paths=PackedStringArray("master")]
+script = ExtResource("4_a0qo3")
+master = NodePath("..")
+
+[node name="Adjust" type="Node3D" parent="." node_paths=PackedStringArray("pos", "size", "rot", "pos_x", "pos_y", "pos_z", "pos_x_mesh", "pos_y_mesh", "pos_z_mesh", "size_x", "size_y", "size_z", "size_x_mesh", "size_y_mesh", "size_z_mesh", "rot_proxy", "rot_x", "rot_y", "rot_z", "rot_x_mesh", "rot_y_mesh", "rot_z_mesh")]
+script = ExtResource("5_6wt44")
+pos = NodePath("Position")
+size = NodePath("Size")
+rot = NodePath("Rotation")
+pos_x = NodePath("Position/X/Area3D/CollisionShape3D")
+pos_y = NodePath("Position/Y/Area3D/CollisionShape3D")
+pos_z = NodePath("Position/Z/Area3D/CollisionShape3D")
+pos_x_mesh = NodePath("Position/X")
+pos_y_mesh = NodePath("Position/Y")
+pos_z_mesh = NodePath("Position/Z")
+size_x = NodePath("Size/X/Area3D/CollisionShape3D")
+size_y = NodePath("Size/Y/Area3D/CollisionShape3D")
+size_z = NodePath("Size/Z/Area3D/CollisionShape3D")
+size_x_mesh = NodePath("Size/X")
+size_y_mesh = NodePath("Size/Y")
+size_z_mesh = NodePath("Size/Z")
+rot_proxy = NodePath("Rotation/RotationProxy")
+rot_x = NodePath("Rotation/X/Area3D/CollisionShape3D")
+rot_y = NodePath("Rotation/Y/Area3D/CollisionShape3D")
+rot_z = NodePath("Rotation/Z/Area3D/CollisionShape3D")
+rot_x_mesh = NodePath("Rotation/X")
+rot_y_mesh = NodePath("Rotation/Y")
+rot_z_mesh = NodePath("Rotation/Z")
+
+[node name="Position" type="Node3D" parent="Adjust"]
+
+[node name="X" type="MeshInstance3D" parent="Adjust/Position"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0)
+layers = 512
+cast_shadow = 0
+mesh = SubResource("BoxMesh_oyjqt")
+skeleton = NodePath("../..")
+
+[node name="Area3D" type="Area3D" parent="Adjust/Position/X"]
+input_capture_on_drag = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Adjust/Position/X/Area3D"]
+shape = SubResource("BoxShape3D_cygxg")
+
+[node name="Y" type="MeshInstance3D" parent="Adjust/Position"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+layers = 512
+cast_shadow = 0
+mesh = SubResource("BoxMesh_fcbbq")
+skeleton = NodePath("../..")
+
+[node name="Area3D" type="Area3D" parent="Adjust/Position/Y"]
+input_capture_on_drag = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Adjust/Position/Y/Area3D"]
+shape = SubResource("BoxShape3D_rw5tg")
+
+[node name="Z" type="MeshInstance3D" parent="Adjust/Position"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5)
+layers = 512
+cast_shadow = 0
+mesh = SubResource("BoxMesh_ixdoo")
+skeleton = NodePath("../..")
+
+[node name="Area3D" type="Area3D" parent="Adjust/Position/Z"]
+input_capture_on_drag = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Adjust/Position/Z/Area3D"]
+shape = SubResource("BoxShape3D_x408b")
+
+[node name="Size" type="Node3D" parent="Adjust"]
+
+[node name="X" type="MeshInstance3D" parent="Adjust/Size"]
+layers = 512
+cast_shadow = 0
+mesh = SubResource("SphereMesh_8u5sg")
+
+[node name="Area3D" type="Area3D" parent="Adjust/Size/X"]
+input_capture_on_drag = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Adjust/Size/X/Area3D"]
+shape = SubResource("BoxShape3D_p3l4i")
+
+[node name="Y" type="MeshInstance3D" parent="Adjust/Size"]
+layers = 512
+cast_shadow = 0
+mesh = SubResource("SphereMesh_4kkim")
+
+[node name="Area3D" type="Area3D" parent="Adjust/Size/Y"]
+input_capture_on_drag = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Adjust/Size/Y/Area3D"]
+shape = SubResource("BoxShape3D_rhtl5")
+
+[node name="Z" type="MeshInstance3D" parent="Adjust/Size"]
+layers = 512
+cast_shadow = 0
+mesh = SubResource("SphereMesh_ultul")
+
+[node name="Area3D" type="Area3D" parent="Adjust/Size/Z"]
+input_capture_on_drag = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Adjust/Size/Z/Area3D"]
+shape = SubResource("BoxShape3D_vdcb3")
+
+[node name="Rotation" type="Node3D" parent="Adjust"]
+
+[node name="X" type="MeshInstance3D" parent="Adjust/Rotation"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.95, 0, 0)
+layers = 512
+cast_shadow = 0
+mesh = SubResource("BoxMesh_g4u1l")
+
+[node name="Area3D" type="Area3D" parent="Adjust/Rotation/X"]
+input_capture_on_drag = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Adjust/Rotation/X/Area3D"]
+shape = SubResource("BoxShape3D_kidsr")
+
+[node name="Y" type="MeshInstance3D" parent="Adjust/Rotation"]
+transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, 0, 0.95, 0)
+layers = 512
+cast_shadow = 0
+mesh = SubResource("BoxMesh_1f0sw")
+
+[node name="Area3D" type="Area3D" parent="Adjust/Rotation/Y"]
+input_capture_on_drag = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Adjust/Rotation/Y/Area3D"]
+shape = SubResource("BoxShape3D_qyyrk")
+
+[node name="Z" type="MeshInstance3D" parent="Adjust/Rotation"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.95)
+layers = 512
+cast_shadow = 0
+mesh = SubResource("BoxMesh_u0pty")
+
+[node name="Area3D" type="Area3D" parent="Adjust/Rotation/Z"]
+input_capture_on_drag = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Adjust/Rotation/Z/Area3D"]
+shape = SubResource("BoxShape3D_ocfkr")
+
+[node name="RotationProxy" type="Node3D" parent="Adjust/Rotation"]
+
+[node name="UI" type="Control" parent="." node_paths=PackedStringArray("tools", "tools_container", "properties", "properties_container", "options", "options_container", "settings", "settings_container")]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme = ExtResource("5_msf75")
+script = ExtResource("6_mhsjx")
+tools = NodePath("Tools")
+tools_container = NodePath("Tools/VBoxContainer")
+properties = NodePath("Properties")
+properties_container = NodePath("Properties/VBoxContainer")
+options = NodePath("Options")
+options_container = NodePath("Options/VBoxContainer")
+settings = NodePath("Settings")
+settings_container = NodePath("Settings/VBoxContainer")
+
+[node name="Properties" type="Panel" parent="UI" node_paths=PackedStringArray("property_options", "part_properties", "shape_properties", "rotation_properties", "part_name", "part_pos", "part_size", "part_rot", "dynamic_movement", "dynamic_rotation")]
+layout_mode = 0
+offset_top = 400.0
+offset_right = 300.0
+offset_bottom = 700.0
+script = ExtResource("6_mogux")
+property_options = NodePath("VBoxContainer/TabBar")
+part_properties = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/Part")
+shape_properties = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties")
+rotation_properties = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/Rotation")
+part_name = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/Part/PartName")
+part_pos = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/Part/Pos/PartPos")
+part_size = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/Part/Size/PartSize")
+part_rot = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/Part/Rot/PartRot")
+dynamic_movement = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/Part/DynamicMove/CheckBox")
+dynamic_rotation = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/Part/DynamicRot/CheckBox")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Properties"]
+layout_mode = 0
+offset_right = 300.0
+offset_bottom = 300.0
+
+[node name="MarginContainer2" type="MarginContainer" parent="UI/Properties/VBoxContainer"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="UI/Properties/VBoxContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[center]Properties"
+fit_content = true
+
+[node name="TabBar" type="TabBar" parent="UI/Properties/VBoxContainer"]
+layout_mode = 2
+
+[node name="MarginContainer3" type="MarginContainer" parent="UI/Properties/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 5
+
+[node name="ScrollContainer" type="ScrollContainer" parent="UI/Properties/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Properties/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Part" type="VBoxContainer" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer" node_paths=PackedStringArray("selection", "part_name", "part_pos", "part_size", "part_rot", "texture_container", "dynamic_movement", "dynamic_rotation", "pivot_container")]
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("10_f3w8y")
+selection = NodePath("../../../../../../SelectionHandler")
+part_name = NodePath("PartName")
+part_pos = NodePath("Pos/PartPos")
+part_size = NodePath("Size/PartSize")
+part_rot = NodePath("Rot/PartRot")
+texture_container = NodePath("Texture")
+dynamic_movement = NodePath("DynamicMove/CheckBox")
+dynamic_rotation = NodePath("DynamicRot/CheckBox")
+pivot_container = NodePath("Pivot")
+
+[node name="PartName" type="LineEdit" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/Part"]
+layout_mode = 2
+placeholder_text = "Enter part name"
+max_length = 24
+
+[node name="Reload" type="Button" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/Part"]
+layout_mode = 2
+text = "Reload"
+
+[node name="Pos" type="HBoxContainer" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/Part"]
+layout_mode = 2
+
+[node name="PartPos" type="RichTextLabel" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/Part/Pos"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = " Position: 0.0, 0.0, 0.0"
+fit_content = true
+
+[node name="Button" type="Button" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/Part/Pos"]
+layout_mode = 2
+text = "Reset"
+
+[node name="Size" type="HBoxContainer" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/Part"]
+layout_mode = 2
+
+[node name="PartSize" type="RichTextLabel" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/Part/Size"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = " Size: 1.0, 1.0, 1.0"
+fit_content = true
+
+[node name="Button" type="Button" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/Part/Size"]
+layout_mode = 2
+text = "Reset"
+
+[node name="Rot" type="HBoxContainer" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/Part"]
+layout_mode = 2
+
+[node name="PartRot" type="RichTextLabel" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/Part/Rot"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = " Rotation: 0, 0, 0"
+fit_content = true
+
+[node name="Button" type="Button" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/Part/Rot"]
+layout_mode = 2
+text = "Reset"
+
+[node name="Texture" type="HBoxContainer" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/Part"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/Part/Texture"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = " Selected Texture:"
+fit_content = true
+
+[node name="DynamicMove" type="HBoxContainer" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/Part"]
+layout_mode = 2
+
+[node name="DynamicMove" type="RichTextLabel" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/Part/DynamicMove"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = " Dynamic Movement:"
+fit_content = true
+
+[node name="CheckBox" type="CheckBox" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/Part/DynamicMove"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/Part/DynamicMove"]
+layout_mode = 2
+theme_override_constants/margin_right = 10
+
+[node name="DynamicRot" type="HBoxContainer" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/Part"]
+layout_mode = 2
+
+[node name="DynamicRot" type="RichTextLabel" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/Part/DynamicRot"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = " Dynamic Rotation:"
+fit_content = true
+
+[node name="CheckBox" type="CheckBox" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/Part/DynamicRot"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/Part/DynamicRot"]
+layout_mode = 2
+theme_override_constants/margin_right = 10
+
+[node name="Pivot" type="VBoxContainer" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/Part"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/Part/Pivot"]
+layout_mode = 2
+size_flags_horizontal = 3
+bbcode_enabled = true
+text = " [center]Pivot"
+fit_content = true
+
+[node name="ShapeProperties" type="VBoxContainer" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer" node_paths=PackedStringArray("shape_name", "shape_pos", "shape_size", "shape_rot", "shape_modifier_holder", "shape_modifier", "shape_sides_holder", "shape_sides", "shape_orientation_holder", "shape_orientation", "shape_flip_orientation_holder", "shape_flip_orientation", "shape_hole_holder", "shape_hole_offset_x", "shape_hole_offset_y", "shape_hole_offset_z", "shape_hole_size")]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("8_1kyoo")
+shape_name = NodePath("ShapeName")
+shape_pos = NodePath("Pos/ShapePos")
+shape_size = NodePath("Size/ShapeSize")
+shape_rot = NodePath("Rot/ShapeRot")
+shape_modifier_holder = NodePath("ShapeModifier")
+shape_modifier = NodePath("ShapeModifier/Modifier")
+shape_sides_holder = NodePath("ShapeSides")
+shape_sides = NodePath("ShapeSides/Sides")
+shape_orientation_holder = NodePath("ShapeOrientation")
+shape_orientation = NodePath("ShapeOrientation/ShapeOrientation")
+shape_flip_orientation_holder = NodePath("ShapeFlipOrientation")
+shape_flip_orientation = NodePath("ShapeFlipOrientation/ShapeFlipOrientation")
+shape_hole_holder = NodePath("Hole")
+shape_hole_offset_x = NodePath("Hole/Offset/SpinBox")
+shape_hole_offset_y = NodePath("Hole/Offset/SpinBox2")
+shape_hole_offset_z = NodePath("Hole/Offset/SpinBox3")
+shape_hole_size = NodePath("Hole/Size/SpinBox")
+
+[node name="ShapeName" type="LineEdit" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties"]
+layout_mode = 2
+placeholder_text = "Enter shape name"
+max_length = 24
+
+[node name="Pos" type="HBoxContainer" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties"]
+layout_mode = 2
+
+[node name="ShapePos" type="RichTextLabel" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Pos"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = " Position: 0,0,0"
+fit_content = true
+
+[node name="Button" type="Button" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Pos"]
+layout_mode = 2
+text = "Reset"
+
+[node name="Size" type="HBoxContainer" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties"]
+layout_mode = 2
+
+[node name="ShapeSize" type="RichTextLabel" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Size"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = " Size: 1.0, 1.0, 1.0"
+fit_content = true
+
+[node name="Button" type="Button" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Size"]
+layout_mode = 2
+text = "Reset"
+
+[node name="Rot" type="HBoxContainer" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties"]
+layout_mode = 2
+
+[node name="ShapeRot" type="RichTextLabel" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Rot"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = " Rotation: 0, 0, 0"
+fit_content = true
+
+[node name="Button" type="Button" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Rot"]
+layout_mode = 2
+text = "Reset"
+
+[node name="ShapeModifier" type="HBoxContainer" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeModifier"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = " Modifier:"
+fit_content = true
+
+[node name="Modifier" type="OptionButton" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeModifier"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.4
+
+[node name="ShapeSides" type="HBoxContainer" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeSides"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.5
+text = "Sides:"
+fit_content = true
+
+[node name="Sides" type="SpinBox" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeSides"]
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 3.0
+max_value = 32.0
+value = 3.0
+
+[node name="ShapeOrientation" type="HBoxContainer" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeOrientation"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.8
+text = "Orientation:"
+fit_content = true
+
+[node name="ShapeOrientation" type="OptionButton" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeOrientation"]
+layout_mode = 2
+size_flags_horizontal = 3
+selected = 1
+item_count = 3
+popup/item_0/text = "X"
+popup/item_0/id = 0
+popup/item_1/text = "Y"
+popup/item_1/id = 1
+popup/item_2/text = "Z"
+popup/item_2/id = 2
+
+[node name="ShapeFlipOrientation" type="HBoxContainer" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeFlipOrientation"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.6
+text = "Flip Orientation:"
+fit_content = true
+
+[node name="ShapeFlipOrientation" type="CheckButton" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeFlipOrientation"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Hole" type="VBoxContainer" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties"]
+visible = false
+layout_mode = 2
+
+[node name="MarginContainer4" type="MarginContainer" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Hole"]
+layout_mode = 2
+theme_override_constants/margin_top = 5
+
+[node name="RichTextLabel" type="RichTextLabel" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Hole"]
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+text = "[center]Hole Properties"
+fit_content = true
+
+[node name="MarginContainer3" type="MarginContainer" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Hole"]
+layout_mode = 2
+theme_override_constants/margin_top = 5
+
+[node name="Offset" type="HBoxContainer" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Hole"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Hole/Offset"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = " Hole Offset:"
+fit_content = true
+
+[node name="SpinBox" type="SpinBox" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Hole/Offset"]
+layout_mode = 2
+min_value = -0.25
+max_value = 0.25
+step = 0.01
+value = -0.25
+
+[node name="SpinBox2" type="SpinBox" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Hole/Offset"]
+layout_mode = 2
+min_value = -0.5
+max_value = 0.5
+step = 0.01
+value = -0.25
+
+[node name="SpinBox3" type="SpinBox" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Hole/Offset"]
+layout_mode = 2
+min_value = -0.25
+max_value = 0.25
+step = 0.01
+value = -0.25
+
+[node name="Size" type="HBoxContainer" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Hole"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Hole/Size"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = " Hole Size:"
+fit_content = true
+
+[node name="SpinBox" type="SpinBox" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Hole/Size"]
+layout_mode = 2
+max_value = 0.9
+step = 0.01
+
+[node name="Point" type="VBoxContainer" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties"]
+visible = false
+layout_mode = 2
+
+[node name="MarginContainer4" type="MarginContainer" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Point"]
+layout_mode = 2
+theme_override_constants/margin_top = 5
+
+[node name="RichTextLabel" type="RichTextLabel" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Point"]
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+text = "[center]Point Properties"
+fit_content = true
+
+[node name="MarginContainer3" type="MarginContainer" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Point"]
+layout_mode = 2
+theme_override_constants/margin_top = 5
+
+[node name="Offset" type="HBoxContainer" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Point"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Point/Offset"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = " Point Offset:"
+fit_content = true
+
+[node name="SpinBox" type="SpinBox" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Point/Offset"]
+layout_mode = 2
+min_value = -0.25
+max_value = 0.25
+step = 0.01
+value = -0.25
+
+[node name="SpinBox3" type="SpinBox" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Point/Offset"]
+layout_mode = 2
+min_value = -0.25
+max_value = 0.25
+step = 0.01
+value = -0.25
+
+[node name="Rotation" type="VBoxContainer" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer" node_paths=PackedStringArray("rotation_amount", "rotation_amount_slider", "rotation_speed", "rotation_speed_slider", "rotation_reverse")]
+visible = false
+layout_mode = 2
+script = ExtResource("9_q2et2")
+rotation_amount = NodePath("Amount/RotationAmount")
+rotation_amount_slider = NodePath("Amount/HSlider")
+rotation_speed = NodePath("Speed/RotationSpeed")
+rotation_speed_slider = NodePath("Speed/HSlider")
+rotation_reverse = NodePath("HBoxContainer/CheckBox")
+
+[node name="Amount" type="HBoxContainer" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/Rotation"]
+layout_mode = 2
+
+[node name="RotationAmount" type="RichTextLabel" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/Rotation/Amount"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = " Rotation Deg: 0"
+fit_content = true
+
+[node name="HSlider" type="HSlider" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/Rotation/Amount"]
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = -360.0
+max_value = 360.0
+
+[node name="Speed" type="HBoxContainer" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/Rotation"]
+layout_mode = 2
+
+[node name="RotationSpeed" type="RichTextLabel" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/Rotation/Speed"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = " Secs per rotation: 0"
+fit_content = true
+
+[node name="HSlider" type="HSlider" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/Rotation/Speed"]
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 0.1
+max_value = 20.0
+step = 0.1
+value = 0.1
+
+[node name="Downtime" type="HBoxContainer" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/Rotation"]
+layout_mode = 2
+
+[node name="RotationDowntime" type="RichTextLabel" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/Rotation/Downtime"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = " Downtime: 0.00"
+fit_content = true
+
+[node name="HSlider" type="HSlider" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/Rotation/Downtime"]
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 0.1
+max_value = 20.0
+step = 0.1
+value = 0.1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/Rotation"]
+layout_mode = 2
+
+[node name="RotationDowntime" type="RichTextLabel" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/Rotation/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = " Reversable:"
+fit_content = true
+
+[node name="CheckBox" type="CheckBox" parent="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/Rotation/HBoxContainer"]
+layout_mode = 2
+
+[node name="Sections" type="Panel" parent="UI" node_paths=PackedStringArray("tab_bar", "geometry_holder", "shape_holder", "geometry_options", "part_holder")]
+layout_mode = 0
+offset_left = 900.0
+offset_top = 20.0
+offset_right = 1250.0
+offset_bottom = 620.0
+mouse_filter = 2
+script = ExtResource("7_2n8hv")
+tab_bar = NodePath("VBoxContainer/TabBar")
+geometry_holder = NodePath("VBoxContainer/HBoxContainer/ScrollContainer/VBoxContainer/Geometry")
+shape_holder = NodePath("VBoxContainer/HBoxContainer/Shapes/VBoxContainer")
+geometry_options = NodePath("VBoxContainer/GeometryOptions")
+part_holder = NodePath("VBoxContainer/HBoxContainer/ScrollContainer/VBoxContainer/Part")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Sections"]
+layout_mode = 0
+offset_right = 350.0
+offset_bottom = 600.0
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/Sections/VBoxContainer"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="UI/Sections/VBoxContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[center]Sections"
+fit_content = true
+
+[node name="TabBar" type="TabBar" parent="UI/Sections/VBoxContainer"]
+layout_mode = 2
+current_tab = 0
+tab_count = 2
+tab_0/title = "Geometry"
+tab_1/title = "Parts"
+
+[node name="Delete" type="Button" parent="UI/Sections/VBoxContainer"]
+layout_mode = 2
+text = "Delete Part"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/Sections/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="UI/Sections/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Sections/VBoxContainer/HBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="Geometry" type="VBoxContainer" parent="UI/Sections/VBoxContainer/HBoxContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Part" type="VBoxContainer" parent="UI/Sections/VBoxContainer/HBoxContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="Misc" type="VBoxContainer" parent="UI/Sections/VBoxContainer/HBoxContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="Shapes" type="ScrollContainer" parent="UI/Sections/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Sections/VBoxContainer/HBoxContainer/Shapes"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="MarginContainer2" type="MarginContainer" parent="UI/Sections/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_bottom = 10
+
+[node name="GeometryOptions" type="VBoxContainer" parent="UI/Sections/VBoxContainer"]
+layout_mode = 2
+
+[node name="NewMesh" type="Button" parent="UI/Sections/VBoxContainer/GeometryOptions"]
+layout_mode = 2
+text = "New Mesh Base"
+
+[node name="Take" type="Button" parent="UI/Sections/VBoxContainer/GeometryOptions"]
+layout_mode = 2
+text = "Take Shape"
+
+[node name="Place" type="Button" parent="UI/Sections/VBoxContainer/GeometryOptions"]
+layout_mode = 2
+text = "Place Shape"
+
+[node name="Tools" type="Panel" parent="UI" node_paths=PackedStringArray("pos_button", "size_button", "rot_button")]
+layout_mode = 0
+offset_left = 308.0
+offset_top = 8.0
+offset_right = 495.0
+offset_bottom = 47.0
+script = ExtResource("8_pcger")
+pos_button = NodePath("VBoxContainer/HBoxContainer/Position")
+size_button = NodePath("VBoxContainer/HBoxContainer/Size")
+rot_button = NodePath("VBoxContainer/HBoxContainer/Rotation")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Tools"]
+layout_mode = 0
+offset_right = 185.0
+offset_bottom = 40.0
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/Tools/VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/Tools/VBoxContainer"]
+layout_mode = 2
+
+[node name="Position" type="Button" parent="UI/Tools/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+toggle_mode = true
+text = "Position"
+
+[node name="Size" type="Button" parent="UI/Tools/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+toggle_mode = true
+text = "Size"
+
+[node name="Rotation" type="Button" parent="UI/Tools/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+toggle_mode = true
+text = "Rotation"
+
+[node name="Hold" type="Button" parent="UI/Tools/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Hold"
+
+[node name="Options" type="Panel" parent="UI"]
+layout_mode = 0
+offset_top = 300.0
+offset_right = 40.0
+offset_bottom = 340.0
+script = ExtResource("11_dvs47")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Options"]
+layout_mode = 0
+offset_right = 185.0
+offset_bottom = 40.0
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/Options/VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/Options/VBoxContainer"]
+layout_mode = 2
+
+[node name="Save" type="Button" parent="UI/Options/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+toggle_mode = true
+text = "Save"
+
+[node name="Test" type="Button" parent="UI/Options/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+toggle_mode = true
+text = "Test"
+
+[node name="Settings" type="Button" parent="UI/Options/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Settings"
+
+[node name="Settings" type="Panel" parent="UI" node_paths=PackedStringArray("name_field", "type_field", "difficulty_field", "include_box")]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("14_5wu5f")
+name_field = NodePath("VBoxContainer/LineEdit")
+type_field = NodePath("VBoxContainer/OptionButton")
+difficulty_field = NodePath("VBoxContainer/OptionButton2")
+include_box = NodePath("VBoxContainer/HBoxContainer/CheckBox")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Settings"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Button" type="Button" parent="UI/Settings/VBoxContainer"]
+layout_mode = 2
+text = "Back"
+
+[node name="LineEdit" type="LineEdit" parent="UI/Settings/VBoxContainer"]
+layout_mode = 2
+placeholder_text = "Level Name"
+
+[node name="OptionButton" type="OptionButton" parent="UI/Settings/VBoxContainer"]
+layout_mode = 2
+selected = 0
+item_count = 1
+popup/item_0/text = "Platform"
+popup/item_0/id = 0
+
+[node name="OptionButton2" type="OptionButton" parent="UI/Settings/VBoxContainer"]
+layout_mode = 2
+selected = 0
+item_count = 3
+popup/item_0/text = "Easy"
+popup/item_0/id = 0
+popup/item_1/text = "Medium"
+popup/item_1/id = 1
+popup/item_2/text = "Hard"
+popup/item_2/id = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/Settings/VBoxContainer"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="UI/Settings/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Include:"
+fit_content = true
+
+[node name="CheckBox" type="CheckBox" parent="UI/Settings/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="Button2" type="Button" parent="UI/Settings/VBoxContainer"]
+layout_mode = 2
+text = "Update"
+
+[node name="Grid" type="Node" parent="."]
+
+[node name="UI2" type="CanvasLayer" parent="."]
+
+[node name="LevelSelect" type="PanelContainer" parent="UI2"]
+unique_name_in_owner = true
+offset_left = 126.0
+offset_top = 124.0
+offset_right = 626.0
+offset_bottom = 524.0
+theme = ExtResource("19_fve5q")
+script = ExtResource("5_kbbl2")
+
+[node name="Select" type="VBoxContainer" parent="UI2/LevelSelect"]
+layout_mode = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="UI2/LevelSelect/Select"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI2/LevelSelect/Select/CenterContainer"]
+custom_minimum_size = Vector2(350, 50)
+layout_mode = 2
+
+[node name="New" type="Button" parent="UI2/LevelSelect/Select/CenterContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "New"
+
+[node name="Edit" type="Button" parent="UI2/LevelSelect/Select/CenterContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Edit"
+
+[node name="Delete" type="Button" parent="UI2/LevelSelect/Select/CenterContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Delete"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="UI2/LevelSelect/Select"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_h10q1")
+
+[node name="Levels" type="GridContainer" parent="UI2/LevelSelect/Select/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/h_separation = 20
+theme_override_constants/v_separation = 20
+columns = 3
+
+[node name="Button" type="Button" parent="UI2/LevelSelect/Select/ScrollContainer/Levels"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "hello"
+
+[node name="Button2" type="Button" parent="UI2/LevelSelect/Select/ScrollContainer/Levels"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "hello"
+
+[node name="Button3" type="Button" parent="UI2/LevelSelect/Select/ScrollContainer/Levels"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "hello"
+
+[node name="New" type="VBoxContainer" parent="UI2/LevelSelect"]
+visible = false
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI2/LevelSelect/New"]
+layout_mode = 2
+
+[node name="Back" type="Button" parent="UI2/LevelSelect/New/HBoxContainer"]
+custom_minimum_size = Vector2(100, 60)
+layout_mode = 2
+text = "Back"
+
+[node name="MarginContainer2" type="MarginContainer" parent="UI2/LevelSelect/New"]
+layout_mode = 2
+
+[node name="GridContainer" type="GridContainer" parent="UI2/LevelSelect/New"]
+layout_mode = 2
+columns = 2
+
+[node name="Label" type="Label" parent="UI2/LevelSelect/New/GridContainer"]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+text = "Level Name"
+vertical_alignment = 1
+
+[node name="LevelName" type="LineEdit" parent="UI2/LevelSelect/New/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label2" type="Label" parent="UI2/LevelSelect/New/GridContainer"]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+text = "Level Type"
+vertical_alignment = 1
+
+[node name="LevelType" type="OptionButton" parent="UI2/LevelSelect/New/GridContainer"]
+layout_mode = 2
+selected = 0
+item_count = 1
+popup/item_0/text = " Platform"
+popup/item_0/id = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="UI2/LevelSelect/New"]
+layout_mode = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="UI2/LevelSelect/New"]
+layout_mode = 2
+
+[node name="Create" type="Button" parent="UI2/LevelSelect/New/CenterContainer"]
+custom_minimum_size = Vector2(200, 60)
+layout_mode = 2
+text = "Create Level"
+
+[node name="TopBar" type="HBoxContainer" parent="UI2"]
+visible = false
+offset_left = 25.0
+offset_top = 25.0
+offset_right = 796.0
+offset_bottom = 75.0
+theme = ExtResource("19_fve5q")
+theme_override_constants/separation = 30
+script = ExtResource("20_h10q1")
+
+[node name="Tools" type="PanelContainer" parent="UI2/TopBar"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI2/TopBar/Tools"]
+layout_mode = 2
+
+[node name="Position" type="Button" parent="UI2/TopBar/Tools/HBoxContainer"]
+custom_minimum_size = Vector2(90, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 20
+toggle_mode = true
+text = "Position"
+
+[node name="Scale" type="Button" parent="UI2/TopBar/Tools/HBoxContainer"]
+custom_minimum_size = Vector2(90, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 20
+toggle_mode = true
+text = "Scale"
+
+[node name="Rotation" type="Button" parent="UI2/TopBar/Tools/HBoxContainer"]
+custom_minimum_size = Vector2(90, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 20
+toggle_mode = true
+text = "Rotation"
+
+[node name="Options" type="PanelContainer" parent="UI2/TopBar"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI2/TopBar/Options"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Button5" type="Button" parent="UI2/TopBar/Options/HBoxContainer"]
+custom_minimum_size = Vector2(90, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 20
+toggle_mode = true
+text = "Save"
+
+[node name="Button6" type="Button" parent="UI2/TopBar/Options/HBoxContainer"]
+custom_minimum_size = Vector2(90, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 20
+toggle_mode = true
+text = "Test"
+
+[node name="Button7" type="Button" parent="UI2/TopBar/Options/HBoxContainer"]
+custom_minimum_size = Vector2(90, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 20
+toggle_mode = true
+text = "Settings"
+
+[node name="Parts" type="HBoxContainer" parent="UI2"]
+visible = false
+offset_left = 25.0
+offset_top = 120.0
+offset_right = 403.0
+offset_bottom = 334.0
+theme = ExtResource("19_fve5q")
+theme_override_constants/separation = 30
+script = ExtResource("6_xrgr4")
+
+[node name="PartContainer" type="PanelContainer" parent="UI2/Parts"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ScrollContainer" type="ScrollContainer" parent="UI2/Parts/PartContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_fve5q")
+
+[node name="Shapes" type="GridContainer" parent="UI2/Parts/PartContainer/ScrollContainer"]
+layout_mode = 2
+columns = 2
+
+[node name="Important" type="GridContainer" parent="UI2/Parts/PartContainer/ScrollContainer"]
+visible = false
+layout_mode = 2
+columns = 2
+
+[node name="Misc" type="GridContainer" parent="UI2/Parts/PartContainer/ScrollContainer"]
+visible = false
+layout_mode = 2
+columns = 2
+
+[node name="Buttons" type="PanelContainer" parent="UI2/Parts"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI2/Parts/Buttons"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UI2/Parts/Buttons/VBoxContainer"]
+layout_mode = 2
+text = "Parts"
+horizontal_alignment = 1
+
+[node name="Shapes" type="Button" parent="UI2/Parts/Buttons/VBoxContainer"]
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+toggle_mode = true
+text = "Shapes"
+
+[node name="Important" type="Button" parent="UI2/Parts/Buttons/VBoxContainer"]
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+toggle_mode = true
+text = "Important"
+
+[node name="Misc" type="Button" parent="UI2/Parts/Buttons/VBoxContainer"]
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+toggle_mode = true
+text = "Misc"
+
+[node name="Sections" type="VBoxContainer" parent="UI2"]
+visible = false
+offset_left = 932.0
+offset_top = 25.0
+offset_right = 1127.0
+offset_bottom = 623.0
+theme = ExtResource("19_fve5q")
+theme_override_constants/separation = 30
+
+[node name="Tool" type="PanelContainer" parent="UI2/Sections"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI2/Sections/Tool"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI2/Sections/Tool/VBoxContainer"]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="UI2/Sections/Tool/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(90, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 20
+text = "Hold"
+
+[node name="Button2" type="Button" parent="UI2/Sections/Tool/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(90, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 20
+text = "Delete"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="UI2/Sections/Tool/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UI2/Sections/Tool/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Held Shape:"
+
+[node name="Label2" type="Label" parent="UI2/Sections/Tool/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "None"
+horizontal_alignment = 2
+
+[node name="Sections" type="PanelContainer" parent="UI2/Sections"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Tabs" type="PanelContainer" parent="UI2/Sections"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI2/Sections/Tabs"]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="UI2/Sections/Tabs/HBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 20
+toggle_mode = true
+text = "Parts"
+
+[node name="Button2" type="Button" parent="UI2/Sections/Tabs/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 20
+toggle_mode = true
+text = "Shapes"
+
+[connection signal="all_non_pivots" from="." to="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/Part" method="display_non_pivots"]
+[connection signal="level_loaded" from="." to="UI/Sections" method="_on_level_loaded"]
+[connection signal="new_part_selected" from="." to="UI/Properties" method="part_selected"]
+[connection signal="new_shape_selected" from="." to="UI/Properties" method="shape_selected"]
+[connection signal="shape_placed" from="." to="UI/Sections" method="add_shape"]
+[connection signal="part_selected" from="SelectionHandler" to="UI/Properties" method="part_selected"]
+[connection signal="shape_selected" from="SelectionHandler" to="UI/Properties" method="shape_selected"]
+[connection signal="pos_changed" from="ChangeHandler" to="Adjust" method="selected_pos_changed"]
+[connection signal="pos_changed" from="ChangeHandler" to="UI/Properties" method="pos_changed"]
+[connection signal="rot_changed" from="ChangeHandler" to="Adjust" method="selected_rotation_changed"]
+[connection signal="rot_changed" from="ChangeHandler" to="UI/Properties" method="rot_changed"]
+[connection signal="size_changed" from="ChangeHandler" to="Adjust" method="selected_size_changed"]
+[connection signal="size_changed" from="ChangeHandler" to="UI/Properties" method="size_changed"]
+[connection signal="offset_change_successful" from="ShapePreview/ShapeHandler" to="Adjust" method="selected_pos_changed"]
+[connection signal="offset_change_successful" from="ShapePreview/ShapeHandler" to="UI/Properties" method="pos_changed"]
+[connection signal="rotation_change_successful" from="ShapePreview/ShapeHandler" to="Adjust" method="selected_rotation_changed"]
+[connection signal="rotation_change_successful" from="ShapePreview/ShapeHandler" to="UI/Properties" method="rot_changed"]
+[connection signal="size_change_successful" from="ShapePreview/ShapeHandler" to="Adjust" method="selected_size_changed"]
+[connection signal="size_change_successful" from="ShapePreview/ShapeHandler" to="UI/Properties" method="size_changed"]
+[connection signal="pos_changed" from="Adjust" to="ChangeHandler" method="movement_detected"]
+[connection signal="rot_changed" from="Adjust" to="ChangeHandler" method="rotation_detected"]
+[connection signal="size_changed" from="Adjust" to="ChangeHandler" method="resize_detected"]
+[connection signal="group_changed" from="UI/Properties" to="." method="property_group_set"]
+[connection signal="tab_changed" from="UI/Properties/VBoxContainer/TabBar" to="UI/Properties" method="property_group_changed"]
+[connection signal="create_rotation_tab" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/Part" to="UI/Properties" method="create_rotation_tab"]
+[connection signal="get_all_non_pivot_parts" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/Part" to="." method="get_all_non_pivot_parts"]
+[connection signal="remove_extra_tabs" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/Part" to="UI/Properties" method="remove_extra_tabs"]
+[connection signal="text_changed" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/Part/PartName" to="ChangeHandler" method="part_name_changed"]
+[connection signal="pressed" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/Part/Reload" to="." method="reload_part"]
+[connection signal="pressed" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/Part/Rot/Button" to="ChangeHandler" method="reset_rotation"]
+[connection signal="toggled" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/Part/DynamicRot/CheckBox" to="ChangeHandler" method="part_rotation_toggled"]
+[connection signal="_hole_offset_changed" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties" to="ShapePreview/ShapeHandler" method="hole_offset_changed"]
+[connection signal="_hole_size_changed" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties" to="ShapePreview/ShapeHandler" method="hole_size_changed"]
+[connection signal="text_changed" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeName" to="ShapePreview/ShapeHandler" method="name_changed"]
+[connection signal="pressed" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Rot/Button" to="ChangeHandler" method="reset_rotation"]
+[connection signal="item_selected" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeModifier/Modifier" to="ShapePreview/ShapeHandler" method="modifier_changed"]
+[connection signal="item_selected" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeModifier/Modifier" to="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties" method="mod_changed"]
+[connection signal="value_changed" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeSides/Sides" to="ShapePreview/ShapeHandler" method="sides_changed"]
+[connection signal="item_selected" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeOrientation/ShapeOrientation" to="ShapePreview/ShapeHandler" method="orientation_changed"]
+[connection signal="toggled" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/ShapeFlipOrientation/ShapeFlipOrientation" to="ShapePreview/ShapeHandler" method="flip_orientation_changed"]
+[connection signal="value_changed" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Hole/Offset/SpinBox" to="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties" method="hole_offset_changed"]
+[connection signal="value_changed" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Hole/Offset/SpinBox2" to="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties" method="hole_offset_changed"]
+[connection signal="value_changed" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Hole/Offset/SpinBox3" to="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties" method="hole_offset_changed"]
+[connection signal="value_changed" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Hole/Size/SpinBox" to="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties" method="hole_size_changed"]
+[connection signal="value_changed" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Point/Offset/SpinBox" to="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties" method="hole_offset_changed"]
+[connection signal="value_changed" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties/Point/Offset/SpinBox3" to="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/ShapeProperties" method="hole_offset_changed"]
+[connection signal="value_changed" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/Rotation/Amount/HSlider" to="ChangeHandler" method="dynamic_rot_amount_changed"]
+[connection signal="value_changed" from="UI/Properties/VBoxContainer/ScrollContainer/VBoxContainer/Rotation/Speed/HSlider" to="ChangeHandler" method="dynamic_rot_speed_changed"]
+[connection signal="part_selected" from="UI/Sections" to="SelectionHandler" method="_part_selected"]
+[connection signal="part_unselected" from="UI/Sections" to="." method="part_unselected"]
+[connection signal="part_unselected" from="UI/Sections" to="UI/Properties" method="part_unselected"]
+[connection signal="shape_selected" from="UI/Sections" to="SelectionHandler" method="_shape_selected"]
+[connection signal="tab_changed" from="UI/Sections/VBoxContainer/TabBar" to="UI/Sections" method="tab_changed"]
+[connection signal="pressed" from="UI/Sections/VBoxContainer/Delete" to="UI/Sections" method="remove_selected"]
+[connection signal="pressed" from="UI/Sections/VBoxContainer/GeometryOptions/NewMesh" to="." method="new_geometry_created"]
+[connection signal="pressed" from="UI/Sections/VBoxContainer/GeometryOptions/Take" to="UI/Sections" method="_on_take_pressed"]
+[connection signal="pressed" from="UI/Sections/VBoxContainer/GeometryOptions/Place" to="." method="_on_place_pressed"]
+[connection signal="pressed" from="UI/Sections/VBoxContainer/GeometryOptions/Place" to="UI/Properties" method="shape_unselected"]
+[connection signal="tool_selected" from="UI/Tools" to="." method="tool_selected"]
+[connection signal="toggled" from="UI/Tools/VBoxContainer/HBoxContainer/Position" to="UI/Tools" method="pos_toggled"]
+[connection signal="toggled" from="UI/Tools/VBoxContainer/HBoxContainer/Size" to="UI/Tools" method="size_toggled"]
+[connection signal="toggled" from="UI/Tools/VBoxContainer/HBoxContainer/Rotation" to="UI/Tools" method="rot_toggled"]
+[connection signal="pressed" from="UI/Tools/VBoxContainer/HBoxContainer/Hold" to="SelectionHandler" method="switch_hold"]
+[connection signal="pressed" from="UI/Options/VBoxContainer/HBoxContainer/Save" to="." method="pre_save"]
+[connection signal="pressed" from="UI/Options/VBoxContainer/HBoxContainer/Test" to="." method="test_pressed"]
+[connection signal="pressed" from="UI/Options/VBoxContainer/HBoxContainer/Settings" to="UI/Settings" method="open_settings"]
+[connection signal="pressed" from="UI/Settings/VBoxContainer/Button" to="UI/Settings" method="close_settings"]
+[connection signal="pressed" from="UI/Settings/VBoxContainer/Button2" to="." method="level_info_updated"]
+[connection signal="pressed" from="UI2/LevelSelect/Select/CenterContainer/HBoxContainer/New" to="UI2/LevelSelect" method="new_pressed"]
+[connection signal="pressed" from="UI2/LevelSelect/Select/CenterContainer/HBoxContainer/Edit" to="UI2/LevelSelect" method="edit_pressed"]
+[connection signal="pressed" from="UI2/LevelSelect/Select/CenterContainer/HBoxContainer/Delete" to="UI2/LevelSelect" method="delete_pressed"]
+[connection signal="pressed" from="UI2/LevelSelect/New/HBoxContainer/Back" to="UI2/LevelSelect" method="show_select"]
+[connection signal="pressed" from="UI2/LevelSelect/New/CenterContainer/Create" to="UI2/LevelSelect" method="create_level"]
+[connection signal="toggled" from="UI2/TopBar/Tools/HBoxContainer/Position" to="UI2/TopBar" method="pos_toggled"]
+[connection signal="toggled" from="UI2/Parts/Buttons/VBoxContainer/Shapes" to="UI2/Parts" method="tab_changed" binds= [0]]
+[connection signal="toggled" from="UI2/Parts/Buttons/VBoxContainer/Important" to="UI2/Parts" method="tab_changed" binds= [1]]
+[connection signal="toggled" from="UI2/Parts/Buttons/VBoxContainer/Misc" to="UI2/Parts" method="tab_changed" binds= [2]]

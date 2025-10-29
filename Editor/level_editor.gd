@@ -31,6 +31,7 @@ var selected_tool : editor.tool = editor.tool.NONE
 
 
 signal level_loaded
+
 signal shape_placed
 signal new_part_selected
 signal new_shape_selected
@@ -57,6 +58,7 @@ func _ready() -> void:
 		$Grid.add_child(line)
 	
 	tool_visible(false)
+	%UI.open_level_select()
 	open_level_select()
 
 
@@ -109,7 +111,7 @@ func open_level_select():
 	selection_handler.selected_shape = null
 	selection_handler.selected_component = null
 	selection_handler.held_shape = null
-	UI.sections.clear_all()
+	%Sections.clear_all()
 	tool_selected(editor.tool.NONE)
 	if level_base != null:
 		level_base.queue_free()
@@ -124,7 +126,7 @@ func level_selected(level_info : level_resource) -> void:
 	level_base = chosen_level.associated_scene.instantiate()
 	add_child(level_base)
 	level_loaded.emit(level_base)
-	UI.show_all()
+	%UI.show()
 	level_base.open_editor()
 	print_orphan_nodes()
 	
@@ -149,19 +151,17 @@ func create_and_place() -> void:
 
 func new_geometry_created() -> geometry:
 	var holder = preload("res://Editor/Parts/Important/Geometry.tscn").instantiate()
-	new_part_created(holder)
+	
 	return holder
 
-func new_part_created(_part : part) -> void:
+func part_created(_part : part) -> void:
 	level_base.parts.append(_part)
 	if _part.is_start:
 		level_base.starts.append(_part)
 	level_base.add_child(_part)
 	rec_set_owner(_part)
-	if _part.collider != null:
+	if _part.collider:
 		_part.collider.disabled = true
-	UI.sections.add_part(_part, true)
-	
 
 
 func reload_part() -> void:
