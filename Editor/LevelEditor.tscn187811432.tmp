@@ -1417,12 +1417,6 @@ theme_override_font_sizes/font_size = 20
 toggle_mode = true
 text = "Shapes"
 
-[connection signal="all_non_pivots" from="." to="UIOld/Properties/VBoxContainer/ScrollContainer/VBoxContainer/Part" method="display_non_pivots"]
-[connection signal="level_loaded" from="." to="UIOld/Sections" method="_on_level_loaded"]
-[connection signal="level_loaded" from="." to="UI/Sections" method="level_loaded"]
-[connection signal="new_part_selected" from="." to="UIOld/Properties" method="part_selected"]
-[connection signal="new_shape_selected" from="." to="UIOld/Properties" method="shape_selected"]
-[connection signal="shape_placed" from="." to="UIOld/Sections" method="add_shape"]
 [connection signal="part_created" from="Info" to="." method="part_created"]
 [connection signal="part_created" from="Info" to="UI/Sections" method="add_part" binds= [true]]
 [connection signal="part_selected" from="SelectionHandler" to="UIOld/Properties" method="part_selected"]

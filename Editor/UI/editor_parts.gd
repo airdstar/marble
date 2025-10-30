@@ -28,7 +28,7 @@ func load_part(type : int, path : String) -> void:
 			holder = holder.new()
 			button.text = current.trim_suffix(".gd")
 			$PartContainer/ScrollContainer/Shapes.add_child(button)
-			button.pressed.connect(shape_selected.bind(holder))
+			button.pressed.connect(%Info.select_shape.bind(holder))
 		else:
 			holder = holder.instantiate()
 			button.text = holder.part_name
@@ -46,15 +46,6 @@ func create_button() -> Button:
 	var button = Button.new()
 	button.custom_minimum_size = Vector2(100,100)
 	return button
-
-func part_selected(part_path : String) -> void:
-	
-	var holder = load(part_path)
-	holder = holder.instantiate()
-	new_part_selected.emit(holder)
-
-func shape_selected(shape : Resource) -> void:
-	new_shape_selected.emit(shape)
 
 func tab_changed(toggled_on : bool, tab: int) -> void:
 	if toggled_on:

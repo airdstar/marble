@@ -17,13 +17,27 @@ var selected_shape : shape_resource = null
 var held_shape : shape_resource = null
 
 signal part_created
+signal tool_selected
 
-func create_part(path : String) -> void:
+func create_part(path : String, info : Array = [], children : Array = []) -> void:
 	var holder = load(path)
 	selected_part = holder.instantiate()
 	part_created.emit(selected_part)
+	if !info.is_empty():
+		selected_part.reparent(info[0])
+		selected_part.scale = info[1]
+		selected_part.rotation = info[2]
+		selected_part.position = info[3]
+		if selected_part is geometry:
+			selected_part.set_shape_info(info[4])
+		if !children.is_empty():
+			for n in children:
+				n.reparent(selected_part)
 
 func select_part(_part : part) -> void:
+	selected_part = _part
+
+func unselect_part() -> void:
 	pass
 
 func select_shape(shape : shape_resource) -> void:
@@ -51,3 +65,4 @@ func place_shape() -> void:
 
 func set_tool(_tool : tool) -> void:
 	current_tool = _tool
+	tool_selected.emit()

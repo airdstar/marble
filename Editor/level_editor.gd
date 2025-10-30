@@ -126,7 +126,7 @@ func level_selected(level_info : level_resource) -> void:
 	level_base = chosen_level.associated_scene.instantiate()
 	add_child(level_base)
 	level_loaded.emit(level_base)
-	%UI.show()
+	%UI.level_selected()
 	level_base.open_editor()
 	print_orphan_nodes()
 	
@@ -165,40 +165,20 @@ func part_created(_part : part) -> void:
 
 
 func reload_part() -> void:
-	var reloaded_part = load(selection_handler.selected_part.base)
-	reloaded_part = reloaded_part.instantiate()
 	var info_holder : Array = []
+	info_holder.append(%Info.selected_part.get_parent())
+	info_holder.append(%Info.selected_part.scale)
+	info_holder.append(%Info.selected_part.rotation)
+	info_holder.append(%Info.selected_part.position)
+	if %Info.selected_part is geometry:
+		info_holder.append(%Info.selected_part.get_shape_info())
+	
 	var child_holder : Array = []
-	info_holder.append(selection_handler.selected_part.get_parent())
-	info_holder.append(selection_handler.selected_part.scale)
-	info_holder.append(selection_handler.selected_part.rotation)
-	info_holder.append(selection_handler.selected_part.position)
+	for n in %Info.selected_part.get_children():
+		child_holder.append(n)
 	
-	if selection_handler.selected_part is geometry:
-		reloaded_part.set_shape_info(selection_handler.selected_part.get_shape_info())
-	
-	if selection_handler.selected_part.is_pivot:
-		for n in selection_handler.selected_part.get_children():
-			child_holder.append(n)
-	else:
-		for n in selection_handler.selected_part.get_children():
-			if n is component:
-				child_holder.append(n)
-	
-	UI.sections.remove_selected()
-	new_part_created(reloaded_part)
-	reloaded_part.reparent(info_holder[0])
-	reloaded_part.scale = info_holder[1]
-	reloaded_part.rotation = info_holder[2]
-	reloaded_part.position = info_holder[3]
-	
-	if reloaded_part is geometry:
-		reloaded_part.regenerate_mesh()
-	
-	for n in child_holder:
-		n.reparent(reloaded_part)
-	
-	selection_handler._part_selected(reloaded_part)
+	%Sections.delete()
+	%Info.create_part(%Info.selected_part.base, info_holder, child_holder)
 
 
 func rec_set_owner(_part : Node) -> void:
