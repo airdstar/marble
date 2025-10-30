@@ -1,4 +1,4 @@
-[gd_scene load_steps=52 format=3 uid="uid://1yq80goel736"]
+[gd_scene load_steps=61 format=3 uid="uid://1yq80goel736"]
 
 [ext_resource type="Script" uid="uid://dq0jj5b6vbes0" path="res://Editor/level_editor.gd" id="1_gkh0n"]
 [ext_resource type="Script" uid="uid://dactvxcod666d" path="res://Editor/editor_info.gd" id="2_h10q1"]
@@ -22,6 +22,8 @@
 [ext_resource type="Script" uid="uid://isxy4rlb26n4" path="res://Editor/editor_ui.gd" id="17_fht63"]
 [ext_resource type="Theme" uid="uid://c4f25imn7f56f" path="res://Editor.tres" id="19_fve5q"]
 [ext_resource type="Script" uid="uid://q0qj860vf5x" path="res://Editor/UI/editor_top_bar.gd" id="20_h10q1"]
+[ext_resource type="FontFile" uid="uid://bq5bnktcrnc38" path="res://Tschichold.ttf" id="23_kldov"]
+[ext_resource type="Script" uid="uid://vfgp5py5fuqy" path="res://Editor/editor_properties.gd" id="24_3xiut"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_j7xly"]
 size = Vector3(50, 50, 1)
@@ -149,6 +151,86 @@ size = Vector3(1, 0.25, 0.25)
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fve5q"]
 content_margin_left = 3.0
 content_margin_top = 3.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3xiut"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lcbr4"]
+bg_color = Color(0.32156864, 0.32156864, 0.32156864, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.59607846, 0.8862745, 0.7764706, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+shadow_size = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1dqbt"]
+bg_color = Color(0.25882354, 0.25882354, 0.25882354, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.59607846, 0.8862745, 0.7764706, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+shadow_size = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ar113"]
+bg_color = Color(0.32156864, 0.32156864, 0.32156864, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.59607846, 0.8862745, 0.7764706, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+expand_margin_left = 1.0
+expand_margin_top = 1.0
+expand_margin_right = 1.0
+expand_margin_bottom = 1.0
+shadow_size = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5n2pn"]
+bg_color = Color(0.18000486, 0.1800049, 0.18000478, 0.41568628)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+expand_margin_left = 10.0
+expand_margin_top = 10.0
+expand_margin_right = 10.0
+expand_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_taxvc"]
+content_margin_left = 5.0
+content_margin_top = 5.0
+content_margin_right = 5.0
+content_margin_bottom = 5.0
+
+[sub_resource type="Theme" id="Theme_536o0"]
+default_font = ExtResource("23_kldov")
+default_font_size = 15
+Button/colors/font_color = Color(0.59607846, 0.8862745, 0.7764706, 1)
+Button/colors/font_focus_color = Color(0.59607846, 0.8862745, 0.7764706, 1)
+Button/colors/font_outline_color = Color(0.5921569, 0.88235295, 0.77254903, 0.078431375)
+Button/constants/outline_size = 10
+Button/styles/focus = SubResource("StyleBoxEmpty_3xiut")
+Button/styles/hover = SubResource("StyleBoxFlat_lcbr4")
+Button/styles/normal = SubResource("StyleBoxFlat_1dqbt")
+Button/styles/pressed = SubResource("StyleBoxFlat_ar113")
+GridContainer/constants/h_separation = 15
+GridContainer/constants/v_separation = 15
+HBoxContainer/constants/separation = 15
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_5n2pn")
+ScrollContainer/styles/panel = SubResource("StyleBoxEmpty_taxvc")
+VBoxContainer/constants/separation = 15
 
 [node name="LevelEditor" type="Node3D" node_paths=PackedStringArray("shape_preview", "camera_pivot", "camera", "shape_handler", "selection_handler", "UI")]
 script = ExtResource("1_gkh0n")
@@ -428,6 +510,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="Part" type="VBoxContainer" parent="UIOld/Properties/VBoxContainer/ScrollContainer/VBoxContainer" node_paths=PackedStringArray("selection", "part_name", "part_pos", "part_size", "part_rot", "texture_container", "dynamic_movement", "dynamic_rotation", "pivot_container")]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 script = ExtResource("10_f3w8y")
@@ -541,7 +624,6 @@ text = " [center]Pivot"
 fit_content = true
 
 [node name="ShapeProperties" type="VBoxContainer" parent="UIOld/Properties/VBoxContainer/ScrollContainer/VBoxContainer" node_paths=PackedStringArray("shape_name", "shape_pos", "shape_size", "shape_rot", "shape_modifier_holder", "shape_modifier", "shape_sides_holder", "shape_sides", "shape_orientation_holder", "shape_orientation", "shape_flip_orientation_holder", "shape_flip_orientation", "shape_hole_holder", "shape_hole_offset_x", "shape_hole_offset_y", "shape_hole_offset_z", "shape_hole_size")]
-visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 script = ExtResource("8_1kyoo")
@@ -1350,32 +1432,19 @@ layout_mode = 2
 [node name="HBoxContainer" type="HBoxContainer" parent="UI/Sections/Tool/VBoxContainer"]
 layout_mode = 2
 
-[node name="Button2" type="Button" parent="UI/Sections/Tool/VBoxContainer/HBoxContainer"]
+[node name="Delete" type="Button" parent="UI/Sections/Tool/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(90, 50)
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 20
 text = "Delete"
 
-[node name="Button3" type="Button" parent="UI/Sections/Tool/VBoxContainer/HBoxContainer"]
+[node name="Take" type="Button" parent="UI/Sections/Tool/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(90, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 20
 text = "Take"
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="UI/Sections/Tool/VBoxContainer"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="UI/Sections/Tool/VBoxContainer/HBoxContainer2"]
-layout_mode = 2
-text = "Held Shape:"
-
-[node name="Label2" type="Label" parent="UI/Sections/Tool/VBoxContainer/HBoxContainer2"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "None"
-horizontal_alignment = 2
 
 [node name="Sections" type="PanelContainer" parent="UI/Sections"]
 modulate = Color(1, 1, 1, 0)
@@ -1416,6 +1485,122 @@ size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 20
 toggle_mode = true
 text = "Shapes"
+
+[node name="Properties" type="VBoxContainer" parent="UI"]
+unique_name_in_owner = true
+offset_left = 25.0
+offset_top = 371.0
+offset_right = 325.0
+offset_bottom = 623.0
+theme = SubResource("Theme_536o0")
+theme_override_constants/separation = 30
+script = ExtResource("24_3xiut")
+
+[node name="PanelContainer" type="PanelContainer" parent="UI/Properties"]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="Tabs" type="HBoxContainer" parent="UI/Properties/PanelContainer"]
+layout_mode = 2
+
+[node name="PartTab" type="Button" parent="UI/Properties/PanelContainer/Tabs"]
+custom_minimum_size = Vector2(70, 35)
+layout_mode = 2
+toggle_mode = true
+text = "Part"
+
+[node name="ShapeTab" type="Button" parent="UI/Properties/PanelContainer/Tabs"]
+custom_minimum_size = Vector2(70, 35)
+layout_mode = 2
+toggle_mode = true
+text = "Shape"
+
+[node name="Properties" type="PanelContainer" parent="UI/Properties"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ScrollContainer" type="ScrollContainer" parent="UI/Properties/Properties"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Properties/Properties/ScrollContainer"]
+layout_mode = 2
+
+[node name="LineEdit" type="LineEdit" parent="UI/Properties/Properties/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+placeholder_text = "Name"
+
+[node name="GridContainer" type="GridContainer" parent="UI/Properties/Properties/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+columns = 2
+
+[node name="Label" type="Label" parent="UI/Properties/Properties/ScrollContainer/VBoxContainer/GridContainer"]
+custom_minimum_size = Vector2(190, 0)
+layout_mode = 2
+text = "Position | 0.0, 0.0, 0.0"
+
+[node name="Button" type="Button" parent="UI/Properties/Properties/ScrollContainer/VBoxContainer/GridContainer"]
+custom_minimum_size = Vector2(70, 35)
+layout_mode = 2
+text = "Reset"
+
+[node name="Label2" type="Label" parent="UI/Properties/Properties/ScrollContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "Rotation | 0.0, 0.0, 0.0"
+
+[node name="Button2" type="Button" parent="UI/Properties/Properties/ScrollContainer/VBoxContainer/GridContainer"]
+custom_minimum_size = Vector2(70, 35)
+layout_mode = 2
+text = "Reset"
+
+[node name="Label3" type="Label" parent="UI/Properties/Properties/ScrollContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "Size | 0.0, 0.0, 0.0"
+
+[node name="Button3" type="Button" parent="UI/Properties/Properties/ScrollContainer/VBoxContainer/GridContainer"]
+custom_minimum_size = Vector2(70, 35)
+layout_mode = 2
+text = "Reset"
+
+[node name="PartSpecific" type="Control" parent="UI/Properties/Properties/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="ShapeSpecific" type="Control" parent="UI/Properties/Properties/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Selected" type="PanelContainer" parent="UI"]
+offset_left = 787.0
+offset_top = 551.0
+offset_right = 887.0
+offset_bottom = 623.0
+theme = ExtResource("19_fve5q")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Selected"]
+layout_mode = 2
+
+[node name="SelectedPart" type="Label" parent="UI/Selected/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 15
+text = "None"
+horizontal_alignment = 1
+
+[node name="SelectedShape" type="Label" parent="UI/Selected/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 15
+text = "None"
+horizontal_alignment = 1
+
+[node name="HeldShape" type="Label" parent="UI/Selected/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 15
+text = "None"
+horizontal_alignment = 1
 
 [connection signal="all_non_pivots" from="." to="UIOld/Properties/VBoxContainer/ScrollContainer/VBoxContainer/Part" method="display_non_pivots"]
 [connection signal="level_loaded" from="." to="UIOld/Sections" method="_on_level_loaded"]
@@ -1494,5 +1679,6 @@ text = "Shapes"
 [connection signal="toggled" from="UI/Parts/Buttons/VBoxContainer/Shapes" to="UI/Parts" method="tab_changed" binds= [0]]
 [connection signal="toggled" from="UI/Parts/Buttons/VBoxContainer/Important" to="UI/Parts" method="tab_changed" binds= [1]]
 [connection signal="toggled" from="UI/Parts/Buttons/VBoxContainer/Misc" to="UI/Parts" method="tab_changed" binds= [2]]
+[connection signal="select_part" from="UI/Sections" to="Info" method="select_part"]
 [connection signal="toggled" from="UI/Sections/Tabs/HBoxContainer/Parts" to="UI/Sections" method="tab" binds= [0]]
 [connection signal="toggled" from="UI/Sections/Tabs/HBoxContainer/Shapes" to="UI/Sections" method="tab" binds= [1]]

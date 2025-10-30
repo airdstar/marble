@@ -107,18 +107,10 @@ func _process(delta : float) -> void:
 
 func open_level_select():
 	chosen_level = null
-	selection_handler.selected_part = null
-	selection_handler.selected_shape = null
-	selection_handler.selected_component = null
-	selection_handler.held_shape = null
-	%Sections.clear_all()
-	tool_selected(editor.tool.NONE)
-	if level_base != null:
+	if level_base:
 		level_base.queue_free()
-		level_base = null
-	UI.hide_all()
-	
-	%LevelSelect.show_select()
+	%Info.clear_all()
+	%UI.open_level_select()
 
 func level_selected(level_info : level_resource) -> void:
 	chosen_level = level_info

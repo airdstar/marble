@@ -8,9 +8,15 @@ enum tool {
 	ROTATION
 }
 
-var current_tool : tool = tool.NONE
+enum adjustable {
+	NONE,
+	PART,
+	SHAPE
+}
 
-var current_level : level
+
+var current_tool : tool = tool.NONE
+var adjusting : adjustable = adjustable.NONE
 
 var selected_part : part = null
 var selected_shape : shape_resource = null
@@ -21,7 +27,7 @@ signal tool_selected
 
 func create_part(path : String, info : Array = [], children : Array = []) -> void:
 	var holder = load(path)
-	selected_part = holder.instantiate()
+	select_part(holder.instantiate())
 	part_created.emit(selected_part)
 	if !info.is_empty():
 		selected_part.reparent(info[0])
@@ -36,9 +42,11 @@ func create_part(path : String, info : Array = [], children : Array = []) -> voi
 
 func select_part(_part : part) -> void:
 	selected_part = _part
+	%SelectedPart.text = _part.part_name
 
 func unselect_part() -> void:
-	pass
+	selected_part = null
+	%SelectedPart.text = "None"
 
 func select_shape(shape : shape_resource) -> void:
 	if selected_part and selected_part is geometry:
@@ -46,14 +54,19 @@ func select_shape(shape : shape_resource) -> void:
 	if selected_shape:
 		held_shape = selected_shape
 	selected_shape = shape
+	%SelectedShape.text = shape.shape_name
 	%ShapePreview.clear_mesh()
 	%ShapePreview.add_shape(shape)
 
 func hold_shape() -> void:
 	if selected_shape:
 		held_shape = selected_shape
+		%HeldShape.text = held_shape.shape_name
 		selected_shape = null
 		%ShapePreview.clear_mesh()
+	elif held_shape:
+		select_shape(held_shape)
+		held_shape = null
 
 func place_shape() -> void:
 	if selected_shape:
@@ -63,6 +76,21 @@ func place_shape() -> void:
 		selected_part.add_shape(selected_shape)
 		selected_shape = null
 
+func set_adjusting(adjust : adjustable) -> void:
+	adjusting = adjust
+
 func set_tool(_tool : tool) -> void:
 	current_tool = _tool
 	tool_selected.emit()
+
+func tool_visibility() -> void:
+	if current_tool == tool.NONE:
+		return
+	
+
+
+func clear_all() -> void:
+	unselect_part()
+	selected_shape = null
+	held_shape = null
+	set_tool(tool.NONE)

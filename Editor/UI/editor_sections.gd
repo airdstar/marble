@@ -18,10 +18,10 @@ var shape_buttons : Array[Button]
 
 @export var part_holder : VBoxContainer
 
-signal shape_selected
-signal part_selected
+signal select_part
+signal select_shape
 
-signal part_unselected
+signal unselect_part
 
 func level_loaded(loaded_level : level) -> void:
 	level_info = loaded_level
@@ -46,7 +46,7 @@ func delete_pressed() -> void:
 				if selected_part.is_start:
 					level_info.starts.remove_at(level_info.starts.find(selected_part))
 				selected_part.queue_free()
-				part_unselected.emit()
+				%Info.unselect_part()
 				return
 
 func clear_all() -> void:
@@ -82,7 +82,7 @@ func create_button() -> Button:
 
 func part_toggled(toggled_on : bool, _part : part, button : Button) -> void:
 	if toggled_on:
-		part_selected.emit(_part)
+		select_part.emit(_part)
 		if selected_part:
 			selected_part.set_pressed_no_signal(false)
 		selected_part = button
