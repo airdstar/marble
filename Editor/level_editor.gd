@@ -28,7 +28,7 @@ var selected_tool : editor.tool = editor.tool.NONE
 
 @onready var adjuster := $Adjust
 
-
+signal level_select
 
 signal level_loaded
 
@@ -57,9 +57,9 @@ func _ready() -> void:
 		line.mesh.material = material
 		$Grid.add_child(line)
 	
-	tool_visible(false)
-	%UI.open_level_select()
-	open_level_select()
+	
+	%Info.set_tool(editor_info.tool.NONE)
+	level_select.emit()
 
 
 func _process(delta : float) -> void:
@@ -72,7 +72,7 @@ func _process(delta : float) -> void:
 	
 	if Input.is_action_just_pressed("back"):
 		if !%LevelSelect.visible:
-			open_level_select()
+			level_select.emit()
 		else:
 			Game.open_scene("res://Main/Menus/MainMenu.tscn")
 	
@@ -110,7 +110,6 @@ func open_level_select():
 	if level_base:
 		level_base.queue_free()
 	%Info.clear_all()
-	%UI.open_level_select()
 
 func level_selected(level_info : level_resource) -> void:
 	chosen_level = level_info

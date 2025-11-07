@@ -306,6 +306,7 @@ script = ExtResource("4_a0qo3")
 master = NodePath("..")
 
 [node name="Adjust" type="Node3D" parent="." node_paths=PackedStringArray("pos", "size", "rot", "pos_x", "pos_y", "pos_z", "pos_x_mesh", "pos_y_mesh", "pos_z_mesh", "size_x", "size_y", "size_z", "size_x_mesh", "size_y_mesh", "size_z_mesh", "rot_proxy", "rot_x", "rot_y", "rot_z", "rot_x_mesh", "rot_y_mesh", "rot_z_mesh")]
+visible = false
 script = ExtResource("5_6wt44")
 pos = NodePath("Position")
 size = NodePath("Size")
@@ -1311,7 +1312,7 @@ theme_override_font_sizes/font_size = 20
 toggle_mode = true
 text = "Rotation"
 
-[node name="Button" type="Button" parent="UI/TopBar/Tools/HBoxContainer"]
+[node name="Hold" type="Button" parent="UI/TopBar/Tools/HBoxContainer"]
 custom_minimum_size = Vector2(90, 50)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -1415,7 +1416,7 @@ text = "Misc"
 
 [node name="Sections" type="VBoxContainer" parent="UI"]
 unique_name_in_owner = true
-offset_left = 932.0
+offset_left = 827.0
 offset_top = 25.0
 offset_right = 1127.0
 offset_bottom = 623.0
@@ -1431,6 +1432,13 @@ layout_mode = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="UI/Sections/Tool/VBoxContainer"]
 layout_mode = 2
+
+[node name="Place" type="Button" parent="UI/Sections/Tool/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(90, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 20
+text = "Place"
 
 [node name="Delete" type="Button" parent="UI/Sections/Tool/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(90, 50)
@@ -1466,13 +1474,42 @@ layout_mode = 2
 
 [node name="Tabs" type="PanelContainer" parent="UI/Sections"]
 layout_mode = 2
+size_flags_horizontal = 4
 
 [node name="HBoxContainer" type="HBoxContainer" parent="UI/Sections/Tabs"]
 layout_mode = 2
 alignment = 1
 
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Sections/Tabs/HBoxContainer"]
+layout_mode = 2
+
+[node name="SelectedPart" type="Label" parent="UI/Sections/Tabs/HBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(90, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 14
+text = "None"
+horizontal_alignment = 1
+
+[node name="SelectedShape" type="Label" parent="UI/Sections/Tabs/HBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 14
+text = "None"
+horizontal_alignment = 1
+
+[node name="HeldShape" type="Label" parent="UI/Sections/Tabs/HBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 14
+text = "None"
+horizontal_alignment = 1
+
 [node name="Parts" type="Button" parent="UI/Sections/Tabs/HBoxContainer"]
-custom_minimum_size = Vector2(0, 50)
+custom_minimum_size = Vector2(90, 50)
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 20
@@ -1480,43 +1517,27 @@ toggle_mode = true
 text = "Parts"
 
 [node name="Shapes" type="Button" parent="UI/Sections/Tabs/HBoxContainer"]
+custom_minimum_size = Vector2(90, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 20
 toggle_mode = true
 text = "Shapes"
 
-[node name="Properties" type="VBoxContainer" parent="UI"]
+[node name="Properties" type="HBoxContainer" parent="UI"]
 unique_name_in_owner = true
 offset_left = 25.0
 offset_top = 371.0
-offset_right = 325.0
+offset_right = 413.0
 offset_bottom = 623.0
+size_flags_horizontal = 3
 theme = SubResource("Theme_536o0")
 theme_override_constants/separation = 30
 script = ExtResource("24_3xiut")
 
-[node name="PanelContainer" type="PanelContainer" parent="UI/Properties"]
-layout_mode = 2
-size_flags_horizontal = 0
-
-[node name="Tabs" type="HBoxContainer" parent="UI/Properties/PanelContainer"]
-layout_mode = 2
-
-[node name="PartTab" type="Button" parent="UI/Properties/PanelContainer/Tabs"]
-custom_minimum_size = Vector2(70, 35)
-layout_mode = 2
-toggle_mode = true
-text = "Part"
-
-[node name="ShapeTab" type="Button" parent="UI/Properties/PanelContainer/Tabs"]
-custom_minimum_size = Vector2(70, 35)
-layout_mode = 2
-toggle_mode = true
-text = "Shape"
-
 [node name="Properties" type="PanelContainer" parent="UI/Properties"]
 layout_mode = 2
+size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="ScrollContainer" type="ScrollContainer" parent="UI/Properties/Properties"]
@@ -1525,18 +1546,20 @@ size_flags_vertical = 3
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UI/Properties/Properties/ScrollContainer"]
 layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="LineEdit" type="LineEdit" parent="UI/Properties/Properties/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 placeholder_text = "Name"
+max_length = 15
 
 [node name="GridContainer" type="GridContainer" parent="UI/Properties/Properties/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 columns = 2
 
-[node name="Label" type="Label" parent="UI/Properties/Properties/ScrollContainer/VBoxContainer/GridContainer"]
-custom_minimum_size = Vector2(190, 0)
+[node name="Position" type="Label" parent="UI/Properties/Properties/ScrollContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
+size_flags_horizontal = 3
 text = "Position | 0.0, 0.0, 0.0"
 
 [node name="Button" type="Button" parent="UI/Properties/Properties/ScrollContainer/VBoxContainer/GridContainer"]
@@ -1544,7 +1567,7 @@ custom_minimum_size = Vector2(70, 35)
 layout_mode = 2
 text = "Reset"
 
-[node name="Label2" type="Label" parent="UI/Properties/Properties/ScrollContainer/VBoxContainer/GridContainer"]
+[node name="Rotation" type="Label" parent="UI/Properties/Properties/ScrollContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 text = "Rotation | 0.0, 0.0, 0.0"
 
@@ -1553,9 +1576,9 @@ custom_minimum_size = Vector2(70, 35)
 layout_mode = 2
 text = "Reset"
 
-[node name="Label3" type="Label" parent="UI/Properties/Properties/ScrollContainer/VBoxContainer/GridContainer"]
+[node name="Scale" type="Label" parent="UI/Properties/Properties/ScrollContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
-text = "Size | 0.0, 0.0, 0.0"
+text = "Scale | 0.0, 0.0, 0.0"
 
 [node name="Button3" type="Button" parent="UI/Properties/Properties/ScrollContainer/VBoxContainer/GridContainer"]
 custom_minimum_size = Vector2(70, 35)
@@ -1568,48 +1591,48 @@ layout_mode = 2
 [node name="ShapeSpecific" type="Control" parent="UI/Properties/Properties/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 
+[node name="Tabs" type="PanelContainer" parent="UI/Properties"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+
+[node name="Tabs" type="VBoxContainer" parent="UI/Properties/Tabs"]
+layout_mode = 2
+
+[node name="PartTab" type="Button" parent="UI/Properties/Tabs/Tabs"]
+custom_minimum_size = Vector2(70, 35)
+layout_mode = 2
+toggle_mode = true
+text = "Part"
+
+[node name="ShapeTab" type="Button" parent="UI/Properties/Tabs/Tabs"]
+custom_minimum_size = Vector2(70, 35)
+layout_mode = 2
+toggle_mode = true
+text = "Shape"
+
 [node name="Selected" type="PanelContainer" parent="UI"]
+visible = false
 offset_left = 787.0
 offset_top = 551.0
 offset_right = 887.0
 offset_bottom = 623.0
 theme = ExtResource("19_fve5q")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/Selected"]
-layout_mode = 2
-
-[node name="SelectedPart" type="Label" parent="UI/Selected/VBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 15
-text = "None"
-horizontal_alignment = 1
-
-[node name="SelectedShape" type="Label" parent="UI/Selected/VBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 15
-text = "None"
-horizontal_alignment = 1
-
-[node name="HeldShape" type="Label" parent="UI/Selected/VBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 15
-text = "None"
-horizontal_alignment = 1
-
 [connection signal="all_non_pivots" from="." to="UIOld/Properties/VBoxContainer/ScrollContainer/VBoxContainer/Part" method="display_non_pivots"]
 [connection signal="level_loaded" from="." to="UIOld/Sections" method="_on_level_loaded"]
 [connection signal="level_loaded" from="." to="UI/Sections" method="level_loaded"]
+[connection signal="level_select" from="." to="." method="open_level_select"]
+[connection signal="level_select" from="." to="UI" method="open_level_select"]
+[connection signal="level_select" from="." to="UI/Properties" method="clear"]
 [connection signal="new_part_selected" from="." to="UIOld/Properties" method="part_selected"]
 [connection signal="new_shape_selected" from="." to="UIOld/Properties" method="shape_selected"]
 [connection signal="shape_placed" from="." to="UIOld/Sections" method="add_shape"]
 [connection signal="part_created" from="Info" to="." method="part_created"]
 [connection signal="part_created" from="Info" to="UI/Sections" method="add_part" binds= [true]]
+[connection signal="part_selected" from="Info" to="UI/Properties" method="part_selected"]
+[connection signal="shape_selected" from="Info" to="UI/Properties" method="shape_selected"]
+[connection signal="shape_unselected" from="Info" to="UI/Properties" method="shape_unselected"]
 [connection signal="part_selected" from="SelectionHandler" to="UIOld/Properties" method="part_selected"]
 [connection signal="shape_selected" from="SelectionHandler" to="UIOld/Properties" method="shape_selected"]
 [connection signal="pos_changed" from="ChangeHandler" to="Adjust" method="selected_pos_changed"]
@@ -1675,10 +1698,16 @@ horizontal_alignment = 1
 [connection signal="pressed" from="UI/LevelSelect/Select/CenterContainer/HBoxContainer/Delete" to="UI/LevelSelect" method="delete_pressed"]
 [connection signal="pressed" from="UI/LevelSelect/New/HBoxContainer/Back" to="UI/LevelSelect" method="show_select"]
 [connection signal="pressed" from="UI/LevelSelect/New/CenterContainer/Create" to="UI/LevelSelect" method="create_level"]
+[connection signal="tool_selected" from="UI/TopBar" to="Info" method="set_tool"]
 [connection signal="toggled" from="UI/TopBar/Tools/HBoxContainer/Position" to="UI/TopBar" method="pos_toggled"]
+[connection signal="toggled" from="UI/TopBar/Tools/HBoxContainer/Scale" to="UI/TopBar" method="size_toggled"]
+[connection signal="toggled" from="UI/TopBar/Tools/HBoxContainer/Rotation" to="UI/TopBar" method="rot_toggled"]
+[connection signal="pressed" from="UI/TopBar/Tools/HBoxContainer/Hold" to="Info" method="hold_shape"]
 [connection signal="toggled" from="UI/Parts/Buttons/VBoxContainer/Shapes" to="UI/Parts" method="tab_changed" binds= [0]]
 [connection signal="toggled" from="UI/Parts/Buttons/VBoxContainer/Important" to="UI/Parts" method="tab_changed" binds= [1]]
 [connection signal="toggled" from="UI/Parts/Buttons/VBoxContainer/Misc" to="UI/Parts" method="tab_changed" binds= [2]]
 [connection signal="select_part" from="UI/Sections" to="Info" method="select_part"]
 [connection signal="toggled" from="UI/Sections/Tabs/HBoxContainer/Parts" to="UI/Sections" method="tab" binds= [0]]
 [connection signal="toggled" from="UI/Sections/Tabs/HBoxContainer/Shapes" to="UI/Sections" method="tab" binds= [1]]
+[connection signal="toggled" from="UI/Properties/Tabs/Tabs/PartTab" to="UI/Properties" method="tab_pressed" binds= [0]]
+[connection signal="toggled" from="UI/Properties/Tabs/Tabs/ShapeTab" to="UI/Properties" method="tab_pressed" binds= [1]]
