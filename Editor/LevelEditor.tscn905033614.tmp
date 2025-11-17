@@ -28,10 +28,6 @@
 [ext_resource type="Script" uid="uid://vfgp5py5fuqy" path="res://Editor/editor_properties.gd" id="24_3xiut"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1dqbt"]
-no_depth_test = true
-albedo_color = Color(1, 0, 0, 1)
-emission_enabled = true
-emission = Color(1, 0.09985284, 0.09985284, 1)
 backlight_enabled = true
 backlight = Color(1, 1, 1, 1)
 
@@ -44,18 +40,10 @@ radial_segments = 4
 size = Vector3(0.3, 2, 0.3)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ar113"]
-no_depth_test = true
-albedo_color = Color(0, 1, 0, 1)
-emission_enabled = true
-emission = Color(0.09985284, 1, 0.09985284, 1)
 backlight_enabled = true
 backlight = Color(1, 1, 1, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5n2pn"]
-no_depth_test = true
-albedo_color = Color(0, 0, 1, 1)
-emission_enabled = true
-emission = Color(0.09985284, 0.09985284, 1, 1)
 backlight_enabled = true
 backlight = Color(1, 1, 1, 1)
 
@@ -296,7 +284,7 @@ skeleton = NodePath("")
 [node name="Area3D" type="Area3D" parent="Adjust/X"]
 input_capture_on_drag = true
 
-[node name="Col" type="CollisionShape3D" parent="Adjust/X/Area3D"]
+[node name="XCol" type="CollisionShape3D" parent="Adjust/X/Area3D"]
 shape = SubResource("BoxShape3D_1dqbt")
 
 [node name="Y" type="MeshInstance3D" parent="Adjust"]
@@ -308,7 +296,7 @@ skeleton = NodePath("")
 [node name="Area3D" type="Area3D" parent="Adjust/Y"]
 input_capture_on_drag = true
 
-[node name="Col" type="CollisionShape3D" parent="Adjust/Y/Area3D"]
+[node name="YCol" type="CollisionShape3D" parent="Adjust/Y/Area3D"]
 shape = SubResource("BoxShape3D_1dqbt")
 
 [node name="Z" type="MeshInstance3D" parent="Adjust"]
@@ -320,7 +308,7 @@ skeleton = NodePath("")
 [node name="Area3D" type="Area3D" parent="Adjust/Z"]
 input_capture_on_drag = true
 
-[node name="Col" type="CollisionShape3D" parent="Adjust/Z/Area3D"]
+[node name="ZCol" type="CollisionShape3D" parent="Adjust/Z/Area3D"]
 shape = SubResource("BoxShape3D_1dqbt")
 
 [node name="SelectionHandler" type="Node" parent="." node_paths=PackedStringArray("master", "UI", "shape_preview")]
@@ -1714,8 +1702,6 @@ theme = ExtResource("19_fve5q")
 [connection signal="shape_unselected" from="Info" to="UI/Properties" method="shape_unselected"]
 [connection signal="mouse_entered" from="Adjust/X/Area3D" to="Adjust" method="enter" binds= ["X"]]
 [connection signal="mouse_exited" from="Adjust/X/Area3D" to="Adjust" method="exit" binds= ["X"]]
-[connection signal="mouse_entered" from="Adjust/Y/Area3D" to="Adjust" method="enter" binds= ["Y"]]
-[connection signal="mouse_exited" from="Adjust/Y/Area3D" to="Adjust" method="exit" binds= ["Y"]]
 [connection signal="part_selected" from="SelectionHandler" to="UIOld/Properties" method="part_selected"]
 [connection signal="shape_selected" from="SelectionHandler" to="UIOld/Properties" method="shape_selected"]
 [connection signal="pos_changed" from="ChangeHandler" to="Adjust3" method="selected_pos_changed"]
@@ -1781,6 +1767,8 @@ theme = ExtResource("19_fve5q")
 [connection signal="pressed" from="UI/LevelSelect/Select/CenterContainer/HBoxContainer/Delete" to="UI/LevelSelect" method="delete_pressed"]
 [connection signal="pressed" from="UI/LevelSelect/New/HBoxContainer/Back" to="UI/LevelSelect" method="show_select"]
 [connection signal="pressed" from="UI/LevelSelect/New/CenterContainer/Create" to="UI/LevelSelect" method="create_level"]
+[connection signal="tool_selected" from="UI/TopBar" to="Info" method="set_tool"]
+[connection signal="tool_selected" from="UI/TopBar" to="Adjust" method="tool_selected"]
 [connection signal="toggled" from="UI/TopBar/Tools/HBoxContainer/Position" to="UI/TopBar" method="pos_toggled"]
 [connection signal="toggled" from="UI/TopBar/Tools/HBoxContainer/Scale" to="UI/TopBar" method="size_toggled"]
 [connection signal="toggled" from="UI/TopBar/Tools/HBoxContainer/Rotation" to="UI/TopBar" method="rot_toggled"]

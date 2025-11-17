@@ -30,12 +30,14 @@ func level_loaded(loaded_level : level) -> void:
 	$Sections.modulate = Color(1.0, 1.0, 1.0, 0.0)
 
 func delete_pressed() -> void:
+	
 	if selected_shape:
 		for n : Button in $Sections/ScrollContainer/Shapes.get_children():
 			if n.button_pressed:
 				n.queue_free()
 				selected_part.remove_shape(selected_shape)
 				selected_shape = null
+				tab(true, 0)
 				return
 	
 	if selected_part:
@@ -48,6 +50,13 @@ func delete_pressed() -> void:
 				selected_part.queue_free()
 				%Info.unselect_part()
 				return
+
+func take_pressed() -> void:
+	if selected_shape:
+		$Sections/ScrollContainer/Shapes.remove_child(selected_shape)
+		%Info.select_shape(selected_shape_info)
+		selected_shape = null
+		selected_shape_info = null
 
 func clear_all() -> void:
 	selected_shape = null
@@ -68,11 +77,13 @@ func add_part(_part : part, toggle_button : bool) -> void:
 		button.button_pressed = true
 	
 
-func add_shape(shape_info : shape_resource):
+func add_shape(shape_info : shape_resource, select : bool = false):
 	var button := create_button()
 	button.text = shape_info.shape_name
 	$Sections/ScrollContainer/Shapes.add_child(button)
 	button.toggled.connect(shape_toggled.bind(shape_info, button))
+	if select:
+		button.button_pressed = true
 
 func create_button() -> Button:
 	var button := Button.new()
@@ -125,12 +136,9 @@ func tab(toggled_on : bool, _tab : int) -> void:
 	else:
 		$Sections.modulate = Color(1.0, 1.0, 1.0, 0.0)
 
-func _on_take_pressed() -> void:
-	if selected_shape:
-		%Info.select_shape(selected_shape_info)
-		$Tabs/HBoxContainer/Shapes.remove_child(selected_shape)
-		selected_shape = null
-		selected_shape_info = null
+
+
+
 
 func get_selected_part() -> Button:
 	for n : Button in part_buttons:

@@ -1,20 +1,12 @@
 extends Node
 
-enum section {
-	GEOMETRY,
-	STARTS,
-	MISC
-}
+
 
 var allow_camera_movement := false
 
 var chosen_level : level_resource
 var level_base : level
-var selected_section : section = section.GEOMETRY
 
-
-var adjusting : editor.adjustable = editor.adjustable.NONE
-var selected_tool : editor.tool = editor.tool.NONE
 
 @export var shape_preview : MeshInstance3D
 
@@ -57,8 +49,6 @@ func _ready() -> void:
 		line.mesh.material = material
 		$Grid.add_child(line)
 	
-	
-	%Info.set_tool(editor_info.tool.NONE)
 	level_select.emit()
 
 
@@ -76,17 +66,18 @@ func _process(delta : float) -> void:
 		else:
 			Game.open_scene("res://Main/Menus/MainMenu.tscn")
 	
-	if Input.is_action_pressed("move_left"):
-		camera_pivot.position += Vector3(-cos(camera_pivot.rotation.y),0, sin(camera_pivot.rotation.y)) * delta * 5
-	
-	if Input.is_action_pressed("move_right"):
-		camera_pivot.position += Vector3(cos(camera_pivot.rotation.y),0, -sin(camera_pivot.rotation.y)) * delta * 5
-	
-	if Input.is_action_pressed("move_forward"):
-		camera_pivot.position += Vector3(-sin(camera_pivot.rotation.y),0,-cos(camera_pivot.rotation.y)) * delta * 5
-	
-	if Input.is_action_pressed("move_backward"):
-		camera_pivot.position += Vector3(sin(camera_pivot.rotation.y),0,cos(camera_pivot.rotation.y)) * delta * 5
+	if !get_viewport().gui_get_focus_owner() is LineEdit:
+		if Input.is_action_pressed("move_left"):
+			camera_pivot.position += Vector3(-cos(camera_pivot.rotation.y),0, sin(camera_pivot.rotation.y)) * delta * 5
+		
+		if Input.is_action_pressed("move_right"):
+			camera_pivot.position += Vector3(cos(camera_pivot.rotation.y),0, -sin(camera_pivot.rotation.y)) * delta * 5
+		
+		if Input.is_action_pressed("move_forward"):
+			camera_pivot.position += Vector3(-sin(camera_pivot.rotation.y),0,-cos(camera_pivot.rotation.y)) * delta * 5
+		
+		if Input.is_action_pressed("move_backward"):
+			camera_pivot.position += Vector3(sin(camera_pivot.rotation.y),0,cos(camera_pivot.rotation.y)) * delta * 5
 	
 	camera_pivot.position = camera_pivot.position.clamp(Vector3(-12.5,0,-12.5), Vector3(12.5,0,12.5))
 	
@@ -213,16 +204,12 @@ func get_all_non_pivot_parts() -> void:
 func property_group_set(adjust_to : String) -> void:
 	match adjust_to:
 		"None":
-			adjusting = editor.adjustable.NONE
 			tool_visible(false)
 		"Part":
-			adjusting = editor.adjustable.PART
 			tool_visible(true)
 		"Shape":
-			adjusting = editor.adjustable.SHAPE
 			tool_visible(true)
 		"Rotation":
-			adjusting = editor.adjustable.NONE
 			if selection_handler.selected_part != null:
 				for n in selection_handler.selected_part.get_children():
 					if n is rotateable_component:
@@ -234,23 +221,12 @@ func tool_visible(make_visible : bool) -> void:
 	adjuster.pos.visible = false
 	adjuster.size.visible = false
 	adjuster.rot.visible = false
-	if make_visible:
-		match selected_tool:
-			editor.tool.POS:
-				adjuster.pos.visible = true
-			editor.tool.SIZE:
-				adjuster.size.visible = true
-			editor.tool.ROTATION:
-				adjuster.rot.visible = true
 
 func tool_selected(tool : editor.tool) -> void:
-	selected_tool = tool
+	
 	var adjust_to : String
-	match adjusting:
-		editor.adjustable.PART:
-			adjust_to = "Part"
-		editor.adjustable.SHAPE:
-			adjust_to = "Shape"
+	adjust_to = "Part"
+	adjust_to = "Shape"
 	property_group_set(adjust_to)
 
 func level_info_updated() -> void:

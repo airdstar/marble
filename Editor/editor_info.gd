@@ -1,21 +1,12 @@
 extends Node
 class_name editor_info
 
-enum tool {
-	NONE,
-	POS,
-	SIZE,
-	ROTATION
-}
-
 enum adjustable {
 	NONE,
 	PART,
 	SHAPE
 }
 
-
-var current_tool : tool = tool.NONE
 var adjusting : adjustable = adjustable.NONE
 
 var selected_part : part = null
@@ -28,7 +19,6 @@ signal part_selected
 
 signal shape_selected
 signal shape_unselected
-signal tool_selected
 
 func create_part(path : String, info : Array = [], children : Array = []) -> void:
 	var holder = load(path)
@@ -68,6 +58,7 @@ func select_shape(shape : shape_resource) -> void:
 
 func unselect_shape() -> void:
 	selected_shape = null
+	%SelectedShape.text = "None"
 	%ShapePreview.clear_mesh()
 	shape_unselected.emit()
 
@@ -85,23 +76,16 @@ func place_shape() -> void:
 		if !selected_part or !selected_part is geometry:
 			create_part("res://Editor/Parts/Important/Geometry.tscn")
 		selected_part.add_shape(selected_shape)
+		%Sections.add_shape(selected_shape, true)
 		unselect_shape()
 
 func set_adjusting(adjust : adjustable) -> void:
 	adjusting = adjust
-
-func set_tool(_tool : tool) -> void:
-	current_tool = _tool
-	tool_selected.emit()
-
-func tool_visibility() -> void:
-	if current_tool == tool.NONE:
-		return
-	
-
+	%Adjust.set_visibility()
 
 func clear_all() -> void:
 	unselect_part()
 	selected_shape = null
 	held_shape = null
-	set_tool(tool.NONE)
+	adjusting = adjustable.NONE
+	%Adjust.set_tool(%Adjust.tool.NONE)
